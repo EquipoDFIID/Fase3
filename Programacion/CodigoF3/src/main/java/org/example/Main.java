@@ -1,11 +1,15 @@
 package org.example;
 
+import org.example.Controladores.ModeloController;
+import org.example.Controladores.VistaController;
 import org.example.Vista.MenuPrincipal;
 
 public class Main {
-    private static MenuPrincipal mPrincipal=new MenuPrincipal();
-    public static void main(String[] args) {
-        mPrincipal.setVisible(true);
 
+    public static void main(String[] args) {
+        ModeloController mc=new ModeloController();
+
+        VistaController vc=new VistaController();
+        mc.setVista(vc);
     }
 }
