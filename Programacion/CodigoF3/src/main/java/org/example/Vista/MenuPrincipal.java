@@ -1,9 +1,6 @@
 package org.example.Vista;
 
-
-
 import javax.swing.*;
-import java.awt.*;
 
 public class MenuPrincipal extends JFrame {
     public JPanel panel1;
@@ -17,14 +14,11 @@ public class MenuPrincipal extends JFrame {
     private JButton TERMINARButton;
     private JButton bajaDeJugadorButton;
 
-    public MenuPrincipal() throws HeadlessException {
+    public MenuPrincipal() {
         setContentPane(panel1);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("MenuPrincipal");
         setSize(500,500);
        setLocationRelativeTo(null);
-
-
-
     }
 }
