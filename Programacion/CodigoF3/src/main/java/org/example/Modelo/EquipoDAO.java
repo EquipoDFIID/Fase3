@@ -10,12 +10,50 @@ import java.util.Set;
 public class EquipoDAO {
     static Connection con = BD.getConnection();
 
-    public EquipoDAO(Connection con) {
+// =============================================
+// == OPERACIONES DE CONSULTA (SELECT)
+// =============================================
+
+    public Equipo selectEquipo(String id) {
+        Equipo e= null;
+        try {
+            String sql = "SELECT * FROM EQUIPOS WHERE id_equipo = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                e.setIdEquipo(rs.getInt("id_equipo"));
+                e.setNombre(rs.getString("nombre"));
+                e.setFechaFund(rs.getDate("fecha_fund").toLocalDate());
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return e;
+    }
+
+    public ArrayList<Equipo> selectIdNombreEquipo(){
+        ArrayList<Equipo> equipos= new ArrayList<>();
+
+        try {
+            String sql = "SELECT id_equipo,nombre FROM EQUIPOS";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Equipo e = new Equipo();
+                e.setIdEquipo(rs.getInt("id_equipo"));
+                e.setNombre(rs.getString("nombre"));
+                equipos.add(e);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return equipos;
     }
 
     public static Equipo buscarEquipo(String nombreEquipo) {
-        //si no es nulo devuelve true
-        //si es nulo devuelve false
         Equipo e= null;
         e.setNombre(nombreEquipo);
         try {
@@ -35,6 +73,10 @@ public class EquipoDAO {
         return e;
     }
 
+// =============================================
+// == OPERACIONES DE INSERCIÓN (INSERT)
+// =============================================
+
     public static void altaEquipo(Equipo equipo) {
         try {
             String sql = "INSERT INTO equipos VALUES(?,?,?)";
@@ -47,6 +89,10 @@ public class EquipoDAO {
             System.out.println(e);
         }
     }
+
+// =============================================
+// == OPERACIONES DE ACTUALIZACIÓN (UPDATE)
+// =============================================
 
     public static void modificarEquipo(Equipo equipo, String nombreEquipo) {
         try {
@@ -61,6 +107,10 @@ public class EquipoDAO {
             System.out.println(e);
         }
     }
+
+// =============================================
+// == OPERACIONES DE ELIMINACIÓN (DELETE)
+// =============================================
 
     public static void borrarEquipo(Equipo e) {
         try {

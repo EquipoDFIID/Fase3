@@ -8,9 +8,28 @@ import java.util.ArrayList;
 public class JugadorDAO {
     static Connection con = BD.getConnection();
 
-    public JugadorDAO(Connection con) {
-    }
+// =============================================
+// == OPERACIONES DE CONSULTA (SELECT)
+// =============================================
 
+    public ArrayList<Jugador> selectIdNombreJugador(){
+        ArrayList<Jugador> jugadores= new ArrayList<>();
+        try {
+            String sql = "SELECT id_jugador,nickname FROM EQUIPOS";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Jugador j = new Jugador();
+                j.setIdJugador(rs.getInt("id_jugador"));
+                j.setNickname(rs.getString("nickname"));
+                jugadores.add(j);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return jugadores;
+    }
 
     public static Jugador buscarJugador(String nombreJugador) {
        Jugador j=null;
@@ -28,7 +47,9 @@ public class JugadorDAO {
                 j.setFechaNacimiento(rs.getDate("FECHA_NAC").toLocalDate());
                 j.setNickname(rs.getString("NICKNAME"));
                 j.setSueldo(rs.getDouble("SUELDO"));
-                j.setEquipo(null);
+                //la linea de abajo puede dar problemas por que no se como se llama la columna del codigo de equipo y ademas el parametro de
+                // "equipo" probablemente este mal
+                j.setEquipo(EquipoDAO.buscarEquipo(rs.getString("EQUIPO")));
             }
 
         } catch (SQLException e) {
@@ -36,6 +57,10 @@ public class JugadorDAO {
         }
         return j;
     }
+
+// =============================================
+// == OPERACIONES DE INSERCIÓN (INSERT)
+// =============================================
 
     public static void altaJugador(Jugador jugador) {
         try {
@@ -54,6 +79,10 @@ public class JugadorDAO {
             System.out.println(e);
         }
     }
+
+// =============================================
+// == OPERACIONES DE ACTUALIZACIÓN (UPDATE)
+// =============================================
 
     public static void modificarJugador(Jugador jugador, String nombreJugador) {
         try {
@@ -74,6 +103,10 @@ public class JugadorDAO {
             System.out.println(e);
         }
     }
+
+// =============================================
+// == OPERACIONES DE ELIMINACIÓN (DELETE)
+// =============================================
 
     public static void borrarJugador(String nombreJugador) {
         try {
