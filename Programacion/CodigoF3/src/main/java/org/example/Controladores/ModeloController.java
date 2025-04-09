@@ -50,4 +50,28 @@ public class ModeloController {
     public void setVista(VistaController vc) {
         this.vc=vc;
     }
+
+
+    public Equipo buscarEquipo(String nombreEquipo) {
+        return equipoController.buscarEquipo(nombreEquipo);
+    }
+
+    public Equipo altaEquipo(Equipo e){
+        return equipoController.altaEquipo(e);
+    }
+    public void modificarEquipo(Equipo e) {
+        equipoController.modificarEquipo(e);
+    }
+    public void bajaEquipo(Equipo e) {
+        equipoController.bajaEquipo(e);
+    }
+    public Jugador altaJugador(Jugador j){
+        return jugadorController.altaJugador(j);
+    }
+    public void bajaJugador(Jugador j) {
+        jugadorController.bajaJugador(j);
+    }
+    public void modificarJugador(Jugador j) {
+        jugadorController.modificarJugador(j);
+    }
 }

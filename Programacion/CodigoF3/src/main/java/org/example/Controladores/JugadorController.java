@@ -13,10 +13,25 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class JugadorController {
+    private JugadorDAO jugadorDAO;
     public JugadorController(JugadorDAO jugadorDAO) {
+        this.jugadorDAO = jugadorDAO;
     }
 
-    public static Jugador solicitarValidarDatos() {
+
+
+    public Jugador altaJugador(Jugador j) {
+        return jugadorDAO.altaJugador(j);
+    }
+    public void bajaJugador(Jugador j) {
+        jugadorDAO.bajaJugador(j);
+    }
+    public void modificarJugador(Jugador j) {
+        jugadorDAO.modificarJugador(j);
+    }
+
+    /*
+       public static Jugador solicitarValidarDatos() {
         // Copia de la versión anterior.
         String idJugador = solicitarDato("ID Jugador", "Teclea ID del jugador", "^[0-9]{4}[A-Z]{1}$");
         String nombre = solicitarDato("Nombre", "Teclea el nombre del jugador", "^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\\s]*$");
@@ -63,6 +78,8 @@ public class JugadorController {
         LocalDate fecha = LocalDate.parse(fechaS, formatter);
         return fecha;
     }
+
+
     public static void altaJugador() {
         boolean continuar = false;
         do {
@@ -115,7 +132,7 @@ public class JugadorController {
             }
         } while (continuar);
         return j;
-    }
+    } */
 
 
 }
