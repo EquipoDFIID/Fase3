@@ -6,7 +6,7 @@ public class VentanaInicio extends JFrame {
     private JPanel panel1;
     private JButton button1;
     private JButton button2;
-    private JButton jugadorButton;
+    private JButton usuarioButton;
     private JButton administradorButton;
 
     public VentanaInicio() {
