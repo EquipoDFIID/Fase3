@@ -1,9 +1,6 @@
 package org.example.Modelo;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,32 +10,36 @@ import java.util.Set;
 public class EquipoDAO {
     static Connection con = BD.getConnection();
 
-    public static boolean buscarEquipo(String nombreEquipo) {
+    public EquipoDAO(Connection con) {
+    }
+
+    public static Equipo buscarEquipo(String nombreEquipo) {
         //si no es nulo devuelve true
         //si es nulo devuelve false
-        boolean resultado = false;
+        Equipo e= null;
+        e.setNombre(nombreEquipo);
         try {
             String sql = "SELECT * FROM EQUIPOS WHERE NOMBRE = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, nombreEquipo);
-            ps.executeQuery();
-            if (ps != null) {
-                resultado = true;
-            } else {
-                resultado = false;
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                e.setIdEquipo(rs.getInt("id_equipo"));
+                e.setNombre(rs.getString("nombre"));
+                e.setFechaFund(rs.getDate("fecha_fund").toLocalDate());
             }
 
-        } catch (SQLException e) {
-            System.out.println(e);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
-        return resultado;
+        return e;
     }
 
     public static void altaEquipo(Equipo equipo) {
         try {
             String sql = "INSERT INTO equipos VALUES(?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, equipo.getIdEquipo());
+            ps.setInt(1, equipo.getIdEquipo());
             ps.setString(2, equipo.getNombre());
             ps.setDate(3, Date.valueOf(equipo.getFechaFund()));
             ps.executeUpdate();
@@ -47,28 +48,28 @@ public class EquipoDAO {
         }
     }
 
-    public static void modificarEquipo(Equipo equipo, String idEquipo) {
+    public static void modificarEquipo(Equipo equipo, String nombreEquipo) {
         try {
             String sql = "UPDATE EQUIPOS SET id_equipo = ?,NOMBRE = ?,FECHA_FUND = ? WHERE NOMBRE= ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, equipo.getIdEquipo());
+            ps.setInt(1, equipo.getIdEquipo());
             ps.setString(2, equipo.getNombre());
             ps.setDate(3, Date.valueOf(equipo.getFechaFund()));
-            ps.setString(4, idEquipo);
+            ps.setString(4, nombreEquipo);
             ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
         }
     }
 
-    public static void borrarEquipo(String nombreEquipo) {
+    public static void borrarEquipo(Equipo e) {
         try {
             String sql = "DELETE FROM EQUIPOS WHERE ID_EQUIPO = ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, nombreEquipo);
+            ps.setString(1, e.getNombre());
             ps.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e);
+        } catch (SQLException ex) {
+            System.out.println(ex);
         }
     }
 }

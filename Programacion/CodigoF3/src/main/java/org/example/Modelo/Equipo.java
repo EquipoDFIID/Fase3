@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Equipo {
-    private String idEquipo;
+    private int idEquipo;
     private String nombre;
     private LocalDate fechaFund;
     private ArrayList<Jugador> listaJugadores;
@@ -14,13 +14,13 @@ public class Equipo {
     }
 
 
-    public Equipo(String idEquipo, LocalDate fechaFund, String nombre) {
+    public Equipo(int idEquipo, LocalDate fechaFund, String nombre) {
         this.idEquipo = idEquipo;
         this.fechaFund = fechaFund;
         this.nombre = nombre;
     }
 
-    public Equipo(String idEquipo, String nombre, LocalDate fechaFund, ArrayList<Jugador> listaJugadores, ArrayList<Enfrentamiento> listaEnfrentamientos) {
+    public Equipo(int idEquipo, String nombre, LocalDate fechaFund, ArrayList<Jugador> listaJugadores, ArrayList<Enfrentamiento> listaEnfrentamientos) {
         this.idEquipo = idEquipo;
         this.nombre = nombre;
         this.fechaFund = fechaFund;
@@ -28,11 +28,11 @@ public class Equipo {
         this.listaEnfrentamientos = listaEnfrentamientos;
     }
 
-    public String getIdEquipo() {
+    public int getIdEquipo() {
         return idEquipo;
     }
 
-    public void setIdEquipo(String idEquipo) {
+    public void setIdEquipo(int idEquipo) {
         this.idEquipo = idEquipo;
     }
 

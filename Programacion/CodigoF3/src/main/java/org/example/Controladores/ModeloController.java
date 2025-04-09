@@ -56,22 +56,22 @@ public class ModeloController {
         return equipoController.buscarEquipo(nombreEquipo);
     }
 
-    public Equipo altaEquipo(Equipo e){
-        return equipoController.altaEquipo(e);
+    public void altaEquipo(Equipo e){
+        equipoController.altaEquipo(e);
     }
-    public void modificarEquipo(Equipo e) {
-        equipoController.modificarEquipo(e);
+    public void modificarEquipo(Equipo e, String nombreEquipo) {
+        equipoController.modificarEquipo(e, nombreEquipo);
     }
     public void bajaEquipo(Equipo e) {
         equipoController.bajaEquipo(e);
     }
-    public Jugador altaJugador(Jugador j){
-        return jugadorController.altaJugador(j);
+    public void altaJugador(Jugador j){
+         jugadorController.altaJugador(j);
     }
-    public void bajaJugador(Jugador j) {
-        jugadorController.bajaJugador(j);
+    public void bajaJugador( String nombreJugador) {
+        jugadorController.bajaJugador( nombreJugador);
     }
-    public void modificarJugador(Jugador j) {
-        jugadorController.modificarJugador(j);
+    public void modificarJugador(Jugador j, String nombreJugador) {
+        jugadorController.modificarJugador(j, nombreJugador);
     }
 }

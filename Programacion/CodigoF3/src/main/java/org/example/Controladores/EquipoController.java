@@ -60,15 +60,17 @@ public class EquipoController {
         LocalDate fecha = LocalDate.parse(fechaS, formatter);
         return fecha;
     }
-
-    public Equipo altaEquipo(Equipo e) {
-       return equipoDAO.altaEquipo(e);
+    public Equipo buscarEquipo(String nombre){
+        return equipoDAO.buscarEquipo(nombre);
     }
-    public void bajaEquipo(String nombreEquipo) {
-        equipoDAO.bajaEquipo(nombreEquipo);
+    public void altaEquipo(Equipo e) {
+        equipoDAO.altaEquipo(e);
     }
-    public void modificarEquipo(Equipo e) {
-        equipoDAO.modificarEquipo(e);
+    public void bajaEquipo(Equipo e) {
+        equipoDAO.borrarEquipo(e);
+    }
+    public void modificarEquipo(Equipo e, String nombreEquipo) {
+        equipoDAO.modificarEquipo(e, nombreEquipo);
     }
 
    /* public void bajaEquipo() {
