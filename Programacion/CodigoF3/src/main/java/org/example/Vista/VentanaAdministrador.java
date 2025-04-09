@@ -1,5 +1,7 @@
 package org.example.Vista;
 
+import org.example.Controladores.VistaController;
+
 import javax.swing.*;
 
 public class VentanaAdministrador extends JFrame {
@@ -13,7 +15,7 @@ public class VentanaAdministrador extends JFrame {
     private JButton bajaEquipoButton;
     private JButton introducirResultadosButton;
 
-    public VentanaAdministrador() {
+    public VentanaAdministrador(VistaController vistaController) {
         setContentPane(panel1);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("MenuPrincipal");

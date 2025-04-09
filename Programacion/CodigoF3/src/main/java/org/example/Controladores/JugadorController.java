@@ -23,11 +23,14 @@ public class JugadorController {
     public Jugador altaJugador(Jugador j) {
         return jugadorDAO.altaJugador(j);
     }
-    public void bajaJugador(Jugador j) {
-        jugadorDAO.bajaJugador(j);
+    public void bajaJugador( String nombreJugador) {
+        jugadorDAO.borrarJugador(nombreJugador);
     }
-    public void modificarJugador(Jugador j) {
-        jugadorDAO.modificarJugador(j);
+    public void modificarJugador(Jugador j, String nombreJugador) {
+        jugadorDAO.modificarJugador(j, nombreJugador);
+    }
+    public Jugador buscarJugador(String nombreJugador) {
+        return jugadorDAO.buscarJugador(nombreJugador);
     }
 
     /*

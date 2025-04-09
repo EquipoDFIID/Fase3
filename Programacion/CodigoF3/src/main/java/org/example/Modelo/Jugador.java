@@ -3,7 +3,7 @@ package org.example.Modelo;
 import java.time.LocalDate;
 
 public class Jugador {
-    private String idJugador;
+    private int idJugador;
     private String nombre;
     private String apellido;
     private String nacionalidad;
@@ -16,7 +16,7 @@ public class Jugador {
     public Jugador() {
     }
 
-    public Jugador(String idJugador, String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento, String nickname, String rol, double sueldo, Equipo equipo) {
+    public Jugador(int idJugador, String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento, String nickname, String rol, double sueldo, Equipo equipo) {
         this.idJugador = idJugador;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -28,11 +28,11 @@ public class Jugador {
         this.equipo = equipo;
     }
 
-    public String getIdJugador() {
+    public int getIdJugador() {
         return idJugador;
     }
 
-    public void setIdJugador(String idJugador) {
+    public void setIdJugador(int idJugador) {
         this.idJugador = idJugador;
     }
 

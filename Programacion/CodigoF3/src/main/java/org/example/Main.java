@@ -5,8 +5,8 @@ import org.example.Vista.VentanaAdministrador;
 import org.example.Vista.VentanaInicio;
 
 public class Main {
-    private static VentanaAdministrador mPrincipal=new VentanaAdministrador();
-    private static VentanaInicio mVentanaInicio=new VentanaInicio();
+    private static VentanaAdministrador mPrincipal=new VentanaAdministrador(this);
+    private static VentanaInicio mVentanaInicio=new VentanaInicio(this);
     public static void main(String[] args) {
         mVentanaInicio.setVisible(true);
         mPrincipal.setVisible(true);

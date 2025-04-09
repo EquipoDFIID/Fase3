@@ -28,8 +28,8 @@ public class VistaController {
         ventanaUsuario.setVisible(true);
         ventanaInicio.setVisible(false);
     }
-    public Equipo altaEquipo(Equipo e){
-        return modeloController.altaEquipo(e);
+    public void altaEquipo(Equipo e){
+         modeloController.altaEquipo(e);
     }
     public void bajaEquipo(String nombreEquipo){
         Equipo e=modeloController.buscarEquipo(nombreEquipo);
@@ -39,24 +39,24 @@ public class VistaController {
     public void modificarEquipo(String nombreEquipo){
         Equipo e=modeloController.buscarEquipo(nombreEquipo);
         if(e!=null){
-            modeloController.modificarEquipo(e);
+            modeloController.modificarEquipo(e, nombreEquipo);
         }
 
     }
-    public Jugador altaJugador(Jugador j){
-        return modeloController.altaJugador(j);
+    public void altaJugador(Jugador j){
+        modeloController.altaJugador(j);
     }
 
     public void bajaJugador(String nombreJugador){
         Jugador j=modeloController.buscarJugador(nombreJugador);
         if(j!=null)
-            modeloController.bajaJugador(j);
+            modeloController.bajaJugador(nombreJugador);
     }
 
     public void modificarJugador(String nombreJugador){
         Jugador j=modeloController.buscarJugador(nombreJugador);
         if(j!=null)
-            modeloController.modificarJugador(j);
+            modeloController.modificarJugador(j, nombreJugador);
     }
 
     public void generarJornada(){}
