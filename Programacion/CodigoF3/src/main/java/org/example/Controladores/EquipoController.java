@@ -14,7 +14,9 @@ import java.util.regex.Pattern;
 import static org.example.Modelo.EquipoDAO.listaEquipos;
 
 public class EquipoController {
+    private EquipoDAO equipoDAO;
     public EquipoController(EquipoDAO equipoDAO) {
+        this.equipoDAO = equipoDAO;
     }
 
 
@@ -59,17 +61,17 @@ public class EquipoController {
         return fecha;
     }
 
-    public void altaEquipo() {
-        try{
-            Equipo equipo= solicitarValidarDatos();
-            EquipoDAO.agregarEquipo(equipo);
-
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Error al insertar el equipo");
-        }
+    public Equipo altaEquipo(Equipo e) {
+       return equipoDAO.altaEquipo(e);
+    }
+    public void bajaEquipo(String nombreEquipo) {
+        equipoDAO.bajaEquipo(nombreEquipo);
+    }
+    public void modificarEquipo(Equipo e) {
+        equipoDAO.modificarEquipo(e);
     }
 
-    public void bajaEquipo() {
+   /* public void bajaEquipo() {
         boolean correcto=false;
         String codigo="";
         try {
@@ -109,5 +111,5 @@ public class EquipoController {
         }
         return eq;
 
-    }
+    } */
 }
