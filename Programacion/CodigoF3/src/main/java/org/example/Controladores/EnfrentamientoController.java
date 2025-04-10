@@ -24,7 +24,7 @@ public class EnfrentamientoController {
     public EnfrentamientoController(EnfrentamientoDAO enfrentamientoDAO) {
     }
 
-    public void generarEnfrentamientos() {
+  /*public void generarEnfrentamientos() {
         StringBuilder sb = new StringBuilder();
         boolean correcto=true;
         List<Equipo> equiposDisponibles = new ArrayList<>(EquipoDAO.listaEquipos);
@@ -63,7 +63,7 @@ public class EnfrentamientoController {
 
             JOptionPane.showMessageDialog(null, sb.toString(), "Ganadores de Cada Jornada", JOptionPane.INFORMATION_MESSAGE);
         } while (correcto);
-    }
+    }*/
 
 
     public static Enfrentamiento solicitarValidarDatos() {

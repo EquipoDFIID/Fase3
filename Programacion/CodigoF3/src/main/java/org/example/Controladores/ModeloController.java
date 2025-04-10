@@ -3,6 +3,8 @@ package org.example.Controladores;
 import org.example.Modelo.*;
 
 import java.sql.Connection;
+import java.sql.Wrapper;
+import java.util.ArrayList;
 
 public class ModeloController {
 
@@ -51,6 +53,9 @@ public class ModeloController {
         this.vc=vc;
     }
 
+    public ArrayList <Equipo> selectNombreEquipo() {
+        return equipoController.selectNombreEquipo();
+    }
 
     public Equipo buscarEquipo(String nombreEquipo) {
         return equipoController.buscarEquipo(nombreEquipo);

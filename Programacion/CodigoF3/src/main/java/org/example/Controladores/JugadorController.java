@@ -20,8 +20,8 @@ public class JugadorController {
 
 
 
-    public Jugador altaJugador(Jugador j) {
-        return jugadorDAO.altaJugador(j);
+    public void altaJugador(Jugador j) {
+         jugadorDAO.altaJugador(j);
     }
     public void bajaJugador( String nombreJugador) {
         jugadorDAO.borrarJugador(nombreJugador);

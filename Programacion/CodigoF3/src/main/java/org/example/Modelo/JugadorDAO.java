@@ -8,6 +8,9 @@ import java.util.ArrayList;
 public class JugadorDAO {
     static Connection con = BD.getConnection();
 
+    public JugadorDAO(Connection con) {
+    }
+
 // =============================================
 // == OPERACIONES DE CONSULTA (SELECT)
 // =============================================
