@@ -13,9 +13,9 @@ public class VentanaBajaEquipo extends JDialog {
     private JButton buttonCancel;
     private JButton button1;
     private JComboBox cNombre;
-    private VistaController vc;
+    private static VistaController vc;
 
-    public VentanaBajaEquipo() {
+    public VentanaBajaEquipo(VistaController vc) {
         this.vc = vc;
         setContentPane(contentPane);
         setModal(true);
@@ -70,11 +70,12 @@ public class VentanaBajaEquipo extends JDialog {
     }
 
     public static void main(String[] args) {
-        VentanaBajaEquipo dialog = new VentanaBajaEquipo();
+        VentanaBajaEquipo dialog = new VentanaBajaEquipo(vc);
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
     }
+
     public void llenarComboBox(){
         ArrayList<Equipo> listaEquipos=vc.selectNombreEquipo();
         cNombre.removeAllItems();
