@@ -6,6 +6,8 @@ import org.example.Vista.VentanaAdministrador;
 import org.example.Vista.VentanaInicio;
 import org.example.Vista.VentanaUsuario;
 
+import java.util.ArrayList;
+
 public class VistaController {
     private VentanaAdministrador ventanaAdministrador;
     private VentanaInicio ventanaInicio;
@@ -47,7 +49,7 @@ public class VistaController {
         modeloController.altaJugador(j);
     }
 
-    public void bajaJugador(String nombreJugador){
+    /*public void bajaJugador(String nombreJugador){
         Jugador j=modeloController.buscarJugador(nombreJugador);
         if(j!=null)
             modeloController.bajaJugador(nombreJugador);
@@ -57,9 +59,20 @@ public class VistaController {
         Jugador j=modeloController.buscarJugador(nombreJugador);
         if(j!=null)
             modeloController.modificarJugador(j, nombreJugador);
-    }
+    }*/
 
     public void generarJornada(){}
 
     public void generarEnfrentamientos(){}
+
+    public ArrayList<Equipo> selectNombreEquipo(){
+        return modeloController.selectNombreEquipo();
+    }
+
+   /* public void prueba(){
+       ArrayList<Equipo>equipos= modeloController.selectNombreEquipo();
+       equipos=new ArrayList<>();
+       Equipo equipo = null;
+       equipos.add(equipo);
+    }*/
 }

@@ -7,11 +7,12 @@ import org.example.Modelo.EquipoDAO;
 import javax.swing.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.example.Modelo.EquipoDAO.listaEquipos;
+import org.example.Modelo.EquipoDAO;
 
 public class EquipoController {
     private EquipoDAO equipoDAO;
@@ -20,7 +21,7 @@ public class EquipoController {
     }
 
 
-    public Equipo solicitarValidarDatos() {
+   /* public Equipo solicitarValidarDatos() {
         // Copia de la versión anterior.
         String idEquipo = solicitarDato("ID", "Teclea el ID del equipo", "^[A-Z]{1}[0-9]{3}$");
         String nombre = solicitarDato("Nombre","Teclea el nombre del equipo","^[0-9a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\\\\s]{3,15}$");
@@ -28,7 +29,7 @@ public class EquipoController {
 
         Equipo e = new Equipo(idEquipo,fechaFund,nombre);
         return e;
-    }
+    }*/
 
     public String solicitarDato(String dato, String mensaje,String expresionRegular)
     {
@@ -72,7 +73,9 @@ public class EquipoController {
     public void modificarEquipo(Equipo e, String nombreEquipo) {
         equipoDAO.modificarEquipo(e, nombreEquipo);
     }
-
+    public ArrayList<Equipo> selectNombreEquipo(){
+        return equipoDAO.selectNombreEquipo();
+    }
    /* public void bajaEquipo() {
         boolean correcto=false;
         String codigo="";

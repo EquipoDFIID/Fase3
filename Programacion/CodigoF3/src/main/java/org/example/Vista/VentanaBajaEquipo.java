@@ -1,19 +1,26 @@
 package org.example.Vista;
 
+import org.example.Controladores.VistaController;
+import org.example.Modelo.Equipo;
+
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class VentanaBajaEquipo extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JButton button1;
-    private JComboBox comboBox1;
+    private JComboBox cNombre;
+    private VistaController vc;
 
     public VentanaBajaEquipo() {
+        this.vc = vc;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+        setLocationRelativeTo(null);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -41,6 +48,15 @@ public class VentanaBajaEquipo extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+
+        cNombre.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                llenarComboBox();
+
+            }
+        });
     }
 
     private void onOK() {
@@ -58,5 +74,13 @@ public class VentanaBajaEquipo extends JDialog {
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
+    }
+    public void llenarComboBox(){
+        ArrayList<Equipo> listaEquipos=vc.selectNombreEquipo();
+        cNombre.removeAllItems();
+
+        for (Equipo equipo : listaEquipos){
+            cNombre.addItem(equipo.getNombre());
+        }
     }
 }

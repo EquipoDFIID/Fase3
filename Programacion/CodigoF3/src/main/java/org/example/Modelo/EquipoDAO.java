@@ -10,6 +10,9 @@ import java.util.Set;
 public class EquipoDAO {
     static Connection con = BD.getConnection();
 
+    public EquipoDAO(Connection con) {
+    }
+
 // =============================================
 // == OPERACIONES DE CONSULTA (SELECT)
 // =============================================
@@ -33,7 +36,7 @@ public class EquipoDAO {
         return e;
     }
 
-    public ArrayList<Equipo> selectIdNombreEquipo(){
+    public ArrayList<Equipo> selectNombreEquipo(){
         ArrayList<Equipo> equipos= new ArrayList<>();
 
         try {
@@ -42,7 +45,6 @@ public class EquipoDAO {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 Equipo e = new Equipo();
-                e.setIdEquipo(rs.getInt("id_equipo"));
                 e.setNombre(rs.getString("nombre"));
                 equipos.add(e);
             }
