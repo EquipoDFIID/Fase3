@@ -1,5 +1,7 @@
 package org.example.Vista;
 
+import org.example.Controladores.VistaController;
+
 import javax.swing.*;
 import java.awt.event.*;
 
@@ -9,11 +11,15 @@ public class VentanaBajaJugador extends JDialog {
     private JButton buttonCancel;
     private JButton button1;
     private JComboBox comboBox1;
+    private static VistaController vc;
 
-    public VentanaBajaJugador() {
+    public VentanaBajaJugador(VistaController vc) {
+        this.vc = vc;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+        setLocationRelativeTo(null);
+        setSize(500, 550);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -54,7 +60,7 @@ public class VentanaBajaJugador extends JDialog {
     }
 
     public static void main(String[] args) {
-        VentanaBajaJugador dialog = new VentanaBajaJugador();
+        VentanaBajaJugador dialog = new VentanaBajaJugador(vc);
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);

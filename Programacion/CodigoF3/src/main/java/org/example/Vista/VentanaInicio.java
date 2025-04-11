@@ -3,10 +3,7 @@ package org.example.Vista;
 import org.example.Controladores.VistaController;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
+import java.awt.event.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,6 +24,8 @@ public class VentanaInicio extends JFrame {
     private JButton aIniciarSesionButton;
     private static VistaController vc;
 
+    private boolean cambiandoVista = false;
+
     public VentanaInicio(VistaController vc) {
         this.vc = vc;
         setContentPane(panel1);
@@ -40,17 +39,29 @@ public class VentanaInicio extends JFrame {
         aIniciarSesionButton.setEnabled(false);
         uIniciarSesionButton.setEnabled(false);
 
-        administradorRadioButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jAdmin.setVisible(true);
-                jUsuario.setVisible(false);
-            }
+        administradorRadioButton.addActionListener(e -> {
+            cambiandoVista = true;
+            jAdmin.setVisible(true);
+            jUsuario.setVisible(false);
+            cambiandoVista = false;
+            uNombre.setText("");
+            uClave.setText("");
+        });
+
+        usuarioRadioButton.addActionListener(e -> {
+            cambiandoVista = true;
+            jUsuario.setVisible(true);
+            jAdmin.setVisible(false);
+            cambiandoVista = false;
+            aNombre.setText("");
+            aClave.setText("");
         });
 
         aNombre.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
+                if (cambiandoVista) return;
+
                 if (aNombre.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío");
                     aNombre.requestFocus();
@@ -68,8 +79,9 @@ public class VentanaInicio extends JFrame {
         aClave.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                boolean nombreValido = validarNombre(aNombre.getText());
-                if (!nombreValido) {
+                if (cambiandoVista) return;
+
+                if (!validarNombre(aNombre.getText())) {
                     aIniciarSesionButton.setEnabled(false);
                     return;
                 }
@@ -78,13 +90,12 @@ public class VentanaInicio extends JFrame {
                 if (clave.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "La clave no puede estar vacía");
                     aIniciarSesionButton.setEnabled(false);
-                } else {
-                    if (validarClave(clave)) {
-                        aIniciarSesionButton.setEnabled(true);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "La clave no puede tener ese formato");
-                        aIniciarSesionButton.setEnabled(false);
-                    }
+                    aClave.requestFocus();
+                } else if (!validarClave(clave)) {
+                    aClave.setText("");
+                    JOptionPane.showMessageDialog(null, "La clave no puede tener ese formato");
+                    aIniciarSesionButton.setEnabled(false);
+                    aClave.requestFocus();
                 }
             }
 
@@ -94,17 +105,22 @@ public class VentanaInicio extends JFrame {
             }
         });
 
-        usuarioRadioButton.addActionListener(new ActionListener() {
+        aClave.addKeyListener(new KeyAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                jUsuario.setVisible(true);
-                jAdmin.setVisible(false);
+            public void keyReleased(KeyEvent e) {
+                if (validarNombre(aNombre.getText()) && validarClave(aClave.getText())) {
+                    aIniciarSesionButton.setEnabled(true);
+                } else {
+                    aIniciarSesionButton.setEnabled(false);
+                }
             }
         });
 
         uNombre.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
+                if (cambiandoVista) return;
+
                 if (uNombre.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío");
                     uNombre.requestFocus();
@@ -122,8 +138,9 @@ public class VentanaInicio extends JFrame {
         uClave.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                boolean nombreValido = validarNombre(uNombre.getText());
-                if (!nombreValido) {
+                if (cambiandoVista) return;
+
+                if (!validarNombre(uNombre.getText())) {
                     uIniciarSesionButton.setEnabled(false);
                     return;
                 }
@@ -132,13 +149,12 @@ public class VentanaInicio extends JFrame {
                 if (clave.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "La clave no puede estar vacía");
                     uIniciarSesionButton.setEnabled(false);
-                } else {
-                    if (validarClave(clave)) {
-                        uIniciarSesionButton.setEnabled(true);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "La clave no puede tener ese formato");
-                        uIniciarSesionButton.setEnabled(false);
-                    }
+                    uClave.requestFocus();
+                } else if (!validarClave(clave)) {
+                    uClave.setText("");
+                    JOptionPane.showMessageDialog(null, "La clave no puede tener ese formato");
+                    uIniciarSesionButton.setEnabled(false);
+                    uClave.requestFocus();
                 }
             }
 
@@ -148,28 +164,30 @@ public class VentanaInicio extends JFrame {
             }
         });
 
-        crearCuentaButton.addActionListener(new ActionListener() {
+        uClave.addKeyListener(new KeyAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                VentanaCrearCuenta ventanaCuenta = new VentanaCrearCuenta(vc);
-                ventanaCuenta.setVisible(true);
+            public void keyReleased(KeyEvent e) {
+                if (validarNombre(uNombre.getText()) && validarClave(uClave.getText())) {
+                    uIniciarSesionButton.setEnabled(true);
+                } else {
+                    uIniciarSesionButton.setEnabled(false);
+                }
             }
         });
 
-        aIniciarSesionButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc);
-                ventanaAdministrador.setVisible(true);
-            }
+        crearCuentaButton.addActionListener(e -> {
+            VentanaCrearCuenta ventanaCuenta = new VentanaCrearCuenta(vc);
+            ventanaCuenta.setVisible(true);
         });
 
-        uIniciarSesionButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                VentanaUsuario ventanaUsuario = new VentanaUsuario(vc);
-                ventanaUsuario.setVisible(true);
-            }
+        aIniciarSesionButton.addActionListener(e -> {
+            VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc);
+            ventanaAdministrador.setVisible(true);
+        });
+
+        uIniciarSesionButton.addActionListener(e -> {
+            VentanaUsuario ventanaUsuario = new VentanaUsuario(vc);
+            ventanaUsuario.setVisible(true);
         });
     }
 

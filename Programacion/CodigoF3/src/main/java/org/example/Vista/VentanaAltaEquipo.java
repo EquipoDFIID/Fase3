@@ -1,5 +1,7 @@
 package org.example.Vista;
 
+import org.example.Controladores.VistaController;
+
 import javax.swing.*;
 import java.awt.event.*;
 
@@ -11,11 +13,15 @@ public class VentanaAltaEquipo extends JDialog {
     private JTextField textField1;
     private JTextField textField2;
     private JTextField textField3;
+    private static VistaController vc;
 
-    public VentanaAltaEquipo() {
+    public VentanaAltaEquipo(VistaController vc) {
+        this.vc = vc;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+        setLocationRelativeTo(null);
+        setSize(500, 550);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -56,7 +62,7 @@ public class VentanaAltaEquipo extends JDialog {
     }
 
     public static void main(String[] args) {
-        VentanaAltaEquipo dialog = new VentanaAltaEquipo();
+        VentanaAltaEquipo dialog = new VentanaAltaEquipo(vc);
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);

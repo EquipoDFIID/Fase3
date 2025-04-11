@@ -21,6 +21,8 @@ public class VentanaBajaEquipo extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         setLocationRelativeTo(null);
+        setSize(500, 550);
+
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
