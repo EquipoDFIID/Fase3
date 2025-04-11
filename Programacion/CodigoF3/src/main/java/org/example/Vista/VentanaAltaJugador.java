@@ -18,19 +18,24 @@ public class VentanaAltaJugador extends JDialog {
     private JTextField textField2;
     private JTextField textField3;
     private static VistaController vc;
+
     /**
      * Constructor de la ventana de alta de jugador.
      * Inicializa los componentes de la interfaz gráfica, configura el comportamiento
      * de los botones y maneja las acciones de cierre de la ventana.
      * @param vc El controlador de la vista, que contiene la lógica de la aplicación.
      */
+=======
+    private static VentanaAdministrador ventana;
+
+
     public VentanaAltaJugador(VistaController vc) {
         this.vc = vc;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        setLocationRelativeTo(null);
         setSize(500, 550);
+        setLocationRelativeTo(null);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -66,7 +71,7 @@ public class VentanaAltaJugador extends JDialog {
     }
 
     private void onCancel() {
-        // add your code here if necessary
+        ventana.setVisible(true);
         dispose();
     }
 

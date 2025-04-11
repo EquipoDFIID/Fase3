@@ -1,14 +1,20 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
+import org.example.Modelo.Equipo;
+import org.example.Modelo.Jugador;
 
 import javax.swing.*;
 import java.awt.event.*;
+
 /**
  * Clase VentanaModificarJugador.
  * Ventana de diálogo para modificar los datos de un jugador existente.
  * Permite seleccionar un jugador desde un comboBox y editar sus datos.
  */
+
+import java.util.ArrayList;
+
 public class VentanaModificarJugador extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
@@ -16,7 +22,7 @@ public class VentanaModificarJugador extends JDialog {
     private JButton button1;
     private JTextField textField2;
     private JTextField textField3;
-    private JComboBox comboBox1;
+    private JComboBox cJugador;
     private JPanel pPrincipal;
     private static VistaController vc;
     private static VentanaAdministrador ventana;
@@ -26,8 +32,10 @@ public class VentanaModificarJugador extends JDialog {
         setContentPane(pPrincipal);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        setLocationRelativeTo(null);
         setSize(500, 550);
+        setLocationRelativeTo(null);
+
+        llenarComboBox();
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -60,6 +68,15 @@ public class VentanaModificarJugador extends JDialog {
         // Ejemplo:
         // comboBox1.addItem("Jugador 1");
         // comboBox1.addItem("Jugador 2");
+
+    }
+    public void llenarComboBox(){
+        ArrayList<Jugador> listaJugadores=vc.selectNicknameJugador();
+        cJugador.removeAllItems();
+
+        for (Jugador jugador : listaJugadores) {
+            cJugador.addItem(jugador.getNombre());
+        }
     }
 
     private void onOK() {
@@ -73,6 +90,7 @@ public class VentanaModificarJugador extends JDialog {
     private void onCancel() {
         // Código adicional si hace falta
         dispose();
+        ventana.setVisible(true);
     }
 
     public static void main(String[] args) {

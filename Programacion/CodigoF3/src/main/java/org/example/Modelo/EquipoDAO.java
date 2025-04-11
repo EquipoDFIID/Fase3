@@ -49,13 +49,14 @@ public class EquipoDAO {
 
 
     public ArrayList<Equipo> selectNombreEquipo(){
-        ArrayList<Equipo> equipos= new ArrayList<>();
+        ArrayList<Equipo> equipos = new ArrayList<>();
 
         try {
-            String sql = "SELECT id_equipo,nombre FROM EQUIPOS";
+            String sql = "SELECT nombre FROM EQUIPOS";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
+
+            while (rs.next()) { // ← CAMBIADO DE "if" A "while"
                 Equipo e = new Equipo();
                 e.setNombre(rs.getString("nombre"));
                 equipos.add(e);
@@ -66,6 +67,7 @@ public class EquipoDAO {
         }
         return equipos;
     }
+
 
     /**
      * Busca un equipo por su nombre en la base de datos.

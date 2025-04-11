@@ -17,14 +17,16 @@ public class VentanaBajaEquipo extends JDialog {
     private JButton button1;
     private JComboBox cNombre;
     private static VistaController vc;
+    private static VentanaAdministrador ventana;
 
     public VentanaBajaEquipo(VistaController vc) {
         this.vc = vc;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        setLocationRelativeTo(null);
         setSize(500, 550);
+        setLocationRelativeTo(null);
+        llenarComboBox();
 
 
         buttonOK.addActionListener(new ActionListener() {
@@ -55,13 +57,7 @@ public class VentanaBajaEquipo extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
 
-        cNombre.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                llenarComboBox();
 
-            }
-        });
     }
 
     private void onOK() {
@@ -72,6 +68,7 @@ public class VentanaBajaEquipo extends JDialog {
     private void onCancel() {
         // add your code here if necessary
         dispose();
+        ventana.setVisible(true);
     }
 
     public static void main(String[] args) {
