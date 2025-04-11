@@ -1,7 +1,10 @@
 package org.example.Modelo;
 
 import java.util.ArrayList;
-
+/**
+ * Representa una jornada dentro de un campeonato, la cual contiene
+ * una lista de enfrentamientos que se disputan en una fecha específica.
+ */
 public class Jornada {
     private String idJornada;
     private String fecha;
