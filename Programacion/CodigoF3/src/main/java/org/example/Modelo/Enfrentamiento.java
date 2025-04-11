@@ -2,7 +2,10 @@ package org.example.Modelo;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
+/**
+ * Representa un enfrentamiento entre dos equipos en una jornada específica,
+ * incluyendo la fecha, hora y el equipo ganador del enfrentamiento.
+ */
 public class Enfrentamiento {
     private String idEnfrentamiento;
     private LocalDate fechEnfrentamiento;

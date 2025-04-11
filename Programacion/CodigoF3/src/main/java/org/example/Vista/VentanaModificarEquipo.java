@@ -5,7 +5,15 @@ import org.example.Modelo.Equipo;
 
 import javax.swing.*;
 import java.awt.event.*;
+
+/**
+ * Clase VentanaModificarEquipo.
+ * Representa una ventana de diálogo para modificar los datos de un equipo.
+ * Contiene campos de texto y un combo box para editar información.
+ */
+
 import java.util.ArrayList;
+
 
 public class VentanaModificarEquipo extends JDialog {
     private JPanel contentPane;
@@ -16,15 +24,18 @@ public class VentanaModificarEquipo extends JDialog {
     private JTextField textField3;
     private JComboBox cNombre;
     private static VistaController vc;
+    private static VentanaAdministrador ventana;
 
-    public VentanaModificarEquipo(VistaController vc) {
+    public VentanaModificarEquipo(VistaController vc, VentanaAdministrador ventana) {
         this.vc = vc;
+        this.ventana = ventana;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+        setSize(500, 580);
         setLocationRelativeTo(null);
-        setSize(500, 550);
         llenarComboBox();
+        setResizable(false);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -61,8 +72,8 @@ public class VentanaModificarEquipo extends JDialog {
     }
 
     private void onCancel() {
-        // add your code here if necessary
-        dispose();
+        ventana.setVisible(true);
+        setVisible(false);
     }
     public void llenarComboBox(){
         ArrayList<Equipo> listaEquipos=vc.selectNombreEquipo();
@@ -74,7 +85,7 @@ public class VentanaModificarEquipo extends JDialog {
     }
 
     public static void main(String[] args) {
-        VentanaModificarEquipo dialog = new VentanaModificarEquipo(vc);
+        VentanaModificarEquipo dialog = new VentanaModificarEquipo(vc, ventana);
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);

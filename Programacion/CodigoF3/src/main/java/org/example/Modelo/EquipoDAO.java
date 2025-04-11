@@ -10,7 +10,7 @@ import java.util.Set;
 public class EquipoDAO {
     static Connection con = BD.getConnection();
 
-    public EquipoDAO(Connection con) {
+    public EquipoDAO() {
     }
 
 // =============================================

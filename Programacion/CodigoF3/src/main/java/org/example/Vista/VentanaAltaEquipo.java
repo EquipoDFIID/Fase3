@@ -14,14 +14,21 @@ public class VentanaAltaEquipo extends JDialog {
     private JTextField textField2;
     private JTextField textField3;
     private static VistaController vc;
+    private static VentanaAltaEquipo ventana;
 
+    /**
+     * Clase que representa la ventana de alta de equipo.
+     * Esta ventana permite al usuario introducir los datos necesarios
+     * para registrar un nuevo equipo en la aplicación.
+     */
     public VentanaAltaEquipo(VistaController vc) {
         this.vc = vc;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+        setSize(500, 580);
         setLocationRelativeTo(null);
-        setSize(500, 550);
+        setResizable(false);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
