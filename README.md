@@ -11,4 +11,4 @@
 ### -----      RECURSOS      -----
 * **Trello:** *https://trello.com/b/Lnr19RzQ/fid*
 
-# **Firma:** *FID*
+**Firma:** *FID*
