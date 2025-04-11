@@ -1,9 +1,11 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
+import org.example.Modelo.Equipo;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class VentanaModificarEquipo extends JDialog {
     private JPanel contentPane;
@@ -12,7 +14,7 @@ public class VentanaModificarEquipo extends JDialog {
     private JButton button1;
     private JTextField textField1;
     private JTextField textField3;
-    private JComboBox comboBox1;
+    private JComboBox cNombre;
     private static VistaController vc;
     private static VentanaAdministrador ventana;
 
@@ -23,6 +25,7 @@ public class VentanaModificarEquipo extends JDialog {
         getRootPane().setDefaultButton(buttonOK);
         setSize(500, 550);
         setLocationRelativeTo(null);
+        llenarComboBox();
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -35,6 +38,7 @@ public class VentanaModificarEquipo extends JDialog {
                 onCancel();
             }
         });
+
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -61,6 +65,14 @@ public class VentanaModificarEquipo extends JDialog {
         // add your code here if necessary
         dispose();
         ventana.setVisible(false);
+    }
+    public void llenarComboBox(){
+        ArrayList<Equipo> listaEquipos=vc.selectNombreEquipo();
+        cNombre.removeAllItems();
+
+        for (Equipo equipo : listaEquipos){
+            cNombre.addItem(equipo.getNombre());
+        }
     }
 
     public static void main(String[] args) {

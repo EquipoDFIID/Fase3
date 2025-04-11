@@ -14,19 +14,19 @@ public class JugadorDAO {
 // =============================================
 // == OPERACIONES DE CONSULTA (SELECT)
 // =============================================
+    public ArrayList<Jugador> selectNicknameJugador() {
+        ArrayList<Jugador> jugadores = new ArrayList<>();
     /**
      * Obtiene una lista de jugadores con su ID y nickname.
      * @return Lista de objetos Jugador con ID y nickname.
      */
-    public ArrayList<Jugador> selectIdNombreJugador(){
-        ArrayList<Jugador> jugadores= new ArrayList<>();
         try {
-            String sql = "SELECT id_jugador,nickname FROM EQUIPOS";
+            String sql = "SELECT nickname FROM JUGADORES";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
+
+            while (rs.next()) {
                 Jugador j = new Jugador();
-                j.setIdJugador(rs.getInt("id_jugador"));
                 j.setNickname(rs.getString("nickname"));
                 jugadores.add(j);
             }
