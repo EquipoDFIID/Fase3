@@ -16,6 +16,11 @@ public class VentanaAltaEquipo extends JDialog {
     private static VistaController vc;
     private static VentanaAltaEquipo ventana;
 
+    /**
+     * Clase que representa la ventana de alta de equipo.
+     * Esta ventana permite al usuario introducir los datos necesarios
+     * para registrar un nuevo equipo en la aplicación.
+     */
     public VentanaAltaEquipo(VistaController vc) {
         this.vc = vc;
         setContentPane(contentPane);

@@ -6,6 +6,13 @@ import org.example.Modelo.Jugador;
 
 import javax.swing.*;
 import java.awt.event.*;
+
+/**
+ * Clase VentanaModificarJugador.
+ * Ventana de diálogo para modificar los datos de un jugador existente.
+ * Permite seleccionar un jugador desde un comboBox y editar sus datos.
+ */
+
 import java.util.ArrayList;
 
 public class VentanaModificarJugador extends JDialog {

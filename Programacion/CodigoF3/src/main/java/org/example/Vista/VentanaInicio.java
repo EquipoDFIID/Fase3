@@ -6,7 +6,10 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+/**
+ * Clase que representa la ventana de inicio de sesión del sistema.
+ * Permite iniciar sesión como administrador o usuario, o crear una nueva cuenta.
+ */
 public class VentanaInicio extends JFrame {
     private JPanel panel1;
     private JButton button1;
@@ -207,13 +210,21 @@ public class VentanaInicio extends JFrame {
             setVisible(false);
         });
     }
-
+    /**
+     * Valida que el nombre comience por mayúscula y solo tenga letras.
+     * @param nombre Nombre a validar.
+     * @return true si es válido, false en caso contrario.
+     */
     private boolean validarNombre(String nombre) {
         if (nombre == null || nombre.isEmpty()) return false;
         Pattern pattern = Pattern.compile("^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]*$");
         return pattern.matcher(nombre).matches();
     }
-
+    /**
+     * Valida que la clave tenga exactamente 4 dígitos numéricos.
+     * @param clave Clave a validar.
+     * @return true si es válida, false en caso contrario.
+     */
     private boolean validarClave(String clave) {
         Pattern pattern = Pattern.compile("^[0-9]{4}$");
         return pattern.matcher(clave).matches();

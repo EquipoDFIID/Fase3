@@ -4,7 +4,11 @@ import org.example.Controladores.VistaController;
 
 import javax.swing.*;
 import java.awt.event.*;
-
+/**
+ * Clase que representa la ventana de alta de jugador.
+ * Esta ventana permite al usuario introducir los datos necesarios
+ * para registrar un nuevo jugador en la aplicación.
+ */
 public class VentanaAltaJugador extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
@@ -14,7 +18,16 @@ public class VentanaAltaJugador extends JDialog {
     private JTextField textField2;
     private JTextField textField3;
     private static VistaController vc;
+
+    /**
+     * Constructor de la ventana de alta de jugador.
+     * Inicializa los componentes de la interfaz gráfica, configura el comportamiento
+     * de los botones y maneja las acciones de cierre de la ventana.
+     * @param vc El controlador de la vista, que contiene la lógica de la aplicación.
+     */
+=======
     private static VentanaAdministrador ventana;
+
 
     public VentanaAltaJugador(VistaController vc) {
         this.vc = vc;
