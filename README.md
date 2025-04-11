@@ -8,5 +8,5 @@
 * *Daria Kuznetsova*  
 * *Farrukh Mohammad*
 *
-### ----- RECURSOS -----
+### ---------- RECURSOS ----------
 * **Trello:** *https://trello.com/b/Lnr19RzQ/fid* 
