@@ -21,8 +21,9 @@ public class VentanaAltaJugador extends JDialog {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        setSize(500, 550);
+        setSize(500, 580);
         setLocationRelativeTo(null);
+        setResizable(false);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -58,7 +59,6 @@ public class VentanaAltaJugador extends JDialog {
     }
 
     private void onCancel() {
-        ventana.setVisible(true);
         dispose();
     }
 

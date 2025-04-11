@@ -21,8 +21,10 @@ public class VentanaBajaEquipo extends JDialog {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        setSize(500, 550);
+        setSize(500, 580);
         setLocationRelativeTo(null);
+        setResizable(false);
+
         llenarComboBox();
 
 
@@ -65,7 +67,6 @@ public class VentanaBajaEquipo extends JDialog {
     private void onCancel() {
         // add your code here if necessary
         dispose();
-        ventana.setVisible(true);
     }
 
     public static void main(String[] args) {

@@ -14,7 +14,8 @@ public class VentanaInformes extends JFrame {
     public VentanaInformes(VistaController vc) {
         this.vc = vc;
         setContentPane(pPrincipal);
-        setSize(500, 550);
+        setSize(500, 580);
         setLocationRelativeTo(null);
+        setResizable(false);
     }
 }

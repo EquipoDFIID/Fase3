@@ -29,9 +29,10 @@ public class VentanaCrearCuenta extends JFrame {
         setContentPane(pPrincipal);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("VentanaCrearCuenta");
-        setSize(500,550);
+        setSize(500,580);
         setLocationRelativeTo(null);
         buttonOK.setEnabled(false);
+        setResizable(false);
 
         comprobarClaves();
     }

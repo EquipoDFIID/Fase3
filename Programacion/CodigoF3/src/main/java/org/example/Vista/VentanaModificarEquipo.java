@@ -18,14 +18,16 @@ public class VentanaModificarEquipo extends JDialog {
     private static VistaController vc;
     private static VentanaAdministrador ventana;
 
-    public VentanaModificarEquipo(VistaController vc) {
+    public VentanaModificarEquipo(VistaController vc, VentanaAdministrador ventana) {
         this.vc = vc;
+        this.ventana = ventana;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        setSize(500, 550);
+        setSize(500, 580);
         setLocationRelativeTo(null);
         llenarComboBox();
+        setResizable(false);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -62,9 +64,8 @@ public class VentanaModificarEquipo extends JDialog {
     }
 
     private void onCancel() {
-        // add your code here if necessary
-        dispose();
-        ventana.setVisible(false);
+        ventana.setVisible(true);
+        setVisible(false);
     }
     public void llenarComboBox(){
         ArrayList<Equipo> listaEquipos=vc.selectNombreEquipo();
@@ -76,7 +77,7 @@ public class VentanaModificarEquipo extends JDialog {
     }
 
     public static void main(String[] args) {
-        VentanaModificarEquipo dialog = new VentanaModificarEquipo(vc);
+        VentanaModificarEquipo dialog = new VentanaModificarEquipo(vc, ventana);
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
