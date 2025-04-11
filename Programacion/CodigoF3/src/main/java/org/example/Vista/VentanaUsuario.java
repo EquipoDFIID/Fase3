@@ -33,7 +33,6 @@ public class VentanaUsuario extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 VentanaEquipos ventanaEquipo = new VentanaEquipos(vc);
                 ventanaEquipo.setVisible(true);
-                setVisible(false);
             }
         });
         resultadosDeÚltimaJornadaButton.addActionListener(new ActionListener() {
@@ -41,7 +40,6 @@ public class VentanaUsuario extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 VentanaResultados ventanaResultados = new VentanaResultados(vc);
                 ventanaResultados.setVisible(true);
-                setVisible(false);
             }
         });
     }

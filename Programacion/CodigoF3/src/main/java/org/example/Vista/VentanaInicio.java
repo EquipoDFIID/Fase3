@@ -57,6 +57,7 @@ public class VentanaInicio extends JFrame {
         });
 
         usuarioRadioButton.addActionListener(e -> {
+            relleno.setVisible(false);
             cambiandoVista = true;
             jUsuario.setVisible(true);
             jAdmin.setVisible(false);
