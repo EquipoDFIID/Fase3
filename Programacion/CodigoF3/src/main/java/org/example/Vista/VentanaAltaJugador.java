@@ -25,7 +25,7 @@ public class VentanaAltaJugador extends JDialog {
      * de los botones y maneja las acciones de cierre de la ventana.
      * @param vc El controlador de la vista, que contiene la lógica de la aplicación.
      */
-=======
+
     private static VentanaAdministrador ventana;
 
 
