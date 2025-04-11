@@ -1,9 +1,12 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
+import org.example.Modelo.Equipo;
+import org.example.Modelo.Jugador;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class VentanaModificarJugador extends JDialog {
     private JPanel contentPane;
@@ -12,7 +15,7 @@ public class VentanaModificarJugador extends JDialog {
     private JButton button1;
     private JTextField textField2;
     private JTextField textField3;
-    private JComboBox comboBox1;
+    private JComboBox cJugador;
     private JPanel pPrincipal;
     private static VistaController vc;
     private static VentanaAdministrador ventana;
@@ -24,6 +27,8 @@ public class VentanaModificarJugador extends JDialog {
         getRootPane().setDefaultButton(buttonOK);
         setLocationRelativeTo(null);
         setSize(500, 550);
+
+        llenarComboBox();
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -56,6 +61,15 @@ public class VentanaModificarJugador extends JDialog {
         // Ejemplo:
         // comboBox1.addItem("Jugador 1");
         // comboBox1.addItem("Jugador 2");
+
+    }
+    public void llenarComboBox(){
+        ArrayList<Jugador> listaJugadores=vc.selectNicknameJugador();
+        cJugador.removeAllItems();
+
+        for (Jugador jugador : listaJugadores) {
+            cJugador.addItem(jugador.getNombre());
+        }
     }
 
     private void onOK() {

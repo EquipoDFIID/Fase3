@@ -22,6 +22,7 @@ public class VentanaBajaEquipo extends JDialog {
         getRootPane().setDefaultButton(buttonOK);
         setLocationRelativeTo(null);
         setSize(500, 550);
+        llenarComboBox();
 
 
         buttonOK.addActionListener(new ActionListener() {
@@ -52,13 +53,7 @@ public class VentanaBajaEquipo extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
 
-        cNombre.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                llenarComboBox();
 
-            }
-        });
     }
 
     private void onOK() {

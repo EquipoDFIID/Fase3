@@ -1,16 +1,18 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
+import org.example.Modelo.Jugador;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class VentanaBajaJugador extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JButton button1;
-    private JComboBox comboBox1;
+    private JComboBox cJugador;
     private static VistaController vc;
 
     public VentanaBajaJugador(VistaController vc) {
@@ -20,6 +22,7 @@ public class VentanaBajaJugador extends JDialog {
         getRootPane().setDefaultButton(buttonOK);
         setLocationRelativeTo(null);
         setSize(500, 550);
+        llenarComboBox();
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -47,6 +50,15 @@ public class VentanaBajaJugador extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+    }
+    public void llenarComboBox(){
+        ArrayList<Jugador> listaJugadores=vc.selectNicknameJugador();
+        cJugador.removeAllItems();
+
+        for (Jugador jugador : listaJugadores) {
+            cJugador.addItem(jugador.getNombre());
+        }
     }
 
     private void onOK() {

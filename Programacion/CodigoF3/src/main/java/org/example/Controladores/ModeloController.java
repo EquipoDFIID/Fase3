@@ -56,7 +56,13 @@ public class ModeloController {
     public ArrayList <Equipo> selectNombreEquipo() {
         return equipoController.selectNombreEquipo();
     }
+    public ArrayList <Jugador> selectNicknameJugador(){
+        return jugadorController.selectNicknameJugador();
+    }
 
+    public Jugador buscarJugador(String nombreJugador) {
+        return jugadorController.buscarJugador(nombreJugador);
+    }
     public Equipo buscarEquipo(String nombreEquipo) {
         return equipoController.buscarEquipo(nombreEquipo);
     }

@@ -48,6 +48,9 @@ public class VistaController {
     public void altaJugador(Jugador j){
         modeloController.altaJugador(j);
     }
+    public Jugador buscarJugador(String nombreJugador) {
+        return modeloController.buscarJugador(nombreJugador);
+    }
 
     /*public void bajaJugador(String nombreJugador){
         Jugador j=modeloController.buscarJugador(nombreJugador);
@@ -67,6 +70,9 @@ public class VistaController {
 
     public ArrayList<Equipo> selectNombreEquipo(){
         return modeloController.selectNombreEquipo();
+    }
+    public ArrayList <Jugador> selectNicknameJugador(){
+        return modeloController.selectNicknameJugador();
     }
 
    /* public void prueba(){
