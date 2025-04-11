@@ -12,14 +12,15 @@ public class VentanaBajaJugador extends JDialog {
     private JButton button1;
     private JComboBox comboBox1;
     private static VistaController vc;
+    private static VentanaAdministrador ventana;
 
     public VentanaBajaJugador(VistaController vc) {
         this.vc = vc;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        setLocationRelativeTo(null);
         setSize(500, 550);
+        setLocationRelativeTo(null);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -57,6 +58,7 @@ public class VentanaBajaJugador extends JDialog {
     private void onCancel() {
         // add your code here if necessary
         dispose();
+        ventana.setVisible(true);
     }
 
     public static void main(String[] args) {
