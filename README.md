@@ -7,3 +7,4 @@
 * *Ibai Mendoza*  
 * *Daria Kuznetsova*  
 * *Farrukh Mohammad*
+* Trello: https://trello.com/b/Lnr19RzQ/fid *
