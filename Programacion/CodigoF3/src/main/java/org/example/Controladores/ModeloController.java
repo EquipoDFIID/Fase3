@@ -30,19 +30,19 @@ public class ModeloController {
             //BaseDatos.abrirConexion();
             Connection con =BD.getConnection();
 
-            campeonatoDao=new CampeonatoDao(con);
+            campeonatoDao=new CampeonatoDao();
             campeonatoController= new CampeonatoController(campeonatoDao);
 
-            enfrentamientoDao=new EnfrentamientoDAO(con);
+            enfrentamientoDao=new EnfrentamientoDAO();
             enfrentamientoController=new EnfrentamientoController(enfrentamientoDao);
 
-            equipoDao=new EquipoDAO(con);
+            equipoDao=new EquipoDAO();
             equipoController=new EquipoController(equipoDao);
 
-            jornadaDao=new JornadaDAO(con);
+            jornadaDao=new JornadaDAO();
             jornadaController=new JornadaController(jornadaDao);
 
-            jugadorDao=new JugadorDAO(con);
+            jugadorDao=new JugadorDAO();
             jugadorController=new JugadorController(jugadorDao);
         } catch (Exception e){
             System.out.println(e.getMessage());

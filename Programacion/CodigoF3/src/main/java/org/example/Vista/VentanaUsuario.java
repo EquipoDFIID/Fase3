@@ -18,8 +18,9 @@ public class VentanaUsuario extends JFrame {
         setContentPane(panel1);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("MenuPrincipal");
-        setSize(500,550);
+        setSize(500,580);
         setLocationRelativeTo(null);
+        setResizable(false);
         informacionEquiposButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

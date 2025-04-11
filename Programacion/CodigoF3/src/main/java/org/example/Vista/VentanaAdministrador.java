@@ -24,8 +24,9 @@ public class VentanaAdministrador extends JFrame {
         setContentPane(panel1);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("MenuPrincipal");
-        setSize(500,550);
+        setSize(500,580);
         setLocationRelativeTo(null);
+        setResizable(false);
 
         altaJugadorButton.addActionListener(new ActionListener() {
             @Override
@@ -63,7 +64,7 @@ public class VentanaAdministrador extends JFrame {
         modificarEquipoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaModificarEquipo ventanaModificarEquipo = new VentanaModificarEquipo(vc);
+                VentanaModificarEquipo ventanaModificarEquipo = new VentanaModificarEquipo(vc, VentanaAdministrador.this);
                 ventanaModificarEquipo.setVisible(true);
                 setVisible(false);
             }

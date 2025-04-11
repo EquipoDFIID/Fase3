@@ -7,7 +7,7 @@ import java.util.List;
 public class EnfrentamientoDAO {
     static List<Enfrentamiento> enfrentamientos=new ArrayList<>();
 
-    public EnfrentamientoDAO(Connection con) {
+    public EnfrentamientoDAO() {
     }
 
     public static void agregarEnfrentamientos (Enfrentamiento enfrentamiento){

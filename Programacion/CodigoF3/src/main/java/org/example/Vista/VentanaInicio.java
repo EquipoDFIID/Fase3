@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public class VentanaInicio extends JFrame {
     private JPanel panel1;
     private JButton button1;
-    private JButton button2;
+    private JButton buttonImagen;
     private JButton crearCuentaButton;
     private JPanel jAdmin;
     private JPanel jUsuario;
@@ -34,6 +34,7 @@ public class VentanaInicio extends JFrame {
         setTitle("VentanaInicio");
         setSize(500, 580);
         setLocationRelativeTo(null);
+        setResizable(false);
 
         jAdmin.setVisible(false);
         jUsuario.setVisible(false);
@@ -49,6 +50,7 @@ public class VentanaInicio extends JFrame {
             uNombre.setText("");
             uClave.setText("");
             relleno.setVisible(false);
+            //buttonImagen.setHorizontalAlignment(SwingConstants.LEFT);
         });
 
         usuarioRadioButton.addActionListener(e -> {
@@ -58,6 +60,7 @@ public class VentanaInicio extends JFrame {
             cambiandoVista = false;
             aNombre.setText("");
             aClave.setText("");
+            //buttonImagen.setHorizontalAlignment(SwingConstants.RIGHT);
         });
 
         aNombre.addFocusListener(new FocusAdapter() {
@@ -113,6 +116,10 @@ public class VentanaInicio extends JFrame {
             public void keyReleased(KeyEvent e) {
                 if (validarNombre(aNombre.getText()) && validarClave(aClave.getText())) {
                     aIniciarSesionButton.setEnabled(true);
+                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                        // Ejecutar la acción como si se hubiera hecho clic
+                        aIniciarSesionButton.doClick();
+                    }
                 } else {
                     aIniciarSesionButton.setEnabled(false);
                 }
@@ -172,6 +179,10 @@ public class VentanaInicio extends JFrame {
             public void keyReleased(KeyEvent e) {
                 if (validarNombre(uNombre.getText()) && validarClave(uClave.getText())) {
                     uIniciarSesionButton.setEnabled(true);
+                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                        // Ejecutar la acción como si se hubiera hecho clic
+                        uIniciarSesionButton.doClick();
+                    }
                 } else {
                     uIniciarSesionButton.setEnabled(false);
                 }

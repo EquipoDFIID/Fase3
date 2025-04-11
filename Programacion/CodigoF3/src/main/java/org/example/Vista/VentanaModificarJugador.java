@@ -25,8 +25,9 @@ public class VentanaModificarJugador extends JDialog {
         setContentPane(pPrincipal);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        setSize(500, 550);
+        setSize(500, 580);
         setLocationRelativeTo(null);
+        setResizable(false);
 
         llenarComboBox();
 
@@ -83,7 +84,6 @@ public class VentanaModificarJugador extends JDialog {
     private void onCancel() {
         // Código adicional si hace falta
         dispose();
-        ventana.setVisible(true);
     }
 
     public static void main(String[] args) {
