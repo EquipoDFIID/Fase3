@@ -6,7 +6,10 @@ import org.example.Modelo.Equipo;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-
+/**
+ * Clase que representa la ventana de baja de equipo.
+ * Esta ventana permite al usuario seleccionar un equipo y proceder con su baja.
+ */
 public class VentanaBajaEquipo extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;

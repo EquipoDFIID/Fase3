@@ -12,7 +12,10 @@ public class VentanaBajaJugador extends JDialog {
     private JButton button1;
     private JComboBox comboBox1;
     private static VistaController vc;
-
+    /**
+     * Clase que representa la ventana de baja de jugador.
+     * Esta ventana permite al usuario seleccionar un jugador y proceder con su baja.
+     */
     public VentanaBajaJugador(VistaController vc) {
         this.vc = vc;
         setContentPane(contentPane);

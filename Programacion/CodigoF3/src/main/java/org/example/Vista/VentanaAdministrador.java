@@ -18,6 +18,13 @@ public class VentanaAdministrador extends JFrame {
     private JButton introducirResultadosButton;
     private static VistaController vc;
 
+
+    /**
+     * Clase que representa la ventana principal del administrador.
+     * Esta ventana permite al administrador realizar varias acciones como
+     * dar de alta, modificar y dar de baja jugadores y equipos, así como
+     * introducir resultados en la competición.
+     */
     public VentanaAdministrador(VistaController vc) {
         this.vc = vc;
         setContentPane(panel1);

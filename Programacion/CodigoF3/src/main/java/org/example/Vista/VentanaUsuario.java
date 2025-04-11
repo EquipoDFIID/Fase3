@@ -3,7 +3,10 @@ package org.example.Vista;
 import org.example.Controladores.VistaController;
 
 import javax.swing.*;
-
+/**
+ * Clase VentanaUsuario.
+ * Ventana principal del usuario que muestra las opciones disponibles para consultar información.
+ */
 public class VentanaUsuario extends JFrame {
     private JPanel panel1;
     private JButton button1;

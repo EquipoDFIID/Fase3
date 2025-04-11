@@ -4,7 +4,11 @@ import org.example.Controladores.VistaController;
 
 import javax.swing.*;
 import java.awt.event.*;
-
+/**
+ * Clase VentanaModificarEquipo.
+ * Representa una ventana de diálogo para modificar los datos de un equipo.
+ * Contiene campos de texto y un combo box para editar información.
+ */
 public class VentanaModificarEquipo extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;

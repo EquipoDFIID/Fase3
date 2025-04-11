@@ -4,7 +4,11 @@ import org.example.Controladores.VistaController;
 
 import javax.swing.*;
 import java.awt.event.*;
-
+/**
+ * Clase VentanaModificarJugador.
+ * Ventana de diálogo para modificar los datos de un jugador existente.
+ * Permite seleccionar un jugador desde un comboBox y editar sus datos.
+ */
 public class VentanaModificarJugador extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;

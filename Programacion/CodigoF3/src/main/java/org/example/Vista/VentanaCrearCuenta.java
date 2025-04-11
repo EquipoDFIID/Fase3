@@ -3,7 +3,10 @@ package org.example.Vista;
 import org.example.Controladores.VistaController;
 
 import javax.swing.*;
-
+/**
+ * Clase que representa la ventana para crear una cuenta de usuario.
+ * Permite al usuario ingresar una clave y confirmarla antes de proceder.
+ */
 public class VentanaCrearCuenta extends JFrame {
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -12,7 +15,10 @@ public class VentanaCrearCuenta extends JFrame {
     private JTextField tfClave2;
     private JPanel pPrincipal;
     private static VistaController vc;
-
+    /**
+     * Método que comprueba si las claves ingresadas coinciden.
+     * Si las claves coinciden, habilita el botón "OK", de lo contrario muestra un mensaje de error.
+     */
     public void comprobarClaves() {
         String clave1 = tfClave.getText();
         String clave2 = tfClave2.getText();
