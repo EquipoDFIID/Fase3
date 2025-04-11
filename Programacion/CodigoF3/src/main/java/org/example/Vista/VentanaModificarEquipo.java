@@ -72,8 +72,7 @@ public class VentanaModificarEquipo extends JDialog {
     }
 
     private void onCancel() {
-        ventana.setVisible(true);
-        setVisible(false);
+        dispose();
     }
     public void llenarComboBox(){
         ArrayList<Equipo> listaEquipos=vc.selectNombreEquipo();

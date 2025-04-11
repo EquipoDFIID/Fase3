@@ -3,6 +3,8 @@ package org.example.Vista;
 import org.example.Controladores.VistaController;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class VentanaEquipos extends JFrame {
     private JButton button1;
@@ -19,5 +21,12 @@ public class VentanaEquipos extends JFrame {
         setSize(500,580);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        SALIRButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
     }
 }

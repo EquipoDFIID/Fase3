@@ -3,8 +3,6 @@ package org.example;
 import org.example.Controladores.ModeloController;
 import org.example.Controladores.VistaController;
 import org.example.Modelo.BD;
-import org.example.Vista.VentanaAdministrador;
-import org.example.Vista.VentanaInicio;
 
 public class Main {
     public static void main(String[] args) {

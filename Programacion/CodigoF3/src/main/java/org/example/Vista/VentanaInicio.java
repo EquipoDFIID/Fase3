@@ -53,17 +53,18 @@ public class VentanaInicio extends JFrame {
             uNombre.setText("");
             uClave.setText("");
             relleno.setVisible(false);
-            //buttonImagen.setHorizontalAlignment(SwingConstants.LEFT);
+            buttonImagen.setHorizontalAlignment(SwingConstants.LEFT);
         });
 
         usuarioRadioButton.addActionListener(e -> {
+            relleno.setVisible(false);
             cambiandoVista = true;
             jUsuario.setVisible(true);
             jAdmin.setVisible(false);
             cambiandoVista = false;
             aNombre.setText("");
             aClave.setText("");
-            //buttonImagen.setHorizontalAlignment(SwingConstants.RIGHT);
+            buttonImagen.setHorizontalAlignment(SwingConstants.LEFT);
         });
 
         aNombre.addFocusListener(new FocusAdapter() {
