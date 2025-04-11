@@ -1,7 +1,10 @@
 package org.example.Modelo;
 
 import java.time.LocalDate;
-
+/**
+ * Representa un jugador de un equipo, incluyendo información personal,
+ * profesional y de asociación con un equipo.
+ */
 public class Jugador {
     private int idJugador;
     private String nombre;

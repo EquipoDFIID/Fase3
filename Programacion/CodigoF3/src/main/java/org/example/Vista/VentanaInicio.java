@@ -22,6 +22,7 @@ public class VentanaInicio extends JFrame {
     private JTextField uClave;
     private JButton uIniciarSesionButton;
     private JButton aIniciarSesionButton;
+    private JLabel relleno;
     private static VistaController vc;
 
     private boolean cambiandoVista = false;
@@ -31,7 +32,7 @@ public class VentanaInicio extends JFrame {
         setContentPane(panel1);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("VentanaInicio");
-        setSize(500, 550);
+        setSize(500, 580);
         setLocationRelativeTo(null);
 
         jAdmin.setVisible(false);
@@ -40,12 +41,14 @@ public class VentanaInicio extends JFrame {
         uIniciarSesionButton.setEnabled(false);
 
         administradorRadioButton.addActionListener(e -> {
+            relleno.setVisible(false);
             cambiandoVista = true;
             jAdmin.setVisible(true);
             jUsuario.setVisible(false);
             cambiandoVista = false;
             uNombre.setText("");
             uClave.setText("");
+            relleno.setVisible(false);
         });
 
         usuarioRadioButton.addActionListener(e -> {
@@ -178,16 +181,19 @@ public class VentanaInicio extends JFrame {
         crearCuentaButton.addActionListener(e -> {
             VentanaCrearCuenta ventanaCuenta = new VentanaCrearCuenta(vc);
             ventanaCuenta.setVisible(true);
+            setVisible(false);
         });
 
         aIniciarSesionButton.addActionListener(e -> {
             VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc);
             ventanaAdministrador.setVisible(true);
+            setVisible(false);
         });
 
         uIniciarSesionButton.addActionListener(e -> {
             VentanaUsuario ventanaUsuario = new VentanaUsuario(vc);
             ventanaUsuario.setVisible(true);
+            setVisible(false);
         });
     }
 

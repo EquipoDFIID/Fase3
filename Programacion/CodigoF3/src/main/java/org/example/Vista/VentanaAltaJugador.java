@@ -14,14 +14,15 @@ public class VentanaAltaJugador extends JDialog {
     private JTextField textField2;
     private JTextField textField3;
     private static VistaController vc;
+    private static VentanaAdministrador ventana;
 
     public VentanaAltaJugador(VistaController vc) {
         this.vc = vc;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        setLocationRelativeTo(null);
         setSize(500, 550);
+        setLocationRelativeTo(null);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -57,7 +58,7 @@ public class VentanaAltaJugador extends JDialog {
     }
 
     private void onCancel() {
-        // add your code here if necessary
+        ventana.setVisible(true);
         dispose();
     }
 

@@ -16,14 +16,15 @@ public class VentanaModificarEquipo extends JDialog {
     private JTextField textField3;
     private JComboBox cNombre;
     private static VistaController vc;
+    private static VentanaAdministrador ventana;
 
     public VentanaModificarEquipo(VistaController vc) {
         this.vc = vc;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        setLocationRelativeTo(null);
         setSize(500, 550);
+        setLocationRelativeTo(null);
         llenarComboBox();
 
         buttonOK.addActionListener(new ActionListener() {
@@ -63,6 +64,7 @@ public class VentanaModificarEquipo extends JDialog {
     private void onCancel() {
         // add your code here if necessary
         dispose();
+        ventana.setVisible(false);
     }
     public void llenarComboBox(){
         ArrayList<Equipo> listaEquipos=vc.selectNombreEquipo();
