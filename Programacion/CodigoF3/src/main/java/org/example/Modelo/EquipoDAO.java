@@ -16,6 +16,11 @@ public class EquipoDAO {
 // =============================================
 // == OPERACIONES DE CONSULTA (SELECT)
 // =============================================
+    /**
+     * Busca un equipo en la base de datos según su ID.
+     * @param id ID del equipo que se desea buscar.
+     * @return Objeto Equipo si se encuentra, o null si no existe.
+     */
 
     public Equipo selectEquipo(String id) {
         Equipo e= null;
@@ -35,15 +40,23 @@ public class EquipoDAO {
         }
         return e;
     }
+    /**
+     * Obtiene una lista de todos los equipos con su ID y nombre.
+     * @return Lista de objetos Equipo con ID y nombre.
+     */
+
+
+
 
     public ArrayList<Equipo> selectNombreEquipo(){
-        ArrayList<Equipo> equipos= new ArrayList<>();
+        ArrayList<Equipo> equipos = new ArrayList<>();
 
         try {
-            String sql = "SELECT id_equipo,nombre FROM EQUIPOS";
+            String sql = "SELECT nombre FROM EQUIPOS";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
+
+            while (rs.next()) { // ← CAMBIADO DE "if" A "while"
                 Equipo e = new Equipo();
                 e.setNombre(rs.getString("nombre"));
                 equipos.add(e);
@@ -54,6 +67,13 @@ public class EquipoDAO {
         }
         return equipos;
     }
+
+
+    /**
+     * Busca un equipo por su nombre en la base de datos.
+     * @param nombreEquipo Nombre del equipo a buscar.
+     * @return Objeto Equipo si se encuentra, o null si no existe.
+     */
 
     public static Equipo buscarEquipo(String nombreEquipo) {
         Equipo e= null;
@@ -78,7 +98,10 @@ public class EquipoDAO {
 // =============================================
 // == OPERACIONES DE INSERCIÓN (INSERT)
 // =============================================
-
+    /**
+     * Inserta un nuevo equipo en la base de datos.
+     * @param equipo Objeto Equipo con los datos a insertar.
+     */
     public static void altaEquipo(Equipo equipo) {
         try {
             String sql = "INSERT INTO equipos VALUES(?,?,?)";
@@ -95,6 +118,12 @@ public class EquipoDAO {
 // =============================================
 // == OPERACIONES DE ACTUALIZACIÓN (UPDATE)
 // =============================================
+
+    /**
+     * Actualiza los datos de un equipo en la base de datos.
+     * @param equipo Objeto Equipo con los nuevos datos.
+     * @param nombreEquipo Nombre actual del equipo para identificar el registro a modificar.
+     */
 
     public static void modificarEquipo(Equipo equipo, String nombreEquipo) {
         try {
@@ -114,6 +143,10 @@ public class EquipoDAO {
 // == OPERACIONES DE ELIMINACIÓN (DELETE)
 // =============================================
 
+    /**
+     * Elimina un equipo de la base de datos según su ID.
+     * @param e Objeto Equipo que se desea eliminar.
+     */
     public static void borrarEquipo(Equipo e) {
         try {
             String sql = "DELETE FROM EQUIPOS WHERE ID_EQUIPO = ?";

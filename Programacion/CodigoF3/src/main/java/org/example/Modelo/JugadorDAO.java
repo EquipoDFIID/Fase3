@@ -14,16 +14,19 @@ public class JugadorDAO {
 // =============================================
 // == OPERACIONES DE CONSULTA (SELECT)
 // =============================================
-
-    public ArrayList<Jugador> selectIdNombreJugador(){
-        ArrayList<Jugador> jugadores= new ArrayList<>();
+    public ArrayList<Jugador> selectNicknameJugador() {
+        ArrayList<Jugador> jugadores = new ArrayList<>();
+    /**
+     * Obtiene una lista de jugadores con su ID y nickname.
+     * @return Lista de objetos Jugador con ID y nickname.
+     */
         try {
-            String sql = "SELECT id_jugador,nickname FROM EQUIPOS";
+            String sql = "SELECT nickname FROM JUGADORES";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
+
+            while (rs.next()) {
                 Jugador j = new Jugador();
-                j.setIdJugador(rs.getInt("id_jugador"));
                 j.setNickname(rs.getString("nickname"));
                 jugadores.add(j);
             }
@@ -34,6 +37,13 @@ public class JugadorDAO {
         return jugadores;
     }
 
+
+
+    /**
+     * Busca un jugador en la base de datos por su nombre.
+     * @param nombreJugador Nombre del jugador a buscar.
+     * @return Objeto Jugador con los detalles del jugador, o null si no se encuentra.
+     */
     public static Jugador buscarJugador(String nombreJugador) {
        Jugador j=null;
        j.setNombre(nombreJugador);
@@ -64,7 +74,10 @@ public class JugadorDAO {
 // =============================================
 // == OPERACIONES DE INSERCIÓN (INSERT)
 // =============================================
-
+    /**
+     * Inserta un nuevo jugador en la base de datos.
+     * @param jugador Objeto Jugador con los datos a insertar.
+     */
     public static void altaJugador(Jugador jugador) {
         try {
             String sql = "INSERT INTO jugadores VALUES(?,?,?,?,?,?,?,?)";
@@ -86,7 +99,11 @@ public class JugadorDAO {
 // =============================================
 // == OPERACIONES DE ACTUALIZACIÓN (UPDATE)
 // =============================================
-
+    /**
+     * Modifica los detalles de un jugador en la base de datos.
+     * @param jugador Objeto Jugador con los nuevos datos.
+     * @param nombreJugador Nombre actual del jugador para identificar el registro a modificar.
+     */
     public static void modificarJugador(Jugador jugador, String nombreJugador) {
         try {
             String sql = "UPDATE JUGADORES SET id_jugador = ?,NOMBRE = ?," +
@@ -110,6 +127,10 @@ public class JugadorDAO {
 // =============================================
 // == OPERACIONES DE ELIMINACIÓN (DELETE)
 // =============================================
+    /**
+     * Elimina un jugador de la base de datos por su nombre.
+     * @param nombreJugador Nombre del jugador a eliminar.
+     */
 
     public static void borrarJugador(String nombreJugador) {
         try {

@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+
+/**
+ * Clase BD que gestiona la conexión a la base de datos Oracle.
+ */
 public class BD{
 
 

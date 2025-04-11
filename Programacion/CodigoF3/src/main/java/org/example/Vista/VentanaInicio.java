@@ -3,9 +3,7 @@ package org.example.Vista;
 import org.example.Controladores.VistaController;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.lang.foreign.MemoryLayout;
+import java.awt.event.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,72 +20,191 @@ public class VentanaInicio extends JFrame {
     private JTextField aClave;
     private JTextField uNombre;
     private JTextField uClave;
+    private JButton uIniciarSesionButton;
+    private JButton aIniciarSesionButton;
+    private JLabel relleno;
+    private static VistaController vc;
 
+    private boolean cambiandoVista = false;
 
-    public VentanaInicio(VistaController vistaController) {
+    public VentanaInicio(VistaController vc) {
+        this.vc = vc;
         setContentPane(panel1);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("VentanaInicio");
-        setSize(500,500);
+        setSize(500, 580);
         setLocationRelativeTo(null);
 
         jAdmin.setVisible(false);
         jUsuario.setVisible(false);
+        aIniciarSesionButton.setEnabled(false);
+        uIniciarSesionButton.setEnabled(false);
 
-        administradorRadioButton.addActionListener(new ActionListener() {
+        administradorRadioButton.addActionListener(e -> {
+            relleno.setVisible(false);
+            cambiandoVista = true;
+            jAdmin.setVisible(true);
+            jUsuario.setVisible(false);
+            cambiandoVista = false;
+            uNombre.setText("");
+            uClave.setText("");
+            relleno.setVisible(false);
+        });
+
+        usuarioRadioButton.addActionListener(e -> {
+            cambiandoVista = true;
+            jUsuario.setVisible(true);
+            jAdmin.setVisible(false);
+            cambiandoVista = false;
+            aNombre.setText("");
+            aClave.setText("");
+        });
+
+        aNombre.addFocusListener(new FocusAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                jAdmin.setVisible(true);
+            public void focusLost(FocusEvent e) {
+                if (cambiandoVista) return;
 
                 if (aNombre.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "El nombre no puede estar vacio");
+                    JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío");
+                    aNombre.requestFocus();
                 } else {
                     Pattern p = Pattern.compile("^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]*$");
                     Matcher m = p.matcher(aNombre.getText());
                     if (!m.matches()) {
                         JOptionPane.showMessageDialog(null, "El nombre debe comenzar por una mayúscula");
-                    }
-
-                }
-
-                if (aClave.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "La clave no puede estar vacio");
-                } else {
-                    Pattern p = Pattern.compile("^[0-9]{4}$");
-                    Matcher m = p.matcher(aClave.getText());
-                    if (!m.matches()) {
-                        JOptionPane.showMessageDialog(null, "La clave no puede tener ese formato");
+                        aNombre.requestFocus();
                     }
                 }
             }
         });
 
-        usuarioRadioButton.addActionListener(new ActionListener() {
+        aClave.addFocusListener(new FocusAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                jUsuario.setVisible(true);
+            public void focusLost(FocusEvent e) {
+                if (cambiandoVista) return;
+
+                if (!validarNombre(aNombre.getText())) {
+                    aIniciarSesionButton.setEnabled(false);
+                    return;
+                }
+
+                String clave = aClave.getText();
+                if (clave.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "La clave no puede estar vacía");
+                    aIniciarSesionButton.setEnabled(false);
+                    aClave.requestFocus();
+                } else if (!validarClave(clave)) {
+                    aClave.setText("");
+                    JOptionPane.showMessageDialog(null, "La clave no puede tener ese formato");
+                    aIniciarSesionButton.setEnabled(false);
+                    aClave.requestFocus();
+                }
+            }
+
+            @Override
+            public void focusGained(FocusEvent e) {
+                aIniciarSesionButton.setEnabled(false);
+            }
+        });
+
+        aClave.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (validarNombre(aNombre.getText()) && validarClave(aClave.getText())) {
+                    aIniciarSesionButton.setEnabled(true);
+                } else {
+                    aIniciarSesionButton.setEnabled(false);
+                }
+            }
+        });
+
+        uNombre.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (cambiandoVista) return;
 
                 if (uNombre.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "El nombre no puede estar vacio");
+                    JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío");
+                    uNombre.requestFocus();
                 } else {
                     Pattern p = Pattern.compile("^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]*$");
                     Matcher m = p.matcher(uNombre.getText());
                     if (!m.matches()) {
                         JOptionPane.showMessageDialog(null, "El nombre debe comenzar por una mayúscula");
-                    }
-
-                }
-
-                if (uClave.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "La clave no puede estar vacio");
-                } else {
-                    Pattern p = Pattern.compile("^[0-9]{4}$");
-                    Matcher m = p.matcher(uClave.getText());
-                    if (!m.matches()) {
-                        JOptionPane.showMessageDialog(null, "La clave no puede tener ese formato");
+                        uNombre.requestFocus();
                     }
                 }
             }
         });
+
+        uClave.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (cambiandoVista) return;
+
+                if (!validarNombre(uNombre.getText())) {
+                    uIniciarSesionButton.setEnabled(false);
+                    return;
+                }
+
+                String clave = uClave.getText();
+                if (clave.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "La clave no puede estar vacía");
+                    uIniciarSesionButton.setEnabled(false);
+                    uClave.requestFocus();
+                } else if (!validarClave(clave)) {
+                    uClave.setText("");
+                    JOptionPane.showMessageDialog(null, "La clave no puede tener ese formato");
+                    uIniciarSesionButton.setEnabled(false);
+                    uClave.requestFocus();
+                }
+            }
+
+            @Override
+            public void focusGained(FocusEvent e) {
+                uIniciarSesionButton.setEnabled(false);
+            }
+        });
+
+        uClave.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (validarNombre(uNombre.getText()) && validarClave(uClave.getText())) {
+                    uIniciarSesionButton.setEnabled(true);
+                } else {
+                    uIniciarSesionButton.setEnabled(false);
+                }
+            }
+        });
+
+        crearCuentaButton.addActionListener(e -> {
+            VentanaCrearCuenta ventanaCuenta = new VentanaCrearCuenta(vc);
+            ventanaCuenta.setVisible(true);
+            setVisible(false);
+        });
+
+        aIniciarSesionButton.addActionListener(e -> {
+            VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc);
+            ventanaAdministrador.setVisible(true);
+            setVisible(false);
+        });
+
+        uIniciarSesionButton.addActionListener(e -> {
+            VentanaUsuario ventanaUsuario = new VentanaUsuario(vc);
+            ventanaUsuario.setVisible(true);
+            setVisible(false);
+        });
+    }
+
+    private boolean validarNombre(String nombre) {
+        if (nombre == null || nombre.isEmpty()) return false;
+        Pattern pattern = Pattern.compile("^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]*$");
+        return pattern.matcher(nombre).matches();
+    }
+
+    private boolean validarClave(String clave) {
+        Pattern pattern = Pattern.compile("^[0-9]{4}$");
+        return pattern.matcher(clave).matches();
     }
 }

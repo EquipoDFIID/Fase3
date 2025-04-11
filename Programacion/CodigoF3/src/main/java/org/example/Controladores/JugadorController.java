@@ -9,6 +9,7 @@ import org.example.Modelo.JugadorDAO;
 import javax.swing.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,6 +33,11 @@ public class JugadorController {
     public Jugador buscarJugador(String nombreJugador) {
         return jugadorDAO.buscarJugador(nombreJugador);
     }
+
+    public ArrayList<Jugador> selectNicknameJugador(){
+        return jugadorDAO.selectNicknameJugador();
+    }
+
 
     /*
        public static Jugador solicitarValidarDatos() {

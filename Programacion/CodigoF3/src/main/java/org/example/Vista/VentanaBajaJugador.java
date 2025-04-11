@@ -1,19 +1,29 @@
 package org.example.Vista;
 
+import org.example.Controladores.VistaController;
+import org.example.Modelo.Jugador;
+
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class VentanaBajaJugador extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JButton button1;
-    private JComboBox comboBox1;
+    private JComboBox cJugador;
+    private static VistaController vc;
+    private static VentanaAdministrador ventana;
 
-    public VentanaBajaJugador() {
+    public VentanaBajaJugador(VistaController vc) {
+        this.vc = vc;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+        setSize(500, 550);
+        setLocationRelativeTo(null);
+        llenarComboBox();
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -41,6 +51,15 @@ public class VentanaBajaJugador extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+    }
+    public void llenarComboBox(){
+        ArrayList<Jugador> listaJugadores=vc.selectNicknameJugador();
+        cJugador.removeAllItems();
+
+        for (Jugador jugador : listaJugadores) {
+            cJugador.addItem(jugador.getNombre());
+        }
     }
 
     private void onOK() {
@@ -51,10 +70,11 @@ public class VentanaBajaJugador extends JDialog {
     private void onCancel() {
         // add your code here if necessary
         dispose();
+        ventana.setVisible(true);
     }
 
     public static void main(String[] args) {
-        VentanaBajaJugador dialog = new VentanaBajaJugador();
+        VentanaBajaJugador dialog = new VentanaBajaJugador(vc);
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
