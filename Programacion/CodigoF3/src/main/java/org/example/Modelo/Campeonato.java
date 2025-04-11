@@ -3,6 +3,10 @@ package org.example.Modelo;
 import java.time.LocalDate;
 import java.util.Arrays;
 
+/**
+ * Representa un campeonato con un ID, nombre, fecha de inicio y estado.
+ * El estado debe ser uno de los valores válidos: "Inscripción", "Curso" o "Finalizado".
+ */
 public class Campeonato {
     private String ID;
     private String Nombre;
