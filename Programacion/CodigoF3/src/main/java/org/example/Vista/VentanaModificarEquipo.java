@@ -20,8 +20,8 @@ public class VentanaModificarEquipo extends JDialog {
     private JButton buttonOK;
     private JButton buttonCancel;
     private JButton button1;
-    private JTextField textField1;
-    private JTextField textField3;
+    private JTextField eNombre;
+    private JTextField eFecha;
     private JComboBox cNombre;
     private static VistaController vc;
     private static VentanaAdministrador ventana;
@@ -36,6 +36,9 @@ public class VentanaModificarEquipo extends JDialog {
         setLocationRelativeTo(null);
         llenarComboBox();
         setResizable(false);
+
+        eNombre.setEnabled(false);
+        eFecha.setEnabled(false);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -64,6 +67,26 @@ public class VentanaModificarEquipo extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+        cNombre.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    String selectedItem = (String) cNombre.getSelectedItem();
+                    if (!selectedItem.equals("Selecciona un equipo...")) {
+                        eNombre.setEnabled(true);
+                        eFecha.setEnabled(true);
+                    }
+                }
+                if (e.getStateChange() == ItemEvent.DESELECTED) {
+                    String selectedItem = (String) cNombre.getSelectedItem();
+                    if (selectedItem.equals("Selecciona un equipo...")) {
+                        eNombre.setEnabled(false);
+                        eFecha.setEnabled(false);
+                    }
+                }
+            }
+        });
     }
 
     private void onOK() {
@@ -78,9 +101,13 @@ public class VentanaModificarEquipo extends JDialog {
         ArrayList<Equipo> listaEquipos=vc.selectNombreEquipo();
         cNombre.removeAllItems();
 
+        cNombre.addItem("Selecciona un equipo...");
+
         for (Equipo equipo : listaEquipos){
             cNombre.addItem(equipo.getNombre());
         }
+
+        cNombre.setSelectedIndex(0);
     }
 
     public static void main(String[] args) {

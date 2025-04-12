@@ -6,6 +6,7 @@ import org.example.Modelo.Equipo;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+
 /**
  * Clase que representa la ventana de baja de equipo.
  * Esta ventana permite al usuario seleccionar un equipo y proceder con su baja.
@@ -17,7 +18,6 @@ public class VentanaBajaEquipo extends JDialog {
     private JButton button1;
     private JComboBox cNombre;
     private static VistaController vc;
-    private static VentanaAdministrador ventana;
 
     public VentanaBajaEquipo(VistaController vc) {
         this.vc = vc;
@@ -28,8 +28,8 @@ public class VentanaBajaEquipo extends JDialog {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        llenarComboBox();
-
+        llenarComboBox(); // Llenar combo antes de añadir el listener
+        buttonOK.setEnabled(false); // Asegurarse de que esté desactivado inicialmente
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -58,12 +58,19 @@ public class VentanaBajaEquipo extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-
-
+        cNombre.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    String selectedItem = (String) cNombre.getSelectedItem();
+                    buttonOK.setEnabled(selectedItem != null && !selectedItem.equals("Selecciona un equipo..."));
+                }
+            }
+        });
     }
 
     private void onOK() {
-        // add your code here
+        // Aquí puedes agregar lógica de confirmación o baja del equipo
         dispose();
     }
 
@@ -79,12 +86,18 @@ public class VentanaBajaEquipo extends JDialog {
         System.exit(0);
     }
 
-    public void llenarComboBox(){
-        ArrayList<Equipo> listaEquipos=vc.selectNombreEquipo();
+    public void llenarComboBox() {
+        ArrayList<Equipo> listaEquipos = vc.selectNombreEquipo();
         cNombre.removeAllItems();
 
-        for (Equipo equipo : listaEquipos){
+        // Opción por defecto no válida
+        cNombre.addItem("Selecciona un equipo...");
+
+        for (Equipo equipo : listaEquipos) {
             cNombre.addItem(equipo.getNombre());
         }
+
+        // Selecciona por defecto la opción inicial (índice 0)
+        cNombre.setSelectedIndex(0);
     }
 }

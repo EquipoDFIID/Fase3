@@ -20,9 +20,6 @@ public class VentanaBajaJugador extends JDialog {
      * Esta ventana permite al usuario seleccionar un jugador y proceder con su baja.
      */
 
-    private static VentanaAdministrador ventana;
-
-
     public VentanaBajaJugador(VistaController vc) {
         this.vc = vc;
         setContentPane(contentPane);
@@ -33,6 +30,7 @@ public class VentanaBajaJugador extends JDialog {
         setResizable(false);
 
         llenarComboBox();
+        buttonOK.setEnabled(false);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -61,14 +59,29 @@ public class VentanaBajaJugador extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
+        cJugador.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    String selectedItem = (String) cJugador.getSelectedItem();
+                    buttonOK.setEnabled(selectedItem != null && !selectedItem.equals("Selecciona un jugador..."));
+                }
+            }
+        });
     }
     public void llenarComboBox(){
         ArrayList<Jugador> listaJugadores=vc.selectNicknameJugador();
         cJugador.removeAllItems();
 
+        // Opción por defecto no válida
+        cJugador.addItem("Selecciona un jugador...");
+
         for (Jugador jugador : listaJugadores) {
             cJugador.addItem(jugador.getNombre());
         }
+
+        // Selecciona por defecto la opción inicial (índice 0)
+        cJugador.setSelectedIndex(0);
     }
 
     private void onOK() {

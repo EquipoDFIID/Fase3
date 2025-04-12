@@ -4,15 +4,17 @@ import org.example.Controladores.VistaController;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class VentanaAltaEquipo extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JButton button1;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
+    private JTextField eID;
+    private JTextField eNombre;
+    private JTextField eFecha;
     private static VistaController vc;
     private static VentanaAltaEquipo ventana;
 
@@ -29,6 +31,8 @@ public class VentanaAltaEquipo extends JDialog {
         setSize(500, 580);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        buttonOK.setEnabled(false);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -56,6 +60,60 @@ public class VentanaAltaEquipo extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+        eID.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+
+                if (eID.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "El id no puede estar vacío");
+                    eID.requestFocus();
+                } else {
+                    Pattern p = Pattern.compile("^[0-9]{4}$");
+                    Matcher m = p.matcher(eID.getText());
+                    if (!m.matches()) {
+                        JOptionPane.showMessageDialog(null, "El id debe tener 4 dígitos");
+                        eID.requestFocus();
+                    }
+                }
+            }
+        });
+
+        eNombre.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+
+                if (eNombre.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío");
+                    eNombre.requestFocus();
+                } else {
+                    Pattern p = Pattern.compile("^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]*$");
+                    Matcher m = p.matcher(eNombre.getText());
+                    if (!m.matches()) {
+                        JOptionPane.showMessageDialog(null, "El nombre debe comenzar por una mayúscula");
+                        eNombre.requestFocus();
+                    }
+                }
+            }
+        });
+
+        eFecha.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String texto = eFecha.getText();
+                Pattern p = Pattern.compile("^[0-9]{2}/[0-9]{2}/[0-9]{4}$");
+                Matcher m = p.matcher(texto);
+
+                if (m.matches()) {
+                    buttonOK.setEnabled(true);
+                } else {
+                    buttonOK.setEnabled(false);
+                }
+            }
+        });
+
     }
 
     private void onOK() {

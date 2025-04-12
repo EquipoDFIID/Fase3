@@ -1,7 +1,6 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
-import org.example.Modelo.Equipo;
 import org.example.Modelo.Jugador;
 
 import javax.swing.*;
@@ -20,10 +19,14 @@ public class VentanaModificarJugador extends JDialog {
     private JButton buttonOK;
     private JButton buttonCancel;
     private JButton button1;
-    private JTextField textField2;
-    private JTextField textField3;
+    private JTextField jNickname;
+    private JTextField jSueldo;
     private JComboBox cJugador;
     private JPanel pPrincipal;
+    private JTextField jNombre;
+    private JTextField jApellido;
+    private JTextField jNacionalidad;
+    private JTextField jFecha;
     private static VistaController vc;
     private static VentanaAdministrador ventana;
 
@@ -36,6 +39,12 @@ public class VentanaModificarJugador extends JDialog {
         setLocationRelativeTo(null);
         setResizable(false);
 
+        jNombre.setEnabled(false);
+        jApellido.setEnabled(false);
+        jNacionalidad.setEnabled(false);
+        jFecha.setEnabled(false);
+        jNickname.setEnabled(false);
+        jSueldo.setEnabled(false);
         llenarComboBox();
 
         buttonOK.addActionListener(new ActionListener() {
@@ -65,26 +74,53 @@ public class VentanaModificarJugador extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        // Aquí podés cargar los jugadores en el comboBox
-        // Ejemplo:
-        // comboBox1.addItem("Jugador 1");
-        // comboBox1.addItem("Jugador 2");
+        cJugador.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    String selectedItem = (String) cJugador.getSelectedItem();
+                    if (!selectedItem.equals("Selecciona un jugador...")) {
+                        jNombre.setEnabled(true);
+                        jApellido.setEnabled(true);
+                        jNacionalidad.setEnabled(true);
+                        jFecha.setEnabled(true);
+                        jNickname.setEnabled(true);
+                        jSueldo.setEnabled(true);
+                    }
+                }
+                if (e.getStateChange() == ItemEvent.DESELECTED) {
+                    String selectedItem = (String) cJugador.getSelectedItem();
+                    if (selectedItem.equals("Selecciona un jugador...")) {
+                        jNombre.setEnabled(false);
+                        jApellido.setEnabled(false);
+                        jNacionalidad.setEnabled(false);
+                        jFecha.setEnabled(false);
+                        jNickname.setEnabled(false);
+                        jSueldo.setEnabled(false);
+                    }
+                }
+            }
+        });
+
+
 
     }
     public void llenarComboBox(){
         ArrayList<Jugador> listaJugadores=vc.selectNicknameJugador();
         cJugador.removeAllItems();
 
+        cJugador.addItem("Selecciona un jugador...");
+
         for (Jugador jugador : listaJugadores) {
             cJugador.addItem(jugador.getNombre());
         }
+
+        cJugador.setSelectedIndex(0);
     }
 
     private void onOK() {
         // Lógica para modificar al jugador seleccionado
         // Podés acceder al comboBox con comboBox1.getSelectedItem()
-        // Y a los textos modificados con textField2.getText(), etc.
-
         dispose();
     }
 
