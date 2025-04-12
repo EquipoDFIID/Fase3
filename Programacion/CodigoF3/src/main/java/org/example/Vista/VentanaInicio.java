@@ -26,6 +26,7 @@ public class VentanaInicio extends JFrame {
     private JButton uIniciarSesionButton;
     private JButton aIniciarSesionButton;
     private JLabel relleno;
+    private JPanel buttons;
     private static VistaController vc;
 
     private boolean cambiandoVista = false;
