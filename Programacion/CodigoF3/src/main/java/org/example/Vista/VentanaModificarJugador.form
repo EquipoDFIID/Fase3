@@ -64,7 +64,7 @@
                           <contentAreaFilled value="false"/>
                           <font name="Segoe UI Black" size="14" style="0"/>
                           <foreground color="-16777216"/>
-                          <text value="OK"/>
+                          <text value="Aceptar"/>
                         </properties>
                       </component>
                       <component id="464b5" class="javax.swing.JButton" binding="buttonCancel">
@@ -76,7 +76,7 @@
                           <contentAreaFilled value="false"/>
                           <font name="Segoe UI Black" size="14" style="0"/>
                           <foreground color="-16777216"/>
-                          <text value="Cancel"/>
+                          <text value="Salir"/>
                         </properties>
                       </component>
                     </children>
