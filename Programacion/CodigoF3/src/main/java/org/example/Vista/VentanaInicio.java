@@ -88,9 +88,12 @@ public class VentanaInicio extends JFrame {
                             JOptionPane.showMessageDialog(null, "El nombre debe comenzar por una mayúscula");
                             aNombre.requestFocus();
                         } else {
-
-                            if (a.getTipo_usuario().equals("admin")) {
-                                if (a == null) throw new DatoNoValido("No existe un administrador con ese nombre");
+                             {
+                                if (a == null) {
+                                    throw new DatoNoValido("No existe un administrador con ese nombre");
+                                } else  if (!a.getTipo_usuario().equals("admin")) {
+                                    throw new DatoNoValido("El nombre no corresponde a un admin");
+                                }
                             }
 
                         }
