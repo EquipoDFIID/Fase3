@@ -63,7 +63,7 @@ public class JugadorDAO {
                 j.setSueldo(rs.getDouble("SUELDO"));
                 //la linea de abajo puede dar problemas por que no se como se llama la columna del codigo de equipo y ademas el parametro de
                 // "equipo" probablemente este mal
-                j.setEquipo(EquipoDAO.buscarEquipo(rs.getString("EQUIPO")));
+                j.setEquipo(EquipoDAO.buscarEquipo(rs.getString("ID_EQUIPO")));
 
             }
 

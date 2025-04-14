@@ -48,17 +48,19 @@ public class EquipoDAO {
 
 
 
-    public ArrayList<Equipo> selectNombreEquipo(){
+    public ArrayList<Equipo> selectObjetoEquipo(){
         ArrayList<Equipo> equipos = new ArrayList<>();
 
         try {
-            String sql = "SELECT nombre FROM EQUIPOS";
+            String sql = "SELECT * FROM EQUIPOS";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) { // ← CAMBIADO DE "if" A "while"
                 Equipo e = new Equipo();
+                e.setIdEquipo(rs.getInt("id_equipo"));
                 e.setNombre(rs.getString("nombre"));
+                e.setFechaFund(rs.getDate("fecha_fund").toLocalDate());
                 equipos.add(e);
             }
 

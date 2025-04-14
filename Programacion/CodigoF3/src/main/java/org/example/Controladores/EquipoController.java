@@ -73,8 +73,8 @@ public class EquipoController {
     public void modificarEquipo(Equipo e, String nombreEquipo) {
         equipoDAO.modificarEquipo(e, nombreEquipo);
     }
-    public ArrayList<Equipo> selectNombreEquipo(){
-        return equipoDAO.selectNombreEquipo();
+    public ArrayList<Equipo> selectObjetoEquipo(){
+        return equipoDAO.selectObjetoEquipo();
     }
    /* public void bajaEquipo() {
         boolean correcto=false;

@@ -4,9 +4,11 @@ import org.example.Modelo.Equipo;
 import org.example.Modelo.Jugador;
 import org.example.Modelo.Usuario;
 import org.example.Vista.VentanaAdministrador;
+import org.example.Vista.VentanaAltaJugador;
 import org.example.Vista.VentanaInicio;
 import org.example.Vista.VentanaUsuario;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class VistaController {
@@ -14,6 +16,7 @@ public class VistaController {
     private VentanaInicio ventanaInicio;
     private VentanaUsuario ventanaUsuario;
     private ModeloController modeloController;
+    private ArrayList<Equipo> listaEquipos = new ArrayList<>();
 
     public VistaController(ModeloController modeloController) {
         this.modeloController = modeloController;
@@ -74,8 +77,8 @@ public class VistaController {
 
     public void generarEnfrentamientos(){}
 
-    public ArrayList<Equipo> selectNombreEquipo(){
-        return modeloController.selectNombreEquipo();
+    public void rellenarEquipos(){
+        listaEquipos = modeloController.selectObjetoEquipo();
     }
     public ArrayList <Jugador> selectNicknameJugador(){
         return modeloController.selectNicknameJugador();
@@ -87,4 +90,20 @@ public class VistaController {
        Equipo equipo = null;
        equipos.add(equipo);
     }*/
+
+    public void llenarComboBox(JComboBox jEquipo) {
+        rellenarEquipos();
+        jEquipo.removeAllItems();
+        jEquipo.addItem("Selecciona un equipo...");
+        for (Equipo equipo : listaEquipos) {
+            //getIndex
+            jEquipo.addItem(equipo.getNombre());
+        }
+        jEquipo.setSelectedIndex(0);
+    }
+
+    public Equipo buscarComboBox(JComboBox jEquipo) {
+        int posicion = jEquipo.getSelectedIndex();
+        return listaEquipos.get(posicion - 1);
+    }
 }
