@@ -1,6 +1,9 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
+import org.example.Excepciones.DatoNoValido;
+import org.example.Modelo.Jugador;
+import org.example.Modelo.Usuario;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -71,18 +74,29 @@ public class VentanaInicio extends JFrame {
         aNombre.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                if (cambiandoVista) return;
+                try {
+                    if (cambiandoVista) return;
 
-                if (aNombre.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío");
-                    aNombre.requestFocus();
-                } else {
-                    Pattern p = Pattern.compile("^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]*$");
-                    Matcher m = p.matcher(aNombre.getText());
-                    if (!m.matches()) {
-                        JOptionPane.showMessageDialog(null, "El nombre debe comenzar por una mayúscula");
+                    if (aNombre.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío");
                         aNombre.requestFocus();
+                    } else {
+                        Usuario a = vc.selectNombre(aNombre.getText());
+                        Pattern p = Pattern.compile("^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]*$");
+                        Matcher m = p.matcher(aNombre.getText());
+                        if (!m.matches()) {
+                            JOptionPane.showMessageDialog(null, "El nombre debe comenzar por una mayúscula");
+                            aNombre.requestFocus();
+                        } else {
+
+                            if (a.getTipo_usuario().equals("admin")) {
+                                if (a == null) throw new DatoNoValido("No existe un administrador con ese nombre");
+                            }
+
+                        }
                     }
+                } catch (DatoNoValido ex){
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
             }
         });
@@ -92,21 +106,49 @@ public class VentanaInicio extends JFrame {
             public void focusLost(FocusEvent e) {
                 if (cambiandoVista) return;
 
-                if (!validarNombre(aNombre.getText())) {
+                String nombre = aNombre.getText().trim();
+                String claveTexto = aClave.getText().trim();
+
+                // Validar nombre (por si se ha escrito después de perder foco)
+                if (!validarNombre(nombre)) {
                     aIniciarSesionButton.setEnabled(false);
                     return;
                 }
 
-                String clave = aClave.getText();
-                if (clave.isEmpty()) {
+                // Validar clave vacía
+                if (claveTexto.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "La clave no puede estar vacía");
                     aIniciarSesionButton.setEnabled(false);
                     aClave.requestFocus();
-                } else if (!validarClave(clave)) {
+                    return;
+                }
+
+                int clave;
+                try {
+                    clave = Integer.parseInt(claveTexto);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "La clave debe ser un número");
                     aClave.setText("");
-                    JOptionPane.showMessageDialog(null, "La clave no puede tener ese formato");
                     aIniciarSesionButton.setEnabled(false);
                     aClave.requestFocus();
+                    return;
+                }
+
+                if (!validarClave(String.valueOf(clave))) {
+                    aClave.setText("");
+                    JOptionPane.showMessageDialog(null, "La clave no tiene el formato correcto");
+                    aIniciarSesionButton.setEnabled(false);
+                    aClave.requestFocus();
+                    return;
+                }
+
+                // Buscar usuario y comparar clave
+                Usuario u = vc.selectNombre(nombre);
+                if (u != null && Integer.parseInt(u.getClave()) == clave) {
+                    aIniciarSesionButton.setEnabled(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Nombre o clave incorrectos");
+                    aIniciarSesionButton.setEnabled(false);
                 }
             }
 
@@ -115,6 +157,7 @@ public class VentanaInicio extends JFrame {
                 aIniciarSesionButton.setEnabled(false);
             }
         });
+
 
         aClave.addKeyListener(new KeyAdapter() {
             @Override

@@ -23,6 +23,9 @@ public class ModeloController {
     private JugadorController jugadorController;
     private JugadorDAO jugadorDao;
 
+    private UsuarioController usuarioController;
+    private UsuarioDAO usuarioDao;
+
     private VistaController vc;
 
     public ModeloController() {
@@ -44,6 +47,9 @@ public class ModeloController {
 
             jugadorDao=new JugadorDAO();
             jugadorController=new JugadorController(jugadorDao);
+
+            usuarioDao=new UsuarioDAO();
+            usuarioController=new UsuarioController(usuarioDao);
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -85,4 +91,8 @@ public class ModeloController {
     public void modificarJugador(Jugador j, String nombreJugador) {
         jugadorController.modificarJugador(j, nombreJugador);
     }
+    public Usuario selectNombre(String nombreUsuario) {
+        return usuarioController.selectNombre(nombreUsuario);
+    }
+
 }

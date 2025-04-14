@@ -2,6 +2,7 @@ package org.example.Controladores;
 
 import org.example.Modelo.Equipo;
 import org.example.Modelo.Jugador;
+import org.example.Modelo.Usuario;
 import org.example.Vista.VentanaAdministrador;
 import org.example.Vista.VentanaInicio;
 import org.example.Vista.VentanaUsuario;
@@ -50,7 +51,12 @@ public class VistaController {
     }
     public Jugador buscarJugador(String nombreJugador) {
         return modeloController.buscarJugador(nombreJugador);
+
     }
+    public Usuario selectNombre(String nombreUsuario) {
+        return modeloController.selectNombre(nombreUsuario);
+    }
+
 
     /*public void bajaJugador(String nombreJugador){
         Jugador j=modeloController.buscarJugador(nombreJugador);
