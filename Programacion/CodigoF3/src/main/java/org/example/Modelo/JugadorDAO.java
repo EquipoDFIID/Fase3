@@ -52,6 +52,7 @@ public class JugadorDAO {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, nombreJugador);
            ResultSet rs= ps.executeQuery();
+
             if (rs.next()) {
                 j.setIdJugador(rs.getInt("ID_JUGADOR"));
                j.setNombre(rs.getString("NOMBRE"));
@@ -63,6 +64,7 @@ public class JugadorDAO {
                 //la linea de abajo puede dar problemas por que no se como se llama la columna del codigo de equipo y ademas el parametro de
                 // "equipo" probablemente este mal
                 j.setEquipo(EquipoDAO.buscarEquipo(rs.getString("EQUIPO")));
+
             }
 
         } catch (SQLException e) {
