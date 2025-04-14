@@ -12,6 +12,9 @@ import java.awt.event.*;
  * Permite seleccionar un jugador desde un comboBox y editar sus datos.
  */
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class VentanaModificarJugador extends JDialog {
@@ -27,8 +30,8 @@ public class VentanaModificarJugador extends JDialog {
     private JTextField jApellido;
     private JTextField jNacionalidad;
     private JTextField jFecha;
+    private JComboBox jEquipo;
     private static VistaController vc;
-    private static VentanaAdministrador ventana;
 
     public VentanaModificarJugador(VistaController vc) {
         this.vc = vc;
@@ -45,7 +48,9 @@ public class VentanaModificarJugador extends JDialog {
         jFecha.setEnabled(false);
         jNickname.setEnabled(false);
         jSueldo.setEnabled(false);
-        llenarComboBox();
+        jEquipo.setEnabled(false);
+        vc.llenarComboBoxJ(cJugador);
+        vc.llenarComboBoxE(jEquipo);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -86,6 +91,7 @@ public class VentanaModificarJugador extends JDialog {
                         jFecha.setEnabled(true);
                         jNickname.setEnabled(true);
                         jSueldo.setEnabled(true);
+                        jEquipo.setEnabled(true);
                     }
                 }
                 if (e.getStateChange() == ItemEvent.DESELECTED) {
@@ -97,6 +103,7 @@ public class VentanaModificarJugador extends JDialog {
                         jFecha.setEnabled(false);
                         jNickname.setEnabled(false);
                         jSueldo.setEnabled(false);
+                        jEquipo.setEnabled(false);
                     }
                 }
             }
@@ -105,8 +112,8 @@ public class VentanaModificarJugador extends JDialog {
 
 
     }
-    public void llenarComboBox(){
-        ArrayList<Jugador> listaJugadores=vc.selectNicknameJugador();
+    /*public void llenarComboBox(){
+        ArrayList<Jugador> listaJugadores=vc.();
         cJugador.removeAllItems();
 
         cJugador.addItem("Selecciona un jugador...");
@@ -116,11 +123,18 @@ public class VentanaModificarJugador extends JDialog {
         }
 
         cJugador.setSelectedIndex(0);
-    }
+    }*/
 
     private void onOK() {
-        // Lógica para modificar al jugador seleccionado
-        // Podés acceder al comboBox con comboBox1.getSelectedItem()
+        Jugador jugador = new Jugador();
+        jugador.setNombre(jNombre.getText());
+        jugador.setApellido(jApellido.getText());
+        jugador.setNacionalidad(jNacionalidad.getText());
+        jugador.setFechaNacimiento(convertirFecha(jFecha.getText()));
+        jugador.setNickname(jNickname.getText());
+        jugador.setSueldo(Double.parseDouble(jSueldo.getText()));
+        jugador.setEquipo(vc.buscarComboBoxE(jEquipo));
+        vc.modificarJugador(jugador, cJugador.getSelectedItem().toString());
         dispose();
     }
 
@@ -134,5 +148,15 @@ public class VentanaModificarJugador extends JDialog {
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
+    }
+
+    private LocalDate convertirFecha(String fechaTexto) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            return LocalDate.parse(fechaTexto, formatter);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "La fecha no tiene el formato válido (dd/mm/aaaa) o es inválida.");
+            return null;
+        }
     }
 }

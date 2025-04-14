@@ -14,20 +14,26 @@ public class JugadorDAO {
 // =============================================
 // == OPERACIONES DE CONSULTA (SELECT)
 // =============================================
-    public ArrayList<Jugador> selectNicknameJugador() {
+    public ArrayList<Jugador> selectObjetosJugador() {
         ArrayList<Jugador> jugadores = new ArrayList<>();
     /**
      * Obtiene una lista de jugadores con su ID y nickname.
      * @return Lista de objetos Jugador con ID y nickname.
      */
         try {
-            String sql = "SELECT nickname FROM JUGADORES";
+            String sql = "SELECT * FROM JUGADORES";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 Jugador j = new Jugador();
-                j.setNickname(rs.getString("nickname"));
+                j.setNombre(rs.getString("NOMBRE"));
+                j.setApellido(rs.getString("APELLIDO"));
+                j.setNacionalidad(rs.getString("NACIONALIDAD"));
+                j.setFechaNacimiento(rs.getDate("FECHA_NAC").toLocalDate());
+                j.setNickname(rs.getString("NICKNAME"));
+                j.setSueldo(rs.getDouble("SUELDO"));
+                j.setEquipo(EquipoDAO.buscarEquipo(rs.getString("ID_EQUIPO")));
                 jugadores.add(j);
             }
 
@@ -45,26 +51,23 @@ public class JugadorDAO {
      * @return Objeto Jugador con los detalles del jugador, o null si no se encuentra.
      */
     public static Jugador buscarJugador(String nombreJugador) {
-       Jugador j=null;
-       j.setNombre(nombreJugador);
+       Jugador j = new Jugador();
+       j.setNickname(nombreJugador);
         try {
-            String sql = "SELECT * FROM jugadores WHERE NOMBRE = ?";
+            String sql = "SELECT * FROM JUGADORES WHERE NICKNAME = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, nombreJugador);
-           ResultSet rs= ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 j.setIdJugador(rs.getInt("ID_JUGADOR"));
-               j.setNombre(rs.getString("NOMBRE"));
-               j.setApellido(rs.getString("APELLIDO"));
-               j.setNacionalidad(rs.getString("NACIONALIDAD"));
+                j.setNombre(rs.getString("NOMBRE"));
+                j.setApellido(rs.getString("APELLIDO"));
+                j.setNacionalidad(rs.getString("NACIONALIDAD"));
                 j.setFechaNacimiento(rs.getDate("FECHA_NAC").toLocalDate());
                 j.setNickname(rs.getString("NICKNAME"));
                 j.setSueldo(rs.getDouble("SUELDO"));
-                //la linea de abajo puede dar problemas por que no se como se llama la columna del codigo de equipo y ademas el parametro de
-                // "equipo" probablemente este mal
                 j.setEquipo(EquipoDAO.buscarEquipo(rs.getString("ID_EQUIPO")));
-
             }
 
         } catch (SQLException e) {
@@ -104,15 +107,15 @@ public class JugadorDAO {
     /**
      * Modifica los detalles de un jugador en la base de datos.
      * @param jugador Objeto Jugador con los nuevos datos.
-     * @param nombreJugador Nombre actual del jugador para identificar el registro a modificar.
+     * @param jugadorAnterior Objeto del jugador para identificar el registro a modificar.
      */
-    public static void modificarJugador(Jugador jugador, String nombreJugador) {
+    public static void modificarJugador(Jugador jugador, Jugador jugadorAnterior) {
         try {
             String sql = "UPDATE JUGADORES SET id_jugador = ?,NOMBRE = ?," +
                          "apellido = ?,nacionalidad = ?,fecha_nac = ?,nickname = ?,sueldo = ?," +
-                         "id_equipo = ? WHERE NOMBRE= ?";
+                         "id_equipo = ? WHERE NICKNAME = ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, jugador.getIdJugador());
+            ps.setInt(1, jugadorAnterior.getIdJugador());
             ps.setString(2, jugador.getNombre());
             ps.setString(3, jugador.getApellido());
             ps.setString(4, jugador.getNacionalidad());
@@ -120,6 +123,7 @@ public class JugadorDAO {
             ps.setString(6, jugador.getNickname());
             ps.setDouble(7, jugador.getSueldo());
             ps.setInt(8, jugador.getEquipo().getIdEquipo());
+            ps.setString(9, jugadorAnterior.getNickname());
             ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
@@ -136,7 +140,7 @@ public class JugadorDAO {
 
     public static void borrarJugador(String nombreJugador) {
         try {
-            String sql = "DELETE FROM JUGADORES WHERE NOMBRE = ?";
+            String sql = "DELETE FROM JUGADORES WHERE NICKNAME = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, nombreJugador);
             ps.executeUpdate();

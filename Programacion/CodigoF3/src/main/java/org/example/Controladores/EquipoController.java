@@ -70,11 +70,11 @@ public class EquipoController {
     public void bajaEquipo(Equipo e) {
         equipoDAO.borrarEquipo(e);
     }
-    public void modificarEquipo(Equipo e, String nombreEquipo) {
-        equipoDAO.modificarEquipo(e, nombreEquipo);
+    public void modificarEquipo(Equipo e, Equipo equipoAnterior) {
+        equipoDAO.modificarEquipo(e, equipoAnterior);
     }
-    public ArrayList<Equipo> selectObjetoEquipo(){
-        return equipoDAO.selectObjetoEquipo();
+    public ArrayList<Equipo> selectObjetosEquipo(){
+        return equipoDAO.selectObjetosEquipo();
     }
    /* public void bajaEquipo() {
         boolean correcto=false;

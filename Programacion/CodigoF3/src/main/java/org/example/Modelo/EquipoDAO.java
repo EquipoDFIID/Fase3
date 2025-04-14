@@ -48,7 +48,7 @@ public class EquipoDAO {
 
 
 
-    public ArrayList<Equipo> selectObjetoEquipo(){
+    public ArrayList<Equipo> selectObjetosEquipo(){
         ArrayList<Equipo> equipos = new ArrayList<>();
 
         try {
@@ -78,13 +78,14 @@ public class EquipoDAO {
      */
 
     public static Equipo buscarEquipo(String nombreEquipo) {
-        Equipo e= null;
+        Equipo e = new Equipo();
         e.setNombre(nombreEquipo);
         try {
             String sql = "SELECT * FROM EQUIPOS WHERE NOMBRE = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, nombreEquipo);
             ResultSet rs = ps.executeQuery();
+
             if (rs.next()) {
                 e.setIdEquipo(rs.getInt("id_equipo"));
                 e.setNombre(rs.getString("nombre"));
@@ -124,17 +125,17 @@ public class EquipoDAO {
     /**
      * Actualiza los datos de un equipo en la base de datos.
      * @param equipo Objeto Equipo con los nuevos datos.
-     * @param nombreEquipo Nombre actual del equipo para identificar el registro a modificar.
+     * @param equipoAnterior Objeto del equipo para identificar el registro a modificar.
      */
 
-    public static void modificarEquipo(Equipo equipo, String nombreEquipo) {
+    public static void modificarEquipo(Equipo equipo, Equipo equipoAnterior) {
         try {
             String sql = "UPDATE EQUIPOS SET id_equipo = ?,NOMBRE = ?,FECHA_FUND = ? WHERE NOMBRE= ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, equipo.getIdEquipo());
+            ps.setInt(1, equipoAnterior.getIdEquipo());
             ps.setString(2, equipo.getNombre());
             ps.setDate(3, Date.valueOf(equipo.getFechaFund()));
-            ps.setString(4, nombreEquipo);
+            ps.setString(4, equipoAnterior.getNombre());
             ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
@@ -151,7 +152,7 @@ public class EquipoDAO {
      */
     public static void borrarEquipo(Equipo e) {
         try {
-            String sql = "DELETE FROM EQUIPOS WHERE ID_EQUIPO = ?";
+            String sql = "DELETE FROM EQUIPOS WHERE NOMBRE = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, e.getNombre());
             ps.executeUpdate();

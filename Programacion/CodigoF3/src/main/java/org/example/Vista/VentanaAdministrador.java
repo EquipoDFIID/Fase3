@@ -67,7 +67,7 @@ public class VentanaAdministrador extends JFrame {
         modificarEquipoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaModificarEquipo ventanaModificarEquipo = new VentanaModificarEquipo(vc, VentanaAdministrador.this);
+                VentanaModificarEquipo ventanaModificarEquipo = new VentanaModificarEquipo(vc);
                 ventanaModificarEquipo.setVisible(true);
             }
         });
