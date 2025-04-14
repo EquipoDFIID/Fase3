@@ -94,4 +94,7 @@ public class ModeloController {
         return usuarioController.selectNombre(nombreUsuario);
     }
 
+    public void crearCuenta(Usuario usuario) {
+        usuarioController.crearCuenta(usuario);
+    }
 }

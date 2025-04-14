@@ -6,6 +6,8 @@ import org.example.Modelo.Jugador;
 import org.example.Modelo.Usuario;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -95,7 +97,6 @@ public class VentanaInicio extends JFrame {
                                     throw new DatoNoValido("El nombre no corresponde a un admin");
                                 }
                             }
-
                         }
                     }
                 } catch (DatoNoValido ex){
@@ -243,19 +244,19 @@ public class VentanaInicio extends JFrame {
         crearCuentaButton.addActionListener(e -> {
             VentanaCrearCuenta ventanaCuenta = new VentanaCrearCuenta(vc);
             ventanaCuenta.setVisible(true);
-            setVisible(false);
+            dispose();
         });
 
         aIniciarSesionButton.addActionListener(e -> {
-            VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc);
+            VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc, aNombre.getText());
             ventanaAdministrador.setVisible(true);
-            setVisible(false);
+            dispose();
         });
 
         uIniciarSesionButton.addActionListener(e -> {
-            VentanaUsuario ventanaUsuario = new VentanaUsuario(vc);
+            VentanaUsuario ventanaUsuario = new VentanaUsuario(vc, uNombre.getText());
             ventanaUsuario.setVisible(true);
-            setVisible(false);
+            dispose();
         });
     }
     /**

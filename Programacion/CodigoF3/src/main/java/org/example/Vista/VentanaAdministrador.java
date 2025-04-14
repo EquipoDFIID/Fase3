@@ -26,14 +26,49 @@ public class VentanaAdministrador extends JFrame {
      * dar de alta, modificar y dar de baja jugadores y equipos, así como
      * introducir resultados en la competición.
      */
-    public VentanaAdministrador(VistaController vc) {
+    public VentanaAdministrador(VistaController vc, String aNombre) {
         this.vc = vc;
         setContentPane(panel1);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("MenuPrincipal");
-        setSize(500,580);
+        setSize(500, 580);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenu Jusuario = new JMenu("Usuario");
+        JMenu JotrasOpciones = new JMenu("Otras opciones");
+
+        JMenuItem Jnombre = new JMenuItem(aNombre);
+        JMenuItem JcambiarUsuario = new JMenuItem("Cambiar de Usuario");
+        JMenuItem Jsalir = new JMenuItem("Salir");
+
+        Jusuario.add(Jnombre);
+        Jusuario.add(JcambiarUsuario);
+        JotrasOpciones.add(Jsalir);
+
+        Jnombre.setEnabled(false);
+
+        menuBar.add(Jusuario);
+        menuBar.add(JotrasOpciones);
+
+        setJMenuBar(menuBar);
+
+        JcambiarUsuario.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                vc.mostrarVentanaInicio();
+            }
+        });
+
+        Jsalir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
 
         altaJugadorButton.addActionListener(new ActionListener() {
             @Override

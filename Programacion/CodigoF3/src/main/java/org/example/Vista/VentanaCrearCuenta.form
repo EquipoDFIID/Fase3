@@ -154,16 +154,6 @@
                   <text value="CLAVE"/>
                 </properties>
               </component>
-              <component id="a0fb2" class="javax.swing.JTextField" binding="tfClave">
-                <constraints>
-                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties>
-                  <background color="-1"/>
-                </properties>
-              </component>
               <component id="fdf38" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
@@ -174,7 +164,7 @@
                   <text value="NOMBRE"/>
                 </properties>
               </component>
-              <component id="70522" class="javax.swing.JTextField" default-binding="true">
+              <component id="70522" class="javax.swing.JTextField" binding="cNombre">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -185,16 +175,6 @@
                   <text value=""/>
                 </properties>
               </component>
-              <component id="81295" class="javax.swing.JTextField" binding="tfClave2">
-                <constraints>
-                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties>
-                  <background color="-1"/>
-                </properties>
-              </component>
               <component id="73c27" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
@@ -203,6 +183,26 @@
                   <font name="Segoe UI Black" size="12" style="0"/>
                   <foreground color="-16777216"/>
                   <text value="REPETIR CLAVE"/>
+                </properties>
+              </component>
+              <component id="14d21" class="javax.swing.JPasswordField" binding="cClave">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <background color="-1"/>
+                </properties>
+              </component>
+              <component id="1ac15" class="javax.swing.JPasswordField" binding="ccClave">
+                <constraints>
+                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <background color="-1"/>
                 </properties>
               </component>
             </children>

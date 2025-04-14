@@ -51,4 +51,20 @@ public class UsuarioDAO {
         }
         return u;
     }
+
+    public void crearUsuario(Usuario usuario){
+        try {
+            String sql = "INSERT INTO USUARIOS (nombre, clave, tipo_usuario, id_usuario) VALUES(?, ?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setString(1, usuario.getNombre());
+            ps.setString(2, usuario.getClave());
+            ps.setString(3, usuario.getTipo_usuario());
+            ps.setInt(4, usuario.getIdUsuario());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+    }
 }

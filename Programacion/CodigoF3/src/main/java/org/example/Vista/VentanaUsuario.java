@@ -20,7 +20,7 @@ public class VentanaUsuario extends JFrame {
     private JButton informacionEquiposButton;
     private VistaController vc;
 
-    public VentanaUsuario(VistaController vc) {
+    public VentanaUsuario(VistaController vc, String uNombre) {
         this.vc = vc;
         setContentPane(panel1);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,6 +28,42 @@ public class VentanaUsuario extends JFrame {
         setSize(500,580);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenu Jusuario = new JMenu("Usuario");
+        JMenu JotrasOpciones = new JMenu("Otras opciones");
+
+        JMenuItem Jnombre = new JMenuItem(uNombre);
+        JMenuItem JcambiarUsuario = new JMenuItem("Cambiar de Usuario");
+        JMenuItem Jsalir = new JMenuItem("Salir");
+
+        Jusuario.add(Jnombre);
+        Jusuario.add(JcambiarUsuario);
+        JotrasOpciones.add(Jsalir);
+
+        Jnombre.setEnabled(false);
+
+        menuBar.add(Jusuario);
+        menuBar.add(JotrasOpciones);
+
+        setJMenuBar(menuBar);
+
+        JcambiarUsuario.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                vc.mostrarVentanaInicio();
+            }
+        });
+
+        Jsalir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
         informacionEquiposButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

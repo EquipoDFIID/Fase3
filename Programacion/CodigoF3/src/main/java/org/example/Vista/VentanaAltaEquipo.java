@@ -5,6 +5,8 @@ import org.example.Modelo.Equipo;
 import org.example.Modelo.Jugador;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -80,8 +82,11 @@ public class VentanaAltaEquipo extends JDialog {
             public void keyReleased(KeyEvent e) {
                 if (validarID()) {
                     eNombre.setEnabled(true);
+                    eID.setBorder(new LineBorder(Color.GREEN, 1));
                 } else {
-                    eNombre.setEnabled(false);                }
+                    eNombre.setEnabled(false);
+                    eID.setBorder(new LineBorder(Color.RED, 1));
+                }
             }
         });
 
@@ -89,8 +94,11 @@ public class VentanaAltaEquipo extends JDialog {
             public void keyReleased(KeyEvent e) {
                 if (validarNombre()) {
                     eFecha.setEnabled(true);
+                    eNombre.setBorder(new LineBorder(Color.GREEN, 1));
+
                 } else {
                     eFecha.setEnabled(false);
+                    eNombre.setBorder(new LineBorder(Color.RED, 1));
                 }
             }
         });
@@ -99,8 +107,10 @@ public class VentanaAltaEquipo extends JDialog {
             public void keyReleased(KeyEvent e) {
                 if (validarFecha()) {
                     buttonOK.setEnabled(true);
+                    eFecha.setBorder(new LineBorder(Color.GREEN, 1));
                 } else {
                     buttonOK.setEnabled(false);
+                    eFecha.setBorder(new LineBorder(Color.RED, 1));
                 }
             }
         });
@@ -115,6 +125,7 @@ public class VentanaAltaEquipo extends JDialog {
                     JOptionPane.showMessageDialog(VentanaAltaEquipo.this, "El ID debe tener exactamente 4 dígitos", "Error", JOptionPane.ERROR_MESSAGE);
                     eID.requestFocus();
                 }
+                eID.setBorder(new LineBorder(Color.BLACK, 1));
             }
         });
 
@@ -128,6 +139,7 @@ public class VentanaAltaEquipo extends JDialog {
                     JOptionPane.showMessageDialog(VentanaAltaEquipo.this, "El nombre no es válido", "Error", JOptionPane.ERROR_MESSAGE);
                     eNombre.requestFocus();
                 }
+                eNombre.setBorder(new LineBorder(Color.BLACK, 1));
             }
         });
 
@@ -141,6 +153,7 @@ public class VentanaAltaEquipo extends JDialog {
                     JOptionPane.showMessageDialog(VentanaAltaEquipo.this, "La fecha no es válida. Formato esperado: dd/mm/yyyy", "Error", JOptionPane.ERROR_MESSAGE);
                     eFecha.requestFocus();
                 }
+                eFecha.setBorder(new LineBorder(Color.BLACK, 1));
             }
         });
     }
