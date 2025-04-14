@@ -39,7 +39,7 @@ public class VentanaAltaJugador extends JDialog {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        llenarComboBox();
+        vc.llenarComboBox(jEquipo);
         inicializarCampos();
 
         // Acciones de botones
@@ -285,18 +285,6 @@ public class VentanaAltaJugador extends JDialog {
         return sueldo.matches("^[0-9]+(\\.[0-9]{1,2})?$");
     }
 
-    public void llenarComboBox() {
-        //hacer en vistaController
-        ArrayList<Equipo> listaEquipos = vc.selectNombreEquipo();
-        jEquipo.removeAllItems();
-        jEquipo.addItem("Selecciona un equipo...");
-        for (Equipo equipo : listaEquipos) {
-            //getIndex
-            jEquipo.addItem(equipo.getNombre());
-        }
-        jEquipo.setSelectedIndex(0);
-    }
-
     private LocalDate convertirFecha(String fechaTexto) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         try {
@@ -316,7 +304,7 @@ public class VentanaAltaJugador extends JDialog {
         j.setFechaNacimiento(convertirFecha(jFecha.getText()));
         j.setNickname(jNickname.getText());
         j.setSueldo(Double.parseDouble(jSueldo.getText()));
-        j.setEquipo((Equipo) jEquipo.getSelectedItem());
+        j.setEquipo(vc.buscarComboBox(jEquipo));
         vc.altaJugador(j);
         dispose();
     }

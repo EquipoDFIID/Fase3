@@ -59,8 +59,8 @@ public class ModeloController {
         this.vc=vc;
     }
 
-    public ArrayList <Equipo> selectNombreEquipo() {
-        return equipoController.selectNombreEquipo();
+    public ArrayList <Equipo> selectObjetoEquipo() {
+        return equipoController.selectObjetoEquipo();
     }
     public ArrayList <Jugador> selectNicknameJugador(){
         return jugadorController.selectNicknameJugador();
