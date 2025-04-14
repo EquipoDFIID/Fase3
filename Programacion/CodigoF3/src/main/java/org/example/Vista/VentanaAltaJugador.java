@@ -1,17 +1,18 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
+import org.example.Modelo.Equipo;
+import org.example.Modelo.Jugador;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Clase que representa la ventana de alta de jugador.
- * Esta ventana permite al usuario introducir los datos necesarios
- * para registrar un nuevo jugador en la aplicación.
- */
 public class VentanaAltaJugador extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
@@ -24,17 +25,10 @@ public class VentanaAltaJugador extends JDialog {
     private JTextField jApellido;
     private JTextField jNacionalidad;
     private JTextField jFecha;
+    private JComboBox jEquipo;
     private static VistaController vc;
 
-    /**
-     * Constructor de la ventana de alta de jugador.
-     * Inicializa los componentes de la interfaz gráfica, configura el comportamiento
-     * de los botones y maneja las acciones de cierre de la ventana.
-     * @param vc El controlador de la vista, que contiene la lógica de la aplicación.
-     */
-
     private static VentanaAdministrador ventana;
-
 
     public VentanaAltaJugador(VistaController vc) {
         this.vc = vc;
@@ -45,21 +39,13 @@ public class VentanaAltaJugador extends JDialog {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        buttonOK.setEnabled(false);
+        llenarComboBox();
+        inicializarCampos();
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
+        // Acciones de botones
+        buttonOK.addActionListener(e -> onOK());
+        buttonCancel.addActionListener(e -> onCancel());
 
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
-
-        // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -67,28 +53,114 @@ public class VentanaAltaJugador extends JDialog {
             }
         });
 
-        // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
+        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+                JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+        agregarListeners();
+    }
+
+    private void inicializarCampos() {
+        jID.setEnabled(true);
+        jNombre.setEnabled(false);
+        jApellido.setEnabled(false);
+        jNacionalidad.setEnabled(false);
+        jFecha.setEnabled(false);
+        jNickname.setEnabled(false);
+        jSueldo.setEnabled(false);
+        jEquipo.setEnabled(false);
+        buttonOK.setEnabled(false);
+    }
+
+    private void agregarListeners() {
+        jID.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                if (validarID()) {
+                    jNombre.setEnabled(true);
+                } else {
+                    jNombre.setEnabled(false);                }
             }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        });
+
+        jNombre.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                if (validarNombre()) {
+                    jApellido.setEnabled(true);
+                } else {
+                    jApellido.setEnabled(false);
+                }
+            }
+        });
+
+        jApellido.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                if (validarApellido()) {
+                    jNacionalidad.setEnabled(true);
+                } else {
+                    jNacionalidad.setEnabled(false);
+                }
+            }
+        });
+
+        jNacionalidad.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                if (validarNacionalidad()) {
+                    jFecha.setEnabled(true);
+                } else {
+                    jFecha.setEnabled(false);
+                }
+            }
+        });
+
+        jFecha.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                if (validarFecha()) {
+                    jNickname.setEnabled(true);
+                } else {
+                    jNickname.setEnabled(false);
+                }
+            }
+        });
+
+        jNickname.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                if (validarNickname()) {
+                    jSueldo.setEnabled(true);
+                } else {
+                    jSueldo.setEnabled(false);
+                }
+            }
+        });
+
+        jSueldo.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                if (validarSueldo()) {
+                    jEquipo.setEnabled(true);
+                } else {
+                    jEquipo.setEnabled(false);
+                }
+            }
+        });
+
+        jEquipo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (jEquipo.isEnabled() && jEquipo.getSelectedIndex() > 0) {
+                    buttonOK.setEnabled(true);
+                } else {
+                    buttonOK.setEnabled(false);
+                }
+            }
+        });
 
         jID.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                super.focusLost(e);
-
                 if (jID.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "El id no puede estar vacío");
+                    JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El campo ID no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
                     jID.requestFocus();
-                } else {
-                    Pattern p = Pattern.compile("^[0-9]{4}$");
-                    Matcher m = p.matcher(jID.getText());
-                    if (!m.matches()) {
-                        JOptionPane.showMessageDialog(null, "El id debe tener 4 dígitos");
-                        jID.requestFocus();
-                    }
+                } else if (!validarID()) {
+                    JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El ID debe tener exactamente 4 dígitos", "Error", JOptionPane.ERROR_MESSAGE);
+                    jID.requestFocus();
                 }
             }
         });
@@ -96,18 +168,12 @@ public class VentanaAltaJugador extends JDialog {
         jNombre.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                super.focusLost(e);
-
                 if (jNombre.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío");
+                    JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El campo nombre no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
                     jNombre.requestFocus();
-                } else {
-                    Pattern p = Pattern.compile("^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]*$");
-                    Matcher m = p.matcher(jNombre.getText());
-                    if (!m.matches()) {
-                        JOptionPane.showMessageDialog(null, "El nombre debe comenzar por una mayúscula");
-                        jNombre.requestFocus();
-                    }
+                } else if (!validarNombre()) {
+                    JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El nombre no es válido", "Error", JOptionPane.ERROR_MESSAGE);
+                    jNombre.requestFocus();
                 }
             }
         });
@@ -115,18 +181,12 @@ public class VentanaAltaJugador extends JDialog {
         jApellido.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                if (e.isTemporary()) return;
-
                 if (jApellido.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "El apellido no puede estar vacío");
+                    JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El campo apellido no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
                     jApellido.requestFocus();
-                } else {
-                    Pattern p = Pattern.compile("^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+$");
-                    Matcher m = p.matcher(jApellido.getText());
-                    if (!m.matches()) {
-                        JOptionPane.showMessageDialog(null, "El apellido debe comenzar por una mayúscula y solo tener letras");
-                        jApellido.requestFocus();
-                    }
+                } else if (!validarApellido()) {
+                    JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El apellido no es válido", "Error", JOptionPane.ERROR_MESSAGE);
+                    jApellido.requestFocus();
                 }
             }
         });
@@ -134,18 +194,12 @@ public class VentanaAltaJugador extends JDialog {
         jNacionalidad.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                if (e.isTemporary()) return;
-
                 if (jNacionalidad.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "La nacionalidad no puede estar vacía");
+                    JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El campo nacionalidad no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
                     jNacionalidad.requestFocus();
-                } else {
-                    Pattern p = Pattern.compile("^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+$");
-                    Matcher m = p.matcher(jNacionalidad.getText());
-                    if (!m.matches()) {
-                        JOptionPane.showMessageDialog(null, "La nacionalidad debe comenzar por una mayúscula y solo tener letras");
-                        jNacionalidad.requestFocus();
-                    }
+                } else if (!validarNacionalidad()) {
+                    JOptionPane.showMessageDialog(VentanaAltaJugador.this, "La nacionalidad no es válida", "Error", JOptionPane.ERROR_MESSAGE);
+                    jNacionalidad.requestFocus();
                 }
             }
         });
@@ -153,18 +207,12 @@ public class VentanaAltaJugador extends JDialog {
         jFecha.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                super.focusLost(e);
-
                 if (jFecha.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "La fecha no puede estar vacía");
+                    JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El campo fecha no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
                     jFecha.requestFocus();
-                } else {
-                    Pattern p = Pattern.compile("^[0-9]{2}/[0-9]{2}/[0-9]{4}$");
-                    Matcher m = p.matcher(jFecha.getText());
-                    if (!m.matches()) {
-                        JOptionPane.showMessageDialog(null, "La fecha debe tener el formato dd/mm/aaaa");
-                        jFecha.requestFocus();
-                    }
+                } else if (!validarFecha()) {
+                    JOptionPane.showMessageDialog(VentanaAltaJugador.this, "La fecha no es válida. Formato esperado: dd/mm/yyyy", "Error", JOptionPane.ERROR_MESSAGE);
+                    jFecha.requestFocus();
                 }
             }
         });
@@ -172,65 +220,104 @@ public class VentanaAltaJugador extends JDialog {
         jNickname.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                if (e.isTemporary()) return;
-
                 if (jNickname.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "El nickname no puede estar vacío");
+                    JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El campo nickname no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
                     jNickname.requestFocus();
-                } else {
-                    Pattern p = Pattern.compile("^[a-zA-Z0-9_]{3,15}$");
-                    Matcher m = p.matcher(jNickname.getText());
-                    if (!m.matches()) {
-                        JOptionPane.showMessageDialog(null, "El nickname debe tener entre 3 y 15 caracteres (letras, números o guion bajo)");
-                        jNickname.requestFocus();
-                    }
+                } else if (!validarNickname()) {
+                    JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El nickname debe tener entre 3 y 15 caracteres alfanuméricos o guiones bajos", "Error", JOptionPane.ERROR_MESSAGE);
+                    jNickname.requestFocus();
                 }
             }
         });
-
 
         jSueldo.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                if (e.isTemporary()) return;
-
                 if (jSueldo.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "El sueldo no puede estar vacío");
+                    JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El campo sueldo no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
                     jSueldo.requestFocus();
-                } else {
-                    Pattern p = Pattern.compile("^[0-9]+(\\.[0-9]{1,2})?$");
-                    Matcher m = p.matcher(jSueldo.getText());
-                    if (!m.matches()) {
-                        JOptionPane.showMessageDialog(null, "El sueldo debe ser un número válido (puede tener decimales)");
-                        jSueldo.requestFocus();
-                    }
+                } else if (!validarSueldo()) {
+                    JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El sueldo debe ser un número válido (puede tener hasta 2 decimales)", "Error", JOptionPane.ERROR_MESSAGE);
+                    jSueldo.requestFocus();
                 }
-
-                buttonOK.setEnabled(true);
             }
         });
+    }
 
-        jSueldo.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                String texto = jSueldo.getText();
-                Pattern p = Pattern.compile("^[0-9]+(\\.[0-9]{1,2})?$");
-                Matcher m = p.matcher(texto);
+    private boolean validarID() {
+        String id = jID.getText();
+        return id.matches("^[0-9]{4}$");
+    }
 
-                if (m.matches()) {
-                    buttonOK.setEnabled(true);
-                } else {
-                    buttonOK.setEnabled(false);
-                }
+    private boolean validarNombre() {
+        String nombre = jNombre.getText();
+        return nombre.matches("^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+$");
+    }
 
-            }
-        });
+    private boolean validarApellido() {
+        String apellido = jApellido.getText();
+        return apellido.matches("^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+$");
+    }
 
+    private boolean validarNacionalidad() {
+        String nacionalidad = jNacionalidad.getText();
+        return nacionalidad.matches("^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+$");
+    }
 
+    private boolean validarFecha() {
+        String fechaTexto = jFecha.getText();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            LocalDate.parse(fechaTexto, formatter);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
+    private boolean validarNickname() {
+        String nick = jNickname.getText();
+        return nick.matches("^[a-zA-Z0-9_]{3,15}$");
+    }
+
+    private boolean validarSueldo() {
+        String sueldo = jSueldo.getText();
+        return sueldo.matches("^[0-9]+(\\.[0-9]{1,2})?$");
+    }
+
+    public void llenarComboBox() {
+        //hacer en vistaController
+        ArrayList<Equipo> listaEquipos = vc.selectNombreEquipo();
+        jEquipo.removeAllItems();
+        jEquipo.addItem("Selecciona un equipo...");
+        for (Equipo equipo : listaEquipos) {
+            //getIndex
+            jEquipo.addItem(equipo.getNombre());
+        }
+        jEquipo.setSelectedIndex(0);
+    }
+
+    private LocalDate convertirFecha(String fechaTexto) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            return LocalDate.parse(fechaTexto, formatter);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "La fecha no tiene el formato válido (dd/mm/aaaa) o es inválida.");
+            return null;
+        }
     }
 
     private void onOK() {
-        // add your code here
+        Jugador j = new Jugador();
+        j.setIdJugador(Integer.parseInt(jID.getText()));
+        j.setNombre(jNombre.getText());
+        j.setApellido(jApellido.getText());
+        j.setNacionalidad(jNacionalidad.getText());
+        j.setFechaNacimiento(convertirFecha(jFecha.getText()));
+        j.setNickname(jNickname.getText());
+        j.setSueldo(Double.parseDouble(jSueldo.getText()));
+        j.setEquipo((Equipo) jEquipo.getSelectedItem());
+        vc.altaJugador(j);
         dispose();
     }
 
