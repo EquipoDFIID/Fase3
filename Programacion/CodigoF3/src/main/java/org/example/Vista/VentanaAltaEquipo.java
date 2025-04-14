@@ -1,9 +1,14 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
+import org.example.Modelo.Equipo;
+import org.example.Modelo.Jugador;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,7 +37,7 @@ public class VentanaAltaEquipo extends JDialog {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        buttonOK.setEnabled(false);
+        inicializarCampos();
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -61,52 +66,38 @@ public class VentanaAltaEquipo extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        eID.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                super.focusLost(e);
+        agregarListeners();
+    }
 
-                if (eID.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "El id no puede estar vacío");
-                    eID.requestFocus();
+    private void inicializarCampos() {
+        buttonOK.setEnabled(false);
+        eNombre.setEnabled(false);
+        eFecha.setEnabled(false);
+    }
+
+    private void agregarListeners() {
+        eID.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                if (validarID()) {
+                    eNombre.setEnabled(true);
                 } else {
-                    Pattern p = Pattern.compile("^[0-9]{4}$");
-                    Matcher m = p.matcher(eID.getText());
-                    if (!m.matches()) {
-                        JOptionPane.showMessageDialog(null, "El id debe tener 4 dígitos");
-                        eID.requestFocus();
-                    }
-                }
+                    eNombre.setEnabled(false);                }
             }
         });
 
-        eNombre.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                super.focusLost(e);
-
-                if (eNombre.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío");
-                    eNombre.requestFocus();
+        eNombre.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                if (validarNombre()) {
+                    eFecha.setEnabled(true);
                 } else {
-                    Pattern p = Pattern.compile("^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]*$");
-                    Matcher m = p.matcher(eNombre.getText());
-                    if (!m.matches()) {
-                        JOptionPane.showMessageDialog(null, "El nombre debe comenzar por una mayúscula");
-                        eNombre.requestFocus();
-                    }
+                    eFecha.setEnabled(false);
                 }
             }
         });
 
         eFecha.addKeyListener(new KeyAdapter() {
-            @Override
             public void keyReleased(KeyEvent e) {
-                String texto = eFecha.getText();
-                Pattern p = Pattern.compile("^[0-9]{2}/[0-9]{2}/[0-9]{4}$");
-                Matcher m = p.matcher(texto);
-
-                if (m.matches()) {
+                if (validarFecha()) {
                     buttonOK.setEnabled(true);
                 } else {
                     buttonOK.setEnabled(false);
@@ -114,10 +105,83 @@ public class VentanaAltaEquipo extends JDialog {
             }
         });
 
+        eID.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (eID.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(VentanaAltaEquipo.this, "El campo ID no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+                    eID.requestFocus();
+                } else if (!validarID()) {
+                    JOptionPane.showMessageDialog(VentanaAltaEquipo.this, "El ID debe tener exactamente 4 dígitos", "Error", JOptionPane.ERROR_MESSAGE);
+                    eID.requestFocus();
+                }
+            }
+        });
+
+        eNombre.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (eNombre.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(VentanaAltaEquipo.this, "El campo nombre no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+                    eNombre.requestFocus();
+                } else if (!validarNombre()) {
+                    JOptionPane.showMessageDialog(VentanaAltaEquipo.this, "El nombre no es válido", "Error", JOptionPane.ERROR_MESSAGE);
+                    eNombre.requestFocus();
+                }
+            }
+        });
+
+        eFecha.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (eFecha.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(VentanaAltaEquipo.this, "El campo fecha no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+                    eFecha.requestFocus();
+                } else if (!validarFecha()) {
+                    JOptionPane.showMessageDialog(VentanaAltaEquipo.this, "La fecha no es válida. Formato esperado: dd/mm/yyyy", "Error", JOptionPane.ERROR_MESSAGE);
+                    eFecha.requestFocus();
+                }
+            }
+        });
+    }
+
+    private boolean validarID() {
+        String id = eID.getText();
+        return id.matches("^[0-9]{4}$");
+    }
+
+    private boolean validarNombre() {
+        String nombre = eNombre.getText();
+        return nombre.matches("^[A-ZÁÉÍÓÚÑa-záéíóúñ]+$");
+    }
+
+    private boolean validarFecha() {
+        String fechaTexto = eFecha.getText();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            LocalDate.parse(fechaTexto, formatter);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
+    private LocalDate convertirFecha(String fechaTexto) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            return LocalDate.parse(fechaTexto, formatter);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "La fecha no tiene el formato válido (dd/mm/aaaa) o es inválida.");
+            return null;
+        }
     }
 
     private void onOK() {
-        // add your code here
+        Equipo e = new Equipo();
+        e.setIdEquipo(Integer.parseInt(eID.getText()));
+        e.setNombre(eNombre.getText());
+        e.setFechaFund(convertirFecha(eFecha.getText()));
+        vc.altaEquipo(e);
         dispose();
     }
 
