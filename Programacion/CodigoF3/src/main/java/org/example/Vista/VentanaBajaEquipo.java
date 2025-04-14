@@ -28,7 +28,7 @@ public class VentanaBajaEquipo extends JDialog {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        vc.llenarComboBox(cNombre);
+        vc.llenarComboBoxE(cNombre);
         buttonOK.setEnabled(false); // Asegurarse de que esté desactivado inicialmente
 
         buttonOK.addActionListener(new ActionListener() {
@@ -70,7 +70,7 @@ public class VentanaBajaEquipo extends JDialog {
     }
 
     private void onOK() {
-        // Aquí puedes agregar lógica de confirmación o baja del equipo
+        vc.bajaEquipo(cNombre.getSelectedItem().toString());
         dispose();
     }
 

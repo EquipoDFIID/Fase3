@@ -59,11 +59,10 @@ public class ModeloController {
         this.vc=vc;
     }
 
-    public ArrayList <Equipo> selectObjetoEquipo() {
-        return equipoController.selectObjetoEquipo();
+    public ArrayList <Equipo> selectObjetosEquipo() {
+        return equipoController.selectObjetosEquipo();
     }
-    public ArrayList <Jugador> selectNicknameJugador(){
-        return jugadorController.selectNicknameJugador();
+    public ArrayList <Jugador> selectObjetosJugador() {return jugadorController.selectObjetosJugador();
     }
 
     public Jugador buscarJugador(String nombreJugador) {
@@ -76,8 +75,8 @@ public class ModeloController {
     public void altaEquipo(Equipo e){
         equipoController.altaEquipo(e);
     }
-    public void modificarEquipo(Equipo e, String nombreEquipo) {
-        equipoController.modificarEquipo(e, nombreEquipo);
+    public void modificarEquipo(Equipo e, Equipo equipoAnterior) {
+        equipoController.modificarEquipo(e, equipoAnterior);
     }
     public void bajaEquipo(Equipo e) {
         equipoController.bajaEquipo(e);
@@ -88,8 +87,8 @@ public class ModeloController {
     public void bajaJugador( String nombreJugador) {
         jugadorController.bajaJugador( nombreJugador);
     }
-    public void modificarJugador(Jugador j, String nombreJugador) {
-        jugadorController.modificarJugador(j, nombreJugador);
+    public void modificarJugador(Jugador jugador, Jugador jugadorAnterior) {
+        jugadorController.modificarJugador(jugador, jugadorAnterior);
     }
     public Usuario selectNombre(String nombreUsuario) {
         return usuarioController.selectNombre(nombreUsuario);

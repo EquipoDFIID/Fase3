@@ -27,15 +27,15 @@ public class JugadorController {
     public void bajaJugador( String nombreJugador) {
         jugadorDAO.borrarJugador(nombreJugador);
     }
-    public void modificarJugador(Jugador j, String nombreJugador) {
-        jugadorDAO.modificarJugador(j, nombreJugador);
+    public void modificarJugador(Jugador jugador, Jugador jugadorAnterior) {
+        jugadorDAO.modificarJugador(jugador, jugadorAnterior);
     }
     public Jugador buscarJugador(String nombreJugador) {
         return jugadorDAO.buscarJugador(nombreJugador);
     }
 
-    public ArrayList<Jugador> selectNicknameJugador(){
-        return jugadorDAO.selectNicknameJugador();
+    public ArrayList<Jugador> selectObjetosJugador(){
+        return jugadorDAO.selectObjetosJugador();
     }
 
 

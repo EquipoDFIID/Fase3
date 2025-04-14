@@ -17,6 +17,7 @@ public class VistaController {
     private VentanaUsuario ventanaUsuario;
     private ModeloController modeloController;
     private ArrayList<Equipo> listaEquipos = new ArrayList<>();
+    private ArrayList<Jugador> listaJugadores = new ArrayList<>();
 
     public VistaController(ModeloController modeloController) {
         this.modeloController = modeloController;
@@ -39,13 +40,12 @@ public class VistaController {
     }
     public void bajaEquipo(String nombreEquipo){
         Equipo e=modeloController.buscarEquipo(nombreEquipo);
-        if(e!=null)
-            modeloController.bajaEquipo(e);
+        if(e!=null) modeloController.bajaEquipo(e);
     }
-    public void modificarEquipo(String nombreEquipo){
-        Equipo e=modeloController.buscarEquipo(nombreEquipo);
-        if(e!=null){
-            modeloController.modificarEquipo(e, nombreEquipo);
+    public void modificarEquipo(Equipo equipo, String nombreEquipo){
+        Equipo equipoAnterior = modeloController.buscarEquipo(nombreEquipo);
+        if(equipoAnterior!=null){
+            modeloController.modificarEquipo(equipo, equipoAnterior);
         }
 
     }
@@ -61,27 +61,27 @@ public class VistaController {
     }
 
 
-    /*public void bajaJugador(String nombreJugador){
+    public void bajaJugador(String nombreJugador){
         Jugador j=modeloController.buscarJugador(nombreJugador);
         if(j!=null)
             modeloController.bajaJugador(nombreJugador);
     }
 
-    public void modificarJugador(String nombreJugador){
-        Jugador j=modeloController.buscarJugador(nombreJugador);
-        if(j!=null)
-            modeloController.modificarJugador(j, nombreJugador);
-    }*/
+    public void modificarJugador(Jugador jugador, String nombreJugador){
+        Jugador jugadorAnterior = modeloController.buscarJugador(nombreJugador);
+        if(jugadorAnterior!=null)
+            modeloController.modificarJugador(jugador, jugadorAnterior);
+    }
 
     public void generarJornada(){}
 
     public void generarEnfrentamientos(){}
 
     public void rellenarEquipos(){
-        listaEquipos = modeloController.selectObjetoEquipo();
+        listaEquipos = modeloController.selectObjetosEquipo();
     }
-    public ArrayList <Jugador> selectNicknameJugador(){
-        return modeloController.selectNicknameJugador();
+    public void rellenarJugadores(){
+        listaJugadores = modeloController.selectObjetosJugador();
     }
 
    /* public void prueba(){
@@ -91,7 +91,7 @@ public class VistaController {
        equipos.add(equipo);
     }*/
 
-    public void llenarComboBox(JComboBox jEquipo) {
+    public void llenarComboBoxE(JComboBox jEquipo) {
         rellenarEquipos();
         jEquipo.removeAllItems();
         jEquipo.addItem("Selecciona un equipo...");
@@ -102,7 +102,18 @@ public class VistaController {
         jEquipo.setSelectedIndex(0);
     }
 
-    public Equipo buscarComboBox(JComboBox jEquipo) {
+    public void llenarComboBoxJ(JComboBox jJugador) {
+        rellenarJugadores();
+        jJugador.removeAllItems();
+        jJugador.addItem("Selecciona un jugador...");
+        for (Jugador jugador : listaJugadores) {
+            //getIndex
+            jJugador.addItem(jugador.getNickname());
+        }
+        jJugador.setSelectedIndex(0);
+    }
+
+    public Equipo buscarComboBoxE(JComboBox jEquipo) {
         int posicion = jEquipo.getSelectedIndex();
         return listaEquipos.get(posicion - 1);
     }

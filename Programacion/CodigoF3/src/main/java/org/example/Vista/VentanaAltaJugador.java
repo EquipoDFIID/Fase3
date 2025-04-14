@@ -39,7 +39,7 @@ public class VentanaAltaJugador extends JDialog {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        vc.llenarComboBox(jEquipo);
+        vc.llenarComboBoxE(jEquipo);
         inicializarCampos();
 
         // Acciones de botones
@@ -304,7 +304,7 @@ public class VentanaAltaJugador extends JDialog {
         j.setFechaNacimiento(convertirFecha(jFecha.getText()));
         j.setNickname(jNickname.getText());
         j.setSueldo(Double.parseDouble(jSueldo.getText()));
-        j.setEquipo(vc.buscarComboBox(jEquipo));
+        j.setEquipo(vc.buscarComboBoxE(jEquipo));
         vc.altaJugador(j);
         dispose();
     }
