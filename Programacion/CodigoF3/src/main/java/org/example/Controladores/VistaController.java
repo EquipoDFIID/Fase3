@@ -24,17 +24,12 @@ public class VistaController {
         ventanaInicio = new VentanaInicio(this);
         ventanaInicio.setVisible(true);
     }
-    public void mostrarAdministrador(){
-        ventanaAdministrador = new VentanaAdministrador(this);
-        ventanaAdministrador.setVisible(true);
-        ventanaInicio.setVisible(false);
+
+    public void mostrarVentanaInicio(){
+        ventanaInicio = new VentanaInicio(this);
+        ventanaInicio.setVisible(true);
     }
 
-    public void mostrarUsuario(){
-        ventanaUsuario = new VentanaUsuario(this);
-        ventanaUsuario.setVisible(true);
-        ventanaInicio.setVisible(false);
-    }
     public void altaEquipo(Equipo e){
          modeloController.altaEquipo(e);
     }
@@ -116,5 +111,9 @@ public class VistaController {
     public Equipo buscarComboBoxE(JComboBox jEquipo) {
         int posicion = jEquipo.getSelectedIndex();
         return listaEquipos.get(posicion - 1);
+    }
+
+    public void crearCuenta(Usuario usuario){
+        modeloController.crearCuenta(usuario);
     }
 }

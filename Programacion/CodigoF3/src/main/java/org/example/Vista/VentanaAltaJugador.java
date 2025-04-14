@@ -5,6 +5,8 @@ import org.example.Modelo.Equipo;
 import org.example.Modelo.Jugador;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -76,8 +78,11 @@ public class VentanaAltaJugador extends JDialog {
             public void keyReleased(KeyEvent e) {
                 if (validarID()) {
                     jNombre.setEnabled(true);
+                    jID.setBorder(new LineBorder(Color.GREEN, 1));
                 } else {
-                    jNombre.setEnabled(false);                }
+                    jNombre.setEnabled(false);
+                    jID.setBorder(new LineBorder(Color.RED, 1));
+                }
             }
         });
 
@@ -85,8 +90,10 @@ public class VentanaAltaJugador extends JDialog {
             public void keyReleased(KeyEvent e) {
                 if (validarNombre()) {
                     jApellido.setEnabled(true);
+                    jNombre.setBorder(new LineBorder(Color.GREEN, 1));
                 } else {
                     jApellido.setEnabled(false);
+                    jNombre.setBorder(new LineBorder(Color.RED, 1));
                 }
             }
         });
@@ -95,8 +102,10 @@ public class VentanaAltaJugador extends JDialog {
             public void keyReleased(KeyEvent e) {
                 if (validarApellido()) {
                     jNacionalidad.setEnabled(true);
+                    jApellido.setBorder(new LineBorder(Color.GREEN, 1));
                 } else {
                     jNacionalidad.setEnabled(false);
+                    jApellido.setBorder(new LineBorder(Color.RED, 1));
                 }
             }
         });
@@ -105,8 +114,10 @@ public class VentanaAltaJugador extends JDialog {
             public void keyReleased(KeyEvent e) {
                 if (validarNacionalidad()) {
                     jFecha.setEnabled(true);
+                    jNacionalidad.setBorder(new LineBorder(Color.GREEN, 1));
                 } else {
                     jFecha.setEnabled(false);
+                    jNacionalidad.setBorder(new LineBorder(Color.RED, 1));
                 }
             }
         });
@@ -115,8 +126,12 @@ public class VentanaAltaJugador extends JDialog {
             public void keyReleased(KeyEvent e) {
                 if (validarFecha()) {
                     jNickname.setEnabled(true);
+                    jFecha.setBorder(new LineBorder(Color.GREEN, 1));
+
                 } else {
                     jNickname.setEnabled(false);
+                    jFecha.setBorder(new LineBorder(Color.RED, 1));
+
                 }
             }
         });
@@ -125,8 +140,12 @@ public class VentanaAltaJugador extends JDialog {
             public void keyReleased(KeyEvent e) {
                 if (validarNickname()) {
                     jSueldo.setEnabled(true);
+                    jNickname.setBorder(new LineBorder(Color.GREEN, 1));
+
                 } else {
                     jSueldo.setEnabled(false);
+                    jNickname.setBorder(new LineBorder(Color.RED, 1));
+
                 }
             }
         });
@@ -135,8 +154,11 @@ public class VentanaAltaJugador extends JDialog {
             public void keyReleased(KeyEvent e) {
                 if (validarSueldo()) {
                     jEquipo.setEnabled(true);
+                    jSueldo.setBorder(new LineBorder(Color.GREEN, 1));
+
                 } else {
                     jEquipo.setEnabled(false);
+                    jSueldo.setBorder(new LineBorder(Color.RED, 1));
                 }
             }
         });
@@ -146,8 +168,10 @@ public class VentanaAltaJugador extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 if (jEquipo.isEnabled() && jEquipo.getSelectedIndex() > 0) {
                     buttonOK.setEnabled(true);
+                    jEquipo.setBorder(new LineBorder(Color.black, 1));
                 } else {
                     buttonOK.setEnabled(false);
+                    jEquipo.setBorder(new LineBorder(Color.RED, 1));
                 }
             }
         });
@@ -162,6 +186,7 @@ public class VentanaAltaJugador extends JDialog {
                     JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El ID debe tener exactamente 4 dígitos", "Error", JOptionPane.ERROR_MESSAGE);
                     jID.requestFocus();
                 }
+                jID.setBorder(new LineBorder(Color.black, 1));
             }
         });
 
@@ -175,6 +200,7 @@ public class VentanaAltaJugador extends JDialog {
                     JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El nombre no es válido", "Error", JOptionPane.ERROR_MESSAGE);
                     jNombre.requestFocus();
                 }
+                jNombre.setBorder(new LineBorder(Color.black, 1));
             }
         });
 
@@ -188,6 +214,7 @@ public class VentanaAltaJugador extends JDialog {
                     JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El apellido no es válido", "Error", JOptionPane.ERROR_MESSAGE);
                     jApellido.requestFocus();
                 }
+                jApellido.setBorder(new LineBorder(Color.black, 1));
             }
         });
 
@@ -201,6 +228,7 @@ public class VentanaAltaJugador extends JDialog {
                     JOptionPane.showMessageDialog(VentanaAltaJugador.this, "La nacionalidad no es válida", "Error", JOptionPane.ERROR_MESSAGE);
                     jNacionalidad.requestFocus();
                 }
+                jNacionalidad.setBorder(new LineBorder(Color.black, 1));
             }
         });
 
@@ -214,6 +242,7 @@ public class VentanaAltaJugador extends JDialog {
                     JOptionPane.showMessageDialog(VentanaAltaJugador.this, "La fecha no es válida. Formato esperado: dd/mm/yyyy", "Error", JOptionPane.ERROR_MESSAGE);
                     jFecha.requestFocus();
                 }
+                jFecha.setBorder(new LineBorder(Color.black, 1));
             }
         });
 
@@ -227,6 +256,7 @@ public class VentanaAltaJugador extends JDialog {
                     JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El nickname debe tener entre 3 y 15 caracteres alfanuméricos o guiones bajos", "Error", JOptionPane.ERROR_MESSAGE);
                     jNickname.requestFocus();
                 }
+                jNickname.setBorder(new LineBorder(Color.black, 1));
             }
         });
 
@@ -240,6 +270,7 @@ public class VentanaAltaJugador extends JDialog {
                     JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El sueldo debe ser un número válido (puede tener hasta 2 decimales)", "Error", JOptionPane.ERROR_MESSAGE);
                     jSueldo.requestFocus();
                 }
+                jSueldo.setBorder(new LineBorder(Color.black, 1));
             }
         });
     }

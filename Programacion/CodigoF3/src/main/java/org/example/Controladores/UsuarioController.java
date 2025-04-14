@@ -13,4 +13,7 @@ public class UsuarioController {
         return usuarioDAO.selectNombre(nombreJugador);
     }
 
+    public void crearCuenta(Usuario usuario){
+        usuarioDAO.crearUsuario(usuario);
+    }
 }
