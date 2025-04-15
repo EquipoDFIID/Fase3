@@ -14,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,6 +24,26 @@ public class EnfrentamientoController {
 
     public EnfrentamientoController(EnfrentamientoDAO enfrentamientoDAO) {
     }
+
+
+    public List<Enfrentamiento> generarEnfrentamientos(List<Equipo> equipos) {
+        List<Enfrentamiento> enfrentamientos = new ArrayList<>();
+        List<Equipo> disponibles = new ArrayList<>(equipos);
+        Random rand = new Random();
+
+        while (disponibles.size() >= 2) {
+            Equipo atacante = disponibles.remove(rand.nextInt(disponibles.size()));
+            Equipo defensor;
+            do {
+                defensor = equipos.get(rand.nextInt(equipos.size()));
+            } while (defensor == atacante);
+
+            enfrentamientos.add(new Enfrentamiento(atacante, defensor));
+        }
+
+        return enfrentamientos;
+    }
+
 
   /*public void generarEnfrentamientos() {
         StringBuilder sb = new StringBuilder();
