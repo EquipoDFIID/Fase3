@@ -76,6 +76,14 @@ public class EquipoController {
     public ArrayList<Equipo> selectNombreEquipo(){
         return equipoDAO.selectNombreEquipo();
     }
+
+    public int selectCountEquipos() {
+        return equipoDAO.selectCountEquipos();
+    }
+
+    public ArrayList selectAllEquipos() {
+        return equipoDAO.selectAllEquipo();
+    }
    /* public void bajaEquipo() {
         boolean correcto=false;
         String codigo="";

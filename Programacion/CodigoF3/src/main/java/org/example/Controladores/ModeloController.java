@@ -5,6 +5,7 @@ import org.example.Modelo.*;
 import java.sql.Connection;
 import java.sql.Wrapper;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ModeloController {
 
@@ -93,6 +94,31 @@ public class ModeloController {
     }
     public Usuario selectNombre(String nombreUsuario) {
         return usuarioController.selectNombre(nombreUsuario);
+    }
+
+    public void inscripcionCerrada(){
+        int numeroEquipos = equipoController.selectCountEquipos() - 1;
+        ArrayList<Equipo> equipos = equipoController.selectAllEquipos();
+        for (int i = 0; i < numeroEquipos; i++) {
+            jornadaController.crearJornada();
+            for(int o = 0; o < numeroEquipos / 2; o++) {
+                Equipo atacante = selecionarEquipoRandom(equipos);
+                Equipo defensor = selecionarEquipoRandom(equipos);
+                enfrentamientoController.crearEnfrentamiento(atacante,defensor);
+            }
+
+        }
+
+    }
+
+    private Equipo selecionarEquipoRandom(ArrayList<Equipo> equipos) {
+        Random random = new Random();
+        int indiceAleatorio = random.nextInt(equipos.size());
+
+        // Obtener y remover el equipo seleccionado para evitar repeticiones
+        Equipo equipoSeleccionado = equipos.remove(indiceAleatorio);
+
+        return equipoSeleccionado;
     }
 
 }
