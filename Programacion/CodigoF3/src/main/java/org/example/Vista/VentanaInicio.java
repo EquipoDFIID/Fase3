@@ -178,6 +178,8 @@ public class VentanaInicio extends JFrame {
             }
         });
 
+
+
         uNombre.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
@@ -257,6 +259,18 @@ public class VentanaInicio extends JFrame {
             VentanaUsuario ventanaUsuario = new VentanaUsuario(vc, uNombre.getText());
             ventanaUsuario.setVisible(true);
             dispose();
+        });
+        uNombre.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                super.keyReleased(e);
+
+                if (!uNombre.getText().isEmpty()) {
+                    crearCuentaButton.setEnabled(false);
+                } else {
+                    crearCuentaButton.setEnabled(true);
+                }
+            }
         });
     }
     /**
