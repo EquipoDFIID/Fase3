@@ -146,5 +146,9 @@ public class EnfrentamientoController {
     }
 
 
+    public void crearEnfrentamiento() {
+    }
 
+    public void crearEnfrentamiento(Equipo atacante, Equipo defensor) {
+    }
 }

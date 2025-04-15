@@ -4,5 +4,7 @@ import java.sql.Connection;
 
 public class JornadaDAO {
     public JornadaDAO() {
+
+
     }
 }

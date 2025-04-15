@@ -22,6 +22,22 @@ public class JornadaController {
 
     // Método para generar las jornadas
     public void generarJornada() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         StringBuilder sb = new StringBuilder();
         boolean correcto = true;
         List<Enfrentamiento> enfrentamientosDisponibles = new ArrayList<>(enfrentamientos);
@@ -63,5 +79,8 @@ public class JornadaController {
             jornadaNum++; // Avanzamos al número siguiente de jornada
             JOptionPane.showMessageDialog(null, sb.toString(), "Jornadas Generadas", JOptionPane.INFORMATION_MESSAGE);
         } while (correcto);
+    }
+
+    public void crearJornada() {
     }
 }

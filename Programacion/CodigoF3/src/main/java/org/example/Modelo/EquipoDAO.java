@@ -97,6 +97,20 @@ public class EquipoDAO {
         }
         return e;
     }
+    public int selectCountEquipos(){
+        try{
+            String sql = "select count(*) from EQUIPOS";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+
+    }
 
 // =============================================
 // == OPERACIONES DE INSERCIÓN (INSERT)
@@ -157,5 +171,27 @@ public class EquipoDAO {
         } catch (SQLException ex) {
             System.out.println(ex);
         }
+    }
+
+    public ArrayList selectAllEquipo() {
+        ArrayList<Equipo> equipos = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM EQUIPOS";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) { // ← CAMBIADO DE "if" A "while"
+                Equipo e = new Equipo();
+                e.setIdEquipo(rs.getInt("id_equipo"));
+                e.setNombre(rs.getString("nombre"));
+                e.setFechaFund(rs.getDate("fecha_fund").toLocalDate());
+                equipos.add(e);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return equipos;
     }
 }
