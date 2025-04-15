@@ -26,7 +26,7 @@ public class EnfrentamientoController {
     }
 
 
-    public List<Enfrentamiento> generarEnfrentamientos(List<Equipo> equipos) {
+    /*public List<Enfrentamiento> generarEnfrentamientos(List<Equipo> equipos) {
         List<Enfrentamiento> enfrentamientos = new ArrayList<>();
         List<Equipo> disponibles = new ArrayList<>(equipos);
         Random rand = new Random();
@@ -42,7 +42,7 @@ public class EnfrentamientoController {
         }
 
         return enfrentamientos;
-    }
+    }*/
 
 
   /*public void generarEnfrentamientos() {
