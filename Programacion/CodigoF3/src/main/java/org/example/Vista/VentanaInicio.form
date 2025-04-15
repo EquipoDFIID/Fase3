@@ -395,6 +395,7 @@
                         </constraints>
                         <properties>
                           <background color="-1"/>
+                          <contentAreaFilled value="false"/>
                           <font name="Segoe UI Black" size="16" style="0"/>
                           <foreground color="-16777216"/>
                           <text value="Administrador"/>
@@ -406,6 +407,7 @@
                         </constraints>
                         <properties>
                           <background color="-1"/>
+                          <contentAreaFilled value="false"/>
                           <font name="Segoe UI Black" size="16" style="0"/>
                           <foreground color="-16777216"/>
                           <text value="Usuario"/>

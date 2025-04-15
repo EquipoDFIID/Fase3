@@ -17,6 +17,9 @@ public class VentanaAdministrador extends JFrame {
     private JButton bajaEquipoButton;
     private JButton introducirResultadosButton;
     private JButton verInformesButton;
+    private JMenuItem jSalir;
+    private JMenuItem jCambiarCuenta;
+    private JMenuItem jNombre;
     private static VistaController vc;
 
 
@@ -35,27 +38,10 @@ public class VentanaAdministrador extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        JMenuBar menuBar = new JMenuBar();
+        jNombre.setText(aNombre);
+        jNombre.setEnabled(false);
 
-        JMenu Jusuario = new JMenu("Usuario");
-        JMenu JotrasOpciones = new JMenu("Otras opciones");
-
-        JMenuItem Jnombre = new JMenuItem(aNombre);
-        JMenuItem JcambiarUsuario = new JMenuItem("Cambiar de Usuario");
-        JMenuItem Jsalir = new JMenuItem("Salir");
-
-        Jusuario.add(Jnombre);
-        Jusuario.add(JcambiarUsuario);
-        JotrasOpciones.add(Jsalir);
-
-        Jnombre.setEnabled(false);
-
-        menuBar.add(Jusuario);
-        menuBar.add(JotrasOpciones);
-
-        setJMenuBar(menuBar);
-
-        JcambiarUsuario.addActionListener(new ActionListener() {
+        jCambiarCuenta.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
@@ -63,7 +49,7 @@ public class VentanaAdministrador extends JFrame {
             }
         });
 
-        Jsalir.addActionListener(new ActionListener() {
+        jSalir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);

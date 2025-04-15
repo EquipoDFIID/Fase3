@@ -85,16 +85,15 @@ public class JugadorDAO {
      */
     public static void altaJugador(Jugador jugador) {
         try {
-            String sql = "INSERT INTO jugadores VALUES(?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO jugadores (NOMBRE, APELLIDO, NACIONALIDAD, FECHA_NAC, NICKNAME, SUELDO, ID_EQUIPO) VALUES(?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, jugador.getIdJugador());
-            ps.setString(2, jugador.getNombre());
-            ps.setString(3, jugador.getApellido());
-            ps.setString(4, jugador.getNacionalidad());
-            ps.setDate(5, Date.valueOf(jugador.getFechaNacimiento()));
-            ps.setString(6, jugador.getNickname());
-            ps.setDouble(7, jugador.getSueldo());
-            ps.setInt(8, jugador.getEquipo().getIdEquipo());
+            ps.setString(1, jugador.getNombre());
+            ps.setString(2, jugador.getApellido());
+            ps.setString(3, jugador.getNacionalidad());
+            ps.setDate(4, Date.valueOf(jugador.getFechaNacimiento()));
+            ps.setString(5, jugador.getNickname());
+            ps.setDouble(6, jugador.getSueldo());
+            ps.setInt(7, jugador.getEquipo().getIdEquipo());
             ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
@@ -111,19 +110,18 @@ public class JugadorDAO {
      */
     public static void modificarJugador(Jugador jugador, Jugador jugadorAnterior) {
         try {
-            String sql = "UPDATE JUGADORES SET id_jugador = ?,NOMBRE = ?," +
+            String sql = "UPDATE JUGADORES SET NOMBRE = ?," +
                          "apellido = ?,nacionalidad = ?,fecha_nac = ?,nickname = ?,sueldo = ?," +
                          "id_equipo = ? WHERE NICKNAME = ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, jugadorAnterior.getIdJugador());
-            ps.setString(2, jugador.getNombre());
-            ps.setString(3, jugador.getApellido());
-            ps.setString(4, jugador.getNacionalidad());
-            ps.setDate(5, Date.valueOf(jugador.getFechaNacimiento()));
-            ps.setString(6, jugador.getNickname());
-            ps.setDouble(7, jugador.getSueldo());
-            ps.setInt(8, jugador.getEquipo().getIdEquipo());
-            ps.setString(9, jugadorAnterior.getNickname());
+            ps.setString(1, jugador.getNombre());
+            ps.setString(2, jugador.getApellido());
+            ps.setString(3, jugador.getNacionalidad());
+            ps.setDate(4, Date.valueOf(jugador.getFechaNacimiento()));
+            ps.setString(5, jugador.getNickname());
+            ps.setDouble(6, jugador.getSueldo());
+            ps.setInt(7, jugador.getEquipo().getIdEquipo());
+            ps.setString(8, jugadorAnterior.getNickname());
             ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
