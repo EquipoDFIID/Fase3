@@ -11,7 +11,12 @@ import java.sql.SQLException;
 
 public class UsuarioDAO {
     static Connection con = BD.getConnection();
-
+    /**
+     * Busca un usuario en la base de datos según su nombre.
+     *
+     * @param nombre Nombre del usuario que se desea buscar.
+     * @return Objeto `Usuario` si se encuentra en la base de datos, o `null` si no existe.
+     */
     public Usuario selectNombre(String nombre){
         Usuario u= null;
         try {
@@ -33,6 +38,12 @@ public class UsuarioDAO {
         }
         return u;
     }
+    /**
+     * Busca un usuario en la base de datos según su clave.
+     *
+     * @param clave Clave del usuario que se desea buscar.
+     * @return Objeto `Usuario` si se encuentra en la base de datos, o `null` si no existe.
+     */
      public Usuario selectClave(int clave){
         Usuario u= null;
         try {
@@ -51,7 +62,11 @@ public class UsuarioDAO {
         }
         return u;
     }
-
+    /**
+     * Crea un nuevo usuario en la base de datos.
+     *
+     * @param usuario Objeto `Usuario` que contiene los datos del usuario a crear.
+     */
     public void crearUsuario(Usuario usuario){
         try {
             String sql = "INSERT INTO USUARIOS (nombre, clave, tipo_usuario, id_usuario) VALUES(?, ?, ?, ?)";
