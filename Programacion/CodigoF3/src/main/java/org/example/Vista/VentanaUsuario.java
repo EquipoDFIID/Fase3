@@ -18,6 +18,9 @@ public class VentanaUsuario extends JFrame {
     private JButton button1;
     private JButton resultadosDeÚltimaJornadaButton;
     private JButton informacionEquiposButton;
+    private JMenuItem uNombre;
+    private JMenuItem uCambiarCuenta;
+    private JMenuItem uSalir;
     private VistaController vc;
 
     public VentanaUsuario(VistaController vc, String uNombre) {
@@ -29,27 +32,10 @@ public class VentanaUsuario extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        JMenuBar menuBar = new JMenuBar();
+        this.uNombre.setText(uNombre);
+        this.uNombre.setEnabled(false);
 
-        JMenu Jusuario = new JMenu("Usuario");
-        JMenu JotrasOpciones = new JMenu("Otras opciones");
-
-        JMenuItem Jnombre = new JMenuItem(uNombre);
-        JMenuItem JcambiarUsuario = new JMenuItem("Cambiar de Usuario");
-        JMenuItem Jsalir = new JMenuItem("Salir");
-
-        Jusuario.add(Jnombre);
-        Jusuario.add(JcambiarUsuario);
-        JotrasOpciones.add(Jsalir);
-
-        Jnombre.setEnabled(false);
-
-        menuBar.add(Jusuario);
-        menuBar.add(JotrasOpciones);
-
-        setJMenuBar(menuBar);
-
-        JcambiarUsuario.addActionListener(new ActionListener() {
+        uCambiarCuenta.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
@@ -57,7 +43,7 @@ public class VentanaUsuario extends JFrame {
             }
         });
 
-        Jsalir.addActionListener(new ActionListener() {
+        uSalir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);

@@ -159,7 +159,6 @@ public class VentanaAltaEquipo extends JDialog {
 
     private void onOK() {
         Equipo e = new Equipo();
-        e.setIdEquipo(Integer.parseInt(eID.getText()));
         e.setNombre(eNombre.getText());
         e.setFechaFund(convertirFecha(eFecha.getText()));
         vc.altaEquipo(e);

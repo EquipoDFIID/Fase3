@@ -295,7 +295,6 @@ public class VentanaAltaJugador extends JDialog {
 
     private void onOK() {
         Jugador j = new Jugador();
-        j.setIdJugador(Integer.parseInt(jID.getText()));
         j.setNombre(jNombre.getText());
         j.setApellido(jApellido.getText());
         j.setNacionalidad(jNacionalidad.getText());

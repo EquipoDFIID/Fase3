@@ -107,11 +107,10 @@ public class EquipoDAO {
      */
     public static void altaEquipo(Equipo equipo) {
         try {
-            String sql = "INSERT INTO equipos VALUES(?,?,?)";
+            String sql = "INSERT INTO equipos (NOMBRE, FECHA_FUND) VALUES(?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, equipo.getIdEquipo());
-            ps.setString(2, equipo.getNombre());
-            ps.setDate(3, Date.valueOf(equipo.getFechaFund()));
+            ps.setString(1, equipo.getNombre());
+            ps.setDate(2, Date.valueOf(equipo.getFechaFund()));
             ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
@@ -130,12 +129,11 @@ public class EquipoDAO {
 
     public static void modificarEquipo(Equipo equipo, Equipo equipoAnterior) {
         try {
-            String sql = "UPDATE EQUIPOS SET id_equipo = ?,NOMBRE = ?,FECHA_FUND = ? WHERE NOMBRE= ?";
+            String sql = "UPDATE EQUIPOS SET NOMBRE = ?,FECHA_FUND = ? WHERE NOMBRE= ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, equipoAnterior.getIdEquipo());
-            ps.setString(2, equipo.getNombre());
-            ps.setDate(3, Date.valueOf(equipo.getFechaFund()));
-            ps.setString(4, equipoAnterior.getNombre());
+            ps.setString(1, equipo.getNombre());
+            ps.setDate(2, Date.valueOf(equipo.getFechaFund()));
+            ps.setString(3, equipoAnterior.getNombre());
             ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
