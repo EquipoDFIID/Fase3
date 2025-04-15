@@ -98,18 +98,19 @@ public class EquipoDAO {
         return e;
     }
     public int selectCountEquipos(){
+        int cantidad=0;
         try{
             String sql = "select count(*) from EQUIPOS";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return rs.getInt(1);
+                cantidad=rs.getInt(1);
             }
         }
         catch(SQLException ex){
             System.out.println(ex.getMessage());
         }
-
+        return cantidad;
     }
 
 // =============================================
