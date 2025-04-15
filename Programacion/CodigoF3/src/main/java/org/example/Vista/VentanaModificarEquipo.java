@@ -12,6 +12,9 @@ import java.awt.event.*;
  * Contiene campos de texto y un combo box para editar información.
  */
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 
@@ -24,21 +27,19 @@ public class VentanaModificarEquipo extends JDialog {
     private JTextField eFecha;
     private JComboBox cNombre;
     private static VistaController vc;
-    private static VentanaAdministrador ventana;
 
-    public VentanaModificarEquipo(VistaController vc, VentanaAdministrador ventana) {
+    public VentanaModificarEquipo(VistaController vc) {
         this.vc = vc;
-        this.ventana = ventana;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         setSize(500, 580);
         setLocationRelativeTo(null);
-        llenarComboBox();
         setResizable(false);
 
         eNombre.setEnabled(false);
         eFecha.setEnabled(false);
+        vc.llenarComboBoxE(cNombre);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -90,15 +91,18 @@ public class VentanaModificarEquipo extends JDialog {
     }
 
     private void onOK() {
-        // add your code here
+        Equipo equipo = new Equipo();
+        equipo.setNombre(eNombre.getText());
+        equipo.setFechaFund(convertirFecha(eFecha.getText()));
+        vc.modificarEquipo(equipo, cNombre.getSelectedItem().toString());
         dispose();
     }
 
     private void onCancel() {
         dispose();
     }
-    public void llenarComboBox(){
-        ArrayList<Equipo> listaEquipos=vc.selectNombreEquipo();
+    /*public void llenarComboBox(){
+        ArrayList<Equipo> listaEquipos=vc.selectObjetoEquipo();
         cNombre.removeAllItems();
 
         cNombre.addItem("Selecciona un equipo...");
@@ -108,12 +112,22 @@ public class VentanaModificarEquipo extends JDialog {
         }
 
         cNombre.setSelectedIndex(0);
-    }
+    }*/
 
     public static void main(String[] args) {
-        VentanaModificarEquipo dialog = new VentanaModificarEquipo(vc, ventana);
+        VentanaModificarEquipo dialog = new VentanaModificarEquipo(vc);
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
+    }
+
+    private LocalDate convertirFecha(String fechaTexto) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            return LocalDate.parse(fechaTexto, formatter);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "La fecha no tiene el formato válido (dd/mm/aaaa) o es inválida.");
+            return null;
+        }
     }
 }

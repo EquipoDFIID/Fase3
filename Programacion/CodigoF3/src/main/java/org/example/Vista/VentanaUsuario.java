@@ -18,9 +18,12 @@ public class VentanaUsuario extends JFrame {
     private JButton button1;
     private JButton resultadosDeÚltimaJornadaButton;
     private JButton informacionEquiposButton;
+    private JMenuItem uNombre;
+    private JMenuItem uCambiarCuenta;
+    private JMenuItem uSalir;
     private VistaController vc;
 
-    public VentanaUsuario(VistaController vc) {
+    public VentanaUsuario(VistaController vc, String uNombre) {
         this.vc = vc;
         setContentPane(panel1);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,6 +31,25 @@ public class VentanaUsuario extends JFrame {
         setSize(500,580);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        this.uNombre.setText(uNombre);
+        this.uNombre.setEnabled(false);
+
+        uCambiarCuenta.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                vc.mostrarVentanaInicio();
+            }
+        });
+
+        uSalir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
         informacionEquiposButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -17,6 +17,9 @@ public class VentanaAdministrador extends JFrame {
     private JButton bajaEquipoButton;
     private JButton introducirResultadosButton;
     private JButton verInformesButton;
+    private JMenuItem jSalir;
+    private JMenuItem jCambiarCuenta;
+    private JMenuItem jNombre;
     private static VistaController vc;
 
 
@@ -26,14 +29,32 @@ public class VentanaAdministrador extends JFrame {
      * dar de alta, modificar y dar de baja jugadores y equipos, así como
      * introducir resultados en la competición.
      */
-    public VentanaAdministrador(VistaController vc) {
+    public VentanaAdministrador(VistaController vc, String aNombre) {
         this.vc = vc;
         setContentPane(panel1);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("MenuPrincipal");
-        setSize(500,580);
+        setSize(500, 580);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        jNombre.setText(aNombre);
+        jNombre.setEnabled(false);
+
+        jCambiarCuenta.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                vc.mostrarVentanaInicio();
+            }
+        });
+
+        jSalir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
 
         altaJugadorButton.addActionListener(new ActionListener() {
             @Override
@@ -67,7 +88,7 @@ public class VentanaAdministrador extends JFrame {
         modificarEquipoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaModificarEquipo ventanaModificarEquipo = new VentanaModificarEquipo(vc, VentanaAdministrador.this);
+                VentanaModificarEquipo ventanaModificarEquipo = new VentanaModificarEquipo(vc);
                 ventanaModificarEquipo.setVisible(true);
             }
         });

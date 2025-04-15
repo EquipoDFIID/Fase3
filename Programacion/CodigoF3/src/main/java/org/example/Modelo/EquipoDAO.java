@@ -48,17 +48,19 @@ public class EquipoDAO {
 
 
 
-    public ArrayList<Equipo> selectNombreEquipo(){
+    public ArrayList<Equipo> selectObjetosEquipo(){
         ArrayList<Equipo> equipos = new ArrayList<>();
 
         try {
-            String sql = "SELECT nombre FROM EQUIPOS";
+            String sql = "SELECT * FROM EQUIPOS";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) { // ← CAMBIADO DE "if" A "while"
                 Equipo e = new Equipo();
+                e.setIdEquipo(rs.getInt("id_equipo"));
                 e.setNombre(rs.getString("nombre"));
+                e.setFechaFund(rs.getDate("fecha_fund").toLocalDate());
                 equipos.add(e);
             }
 
@@ -76,13 +78,14 @@ public class EquipoDAO {
      */
 
     public static Equipo buscarEquipo(String nombreEquipo) {
-        Equipo e= null;
+        Equipo e = new Equipo();
         e.setNombre(nombreEquipo);
         try {
             String sql = "SELECT * FROM EQUIPOS WHERE NOMBRE = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, nombreEquipo);
             ResultSet rs = ps.executeQuery();
+
             if (rs.next()) {
                 e.setIdEquipo(rs.getInt("id_equipo"));
                 e.setNombre(rs.getString("nombre"));
@@ -118,11 +121,10 @@ public class EquipoDAO {
      */
     public static void altaEquipo(Equipo equipo) {
         try {
-            String sql = "INSERT INTO equipos VALUES(?,?,?)";
+            String sql = "INSERT INTO equipos (NOMBRE, FECHA_FUND) VALUES(?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, equipo.getIdEquipo());
-            ps.setString(2, equipo.getNombre());
-            ps.setDate(3, Date.valueOf(equipo.getFechaFund()));
+            ps.setString(1, equipo.getNombre());
+            ps.setDate(2, Date.valueOf(equipo.getFechaFund()));
             ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
@@ -136,17 +138,16 @@ public class EquipoDAO {
     /**
      * Actualiza los datos de un equipo en la base de datos.
      * @param equipo Objeto Equipo con los nuevos datos.
-     * @param nombreEquipo Nombre actual del equipo para identificar el registro a modificar.
+     * @param equipoAnterior Objeto del equipo para identificar el registro a modificar.
      */
 
-    public static void modificarEquipo(Equipo equipo, String nombreEquipo) {
+    public static void modificarEquipo(Equipo equipo, Equipo equipoAnterior) {
         try {
-            String sql = "UPDATE EQUIPOS SET id_equipo = ?,NOMBRE = ?,FECHA_FUND = ? WHERE NOMBRE= ?";
+            String sql = "UPDATE EQUIPOS SET NOMBRE = ?,FECHA_FUND = ? WHERE NOMBRE= ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, equipo.getIdEquipo());
-            ps.setString(2, equipo.getNombre());
-            ps.setDate(3, Date.valueOf(equipo.getFechaFund()));
-            ps.setString(4, nombreEquipo);
+            ps.setString(1, equipo.getNombre());
+            ps.setDate(2, Date.valueOf(equipo.getFechaFund()));
+            ps.setString(3, equipoAnterior.getNombre());
             ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
@@ -163,7 +164,7 @@ public class EquipoDAO {
      */
     public static void borrarEquipo(Equipo e) {
         try {
-            String sql = "DELETE FROM EQUIPOS WHERE ID_EQUIPO = ?";
+            String sql = "DELETE FROM EQUIPOS WHERE NOMBRE = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, e.getNombre());
             ps.executeUpdate();

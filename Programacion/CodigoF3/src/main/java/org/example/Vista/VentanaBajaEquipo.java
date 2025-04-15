@@ -28,7 +28,7 @@ public class VentanaBajaEquipo extends JDialog {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        llenarComboBox(); // Llenar combo antes de añadir el listener
+        vc.llenarComboBoxE(cNombre);
         buttonOK.setEnabled(false); // Asegurarse de que esté desactivado inicialmente
 
         buttonOK.addActionListener(new ActionListener() {
@@ -70,7 +70,7 @@ public class VentanaBajaEquipo extends JDialog {
     }
 
     private void onOK() {
-        // Aquí puedes agregar lógica de confirmación o baja del equipo
+        vc.bajaEquipo(cNombre.getSelectedItem().toString());
         dispose();
     }
 
@@ -86,8 +86,8 @@ public class VentanaBajaEquipo extends JDialog {
         System.exit(0);
     }
 
-    public void llenarComboBox() {
-        ArrayList<Equipo> listaEquipos = vc.selectNombreEquipo();
+    /*public void llenarComboBox() {
+        ArrayList<Equipo> listaEquipos = vc.selectObjetoEquipo();
         cNombre.removeAllItems();
 
         // Opción por defecto no válida
@@ -99,5 +99,5 @@ public class VentanaBajaEquipo extends JDialog {
 
         // Selecciona por defecto la opción inicial (índice 0)
         cNombre.setSelectedIndex(0);
-    }
+    }*/
 }

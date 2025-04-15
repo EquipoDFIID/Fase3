@@ -5,6 +5,8 @@ import org.example.Modelo.Equipo;
 import org.example.Modelo.Jugador;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -39,7 +41,7 @@ public class VentanaAltaJugador extends JDialog {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        llenarComboBox();
+        vc.llenarComboBoxE(jEquipo);
         inicializarCampos();
 
         // Acciones de botones
@@ -60,8 +62,6 @@ public class VentanaAltaJugador extends JDialog {
     }
 
     private void inicializarCampos() {
-        jID.setEnabled(true);
-        jNombre.setEnabled(false);
         jApellido.setEnabled(false);
         jNacionalidad.setEnabled(false);
         jFecha.setEnabled(false);
@@ -72,21 +72,14 @@ public class VentanaAltaJugador extends JDialog {
     }
 
     private void agregarListeners() {
-        jID.addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent e) {
-                if (validarID()) {
-                    jNombre.setEnabled(true);
-                } else {
-                    jNombre.setEnabled(false);                }
-            }
-        });
-
         jNombre.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
                 if (validarNombre()) {
                     jApellido.setEnabled(true);
+                    jNombre.setBorder(new LineBorder(Color.GREEN, 1));
                 } else {
                     jApellido.setEnabled(false);
+                    jNombre.setBorder(new LineBorder(Color.RED, 1));
                 }
             }
         });
@@ -95,8 +88,10 @@ public class VentanaAltaJugador extends JDialog {
             public void keyReleased(KeyEvent e) {
                 if (validarApellido()) {
                     jNacionalidad.setEnabled(true);
+                    jApellido.setBorder(new LineBorder(Color.GREEN, 1));
                 } else {
                     jNacionalidad.setEnabled(false);
+                    jApellido.setBorder(new LineBorder(Color.RED, 1));
                 }
             }
         });
@@ -105,8 +100,10 @@ public class VentanaAltaJugador extends JDialog {
             public void keyReleased(KeyEvent e) {
                 if (validarNacionalidad()) {
                     jFecha.setEnabled(true);
+                    jNacionalidad.setBorder(new LineBorder(Color.GREEN, 1));
                 } else {
                     jFecha.setEnabled(false);
+                    jNacionalidad.setBorder(new LineBorder(Color.RED, 1));
                 }
             }
         });
@@ -115,8 +112,12 @@ public class VentanaAltaJugador extends JDialog {
             public void keyReleased(KeyEvent e) {
                 if (validarFecha()) {
                     jNickname.setEnabled(true);
+                    jFecha.setBorder(new LineBorder(Color.GREEN, 1));
+
                 } else {
                     jNickname.setEnabled(false);
+                    jFecha.setBorder(new LineBorder(Color.RED, 1));
+
                 }
             }
         });
@@ -125,8 +126,12 @@ public class VentanaAltaJugador extends JDialog {
             public void keyReleased(KeyEvent e) {
                 if (validarNickname()) {
                     jSueldo.setEnabled(true);
+                    jNickname.setBorder(new LineBorder(Color.GREEN, 1));
+
                 } else {
                     jSueldo.setEnabled(false);
+                    jNickname.setBorder(new LineBorder(Color.RED, 1));
+
                 }
             }
         });
@@ -135,8 +140,11 @@ public class VentanaAltaJugador extends JDialog {
             public void keyReleased(KeyEvent e) {
                 if (validarSueldo()) {
                     jEquipo.setEnabled(true);
+                    jSueldo.setBorder(new LineBorder(Color.GREEN, 1));
+
                 } else {
                     jEquipo.setEnabled(false);
+                    jSueldo.setBorder(new LineBorder(Color.RED, 1));
                 }
             }
         });
@@ -146,21 +154,10 @@ public class VentanaAltaJugador extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 if (jEquipo.isEnabled() && jEquipo.getSelectedIndex() > 0) {
                     buttonOK.setEnabled(true);
+                    jEquipo.setBorder(new LineBorder(Color.black, 1));
                 } else {
                     buttonOK.setEnabled(false);
-                }
-            }
-        });
-
-        jID.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (jID.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El campo ID no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
-                    jID.requestFocus();
-                } else if (!validarID()) {
-                    JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El ID debe tener exactamente 4 dígitos", "Error", JOptionPane.ERROR_MESSAGE);
-                    jID.requestFocus();
+                    jEquipo.setBorder(new LineBorder(Color.RED, 1));
                 }
             }
         });
@@ -175,6 +172,7 @@ public class VentanaAltaJugador extends JDialog {
                     JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El nombre no es válido", "Error", JOptionPane.ERROR_MESSAGE);
                     jNombre.requestFocus();
                 }
+                jNombre.setBorder(new LineBorder(Color.black, 1));
             }
         });
 
@@ -188,6 +186,7 @@ public class VentanaAltaJugador extends JDialog {
                     JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El apellido no es válido", "Error", JOptionPane.ERROR_MESSAGE);
                     jApellido.requestFocus();
                 }
+                jApellido.setBorder(new LineBorder(Color.black, 1));
             }
         });
 
@@ -201,6 +200,7 @@ public class VentanaAltaJugador extends JDialog {
                     JOptionPane.showMessageDialog(VentanaAltaJugador.this, "La nacionalidad no es válida", "Error", JOptionPane.ERROR_MESSAGE);
                     jNacionalidad.requestFocus();
                 }
+                jNacionalidad.setBorder(new LineBorder(Color.black, 1));
             }
         });
 
@@ -214,6 +214,7 @@ public class VentanaAltaJugador extends JDialog {
                     JOptionPane.showMessageDialog(VentanaAltaJugador.this, "La fecha no es válida. Formato esperado: dd/mm/yyyy", "Error", JOptionPane.ERROR_MESSAGE);
                     jFecha.requestFocus();
                 }
+                jFecha.setBorder(new LineBorder(Color.black, 1));
             }
         });
 
@@ -227,6 +228,7 @@ public class VentanaAltaJugador extends JDialog {
                     JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El nickname debe tener entre 3 y 15 caracteres alfanuméricos o guiones bajos", "Error", JOptionPane.ERROR_MESSAGE);
                     jNickname.requestFocus();
                 }
+                jNickname.setBorder(new LineBorder(Color.black, 1));
             }
         });
 
@@ -240,13 +242,9 @@ public class VentanaAltaJugador extends JDialog {
                     JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El sueldo debe ser un número válido (puede tener hasta 2 decimales)", "Error", JOptionPane.ERROR_MESSAGE);
                     jSueldo.requestFocus();
                 }
+                jSueldo.setBorder(new LineBorder(Color.black, 1));
             }
         });
-    }
-
-    private boolean validarID() {
-        String id = jID.getText();
-        return id.matches("^[0-9]{4}$");
     }
 
     private boolean validarNombre() {
@@ -285,18 +283,6 @@ public class VentanaAltaJugador extends JDialog {
         return sueldo.matches("^[0-9]+(\\.[0-9]{1,2})?$");
     }
 
-    public void llenarComboBox() {
-        //hacer en vistaController
-        ArrayList<Equipo> listaEquipos = vc.selectNombreEquipo();
-        jEquipo.removeAllItems();
-        jEquipo.addItem("Selecciona un equipo...");
-        for (Equipo equipo : listaEquipos) {
-            //getIndex
-            jEquipo.addItem(equipo.getNombre());
-        }
-        jEquipo.setSelectedIndex(0);
-    }
-
     private LocalDate convertirFecha(String fechaTexto) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         try {
@@ -309,14 +295,13 @@ public class VentanaAltaJugador extends JDialog {
 
     private void onOK() {
         Jugador j = new Jugador();
-        j.setIdJugador(Integer.parseInt(jID.getText()));
         j.setNombre(jNombre.getText());
         j.setApellido(jApellido.getText());
         j.setNacionalidad(jNacionalidad.getText());
         j.setFechaNacimiento(convertirFecha(jFecha.getText()));
         j.setNickname(jNickname.getText());
         j.setSueldo(Double.parseDouble(jSueldo.getText()));
-        j.setEquipo((Equipo) jEquipo.getSelectedItem());
+        j.setEquipo(vc.buscarComboBoxE(jEquipo));
         vc.altaJugador(j);
         dispose();
     }

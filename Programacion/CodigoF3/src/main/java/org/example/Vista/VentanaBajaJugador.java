@@ -29,7 +29,7 @@ public class VentanaBajaJugador extends JDialog {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        llenarComboBox();
+        vc.llenarComboBoxJ(cJugador);
         buttonOK.setEnabled(false);
 
         buttonOK.addActionListener(new ActionListener() {
@@ -69,7 +69,7 @@ public class VentanaBajaJugador extends JDialog {
             }
         });
     }
-    public void llenarComboBox(){
+    /*public void llenarComboBox(){
         ArrayList<Jugador> listaJugadores=vc.selectNicknameJugador();
         cJugador.removeAllItems();
 
@@ -82,10 +82,10 @@ public class VentanaBajaJugador extends JDialog {
 
         // Selecciona por defecto la opción inicial (índice 0)
         cJugador.setSelectedIndex(0);
-    }
+    }*/
 
     private void onOK() {
-        // add your code here
+        vc.bajaJugador(cJugador.getSelectedItem().toString());
         dispose();
     }
 
