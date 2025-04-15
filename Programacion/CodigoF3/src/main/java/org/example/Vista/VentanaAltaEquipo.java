@@ -73,23 +73,10 @@ public class VentanaAltaEquipo extends JDialog {
 
     private void inicializarCampos() {
         buttonOK.setEnabled(false);
-        eNombre.setEnabled(false);
         eFecha.setEnabled(false);
     }
 
     private void agregarListeners() {
-        eID.addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent e) {
-                if (validarID()) {
-                    eNombre.setEnabled(true);
-                    eID.setBorder(new LineBorder(Color.GREEN, 1));
-                } else {
-                    eNombre.setEnabled(false);
-                    eID.setBorder(new LineBorder(Color.RED, 1));
-                }
-            }
-        });
-
         eNombre.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
                 if (validarNombre()) {
@@ -112,20 +99,6 @@ public class VentanaAltaEquipo extends JDialog {
                     buttonOK.setEnabled(false);
                     eFecha.setBorder(new LineBorder(Color.RED, 1));
                 }
-            }
-        });
-
-        eID.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (eID.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(VentanaAltaEquipo.this, "El campo ID no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
-                    eID.requestFocus();
-                } else if (!validarID()) {
-                    JOptionPane.showMessageDialog(VentanaAltaEquipo.this, "El ID debe tener exactamente 4 dígitos", "Error", JOptionPane.ERROR_MESSAGE);
-                    eID.requestFocus();
-                }
-                eID.setBorder(new LineBorder(Color.BLACK, 1));
             }
         });
 
@@ -156,11 +129,6 @@ public class VentanaAltaEquipo extends JDialog {
                 eFecha.setBorder(new LineBorder(Color.BLACK, 1));
             }
         });
-    }
-
-    private boolean validarID() {
-        String id = eID.getText();
-        return id.matches("^[0-9]{4}$");
     }
 
     private boolean validarNombre() {
