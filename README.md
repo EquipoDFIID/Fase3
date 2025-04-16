@@ -1,4 +1,4 @@
-# 📚 Índice
+# ◼️ Índice
 
 - [Descripción](#-gestión-de-competiciones-e-sport)
 - [Colaboradores](#-colaboradores)
@@ -7,7 +7,7 @@
 
 ---
 
-# 🔪 Gestión de Competición CSGO
+# ◼️ Gestión de Competición CSGO
 
 Aplicación pensada para gestionar competiciones de CSGO. Permite registrar equipos y jugadores, generar automáticamente el calendario de enfrentamientos y guardar los resultados de cada jornada.
 
@@ -18,7 +18,7 @@ Tiene dos tipos de usuarios:
 
 ---
 
-# 🧑🏻‍💻 Integrantes del equipo
+# ◼️ Integrantes del equipo
 
 - *Danel Rivas* 
 - *Ibai López* 
@@ -28,7 +28,7 @@ Tiene dos tipos de usuarios:
 
 ---
 
-# 🧰 Tecnologías Utilizadas
+# ◼️ Tecnologías Utilizadas
 
 ![Java](https://img.shields.io/badge/Java-red?logo=coffeescript&logoColor=white) ![SQL](https://img.shields.io/badge/Oracle_SQL-white?logo=liquibase&logoColor=black) ![JUnit5](https://img.shields.io/badge/JUnit5-darkgreen?logo=jekyll&logoColor=white) ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ_IDEA-darkviolet?logo=intellijidea&logoColor=white) ![Trello](https://img.shields.io/badge/Trello-darkblue?logo=trello&logoColor=white) ![WhatsApp](https://img.shields.io/badge/WhatsApp-darkgreen?logo=whatsapp&logoColor=white) ![Discord](https://img.shields.io/badge/Discord-blue?logo=discord&logoColor=white) ![ChatGPT](https://img.shields.io/badge/ChatGPT-white?logo=openai&logoColor=black) 
 
