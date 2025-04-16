@@ -3,10 +3,6 @@
 - [Descripción](#-gestión-de-competiciones-e-sport)
 - [Colaboradores](#-colaboradores)
 - [Tecnologías Utilizadas](#-tecnologías-utilizadas)
-- [Instalación](#-instalación)
-- [Uso](#-uso)
-- [Capturas](#-capturas)
-- [Tests](#-tests)
 - [Estado del Proyecto](#-estado-del-proyecto)
 
 ---
@@ -24,25 +20,25 @@ Tiene dos tipos de usuarios:
 
 # 🧑🏻‍💻 Integrantes del equipo
 
-- Danel Rivas 
-- Ibai López  
-- Ibai Mendoza
-- Daria Kuznetsova  
-- Farrukh Mohammad
+- *Danel Rivas* 
+- *Ibai López* 
+- *Ibai Mendoza*
+- *Daria Kuznetsova*  
+- *Farrukh Mohammad*
 
 ---
 
 # 🧰 Tecnologías Utilizadas
 
 ![Java](https://img.shields.io/badge/Java-red?logo=coffeescript&logoColor=white)  ![SQL](https://img.shields.io/badge/Oracle_SQL-white?logo=liquibase&logoColor=black)  ![JUnit5](https://img.shields.io/badge/JUnit5-darkgreen?logo=jekyll&logoColor=white)  
-![Trello](https://img.shields.io/badge/Trello-darkblue?logo=trello&logoColor=white)  ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ_IDEA-darkviolet?logo=intellijidea&logoColor=white)  ![ChatGPT](https://img.shields.io/badge/ChatGPT-white?logo=openai&logoColor=black)  
-![Discord](https://img.shields.io/badge/Discord-blue?logo=discord&logoColor=white)  ![WhatsApp](https://img.shields.io/badge/WhatsApp-darkgreen?logo=whatsapp&logoColor=white)
+![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ_IDEA-darkviolet?logo=intellijidea&logoColor=white) ![Trello](https://img.shields.io/badge/Trello-darkblue?logo=trello&logoColor=white) ![WhatsApp](https://img.shields.io/badge/WhatsApp-darkgreen?logo=whatsapp&logoColor=white)
+![ChatGPT](https://img.shields.io/badge/ChatGPT-white?logo=openai&logoColor=black)  ![Discord](https://img.shields.io/badge/Discord-blue?logo=discord&logoColor=white)  
 
 ---
 
 ## 🚀 Estado del Proyecto
 
-✅ Proyecto en construcción
+✅ Proyecto en proceso
 
 ---
 
