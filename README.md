@@ -19,11 +19,11 @@ Aplicación pensada para gestionar competiciones de CSGO. Permite registrar equi
 
 <h1 id="integrantes">◾ Integrantes del equipo</h1>
 
-- *Danel Rivas* 
-- *Ibai López* 
-- *Ibai Mendoza*
-- *Daria Kuznetsova*  
-- *Farrukh Mohammad*
+  <li><em>Danel Rivas</em></li>
+  <li><em>Ibai López</em></li>
+  <li><em>Ibai Mendoza</em></li>
+  <li><em>Daria Kuznetsova</em></li>
+  <li><em>Farrukh Mohammad</em></li>
 
 ---
 
