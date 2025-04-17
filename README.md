@@ -5,7 +5,7 @@
 - [Tecnologías Utilizadas](#tecnologias)
 - [Instalación](#instalacion)
 - [Uso](#uso)
-- [Capturas](#capturas)
+- [Aspecto](#aspecto)
 - [tests](#tests)
 - [Estado del Proyecto](#estado)
 
@@ -77,17 +77,15 @@ Tiene dos tipos de usuarios:
 
 ---
 
-<h1 id="capturas">◾ Capturas</h1>
+<h1 id="aspecto">◾ Aspecto</h1>
 
 Esta es la pantalla principal de la aplicación, donde se muestra el logo de CSGO y eliges tu tipo de usuario.
 
   <img src="readmeImg/ventanaInicio.png" alt="Pantalla principal" width="300"/>
 
-En esta ventana se muestran dos campos mencionados anteriormente:
-  - Nombre
-  - Clave
+Estas dos ventanas muestran los campos para introducir las credenciales y en usuario además veremos un botón que nos facilitará la creación de un usuario si no existe.
 
-  <img src="readmeImg/inicioUsr.png" alt="Selección de usuario" width="200"/>  <img src="readmeImg/inicioAdmin.png" alt="Selección de usuario" width="200"/>
+  <img src="readmeImg/inicioAdmin.png" alt="Selección de usuario" width="200"/>  <img src="readmeImg/inicioUsr.png" alt="Selección de usuario" width="200"/>
 
 
 
