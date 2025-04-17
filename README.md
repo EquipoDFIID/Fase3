@@ -81,14 +81,13 @@ Tiene dos tipos de usuarios:
 
 Esta es la pantalla principal de la aplicación, donde se muestra el logo de CSGO y eliges tu tipo de usuario.
 
-<img src="imgReadme/ventanaInicio.png" alt="Pantalla principal" width="400"/>
+<img src="readmeImg/ventanaInicio.png" alt="Pantalla principal" width="400"/>
 
 En esta ventana se muestran dos campos mencionados anteriormente:
   - Nombre
   - Clave
 
-<img src="readmeImg/inicioUsr.png" alt="Selección de usuario" width="200"/>
-<img src="readmeImg/inicioAdmin.png" alt="Selección de usuario" width="200"/>
+<img src="readmeImg/inicioUsr.png" alt="Selección de usuario" width="200"/><img src="readmeImg/inicioAdmin.png" alt="Selección de usuario" width="200"/>
 
 
 
