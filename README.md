@@ -1,13 +1,13 @@
-# ◼️ Índice
+# ◾ Índice
 
-- [Descripción](#-gestión-de-competiciones-e-sport)
-- [Colaboradores](#-colaboradores)
-- [Tecnologías Utilizadas](#-tecnologías-utilizadas)
-- [Estado del Proyecto](#-estado-del-proyecto)
+- [Descripción](#descripcion)
+- [Colaboradores](#integrantes)
+- [Tecnologías Utilizadas](#tecnologias)
+- [Estado del Proyecto](#estado)
 
 ---
 
-# ◼️ Gestión de Competición CSGO
+<h1 id="descripcion">◾ Gestión de Competición CSGO</h1>
 
 Aplicación pensada para gestionar competiciones de CSGO. Permite registrar equipos y jugadores, generar automáticamente el calendario de enfrentamientos y guardar los resultados de cada jornada.
 
@@ -18,7 +18,7 @@ Tiene dos tipos de usuarios:
 
 ---
 
-# ◼️ Integrantes del equipo
+<h1 id="integrantes">◾ Integrantes del equipo</h1>
 
 - *Danel Rivas* 
 - *Ibai López* 
@@ -28,16 +28,29 @@ Tiene dos tipos de usuarios:
 
 ---
 
-# ◼️ Tecnologías Utilizadas
+<h1 id="tecnologias">◾ Tecnologías Utilizadas</h1>
 
-![Java](https://img.shields.io/badge/Java-red?logo=coffeescript&logoColor=white) ![SQL](https://img.shields.io/badge/Oracle_SQL-white?logo=liquibase&logoColor=black) ![JUnit5](https://img.shields.io/badge/JUnit5-darkgreen?logo=jekyll&logoColor=white) ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ_IDEA-darkviolet?logo=intellijidea&logoColor=white) ![Trello](https://img.shields.io/badge/Trello-darkblue?logo=trello&logoColor=white) ![WhatsApp](https://img.shields.io/badge/WhatsApp-darkgreen?logo=whatsapp&logoColor=white) ![Discord](https://img.shields.io/badge/Discord-blue?logo=discord&logoColor=white) ![ChatGPT](https://img.shields.io/badge/ChatGPT-white?logo=openai&logoColor=black) 
+-  Tecnologías de Desarrollo
 
+![Java](https://img.shields.io/badge/Java-white?logo=coffeescript&logoColor=black&color=white)
+![Oracle_SQL](https://img.shields.io/badge/Oracle_SQL-white?logo=liquibase&logoColor=black&color=white)
+![JUnit5](https://img.shields.io/badge/JUnit5-white?logo=jekyll&logoColor=black&color=white)
+![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ_IDEA-white?logo=intellijidea&logoColor=black&color=white)
+![ChatGPT](https://img.shields.io/badge/ChatGPT-white?logo=openai&logoColor=black&color=white)
+
+
+
+-  Herramientas de Organización y Comunicación
+
+![Trello](https://img.shields.io/badge/Trello-white?logo=trello&logoColor=black&color=white)
+![WhatsApp](https://img.shields.io/badge/WhatsApp-white?logo=whatsapp&logoColor=black&color=white)
+![Discord](https://img.shields.io/badge/Discord-white?logo=discord&logoColor=black&color=white)
 
 ---
 
-## 🚀 Estado del Proyecto
+<h1 id="estado">◾ Estado del Proyecto</h1>
 
-✅ Proyecto en proceso
+🚀 Proyecto en proceso
 
 ---
 
