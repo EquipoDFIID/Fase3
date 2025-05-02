@@ -4,6 +4,7 @@ import org.example.Modelo.*;
 
 import java.sql.Connection;
 import java.sql.Wrapper;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -73,8 +74,8 @@ public class ModeloController {
         return equipoController.buscarEquipo(nombreEquipo);
     }
 
-    public void altaEquipo(Equipo e){
-        equipoController.altaEquipo(e);
+    public void altaEquipo(String nombre, String fecha){
+        equipoController.altaEquipo(nombre, fecha);
     }
     public void modificarEquipo(Equipo e, Equipo equipoAnterior) {
         equipoController.modificarEquipo(e, equipoAnterior);
@@ -82,8 +83,10 @@ public class ModeloController {
     public void bajaEquipo(Equipo e) {
         equipoController.bajaEquipo(e);
     }
-    public void altaJugador(Jugador j){
-         jugadorController.altaJugador(j);
+    public void altaJugador(String nombre, String apellido, String nacionalidad,
+                            LocalDate fechaNacimiento, String nickname,
+                            double sueldo, Equipo equipo){
+         jugadorController.altaJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, equipo);
     }
     public void bajaJugador( String nombreJugador) {
         jugadorController.bajaJugador( nombreJugador);

@@ -9,6 +9,7 @@ import org.example.Vista.VentanaInicio;
 import org.example.Vista.VentanaUsuario;
 
 import javax.swing.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class VistaController {
@@ -30,8 +31,8 @@ public class VistaController {
         ventanaInicio.setVisible(true);
     }
 
-    public void altaEquipo(Equipo e){
-         modeloController.altaEquipo(e);
+    public void altaEquipo(String nombre, String fecha){
+         modeloController.altaEquipo(nombre, fecha);
     }
     public void bajaEquipo(String nombreEquipo){
         Equipo e=modeloController.buscarEquipo(nombreEquipo);
@@ -44,8 +45,10 @@ public class VistaController {
         }
 
     }
-    public void altaJugador(Jugador j){
-        modeloController.altaJugador(j);
+    public void altaJugador(String nombre, String apellido, String nacionalidad,
+                            LocalDate fechaNacimiento, String nickname,
+                            double sueldo, Equipo equipo) {
+        modeloController.altaJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, equipo);
     }
     public Jugador buscarJugador(String nombreJugador) {
         return modeloController.buscarJugador(nombreJugador);
