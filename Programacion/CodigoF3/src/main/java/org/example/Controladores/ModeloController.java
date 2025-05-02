@@ -125,7 +125,7 @@ public class ModeloController {
     }
 
 
-    public void crearCuenta(Usuario usuario) {
-        usuarioController.crearCuenta(usuario);
+    public void crearCuenta(String nombre, String clave) {
+        usuarioController.crearCuenta(nombre, clave);
     }
 }

@@ -136,12 +136,7 @@ public class VentanaCrearCuenta extends JFrame {
         buttonOK.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Usuario usuario = new Usuario();
-                usuario.setNombre(cNombre.getText());
-                usuario.setClave(cClave.getText());
-                usuario.setTipo_usuario("user");
-                usuario.setIdUsuario(2222);
-                vc.crearCuenta(usuario);
+                vc.crearCuenta(cNombre.getText(), cClave.getText());
                 JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "Usuario creado exitosamente", "Exitosamente", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
             }

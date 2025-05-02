@@ -13,7 +13,11 @@ public class UsuarioController {
         return usuarioDAO.selectNombre(nombreJugador);
     }
 
-    public void crearCuenta(Usuario usuario){
+    public void crearCuenta(String nombre, String clave){
+        Usuario usuario = new Usuario();
+        usuario.setNombre(nombre);
+        usuario.setClave(clave);
+        usuario.setTipo_usuario("user");
         usuarioDAO.crearUsuario(usuario);
     }
 }

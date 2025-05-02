@@ -110,7 +110,7 @@ public class VistaController {
         return listaEquipos.get(posicion - 1);
     }
 
-    public void crearCuenta(Usuario usuario){
-        modeloController.crearCuenta(usuario);
+    public void crearCuenta(String nombre, String clave){
+        modeloController.crearCuenta(nombre, clave);
     }
 }
