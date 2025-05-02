@@ -7,19 +7,20 @@ import org.example.Modelo.EquipoDAO;
 import javax.swing.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.example.Modelo.EquipoDAO;
+import org.example.Vista.VentanaAltaEquipo;
 
 public class EquipoController {
     private EquipoDAO equipoDAO;
     public EquipoController(EquipoDAO equipoDAO) {
         this.equipoDAO = equipoDAO;
     }
-
 
    /* public Equipo solicitarValidarDatos() {
         // Copia de la versión anterior.
@@ -64,7 +65,10 @@ public class EquipoController {
     public Equipo buscarEquipo(String nombre){
         return equipoDAO.buscarEquipo(nombre);
     }
-    public void altaEquipo(Equipo e) {
+    public void altaEquipo(String nombre, String fecha) {
+        Equipo e = new Equipo();
+        e.setNombre(nombre);
+        e.setFechaFund(convertirFecha(fecha));
         equipoDAO.altaEquipo(e);
     }
     public void bajaEquipo(Equipo e) {
@@ -125,4 +129,13 @@ public class EquipoController {
         return eq;
 
     } */
+
+    private LocalDate convertirFecha(String fechaTexto) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            return LocalDate.parse(fechaTexto, formatter);
+        } catch (DateTimeParseException e) {
+            return null;
+        }
+    }
 }
