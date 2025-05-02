@@ -32,44 +32,38 @@ public class VistaController {
     }
 
     public void altaEquipo(String nombre, String fecha){
-         modeloController.altaEquipo(nombre, fecha);
+        modeloController.altaEquipo(nombre, fecha);
     }
     public void bajaEquipo(String nombreEquipo){
-        Equipo e=modeloController.buscarEquipo(nombreEquipo);
-        if(e!=null) modeloController.bajaEquipo(e);
+        modeloController.buscarEquipo(nombreEquipo);
+        modeloController.bajaEquipo();
     }
     public void modificarEquipo(Equipo equipo, String nombreEquipo){
-        Equipo equipoAnterior = modeloController.buscarEquipo(nombreEquipo);
-        if(equipoAnterior!=null){
-            modeloController.modificarEquipo(equipo, equipoAnterior);
-        }
+        modeloController.buscarEquipo(nombreEquipo);
+        modeloController.modificarEquipo(equipo);
 
     }
+
     public void altaJugador(String nombre, String apellido, String nacionalidad,
                             LocalDate fechaNacimiento, String nickname,
                             double sueldo, Equipo equipo) {
         modeloController.altaJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, equipo);
     }
-    public Jugador buscarJugador(String nombreJugador) {
-        return modeloController.buscarJugador(nombreJugador);
-
+    public void bajaJugador(String nombreJugador){
+        modeloController.buscarJugador(nombreJugador);
+        modeloController.bajaJugador(nombreJugador);
     }
+    public void modificarJugador(Jugador jugador, String nombreJugador){
+        modeloController.buscarJugador(nombreJugador);
+        modeloController.modificarJugador(jugador);
+    }
+
     public Usuario selectNombre(String nombreUsuario) {
         return modeloController.selectNombre(nombreUsuario);
     }
 
 
-    public void bajaJugador(String nombreJugador){
-        Jugador j=modeloController.buscarJugador(nombreJugador);
-        if(j!=null)
-            modeloController.bajaJugador(nombreJugador);
-    }
 
-    public void modificarJugador(Jugador jugador, String nombreJugador){
-        Jugador jugadorAnterior = modeloController.buscarJugador(nombreJugador);
-        if(jugadorAnterior!=null)
-            modeloController.modificarJugador(jugador, jugadorAnterior);
-    }
 
     public void generarJornada(){}
 
@@ -116,7 +110,7 @@ public class VistaController {
         return listaEquipos.get(posicion - 1);
     }
 
-    public void crearCuenta(Usuario usuario){
-        modeloController.crearCuenta(usuario);
+    public void crearCuenta(String nombre, String clave){
+        modeloController.crearCuenta(nombre, clave);
     }
 }

@@ -19,14 +19,12 @@ public class Jugador {
     public Jugador() {
     }
 
-    public Jugador(int idJugador, String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento, String nickname, String rol, double sueldo, Equipo equipo) {
-        this.idJugador = idJugador;
+    public Jugador(String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento, String nickname, double sueldo, Equipo equipo) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.nacionalidad = nacionalidad;
         this.fechaNacimiento = fechaNacimiento;
         this.nickname = nickname;
-        this.rol = rol;
         this.sueldo = sueldo;
         this.equipo = equipo;
     }

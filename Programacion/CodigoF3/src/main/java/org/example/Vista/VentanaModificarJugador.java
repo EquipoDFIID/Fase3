@@ -15,7 +15,6 @@ import java.awt.event.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 
 public class VentanaModificarJugador extends JDialog {
     private JPanel contentPane;
@@ -126,7 +125,7 @@ public class VentanaModificarJugador extends JDialog {
     }*/
 
     private void onOK() {
-        Jugador jugador = new Jugador();
+        Jugador jugador = new Jugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, equipo);
         jugador.setNombre(jNombre.getText());
         jugador.setApellido(jApellido.getText());
         jugador.setNacionalidad(jNacionalidad.getText());

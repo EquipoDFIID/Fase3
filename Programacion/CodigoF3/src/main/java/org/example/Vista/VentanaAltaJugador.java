@@ -294,15 +294,15 @@ public class VentanaAltaJugador extends JDialog {
     }
 
     private void onOK() {
-        Jugador j = new Jugador();
-        j.setNombre(jNombre.getText());
-        j.setApellido(jApellido.getText());
-        j.setNacionalidad(jNacionalidad.getText());
-        j.setFechaNacimiento(convertirFecha(jFecha.getText()));
-        j.setNickname(jNickname.getText());
-        j.setSueldo(Double.parseDouble(jSueldo.getText()));
-        j.setEquipo(vc.buscarComboBoxE(jEquipo));
-        vc.altaJugador(j);
+        vc.altaJugador(
+                jNombre.getText(),
+                jApellido.getText(),
+                jNacionalidad.getText(),
+                convertirFecha(jFecha.getText()),
+                jNickname.getText(),
+                Double.parseDouble(jSueldo.getText()),
+                vc.buscarComboBoxE(jEquipo)
+        );
         dispose();
     }
 
