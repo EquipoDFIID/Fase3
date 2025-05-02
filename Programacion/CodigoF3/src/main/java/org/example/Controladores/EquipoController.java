@@ -18,6 +18,7 @@ import org.example.Vista.VentanaAltaEquipo;
 
 public class EquipoController {
     private EquipoDAO equipoDAO;
+    private Equipo eb;
     public EquipoController(EquipoDAO equipoDAO) {
         this.equipoDAO = equipoDAO;
     }
@@ -62,8 +63,8 @@ public class EquipoController {
         LocalDate fecha = LocalDate.parse(fechaS, formatter);
         return fecha;
     }
-    public Equipo buscarEquipo(String nombre){
-        return equipoDAO.buscarEquipo(nombre);
+    public void buscarEquipo(String nombre){
+        eb = equipoDAO.buscarEquipo(nombre);
     }
     public void altaEquipo(String nombre, String fecha) {
         Equipo e = new Equipo();
@@ -71,11 +72,11 @@ public class EquipoController {
         e.setFechaFund(convertirFecha(fecha));
         equipoDAO.altaEquipo(e);
     }
-    public void bajaEquipo(Equipo e) {
-        equipoDAO.borrarEquipo(e);
+    public void bajaEquipo() {
+        equipoDAO.borrarEquipo(eb);
     }
-    public void modificarEquipo(Equipo e, Equipo equipoAnterior) {
-        equipoDAO.modificarEquipo(e, equipoAnterior);
+    public void modificarEquipo(Equipo e) {
+        equipoDAO.modificarEquipo(e, eb);
     }
     public ArrayList<Equipo> selectObjetosEquipo(){
         return equipoDAO.selectObjetosEquipo();

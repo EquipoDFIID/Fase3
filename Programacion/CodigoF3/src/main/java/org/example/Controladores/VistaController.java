@@ -32,23 +32,19 @@ public class VistaController {
     }
 
     public void altaEquipo(String nombre, String fecha){
-         modeloController.altaEquipo(nombre, fecha);
+        modeloController.altaEquipo(nombre, fecha);
     }
     public void bajaEquipo(String nombreEquipo){
-        Equipo e=modeloController.buscarEquipo(nombreEquipo);
-        if(e!=null) modeloController.bajaEquipo(e);
+        modeloController.buscarEquipo(nombreEquipo);
+        modeloController.bajaEquipo();
     }
     public void modificarEquipo(Equipo equipo, String nombreEquipo){
-        Equipo equipoAnterior = modeloController.buscarEquipo(nombreEquipo);
-        if(equipoAnterior!=null){
-            modeloController.modificarEquipo(equipo, equipoAnterior);
-        }
+        modeloController.buscarEquipo(nombreEquipo);
+        modeloController.modificarEquipo(equipo);
 
     }
-    public void altaJugador(String nombre, String apellido, String nacionalidad,
-                            LocalDate fechaNacimiento, String nickname,
-                            double sueldo, Equipo equipo) {
-        modeloController.altaJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, equipo);
+    public void altaJugador(Jugador j) {
+        modeloController.altaJugador(j);
     }
     public Jugador buscarJugador(String nombreJugador) {
         return modeloController.buscarJugador(nombreJugador);
@@ -60,9 +56,8 @@ public class VistaController {
 
 
     public void bajaJugador(String nombreJugador){
-        Jugador j=modeloController.buscarJugador(nombreJugador);
-        if(j!=null)
-            modeloController.bajaJugador(nombreJugador);
+        modeloController.buscarJugador(nombreJugador);
+        modeloController.bajaJugador(nombreJugador);
     }
 
     public void modificarJugador(Jugador jugador, String nombreJugador){
