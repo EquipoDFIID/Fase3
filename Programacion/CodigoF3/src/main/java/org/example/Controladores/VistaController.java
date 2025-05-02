@@ -43,28 +43,27 @@ public class VistaController {
         modeloController.modificarEquipo(equipo);
 
     }
-    public void altaJugador(Jugador j) {
-        modeloController.altaJugador(j);
-    }
-    public Jugador buscarJugador(String nombreJugador) {
-        return modeloController.buscarJugador(nombreJugador);
 
+    public void altaJugador(String nombre, String apellido, String nacionalidad,
+                            LocalDate fechaNacimiento, String nickname,
+                            double sueldo, Equipo equipo) {
+        modeloController.altaJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, equipo);
     }
+    public void bajaJugador(String nombreJugador){
+        modeloController.buscarJugador(nombreJugador);
+        modeloController.bajaJugador(nombreJugador);
+    }
+    public void modificarJugador(Jugador jugador, String nombreJugador){
+        modeloController.buscarJugador(nombreJugador);
+        modeloController.modificarJugador(jugador);
+    }
+
     public Usuario selectNombre(String nombreUsuario) {
         return modeloController.selectNombre(nombreUsuario);
     }
 
 
-    public void bajaJugador(String nombreJugador){
-        modeloController.buscarJugador(nombreJugador);
-        modeloController.bajaJugador(nombreJugador);
-    }
 
-    public void modificarJugador(Jugador jugador, String nombreJugador){
-        Jugador jugadorAnterior = modeloController.buscarJugador(nombreJugador);
-        if(jugadorAnterior!=null)
-            modeloController.modificarJugador(jugador, jugadorAnterior);
-    }
 
     public void generarJornada(){}
 

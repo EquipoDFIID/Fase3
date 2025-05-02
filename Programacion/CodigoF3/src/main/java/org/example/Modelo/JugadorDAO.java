@@ -1,7 +1,5 @@
 package org.example.Modelo;
 
-import org.example.Controladores.JugadorController;
-
 import java.sql.*;
 import java.util.ArrayList;
 

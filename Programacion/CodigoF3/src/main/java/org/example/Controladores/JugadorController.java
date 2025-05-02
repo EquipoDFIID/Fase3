@@ -15,23 +15,27 @@ import java.util.regex.Pattern;
 
 public class JugadorController {
     private JugadorDAO jugadorDAO;
+    private Jugador jb;
     public JugadorController(JugadorDAO jugadorDAO) {
         this.jugadorDAO = jugadorDAO;
     }
 
 
 
-    public void altaJugador(Jugador j) {
+    public void altaJugador(String nombre, String apellido, String nacionalidad,
+                            LocalDate fechaNacimiento, String nickname,
+                            double sueldo, Equipo equipo) {
+        Jugador j = new Jugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, equipo);
          jugadorDAO.altaJugador(j);
     }
     public void bajaJugador( String nombreJugador) {
         jugadorDAO.borrarJugador(nombreJugador);
     }
-    public void modificarJugador(Jugador jugador, Jugador jugadorAnterior) {
-        jugadorDAO.modificarJugador(jugador, jugadorAnterior);
+    public void modificarJugador(Jugador jugador) {
+        jugadorDAO.modificarJugador(jugador, jb);
     }
-    public Jugador buscarJugador(String nombreJugador) {
-        return jugadorDAO.buscarJugador(nombreJugador);
+    public void buscarJugador(String nombreJugador) {
+        jb = jugadorDAO.buscarJugador(nombreJugador);
     }
 
     public ArrayList<Jugador> selectObjetosJugador(){
