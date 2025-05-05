@@ -38,9 +38,9 @@ public class VistaController {
         modeloController.buscarEquipo(nombreEquipo);
         modeloController.bajaEquipo();
     }
-    public void modificarEquipo(Equipo equipo, String nombreEquipo){
+    public void modificarEquipo(String nombre, String fecha, String nombreEquipo){
         modeloController.buscarEquipo(nombreEquipo);
-        modeloController.modificarEquipo(equipo);
+        modeloController.modificarEquipo(nombre, fecha);
 
     }
 
