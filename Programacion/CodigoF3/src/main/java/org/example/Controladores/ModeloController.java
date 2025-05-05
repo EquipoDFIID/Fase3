@@ -3,7 +3,6 @@ package org.example.Controladores;
 import org.example.Modelo.*;
 
 import java.sql.Connection;
-import java.sql.Wrapper;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
@@ -99,20 +98,90 @@ public class ModeloController {
         return usuarioController.selectNombre(nombreUsuario);
     }
 
-    public void inscripcionCerrada(){
-        int numeroEquipos = equipoController.selectCountEquipos() - 1;
+    public void inscripcionCerrada() {
+        int numeroEquipos = equipoController.selectCountEquipos();
         ArrayList<Equipo> equipos = equipoController.selectAllEquipos();
-        for (int i = 0; i < numeroEquipos; i++) {
-            jornadaController.crearJornada();
-            for(int o = 0; o < numeroEquipos / 2; o++) {
-                Equipo atacante = selecionarEquipoRandom(equipos);
-                Equipo defensor = selecionarEquipoRandom(equipos);
-                enfrentamientoController.crearEnfrentamiento(atacante,defensor);
-            }
 
+        // Para registrar enfrentamientos únicos: "id1-id2" donde id1 < id2
+        ArrayList<String> enfrentamientosRealizados = new ArrayList<>();
+        int contadorJornadas = 0;
+        int contadorEnfrentamientos=0;
+        while (contadorJornadas < numeroEquipos) {
+            jornadaController.crearJornada();
+            System.out.println("nueva jornada");
+            // Copia temporal para esta jornada
+            ArrayList<Equipo> disponibles = new ArrayList<>(equipos);
+
+            for (int o = 0; o < numeroEquipos / 2; o++) {
+                Equipo atacante = null;
+                Equipo defensor = null;
+
+                // Buscar una pareja que no se haya enfrentado antes
+                while (contadorEnfrentamientos<numeroEquipos/2) {
+                    atacante = selecionarEquipoRandom(disponibles);
+                    disponibles.remove(atacante);
+
+                    defensor = selecionarEquipoRandom(disponibles);
+                    disponibles.remove(defensor);
+
+                    // Generar clave única ordenada (por IDs o nombres)
+                    String key = generarClaveUnica(atacante, defensor,enfrentamientosRealizados);
+
+                    /*if (!enfrentamientosRealizados.contains(key)) {
+                        enfrentamientosRealizados.add(key);
+                        encontrado = true;
+                        System.out.println("Enfrentamiento: " + key);
+                    } else {
+                        // Si ya se enfrentaron, devolver al pool y seguir buscando
+                        disponibles.add(atacante);
+                        disponibles.add(defensor);
+                        atacante = null;
+                        defensor = null;
+                    }*/
+                }
+
+                /* Si no se encontró pareja válida, salir del bucle
+                if (atacante != null && defensor != null) {
+                    enfrentamientoController.crearEnfrentamiento(atacante, defensor);
+                } else {
+                    System.out.println("No se pudo asignar enfrentamiento sin repetir.");
+                }
+            }*/
+                contadorJornadas++;
+            }
+        }
+    }
+
+    // Método para generar clave única para una pareja de equipos
+    private String generarClaveUnica(Equipo e1, Equipo e2, ArrayList<String> enfrentamientosRealizados) {
+        String id1 = e1.getNombre(); // o e1.getId() si tienes ID numérico
+        String id2 = e2.getNombre();
+
+        // Ordenar para que "A-B" sea igual que "B-A"
+        String clave;
+        if (id1.compareTo(id2) < 0) {
+            clave = id1 + "-" + id2;
+        } else {
+            clave = id2 + "-" + id1;
         }
 
+        // Insertar clave en la lista
+        enfrentamientosRealizados.add(clave);
+
+        return clave;
     }
+
+    private boolean buscarEnfrentamiento(String clave, ArrayList<String> enfrentamientosRealizados) {
+        boolean encontrado = false;
+        for(int i=0;i<enfrentamientosRealizados.size();i++){
+            if(enfrentamientosRealizados.get(i).equals(clave)){
+                encontrado= true;
+            }
+        }
+        return encontrado;
+    }
+
+
 
     private Equipo selecionarEquipoRandom(ArrayList<Equipo> equipos) {
         Random random = new Random();
