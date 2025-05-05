@@ -5,7 +5,9 @@ import org.example.Modelo.*;
 import java.sql.Connection;
 import java.sql.Wrapper;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class ModeloController {
@@ -99,29 +101,43 @@ public class ModeloController {
         return usuarioController.selectNombre(nombreUsuario);
     }
 
-    public void inscripcionCerrada(){
-        int numeroEquipos = equipoController.selectCountEquipos() - 1;
-        ArrayList<Equipo> equipos = equipoController.selectAllEquipos();
-        for (int i = 0; i < numeroEquipos; i++) {
-            jornadaController.crearJornada();
-            for(int o = 0; o < numeroEquipos / 2; o++) {
-                Equipo atacante = selecionarEquipoRandom(equipos);
-                Equipo defensor = selecionarEquipoRandom(equipos);
-                enfrentamientoController.crearEnfrentamiento(atacante,defensor);
+    public void inscripcionCerrada() {
+        ArrayList<Equipo> equiposOriginal = equipoController.selectAllEquipos();
+        int numeroEquipos = equiposOriginal.size(); // siempre par
+
+        int totalJornadas = numeroEquipos - 1;
+        int partidosPorJornada = numeroEquipos / 2;
+
+        // Creamos una lista mutable para rotar (sin afectar la original)
+        ArrayList<Equipo> equipos = new ArrayList<>(equiposOriginal);
+
+        for (int jornada = 0; jornada < totalJornadas; jornada++) {
+            ArrayList<Enfrentamiento> enfrentamientos = new ArrayList<>();
+            Jornada jornadaNueva = new Jornada(LocalDate.now(),2,enfrentamientos);
+            Jornada jornadaEnfren = jornadaController.crearJornada(jornadaNueva);
+            System.out.println("Jornada " + (jornada + 1) + " creada");
+
+            for (int i = 0; i < partidosPorJornada; i++) {
+                Equipo local = equipos.get(i);
+                Equipo visitante = equipos.get(numeroEquipos - 1 - i);
+                ArrayList<Equipo> generarGnador = new ArrayList<>();
+                generarGnador.add(local);
+                generarGnador.add(visitante);
+                Collections.shuffle(generarGnador);
+                Equipo ganador = generarGnador.get(0);
+                Enfrentamiento enfrentamiento = new Enfrentamiento(LocalDate.now(),LocalTime.now(),local,visitante,jornadaEnfren,ganador);
+                enfrentamientos.add(enfrentamiento);
+                enfrentamientoController.crearEnfrentamiento(enfrentamiento);
+                System.out.println(local.getNombre() + " vs " + visitante.getNombre());
             }
 
+            // Rotación: el primer equipo queda fijo, los demás giran a la derecha
+            Equipo fijo = equipos.get(0);
+            equipos.remove(0);
+            Equipo ultimo = equipos.remove(equipos.size() - 1);
+            equipos.add(0, ultimo); // el nuevo segundo
+            equipos.add(0, fijo);   // el primero se mantiene fijo
         }
-
-    }
-
-    private Equipo selecionarEquipoRandom(ArrayList<Equipo> equipos) {
-        Random random = new Random();
-        int indiceAleatorio = random.nextInt(equipos.size());
-
-        // Obtener y remover el equipo seleccionado para evitar repeticiones
-        Equipo equipoSeleccionado = equipos.remove(indiceAleatorio);
-
-        return equipoSeleccionado;
     }
 
 

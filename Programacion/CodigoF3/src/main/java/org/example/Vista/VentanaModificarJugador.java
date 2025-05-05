@@ -125,7 +125,7 @@ public class VentanaModificarJugador extends JDialog {
     }*/
 
     private void onOK() {
-        Jugador jugador = new Jugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, equipo);
+        Jugador jugador = new Jugador();
         jugador.setNombre(jNombre.getText());
         jugador.setApellido(jApellido.getText());
         jugador.setNacionalidad(jNacionalidad.getText());
