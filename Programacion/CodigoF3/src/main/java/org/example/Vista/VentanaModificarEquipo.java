@@ -1,7 +1,6 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
-import org.example.Modelo.Equipo;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -15,14 +14,13 @@ import java.awt.event.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 
 
 public class VentanaModificarEquipo extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JButton button1;
+    private JButton bLogo;
     private JTextField eNombre;
     private JTextField eFecha;
     private JComboBox cNombre;
@@ -86,6 +84,12 @@ public class VentanaModificarEquipo extends JDialog {
                         eFecha.setEnabled(false);
                     }
                 }
+            }
+        });
+        bLogo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
             }
         });
     }

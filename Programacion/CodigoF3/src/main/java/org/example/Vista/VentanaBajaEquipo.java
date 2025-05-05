@@ -1,11 +1,9 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
-import org.example.Modelo.Equipo;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 /**
  * Clase que representa la ventana de baja de equipo.
@@ -15,7 +13,7 @@ public class VentanaBajaEquipo extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JButton button1;
+    private JButton bLogo;
     private JComboBox cNombre;
     private static VistaController vc;
 
@@ -65,6 +63,12 @@ public class VentanaBajaEquipo extends JDialog {
                     String selectedItem = (String) cNombre.getSelectedItem();
                     buttonOK.setEnabled(selectedItem != null && !selectedItem.equals("Selecciona un equipo..."));
                 }
+            }
+        });
+        bLogo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
             }
         });
     }

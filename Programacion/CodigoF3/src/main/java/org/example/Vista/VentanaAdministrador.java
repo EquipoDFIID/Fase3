@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 
 public class VentanaAdministrador extends JFrame {
     public JPanel panel1;
-    private JButton button1;
+    private JButton bLogo;
     private JButton altaJugadorButton;
     private JButton modificarJugadorButton;
     private JButton bajaJugadorButton;

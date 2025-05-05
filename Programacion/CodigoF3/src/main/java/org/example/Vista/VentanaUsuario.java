@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 
 public class VentanaUsuario extends JFrame {
     private JPanel panel1;
-    private JButton button1;
+    private JButton bLogo;
     private JButton resultadosDeÚltimaJornadaButton;
     private JButton informacionEquiposButton;
     private JMenuItem uNombre;
@@ -62,6 +62,12 @@ public class VentanaUsuario extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 VentanaResultados ventanaResultados = new VentanaResultados(vc);
                 ventanaResultados.setVisible(true);
+            }
+        });
+        bLogo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
             }
         });
     }

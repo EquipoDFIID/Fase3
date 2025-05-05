@@ -10,7 +10,7 @@ import java.awt.event.ItemListener;
 
 public class VentanaIntroducirResultados extends JFrame {
     private JPanel panel1;
-    private JButton button1;
+    private JButton bLogo;
     private JRadioButton bEquipo1;
     private JRadioButton bEquipo2;
     private JButton bAceptar;
@@ -51,6 +51,12 @@ public class VentanaIntroducirResultados extends JFrame {
         });
 
         bSalir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        bLogo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
