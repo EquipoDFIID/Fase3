@@ -40,11 +40,11 @@ public class Usuario {
         this.clave = clave;
     }
 
-    public String getTipo_usuario() {
+    public String getTipoUsuario() {
         return tipoUsuario;
     }
 
-    public void setTipo_usuario(String tipo_usuario) {
+    public void setTipoUsuario(String tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
 }

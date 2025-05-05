@@ -29,7 +29,7 @@ public class UsuarioDAO {
                 u.setIdUsuario(rs.getInt("id_usuario"));
                 u.setNombre(rs.getString("nombre"));
                 u.setClave(rs.getString("clave"));
-                u.setTipo_usuario(rs.getString("tipo_usuario"));
+                u.setTipoUsuario(rs.getString("tipo_usuario"));
                 System.out.println(u.getNombre());
             }
 
@@ -55,7 +55,7 @@ public class UsuarioDAO {
                 u.setIdUsuario(rs.getInt("id_usuario"));
                 u.setNombre(rs.getString("nombre"));
                 u.setClave(rs.getString("clave"));
-                u.setTipo_usuario(rs.getString("tipo_usuario"));
+                u.setTipoUsuario(rs.getString("tipo_usuario"));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -74,7 +74,7 @@ public class UsuarioDAO {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, usuario.getNombre());
             ps.setString(2, usuario.getClave());
-            ps.setString(3, usuario.getTipo_usuario());
+            ps.setString(3, usuario.getTipoUsuario());
             ps.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
