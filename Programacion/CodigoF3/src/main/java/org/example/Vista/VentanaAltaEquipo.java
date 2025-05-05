@@ -20,14 +20,16 @@ public class VentanaAltaEquipo extends JDialog {
     private JTextField eFecha;
     private static VistaController vc;
     private static VentanaAltaEquipo ventana;
+    private static String nombre;
 
     /**
      * Clase que representa la ventana de alta de equipo.
      * Esta ventana permite al usuario introducir los datos necesarios
      * para registrar un nuevo equipo en la aplicación.
      */
-    public VentanaAltaEquipo(VistaController vc) {
+    public VentanaAltaEquipo(VistaController vc, String aNombre) {
         this.vc = vc;
+        this.nombre = aNombre;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -68,8 +70,9 @@ public class VentanaAltaEquipo extends JDialog {
         bLogo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                VentanaInicio ventanaInicio = new VentanaInicio(vc);
+                ventanaInicio.setVisible(true);
                 dispose();
-
             }
         });
     }
@@ -156,12 +159,13 @@ public class VentanaAltaEquipo extends JDialog {
     }
 
     private void onCancel() {
-        // add your code here if necessary
+        VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc, nombre);
+        ventanaAdministrador.setVisible(true);
         dispose();
     }
 
     public static void main(String[] args) {
-        VentanaAltaEquipo dialog = new VentanaAltaEquipo(vc);
+        VentanaAltaEquipo dialog = new VentanaAltaEquipo(vc, nombre);
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);

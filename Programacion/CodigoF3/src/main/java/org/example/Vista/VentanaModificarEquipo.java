@@ -25,9 +25,11 @@ public class VentanaModificarEquipo extends JDialog {
     private JTextField eFecha;
     private JComboBox cNombre;
     private static VistaController vc;
+    private static String nombre;
 
-    public VentanaModificarEquipo(VistaController vc) {
+    public VentanaModificarEquipo(VistaController vc, String aNombre) {
         this.vc = vc;
+        this.nombre = aNombre;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -89,6 +91,8 @@ public class VentanaModificarEquipo extends JDialog {
         bLogo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                VentanaInicio ventanaInicio = new VentanaInicio(vc);
+                ventanaInicio.setVisible(true);
                 dispose();
             }
         });
@@ -100,6 +104,8 @@ public class VentanaModificarEquipo extends JDialog {
     }
 
     private void onCancel() {
+        VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc, nombre);
+        ventanaAdministrador.setVisible(true);
         dispose();
     }
     /*public void llenarComboBox(){
@@ -116,7 +122,7 @@ public class VentanaModificarEquipo extends JDialog {
     }*/
 
     public static void main(String[] args) {
-        VentanaModificarEquipo dialog = new VentanaModificarEquipo(vc);
+        VentanaModificarEquipo dialog = new VentanaModificarEquipo(vc, nombre);
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);

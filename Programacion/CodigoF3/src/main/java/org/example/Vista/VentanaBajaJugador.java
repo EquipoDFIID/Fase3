@@ -12,14 +12,16 @@ public class VentanaBajaJugador extends JDialog {
     private JButton bLogo;
     private JComboBox cJugador;
     private static VistaController vc;
+    private static String nombre;
 
     /**
      * Clase que representa la ventana de baja de jugador.
      * Esta ventana permite al usuario seleccionar un jugador y proceder con su baja.
      */
 
-    public VentanaBajaJugador(VistaController vc) {
+    public VentanaBajaJugador(VistaController vc, String aNombre) {
         this.vc = vc;
+        this.nombre = aNombre;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -69,6 +71,8 @@ public class VentanaBajaJugador extends JDialog {
         bLogo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                VentanaInicio ventanaInicio = new VentanaInicio(vc);
+                ventanaInicio.setVisible(true);
                 dispose();
             }
         });
@@ -94,12 +98,13 @@ public class VentanaBajaJugador extends JDialog {
     }
 
     private void onCancel() {
-        // add your code here if necessary
+        VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc, nombre);
+        ventanaAdministrador.setVisible(true);
         dispose();
     }
 
     public static void main(String[] args) {
-        VentanaBajaJugador dialog = new VentanaBajaJugador(vc);
+        VentanaBajaJugador dialog = new VentanaBajaJugador(vc, nombre);
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
