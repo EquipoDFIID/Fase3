@@ -91,10 +91,7 @@ public class VentanaModificarEquipo extends JDialog {
     }
 
     private void onOK() {
-        Equipo equipo = new Equipo();
-        equipo.setNombre(eNombre.getText());
-        equipo.setFechaFund(convertirFecha(eFecha.getText()));
-        vc.modificarEquipo(equipo, cNombre.getSelectedItem().toString());
+        vc.modificarEquipo(eNombre.getText(), eFecha.getText(), cNombre.getSelectedItem().toString());
         dispose();
     }
 

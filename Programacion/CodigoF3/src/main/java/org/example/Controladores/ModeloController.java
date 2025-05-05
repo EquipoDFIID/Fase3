@@ -69,8 +69,7 @@ public class ModeloController {
 
     public void buscarJugador(String nombreJugador) {jugadorController.buscarJugador(nombreJugador);
     }
-    public void buscarEquipo(String nombreEquipo) {
-        equipoController.buscarEquipo(nombreEquipo);
+    public void buscarEquipo(String nombreEquipo) {equipoController.buscarEquipo(nombreEquipo);
     }
 
     public void altaEquipo(String nombre, String fecha){
@@ -79,23 +78,21 @@ public class ModeloController {
     public void bajaEquipo() {
         equipoController.bajaEquipo();
     }
-    public void modificarEquipo(Equipo e) {
-        equipoController.modificarEquipo(e);
+    public void modificarEquipo(String nombre, String fecha) {
+        equipoController.modificarEquipo(nombre, fecha);
     }
 
-    public void altaJugador(String nombre, String apellido, String nacionalidad,
-                            LocalDate fechaNacimiento, String nickname,
-                            double sueldo, Equipo equipo){
+    public void altaJugador(String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento, String nickname, double sueldo, Equipo equipo){
          jugadorController.altaJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, equipo);
     }
     public void bajaJugador( String nombreJugador) {
         jugadorController.bajaJugador( nombreJugador);
     }
-    public void modificarJugador(String nombre, String apellido, String nacionalidad,
-                                 LocalDate fechaNacimiento, String nickname,
-                                 double sueldo, Equipo ej) {
+    public void modificarJugador(String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento, String nickname, double sueldo, Equipo ej) {
         jugadorController.modificarJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, ej);
     }
+
+
 
     public Usuario selectNombre(String nombreUsuario) {
         return usuarioController.selectNombre(nombreUsuario);
