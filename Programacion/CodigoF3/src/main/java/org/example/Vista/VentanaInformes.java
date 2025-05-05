@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class VentanaInformes extends JFrame {
-    private JButton button1;
+    private JButton bLogo;
     private JButton bSalir;
     private JTextArea textArea1;
     private JPanel pPrincipal;
@@ -21,6 +21,12 @@ public class VentanaInformes extends JFrame {
         setResizable(false);
 
         bSalir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        bLogo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();

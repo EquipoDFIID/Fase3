@@ -1,17 +1,15 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
-import org.example.Modelo.Jugador;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 public class VentanaBajaJugador extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JButton button1;
+    private JButton bLogo;
     private JComboBox cJugador;
     private static VistaController vc;
 
@@ -66,6 +64,12 @@ public class VentanaBajaJugador extends JDialog {
                     String selectedItem = (String) cJugador.getSelectedItem();
                     buttonOK.setEnabled(selectedItem != null && !selectedItem.equals("Selecciona un jugador..."));
                 }
+            }
+        });
+        bLogo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
             }
         });
     }

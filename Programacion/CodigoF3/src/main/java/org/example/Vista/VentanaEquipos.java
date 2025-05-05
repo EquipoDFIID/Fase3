@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class VentanaEquipos extends JFrame {
-    private JButton button1;
+    private JButton bLogo;
     private JButton SALIRButton;
     private JTextArea textArea1;
     private JPanel pPrincipal;
@@ -23,6 +23,12 @@ public class VentanaEquipos extends JFrame {
         setResizable(false);
 
         SALIRButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        bLogo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();

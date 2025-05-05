@@ -2,7 +2,6 @@ package org.example.Vista;
 
 import org.example.Controladores.VistaController;
 import org.example.Modelo.Equipo;
-import org.example.Modelo.Jugador;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -21,7 +20,7 @@ public class VentanaModificarJugador extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JButton button1;
+    private JButton bLogo;
     private JTextField jNickname;
     private JTextField jSueldo;
     private JComboBox cJugador;
@@ -111,7 +110,12 @@ public class VentanaModificarJugador extends JDialog {
         });
 
 
-
+        bLogo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
     }
     /*public void llenarComboBox(){
         ArrayList<Jugador> listaJugadores=vc.();
