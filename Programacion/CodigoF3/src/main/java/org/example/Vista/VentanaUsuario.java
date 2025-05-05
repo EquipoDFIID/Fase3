@@ -53,15 +53,17 @@ public class VentanaUsuario extends JFrame {
         informacionEquiposButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaEquipos ventanaEquipo = new VentanaEquipos(vc);
+                VentanaEquipos ventanaEquipo = new VentanaEquipos(vc, uNombre);
                 ventanaEquipo.setVisible(true);
+                dispose();
             }
         });
         resultadosDeÚltimaJornadaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaResultados ventanaResultados = new VentanaResultados(vc);
+                VentanaResultados ventanaResultados = new VentanaResultados(vc, uNombre);
                 ventanaResultados.setVisible(true);
+                dispose();
             }
         });
         bLogo.addActionListener(new ActionListener() {

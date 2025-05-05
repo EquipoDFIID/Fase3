@@ -13,7 +13,7 @@ public class VentanaEquipos extends JFrame {
     private JPanel pPrincipal;
     private static VistaController vc;
 
-    public VentanaEquipos(VistaController vc) {
+    public VentanaEquipos(VistaController vc, String nombre) {
         this.vc = vc;
         setContentPane(pPrincipal);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,12 +25,16 @@ public class VentanaEquipos extends JFrame {
         SALIRButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                VentanaUsuario ventanaUsuario = new VentanaUsuario(vc, nombre);
+                ventanaUsuario.setVisible(true);
                 dispose();
             }
         });
         bLogo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                VentanaInicio ventanaInicio = new VentanaInicio(vc);
+                ventanaInicio.setVisible(true);
                 dispose();
             }
         });
