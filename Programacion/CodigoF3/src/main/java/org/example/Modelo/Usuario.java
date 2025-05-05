@@ -4,16 +4,16 @@ public class Usuario {
     private int idUsuario;
     private String nombre;
     private String clave;
-    private String tipo_usuario;
+    private String tipoUsuario;
     public Usuario() {
 
     }
 
-    public Usuario(int idUsuario, String nombre, String clave, String tipo_usuario) {
+    public Usuario(int idUsuario, String nombre, String clave, String tipoUsuario) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.clave = clave;
-        this.tipo_usuario = tipo_usuario;
+        this.tipoUsuario = tipoUsuario;
     }
 
     public int getIdUsuario() {
@@ -41,10 +41,10 @@ public class Usuario {
     }
 
     public String getTipo_usuario() {
-        return tipo_usuario;
+        return tipoUsuario;
     }
 
     public void setTipo_usuario(String tipo_usuario) {
-        this.tipo_usuario = tipo_usuario;
+        this.tipoUsuario = tipoUsuario;
     }
 }

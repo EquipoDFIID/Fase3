@@ -1,6 +1,7 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
+import org.example.Modelo.Equipo;
 import org.example.Modelo.Jugador;
 
 import javax.swing.*;
@@ -31,6 +32,7 @@ public class VentanaModificarJugador extends JDialog {
     private JTextField jFecha;
     private JComboBox jEquipo;
     private static VistaController vc;
+    private Equipo ej;
 
     public VentanaModificarJugador(VistaController vc) {
         this.vc = vc;
@@ -125,16 +127,18 @@ public class VentanaModificarJugador extends JDialog {
     }*/
 
     private void onOK() {
-        Jugador jugador = new Jugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, equipo);
-        jugador.setNombre(jNombre.getText());
-        jugador.setApellido(jApellido.getText());
-        jugador.setNacionalidad(jNacionalidad.getText());
-        jugador.setFechaNacimiento(convertirFecha(jFecha.getText()));
-        jugador.setNickname(jNickname.getText());
-        jugador.setSueldo(Double.parseDouble(jSueldo.getText()));
-        jugador.setEquipo(vc.buscarComboBoxE(jEquipo));
-        vc.modificarJugador(jugador, cJugador.getSelectedItem().toString());
+        vc.modificarJugador(
+                jNombre.getText(),
+                jApellido.getText(),
+                jNacionalidad.getText(),
+                LocalDate.parse(jFecha.getText()),
+                jNickname.getText(),
+                Double.parseDouble(jSueldo.getText()),
+                ej = vc.buscarComboBoxE(jEquipo),
+                cJugador.getSelectedItem().toString()
+        );
         dispose();
+
     }
 
     private void onCancel() {

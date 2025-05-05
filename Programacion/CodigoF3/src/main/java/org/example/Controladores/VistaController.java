@@ -53,9 +53,11 @@ public class VistaController {
         modeloController.buscarJugador(nombreJugador);
         modeloController.bajaJugador(nombreJugador);
     }
-    public void modificarJugador(Jugador jugador, String nombreJugador){
+    public void modificarJugador(String nombre, String apellido, String nacionalidad,
+                                 LocalDate fechaNacimiento, String nickname,
+                                 double sueldo, Equipo ej, String nombreJugador){
         modeloController.buscarJugador(nombreJugador);
-        modeloController.modificarJugador(jugador);
+        modeloController.modificarJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, ej);
     }
 
     public Usuario selectNombre(String nombreUsuario) {

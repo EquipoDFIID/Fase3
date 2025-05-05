@@ -91,8 +91,10 @@ public class ModeloController {
     public void bajaJugador( String nombreJugador) {
         jugadorController.bajaJugador( nombreJugador);
     }
-    public void modificarJugador(Jugador jugador) {
-        jugadorController.modificarJugador(jugador);
+    public void modificarJugador(String nombre, String apellido, String nacionalidad,
+                                 LocalDate fechaNacimiento, String nickname,
+                                 double sueldo, Equipo ej) {
+        jugadorController.modificarJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, ej);
     }
 
     public Usuario selectNombre(String nombreUsuario) {
