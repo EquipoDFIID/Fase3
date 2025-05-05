@@ -31,7 +31,10 @@ public class JugadorController {
     public void bajaJugador( String nombreJugador) {
         jugadorDAO.borrarJugador(nombreJugador);
     }
-    public void modificarJugador(Jugador jugador) {
+    public void modificarJugador(String nombre, String apellido, String nacionalidad,
+                                 LocalDate fechaNacimiento, String nickname,
+                                 double sueldo, Equipo ej) {
+        Jugador jugador = new Jugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, ej);
         jugadorDAO.modificarJugador(jugador, jb);
     }
     public void buscarJugador(String nombreJugador) {

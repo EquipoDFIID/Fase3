@@ -10,18 +10,18 @@ import java.util.Arrays;
 public class Campeonato {
     private String ID;
     private String Nombre;
-    private LocalDate Fecha_inicio;
+    private LocalDate fechaInicio;
     private String estado;
 
-    private static final String[] ESTADOS_VALIDOS = {"Inscripción", "Curso", "Finalizado"};
+    private static final String[] ESTADOSVALIDOS = {"Inscripción", "Curso", "Finalizado"};
 
     public Campeonato() {
     }
 
-    public Campeonato(String ID, String nombre, LocalDate fecha_inicio, String estado) {
+    public Campeonato(String ID, String nombre, LocalDate fechaInicio, String estado) {
         this.ID = ID;
-        Nombre = nombre;
-        Fecha_inicio = fecha_inicio;
+        this.Nombre = nombre;
+        this.fechaInicio = fechaInicio;
         setEstado(estado);
     }
 
@@ -42,11 +42,11 @@ public class Campeonato {
     }
 
     public LocalDate getFecha_inicio() {
-        return Fecha_inicio;
+        return fechaInicio;
     }
 
     public void setFecha_inicio(LocalDate fecha_inicio) {
-        Fecha_inicio = fecha_inicio;
+        fechaInicio = fechaInicio;
     }
 
     public String getEstado() {
@@ -54,7 +54,7 @@ public class Campeonato {
     }
 
     public void setEstado(String estado) {
-        if (Arrays.asList(ESTADOS_VALIDOS).contains(estado)) {
+        if (Arrays.asList(ESTADOSVALIDOS).contains(estado)) {
             this.estado = estado;
         } else {
             throw new IllegalArgumentException("Estado inválido. Debe ser 'Inscripción', 'Curso' o 'Finalizado'.");
