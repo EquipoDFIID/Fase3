@@ -17,7 +17,7 @@ public class UsuarioController {
         Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
         usuario.setClave(clave);
-        usuario.setTipo_usuario("user");
+        usuario.setTipoUsuario("user");
         usuarioDAO.crearUsuario(usuario);
     }
 }

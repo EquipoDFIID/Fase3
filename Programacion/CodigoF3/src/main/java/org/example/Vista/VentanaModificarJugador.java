@@ -131,7 +131,7 @@ public class VentanaModificarJugador extends JDialog {
                 jNombre.getText(),
                 jApellido.getText(),
                 jNacionalidad.getText(),
-                LocalDate.parse(jFecha.getText()),
+                convertirFecha(jFecha.getText()),
                 jNickname.getText(),
                 Double.parseDouble(jSueldo.getText()),
                 ej = vc.buscarComboBoxE(jEquipo),

@@ -93,7 +93,7 @@ public class VentanaInicio extends JFrame {
                              {
                                 if (a == null) {
                                     throw new DatoNoValido("No existe un administrador con ese nombre");
-                                } else  if (!a.getTipo_usuario().equals("admin")) {
+                                } else  if (!a.getTipoUsuario().equals("admin")) {
                                     throw new DatoNoValido("El nombre no corresponde a un admin");
                                 }
                             }
