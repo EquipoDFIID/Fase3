@@ -32,9 +32,11 @@ public class VentanaModificarJugador extends JDialog {
     private JComboBox jEquipo;
     private static VistaController vc;
     private Equipo ej;
+    private static String nombre;
 
-    public VentanaModificarJugador(VistaController vc) {
+    public VentanaModificarJugador(VistaController vc, String aNombre) {
         this.vc = vc;
+        this.nombre = aNombre;
         setContentPane(pPrincipal);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -113,6 +115,8 @@ public class VentanaModificarJugador extends JDialog {
         bLogo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                VentanaInicio ventanaInicio = new VentanaInicio(vc);
+                ventanaInicio.setVisible(true);
                 dispose();
             }
         });
@@ -146,12 +150,13 @@ public class VentanaModificarJugador extends JDialog {
     }
 
     private void onCancel() {
-        // Código adicional si hace falta
+        VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc, nombre);
+        ventanaAdministrador.setVisible(true);
         dispose();
     }
 
     public static void main(String[] args) {
-        VentanaModificarJugador dialog = new VentanaModificarJugador(vc);
+        VentanaModificarJugador dialog = new VentanaModificarJugador(vc, nombre);
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);

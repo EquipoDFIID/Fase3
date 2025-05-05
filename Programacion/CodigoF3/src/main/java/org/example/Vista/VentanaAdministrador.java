@@ -45,7 +45,6 @@ public class VentanaAdministrador extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                vc.mostrarVentanaInicio();
             }
         });
 
@@ -59,59 +58,75 @@ public class VentanaAdministrador extends JFrame {
         altaJugadorButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaAltaJugador ventanaAltaJugador = new VentanaAltaJugador(vc);
+                VentanaAltaJugador ventanaAltaJugador = new VentanaAltaJugador(vc, aNombre);
                 ventanaAltaJugador.setVisible(true);
+                dispose();
             }
         });
         modificarJugadorButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaModificarJugador ventanaModificarJugador = new VentanaModificarJugador(vc);
+                VentanaModificarJugador ventanaModificarJugador = new VentanaModificarJugador(vc, aNombre);
                 ventanaModificarJugador.setVisible(true);
+                dispose();
             }
         });
         bajaJugadorButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaBajaJugador ventanaBajaJugador = new VentanaBajaJugador(vc);
+                VentanaBajaJugador ventanaBajaJugador = new VentanaBajaJugador(vc, aNombre);
                 ventanaBajaJugador.setVisible(true);
+                dispose();
             }
         });
 
         altaEquipoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaAltaEquipo ventanaAltaEquipo = new VentanaAltaEquipo(vc);
+                VentanaAltaEquipo ventanaAltaEquipo = new VentanaAltaEquipo(vc, aNombre);
                 ventanaAltaEquipo.setVisible(true);
+                dispose();
             }
         });
         modificarEquipoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaModificarEquipo ventanaModificarEquipo = new VentanaModificarEquipo(vc);
+                VentanaModificarEquipo ventanaModificarEquipo = new VentanaModificarEquipo(vc, aNombre);
                 ventanaModificarEquipo.setVisible(true);
+                dispose();
             }
         });
         bajaEquipoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaBajaEquipo ventanaBajaEquipo = new VentanaBajaEquipo(vc);
+                VentanaBajaEquipo ventanaBajaEquipo = new VentanaBajaEquipo(vc, aNombre);
                 ventanaBajaEquipo.setVisible(true);
+                dispose();
             }
         });
         introducirResultadosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaIntroducirResultados ventanaIntroducirResultados = new VentanaIntroducirResultados(vc);
+                VentanaIntroducirResultados ventanaIntroducirResultados = new VentanaIntroducirResultados(vc, aNombre);
                 ventanaIntroducirResultados.setVisible(true);
+                dispose();
             }
         });
 
         verInformesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaInformes ventanaInformes = new VentanaInformes(vc);
+                VentanaInformes ventanaInformes = new VentanaInformes(vc, aNombre);
                 ventanaInformes.setVisible(true);
+                dispose();
+            }
+        });
+        bLogo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VentanaInicio ventanaInicio = new VentanaInicio(vc);
+                ventanaInicio.setVisible(true);
+                dispose();
             }
         });
     }

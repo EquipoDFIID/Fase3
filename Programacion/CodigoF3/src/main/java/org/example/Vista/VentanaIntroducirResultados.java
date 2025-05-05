@@ -16,10 +16,12 @@ public class VentanaIntroducirResultados extends JFrame {
     private JButton bAceptar;
     private JPanel pPrincipal;
     private JButton bSalir;
-    private static VistaController vc;
+    private VistaController vc;
+    private String nombre;
 
-    public VentanaIntroducirResultados(VistaController vc) {
+    public VentanaIntroducirResultados(VistaController vc, String aNombre) {
         this.vc = vc;
+        this.nombre = aNombre;
         setContentPane(pPrincipal);
         setSize(500, 580);
         setLocationRelativeTo(null);
@@ -53,12 +55,16 @@ public class VentanaIntroducirResultados extends JFrame {
         bSalir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc, nombre);
+                ventanaAdministrador.setVisible(true);
                 dispose();
             }
         });
         bLogo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                VentanaInicio ventanaInicio = new VentanaInicio(vc);
+                ventanaInicio.setVisible(true);
                 dispose();
             }
         });

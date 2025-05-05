@@ -11,10 +11,12 @@ public class VentanaInformes extends JFrame {
     private JButton bSalir;
     private JTextArea textArea1;
     private JPanel pPrincipal;
-    private static VistaController vc;
+    private VistaController vc;
+    private String nombre;
 
-    public VentanaInformes(VistaController vc) {
+    public VentanaInformes(VistaController vc, String aNombre) {
         this.vc = vc;
+        this.nombre = aNombre;
         setContentPane(pPrincipal);
         setSize(500, 580);
         setLocationRelativeTo(null);
@@ -23,12 +25,16 @@ public class VentanaInformes extends JFrame {
         bSalir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc, nombre);
+                ventanaAdministrador.setVisible(true);
                 dispose();
             }
         });
         bLogo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                VentanaInicio ventanaInicio = new VentanaInicio(vc);
+                ventanaInicio.setVisible(true);
                 dispose();
             }
         });

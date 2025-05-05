@@ -24,11 +24,13 @@ public class VentanaAltaJugador extends JDialog {
     private JTextField jFecha;
     private JComboBox jEquipo;
     private static VistaController vc;
+    private static String nombre;
 
     private static VentanaAdministrador ventana;
 
-    public VentanaAltaJugador(VistaController vc) {
+    public VentanaAltaJugador(VistaController vc, String aNombre) {
         this.vc = vc;
+        this.nombre = aNombre;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -57,6 +59,8 @@ public class VentanaAltaJugador extends JDialog {
         bLogo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                VentanaInicio ventanaInicio = new VentanaInicio(vc);
+                ventanaInicio.setVisible(true);
                 dispose();
             }
         });
@@ -308,11 +312,13 @@ public class VentanaAltaJugador extends JDialog {
     }
 
     private void onCancel() {
+        VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc, nombre);
+        ventanaAdministrador.setVisible(true);
         dispose();
     }
 
     public static void main(String[] args) {
-        VentanaAltaJugador dialog = new VentanaAltaJugador(vc);
+        VentanaAltaJugador dialog = new VentanaAltaJugador(vc, nombre);
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
