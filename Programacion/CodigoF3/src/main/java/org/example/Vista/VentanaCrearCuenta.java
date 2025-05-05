@@ -145,9 +145,8 @@ public class VentanaCrearCuenta extends JFrame {
         bLogo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaInicio ventanaInicio = new VentanaInicio(vc);
-                ventanaInicio.setVisible(true);
                 dispose();
+                vc.mostrarVentanaInicio();
             }
         });
     }
