@@ -1,8 +1,6 @@
 package org.example.Controladores;
 
-import org.example.Modelo.Equipo;
-import org.example.Modelo.Jugador;
-import org.example.Modelo.Usuario;
+import org.example.Modelo.*;
 import org.example.Vista.VentanaAdministrador;
 import org.example.Vista.VentanaAltaJugador;
 import org.example.Vista.VentanaInicio;
@@ -19,6 +17,8 @@ public class VistaController {
     private ModeloController modeloController;
     private ArrayList<Equipo> listaEquipos = new ArrayList<>();
     private ArrayList<Jugador> listaJugadores = new ArrayList<>();
+    private ArrayList<Jornada> listaJornadas = new ArrayList<>();
+    private ArrayList<Enfrentamiento> listaEnfrentamientos = new ArrayList<>();
 
     public VistaController(ModeloController modeloController) {
         this.modeloController = modeloController;
@@ -77,6 +77,30 @@ public class VistaController {
     public void rellenarJugadores(){
         listaJugadores = modeloController.selectObjetosJugador();
     }
+    public void rellenarJornadas(){
+        listaJornadas = modeloController.selectObjetosJornada();
+    }
+    public void rellenarEquiposEnfrentamientos(JRadioButton bEquipo1, JRadioButton bEquipo2, JRadioButton bEquipo3, JRadioButton bEquipo4, JRadioButton bEquipo5, JRadioButton bEquipo6, JRadioButton bEquipo7, JRadioButton bEquipo8, JRadioButton bEquipo9, JRadioButton bEquipo10) {
+        listaEnfrentamientos = modeloController.rellenarEquiposEnfrentamientos();
+
+        if (listaEnfrentamientos.size() == 5) {
+            bEquipo1.setText(listaEnfrentamientos.get(0).getEquipoAtacante().getNombre());
+            bEquipo2.setText(listaEnfrentamientos.get(0).getEquipoDefensor().getNombre());
+
+            bEquipo3.setText(listaEnfrentamientos.get(1).getEquipoAtacante().getNombre());
+            bEquipo4.setText(listaEnfrentamientos.get(1).getEquipoDefensor().getNombre());
+
+            bEquipo5.setText(listaEnfrentamientos.get(2).getEquipoAtacante().getNombre());
+            bEquipo6.setText(listaEnfrentamientos.get(2).getEquipoDefensor().getNombre());
+
+            bEquipo7.setText(listaEnfrentamientos.get(3).getEquipoAtacante().getNombre());
+            bEquipo8.setText(listaEnfrentamientos.get(3).getEquipoDefensor().getNombre());
+
+            bEquipo9.setText(listaEnfrentamientos.get(4).getEquipoAtacante().getNombre());
+            bEquipo10.setText(listaEnfrentamientos.get(4).getEquipoDefensor().getNombre());
+        }
+    }
+
 
    /* public void prueba(){
        ArrayList<Equipo>equipos= modeloController.selectNombreEquipo();
@@ -110,6 +134,16 @@ public class VistaController {
     public Equipo buscarComboBoxE(JComboBox jEquipo) {
         int posicion = jEquipo.getSelectedIndex();
         return listaEquipos.get(posicion - 1);
+    }
+
+    public void llenarComboBoxJor(JComboBox jJornada) {
+        rellenarJornadas();
+        jJornada.removeAllItems();
+        jJornada.addItem("Selecciona una jornada...");
+        for (Jornada jornada : listaJornadas) {
+            jJornada.addItem(jornada.getIdJornada());
+        }
+        jJornada.setSelectedIndex(0);
     }
 
     public void crearCuenta(String nombre, String clave){

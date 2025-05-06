@@ -10,6 +10,7 @@ public class JornadaController {
 
     private static JornadaDAO dao;
     private static CampeonatoController campeonatoController;
+    ArrayList<Jornada> listaJornadas = new ArrayList<>();
 
     public JornadaController(JornadaDAO jornadaDao) {
         this.dao = jornadaDao;
@@ -17,6 +18,10 @@ public class JornadaController {
 
     public Campeonato buscarCompeticion(int idCompeticion) {
         return campeonatoController.buscarCompeticion(idCompeticion);
+    }
+
+    public ArrayList<Jornada> selectObjetosJornada() {
+        return listaJornadas;
     }
 
     // Método para generar las jornadas
@@ -65,6 +70,7 @@ public class JornadaController {
     }*/
 
     public Jornada crearJornada(Jornada jornadaNueva) {
+        listaJornadas.add(jornadaNueva);
         return dao.altaJornada(jornadaNueva);
     }
 }
