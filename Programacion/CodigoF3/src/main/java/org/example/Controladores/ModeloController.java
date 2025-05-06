@@ -123,10 +123,11 @@ public class ModeloController {
                 generarGnador.add(visitante);
                 Collections.shuffle(generarGnador);
                 Equipo ganador = generarGnador.get(0);
-                Enfrentamiento enfrentamiento = new Enfrentamiento(LocalDate.now(),LocalTime.now(),local,visitante,jornadaEnfren,ganador);
+                Enfrentamiento enfrentamiento = new Enfrentamiento(LocalDate.now(), LocalTime.now(), local, visitante, jornadaEnfren, ganador);
                 enfrentamientos.add(enfrentamiento);
                 enfrentamientoController.crearEnfrentamiento(enfrentamiento);
                 System.out.println(local.getNombre() + " vs " + visitante.getNombre());
+            }
 
             // Rotación: el primer equipo queda fijo, los demás giran a la derecha
             Equipo fijo = equipos.get(0);
@@ -137,7 +138,7 @@ public class ModeloController {
         }
     }
 
-    public void crearCuenta(String nombre, String clave) {
-        usuarioController.crearCuenta(nombre, clave);
+    public void crearCuenta(String nombre, String clave){
+            usuarioController.crearCuenta(nombre, clave);
     }
 }
