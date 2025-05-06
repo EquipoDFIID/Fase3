@@ -112,6 +112,8 @@ public class VistaController {
         return listaEquipos.get(posicion - 1);
     }
 
+    public String
+
     public void crearCuenta(String nombre, String clave){
         modeloController.crearCuenta(nombre, clave);
     }
