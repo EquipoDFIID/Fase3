@@ -34,7 +34,6 @@ public class VentanaInicio extends JFrame {
     private JPanel buttons;
     private static VistaController vc;
 
-    private boolean cambiandoVista = false;
 
     public VentanaInicio(VistaController vc) {
         this.vc = vc;
@@ -55,10 +54,8 @@ public class VentanaInicio extends JFrame {
 
         administradorRadioButton.addActionListener(e -> {
             relleno.setVisible(false);
-            cambiandoVista = true;
             jAdmin.setVisible(true);
             jUsuario.setVisible(false);
-            cambiandoVista = false;
             uNombre.setText("");
             uClave.setText("");
             relleno.setVisible(false);
@@ -67,10 +64,8 @@ public class VentanaInicio extends JFrame {
 
         usuarioRadioButton.addActionListener(e -> {
             relleno.setVisible(false);
-            cambiandoVista = true;
             jUsuario.setVisible(true);
             jAdmin.setVisible(false);
-            cambiandoVista = false;
             aNombre.setText("");
             aClave.setText("");
             buttonImagen.setHorizontalAlignment(SwingConstants.LEFT);
@@ -80,7 +75,7 @@ public class VentanaInicio extends JFrame {
             @Override
             public void focusLost(FocusEvent e) {
                 Component opposite = e.getOppositeComponent();
-                if (cambiandoVista || (opposite instanceof JRadioButton)) return;
+                if ((opposite instanceof JRadioButton)) return;
 
                 try {
                     if (aNombre.getText().isEmpty()) {
@@ -110,7 +105,8 @@ public class VentanaInicio extends JFrame {
         aClave.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                if (cambiandoVista) return;
+                Component opposite = e.getOppositeComponent();
+                if ((opposite instanceof JRadioButton) || opposite == aNombre) return;
 
                 String nombre = aNombre.getText().trim();
                 String claveTexto = aClave.getText().trim();
@@ -186,7 +182,7 @@ public class VentanaInicio extends JFrame {
             @Override
             public void focusLost(FocusEvent e) {
                 Component opposite = e.getOppositeComponent();
-                if (cambiandoVista || (opposite instanceof JRadioButton)) return;
+                if ((opposite instanceof JRadioButton)) return;
 
                 if (uNombre.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío");
@@ -218,7 +214,8 @@ public class VentanaInicio extends JFrame {
         uClave.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                if (cambiandoVista) return;
+                Component opposite = e.getOppositeComponent();
+                if ((opposite instanceof JRadioButton) || opposite == uNombre) return;
 
                 if (!validarNombre(uNombre.getText())) {
                     uIniciarSesionButton.setEnabled(false);

@@ -128,6 +128,9 @@ public class VentanaAltaEquipo extends JDialog {
         eFecha.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
+                Component opposite = e.getOppositeComponent();
+                if ((opposite instanceof JRadioButton) || opposite == eNombre) return;
+
                 if (eFecha.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(VentanaAltaEquipo.this, "El campo fecha no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
                     eFecha.requestFocus();

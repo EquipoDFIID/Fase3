@@ -186,6 +186,9 @@ public class VentanaAltaJugador extends JDialog {
         jApellido.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
+                Component opposite = e.getOppositeComponent();
+                if ((opposite instanceof JRadioButton) || opposite == jNombre) return;
+
                 if (jApellido.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El campo apellido no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
                     jApellido.requestFocus();
@@ -200,6 +203,9 @@ public class VentanaAltaJugador extends JDialog {
         jNacionalidad.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
+                Component opposite = e.getOppositeComponent();
+                if ((opposite instanceof JRadioButton) || opposite == jNombre || opposite == jApellido) return;
+
                 if (jNacionalidad.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El campo nacionalidad no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
                     jNacionalidad.requestFocus();
@@ -214,6 +220,9 @@ public class VentanaAltaJugador extends JDialog {
         jFecha.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
+                Component opposite = e.getOppositeComponent();
+                if ((opposite instanceof JRadioButton) || opposite == jNombre || opposite == jApellido || opposite == jNacionalidad) return;
+
                 if (jFecha.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El campo fecha no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
                     jFecha.requestFocus();
@@ -228,6 +237,9 @@ public class VentanaAltaJugador extends JDialog {
         jNickname.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
+                Component opposite = e.getOppositeComponent();
+                if ((opposite instanceof JRadioButton) || opposite == jNombre || opposite == jApellido || opposite == jNacionalidad || opposite == jFecha) return;
+
                 if (jNickname.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El campo nickname no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
                     jNickname.requestFocus();
@@ -242,6 +254,9 @@ public class VentanaAltaJugador extends JDialog {
         jSueldo.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
+                Component opposite = e.getOppositeComponent();
+                if ((opposite instanceof JRadioButton) || opposite == jNombre || opposite == jApellido || opposite == jNacionalidad || opposite == jFecha || opposite == jNickname) return;
+
                 if (jSueldo.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(VentanaAltaJugador.this, "El campo sueldo no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
                     jSueldo.requestFocus();
