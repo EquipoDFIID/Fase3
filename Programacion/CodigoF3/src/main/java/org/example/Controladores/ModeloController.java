@@ -110,7 +110,7 @@ public class ModeloController {
 
         for (int jornada = 0; jornada < totalJornadas; jornada++) {
             ArrayList<Enfrentamiento> enfrentamientos = new ArrayList<>();
-            Jornada jornadaNueva = new Jornada(LocalDate.now(),2,enfrentamientos);
+            Jornada jornadaNueva = new Jornada(enfrentamientos,LocalDate.now(),campeonatoController.buscarCompeticion(2));
             Jornada jornadaEnfren = jornadaController.crearJornada(jornadaNueva);
             System.out.println("Jornada " + (jornada + 1) + " creada");
 

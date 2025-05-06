@@ -17,7 +17,7 @@ public class JornadaDAO {
             String sql = "INSERT INTO JORNADAS (FECHA, ID_COMPETICION) VALUES (?, ?)";
             PreparedStatement ps = con.prepareStatement(sql, new String[] { "ID_JORNADA" }); // permite recuperar la clave generada
             ps.setDate(1, Date.valueOf(jornada.getFecha()));
-            ps.setString(2, jornada.getCampeonato().getNombre());
+            ps.setInt(2, jornada.getCampeonato().getID());
             ps.executeUpdate();
 
             // Recuperar el ID generado
