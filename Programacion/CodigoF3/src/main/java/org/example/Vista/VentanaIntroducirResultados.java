@@ -27,17 +27,21 @@ public class VentanaIntroducirResultados extends JFrame {
     private JRadioButton bEquipo10;
     private VistaController vc;
     private String nombre;
+    private JFrame ventanaAdministrador;
 
-    public VentanaIntroducirResultados(VistaController vc, String aNombre) {
+    public VentanaIntroducirResultados(VistaController vc, String aNombre, JFrame ventanaAdmin) {
         this.vc = vc;
         this.nombre = aNombre;
+        this.ventanaAdministrador = ventanaAdmin;
         setContentPane(pPrincipal);
         setSize(500, 580);
         setLocationRelativeTo(null);
         setResizable(false);
 
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        setIconImage(icon.getImage());
+
         vc.llenarComboBoxJor(cJornada);
-        vc.rellenarEquiposEnfrentamientos(bEquipo1, bEquipo2, bEquipo3, bEquipo4, bEquipo5, bEquipo6, bEquipo7, bEquipo8, bEquipo9, bEquipo10);
         disableGanadores();
         bAceptar.setEnabled(false);
 
@@ -50,12 +54,14 @@ public class VentanaIntroducirResultados extends JFrame {
                     if (!selectedItem.equals("Selecciona una jornada...")) {
                         bEquipo1.setEnabled(true);
                         bEquipo2.setEnabled(true);
+                        vc.rellenarEquiposEnfrentamientos(bEquipo1, bEquipo2, bEquipo3, bEquipo4, bEquipo5, bEquipo6, bEquipo7, bEquipo8, bEquipo9, bEquipo10);
                     }
                 } else {
                     String selectedItem = cJornada.getSelectedItem().toString();
                     if (selectedItem.equals("Selecciona una jornada...")) {
                         bEquipo1.setEnabled(false);
                         bEquipo2.setEnabled(false);
+                        defaultEquipos();
                     }
                 }
             }
@@ -191,9 +197,8 @@ public class VentanaIntroducirResultados extends JFrame {
         bSalir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc, nombre);
-                ventanaAdministrador.setVisible(true);
-                dispose();
+                ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+                dispose(); //
             }
         });
         bLogo.addActionListener(new ActionListener() {
@@ -216,5 +221,18 @@ public class VentanaIntroducirResultados extends JFrame {
         bEquipo8.setEnabled(false);
         bEquipo9.setEnabled(false);
         bEquipo10.setEnabled(false);
+    }
+
+    public void defaultEquipos(){
+        bEquipo1.setText("Equipo 1");
+        bEquipo2.setText("Equipo 2");
+        bEquipo3.setText("Equipo 3");
+        bEquipo4.setText("Equipo 4");
+        bEquipo5.setText("Equipo 5");
+        bEquipo6.setText("Equipo 6");
+        bEquipo7.setText("Equipo 7");
+        bEquipo8.setText("Equipo 8");
+        bEquipo9.setText("Equipo 9");
+        bEquipo10.setText("Equipo 10");
     }
 }

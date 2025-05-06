@@ -128,8 +128,8 @@ public class EnfrentamientoController {
     }
 
     public void crearEnfrentamiento(Enfrentamiento enfrentamiento) {
-        listaEnfrentamientos.add(enfrentamiento);
         dao.altaEnfrentamiento(enfrentamiento);
+        listaEnfrentamientos.add(enfrentamiento);
     }
 
     public ArrayList<Enfrentamiento> rellenarEquiposEnfrentamientos(){

@@ -31,6 +31,9 @@ public class VentanaCrearCuenta extends JFrame {
         buttonOK.setEnabled(false);
         setResizable(false);
 
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        setIconImage(icon.getImage());
+
         cClave.setEnabled(false);
         ccClave.setEnabled(false);
 

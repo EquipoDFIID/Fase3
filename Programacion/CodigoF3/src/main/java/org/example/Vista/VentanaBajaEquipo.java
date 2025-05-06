@@ -17,16 +17,21 @@ public class VentanaBajaEquipo extends JDialog {
     private JComboBox cNombre;
     private static VistaController vc;
     private static String nombre;
+    private JFrame ventanaAdministrador;
 
-    public VentanaBajaEquipo(VistaController vc, String aNombre) {
+    public VentanaBajaEquipo(VistaController vc, String aNombre, JFrame ventanaAdmin) {
         this.vc = vc;
         this.nombre = aNombre;
+        this.ventanaAdministrador = ventanaAdmin;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         setSize(500, 580);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        setIconImage(icon.getImage());
 
         vc.llenarComboBoxE(cNombre);
         buttonOK.setEnabled(false); // Asegurarse de que esté desactivado inicialmente
@@ -82,16 +87,8 @@ public class VentanaBajaEquipo extends JDialog {
     }
 
     private void onCancel() {
-        VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc, nombre);
-        ventanaAdministrador.setVisible(true);
-        dispose();
-    }
-
-    public static void main(String[] args) {
-        VentanaBajaEquipo dialog = new VentanaBajaEquipo(vc, nombre);
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
+        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+        dispose(); //
     }
 
     /*public void llenarComboBox() {

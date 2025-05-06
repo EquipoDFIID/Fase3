@@ -45,6 +45,9 @@ public class VentanaInicio extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        setIconImage(icon.getImage());
+
         jAdmin.setVisible(false);
         jUsuario.setVisible(false);
         aIniciarSesionButton.setEnabled(false);
@@ -76,9 +79,10 @@ public class VentanaInicio extends JFrame {
         aNombre.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                try {
-                    if (cambiandoVista) return;
+                Component opposite = e.getOppositeComponent();
+                if (cambiandoVista || (opposite instanceof JRadioButton)) return;
 
+                try {
                     if (aNombre.getText().isEmpty()) {
                         JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío");
                         aNombre.requestFocus();
@@ -90,16 +94,14 @@ public class VentanaInicio extends JFrame {
                             JOptionPane.showMessageDialog(null, "El nombre debe comenzar por una mayúscula");
                             aNombre.requestFocus();
                         } else {
-                             {
-                                if (a == null) {
-                                    throw new DatoNoValido("No existe un administrador con ese nombre");
-                                } else  if (!a.getTipoUsuario().equals("admin")) {
-                                    throw new DatoNoValido("El nombre no corresponde a un admin");
-                                }
+                            if (a == null) {
+                                throw new DatoNoValido("No existe un administrador con ese nombre");
+                            } else if (!a.getTipoUsuario().equals("admin")) {
+                                throw new DatoNoValido("El nombre no corresponde a un admin");
                             }
                         }
                     }
-                } catch (DatoNoValido ex){
+                } catch (DatoNoValido ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
             }
@@ -183,7 +185,8 @@ public class VentanaInicio extends JFrame {
         uNombre.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                if (cambiandoVista) return;
+                Component opposite = e.getOppositeComponent();
+                if (cambiandoVista || (opposite instanceof JRadioButton)) return;
 
                 if (uNombre.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío");
@@ -195,6 +198,19 @@ public class VentanaInicio extends JFrame {
                         JOptionPane.showMessageDialog(null, "El nombre debe comenzar por una mayúscula");
                         uNombre.requestFocus();
                     }
+                }
+            }
+        });
+
+        uNombre.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                super.keyReleased(e);
+
+                if (!uNombre.getText().isEmpty()) {
+                    crearCuentaButton.setEnabled(false);
+                } else {
+                    crearCuentaButton.setEnabled(true);
                 }
             }
         });
@@ -243,35 +259,21 @@ public class VentanaInicio extends JFrame {
             }
         });
 
-        crearCuentaButton.addActionListener(e -> {
-            VentanaCrearCuenta ventanaCuenta = new VentanaCrearCuenta(vc);
-            ventanaCuenta.setVisible(true);
-            dispose();
-        });
-
         aIniciarSesionButton.addActionListener(e -> {
-            VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc, aNombre.getText());
-            ventanaAdministrador.setVisible(true);
-            dispose();
+            vc.mostrarVentanaAdministrador(aNombre.getText());
+            setVisible(false);
         });
 
         uIniciarSesionButton.addActionListener(e -> {
-            VentanaUsuario ventanaUsuario = new VentanaUsuario(vc, uNombre.getText());
-            ventanaUsuario.setVisible(true);
-            dispose();
+            vc.mostrarVentanaUsuario(uNombre.getText());
+            setVisible(false);
         });
-        uNombre.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                super.keyReleased(e);
 
-                if (!uNombre.getText().isEmpty()) {
-                    crearCuentaButton.setEnabled(false);
-                } else {
-                    crearCuentaButton.setEnabled(true);
-                }
-            }
+        crearCuentaButton.addActionListener(e -> {
+            vc.mostrarVentanaCuenta(VentanaInicio.this);
+            setVisible(false);
         });
+
     }
     /**
      * Valida que el nombre comience por mayúscula y solo tenga letras.

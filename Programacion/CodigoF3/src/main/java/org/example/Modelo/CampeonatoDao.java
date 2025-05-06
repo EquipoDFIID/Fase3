@@ -4,13 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 
-
-public class CampeonatoDao {
+public class CampeonatoDAO {
     static Connection con = BD.getConnection();
-    public CampeonatoDao() {
+    public CampeonatoDAO() {
     }
 
     public static Campeonato buscarCompeticion(int idCompeticion) {

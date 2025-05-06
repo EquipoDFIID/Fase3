@@ -11,10 +11,12 @@ public class VentanaEquipos extends JFrame {
     private JButton SALIRButton;
     private JTextArea tEquipos;
     private JPanel pPrincipal;
-    private static VistaController vc;
+    private VistaController vc;
+    private JFrame ventanaUser;
 
-    public VentanaEquipos(VistaController vc, String nombre) {
+    public VentanaEquipos(VistaController vc, String nombre, JFrame ventanaUsuario) {
         this.vc = vc;
+        this.ventanaUser = ventanaUsuario;
         setContentPane(pPrincipal);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("MenuPrincipal");
@@ -22,7 +24,8 @@ public class VentanaEquipos extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        //vc.mostrarEquipos();
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        setIconImage(icon.getImage());
 
         SALIRButton.addActionListener(new ActionListener() {
             @Override

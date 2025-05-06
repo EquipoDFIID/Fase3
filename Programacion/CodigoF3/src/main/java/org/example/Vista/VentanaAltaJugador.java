@@ -25,18 +25,21 @@ public class VentanaAltaJugador extends JDialog {
     private JComboBox jEquipo;
     private static VistaController vc;
     private static String nombre;
+    private static JFrame ventanaAdministrador;
 
-    private static VentanaAdministrador ventana;
-
-    public VentanaAltaJugador(VistaController vc, String aNombre) {
+    public VentanaAltaJugador(VistaController vc, String aNombre, JFrame ventanaAdmin) {
         this.vc = vc;
         this.nombre = aNombre;
+        this.ventanaAdministrador = ventanaAdmin;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         setSize(500, 580);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        setIconImage(icon.getImage());
 
         vc.llenarComboBoxE(jEquipo);
         inicializarCampos();
@@ -311,15 +314,7 @@ public class VentanaAltaJugador extends JDialog {
     }
 
     private void onCancel() {
-        VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc, nombre);
-        ventanaAdministrador.setVisible(true);
-        dispose();
-    }
-
-    public static void main(String[] args) {
-        VentanaAltaJugador dialog = new VentanaAltaJugador(vc, nombre);
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
+        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+        dispose(); //
     }
 }
