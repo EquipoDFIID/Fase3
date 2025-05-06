@@ -66,6 +66,13 @@ public class ModeloController {
     }
     public ArrayList <Jugador> selectObjetosJugador() {return jugadorController.selectObjetosJugador();
     }
+    public ArrayList <Jornada> selectObjetosJornada() {
+        return jornadaController.selectObjetosJornada();
+    }
+
+    public ArrayList <Enfrentamiento> rellenarEquiposEnfrentamientos() {
+        return enfrentamientoController.rellenarEquiposEnfrentamientos();
+    }
 
     public void buscarJugador(String nombreJugador) {jugadorController.buscarJugador(nombreJugador);
     }
