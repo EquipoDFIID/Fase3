@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 public class VentanaEquipos extends JFrame {
     private JButton bLogo;
     private JButton SALIRButton;
-    private JTextArea textArea1;
+    private JTextArea tEquipos;
     private JPanel pPrincipal;
     private static VistaController vc;
 
@@ -21,6 +21,8 @@ public class VentanaEquipos extends JFrame {
         setSize(500,580);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        //vc.mostrarEquipos();
 
         SALIRButton.addActionListener(new ActionListener() {
             @Override
@@ -37,5 +39,6 @@ public class VentanaEquipos extends JFrame {
                 vc.mostrarVentanaInicio();
             }
         });
+
     }
 }

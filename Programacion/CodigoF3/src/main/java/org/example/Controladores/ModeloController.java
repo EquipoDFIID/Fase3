@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 
 public class ModeloController {
 
@@ -140,5 +139,9 @@ public class ModeloController {
 
     public void crearCuenta(String nombre, String clave){
             usuarioController.crearCuenta(nombre, clave);
+    }
+
+    public ArrayList selectAllEquipos() {
+        return equipoController.selectAllEquipos();
     }
 }

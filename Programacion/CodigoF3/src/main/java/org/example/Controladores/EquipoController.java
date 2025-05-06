@@ -91,6 +91,8 @@ public class EquipoController {
     public ArrayList selectAllEquipos() {
         return equipoDAO.selectAllEquipo();
     }
+
+
    /* public void bajaEquipo() {
         boolean correcto=false;
         String codigo="";
