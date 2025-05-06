@@ -8,7 +8,7 @@ import java.util.Arrays;
  * El estado debe ser uno de los valores válidos: "Inscripción", "Curso" o "Finalizado".
  */
 public class Campeonato {
-    private String ID;
+    private int ID;
     private String Nombre;
     private LocalDate fechaInicio;
     private String estado;
@@ -18,18 +18,19 @@ public class Campeonato {
     public Campeonato() {
     }
 
-    public Campeonato(String ID, String nombre, LocalDate fechaInicio, String estado) {
+
+    public Campeonato(int ID, String nombre, LocalDate fecha_inicio, String estado) {
         this.ID = ID;
         this.Nombre = nombre;
         this.fechaInicio = fechaInicio;
         setEstado(estado);
     }
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 

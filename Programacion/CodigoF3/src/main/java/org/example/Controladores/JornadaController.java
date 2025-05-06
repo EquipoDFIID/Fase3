@@ -1,27 +1,20 @@
 package org.example.Controladores;
 
-import org.example.Modelo.Campeonato;
-import org.example.Modelo.Enfrentamiento;
 import org.example.Modelo.Jornada;
 import org.example.Modelo.JornadaDAO;
 
-import javax.swing.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import static org.example.Controladores.EnfrentamientoController.enfrentamientos;
 
 public class JornadaController {
 
-    public static ArrayList<Jornada> listaJornadas = new ArrayList<>();
+    private static JornadaDAO dao;
 
     public JornadaController(JornadaDAO jornadaDao) {
+        this.dao = jornadaDao;
     }
 
     // Método para generar las jornadas
-    public void generarJornada() {
+    /*public void generarJornada() {
 
 
 
@@ -79,8 +72,9 @@ public class JornadaController {
             jornadaNum++; // Avanzamos al número siguiente de jornada
             JOptionPane.showMessageDialog(null, sb.toString(), "Jornadas Generadas", JOptionPane.INFORMATION_MESSAGE);
         } while (correcto);
-    }
+    }*/
 
-    public void crearJornada() {
+    public Jornada crearJornada(Jornada jornadaNueva) {
+        return dao.altaJornada(jornadaNueva);
     }
 }

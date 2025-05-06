@@ -19,10 +19,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class EnfrentamientoController {
-    public static ArrayList<Equipo> equiposGanadores=new ArrayList<>();
-    public static List<Enfrentamiento> enfrentamientos=new ArrayList<>();
+    private EnfrentamientoDAO dao;
 
     public EnfrentamientoController(EnfrentamientoDAO enfrentamientoDAO) {
+        this.dao = enfrentamientoDAO;
     }
 
 
@@ -134,42 +134,17 @@ public class EnfrentamientoController {
         return hora;
     }
 
-    public Equipo preguntarResultados() {
-        Equipo equipoGanador = null;
-        for (Enfrentamiento enfrentamiento : enfrentamientos) {
-            Equipo equipo1 = enfrentamiento.getEquipoAtacante();
-            Equipo equipo2 = enfrentamiento.getEquipoDefensor();
 
-            String[] opciones = {equipo1.getNombre(), equipo2.getNombre()};
-            int resultado = JOptionPane.showOptionDialog(
-                    null,
-                    "¿Quién ha ganado?",
-                    equipo1.getNombre() + " vs " + equipo2.getNombre(),
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    opciones,
-                    opciones[0]
-            );
-
-
-
-            if (resultado == 0) {
-                equipoGanador = equipo1;
-            } else if (resultado == 1) {
-                equipoGanador = equipo2;
-            }
-
-
-        }
-
-        return equipoGanador;
-    }
 
 
     public void crearEnfrentamiento() {
     }
 
     public void crearEnfrentamiento(Equipo atacante, Equipo defensor) {
+    }
+
+    public void crearEnfrentamiento(Enfrentamiento enfrentamiento) {
+        dao.altaEnfrentamiento(enfrentamiento);
+
     }
 }

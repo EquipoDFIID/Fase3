@@ -4,7 +4,9 @@ import org.example.Modelo.*;
 
 import java.sql.Connection;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class ModeloController {
@@ -98,100 +100,42 @@ public class ModeloController {
     }
 
     public void inscripcionCerrada() {
-        int numeroEquipos = equipoController.selectCountEquipos();
-        ArrayList<Equipo> equipos = equipoController.selectAllEquipos();
+        ArrayList<Equipo> equiposOriginal = equipoController.selectAllEquipos();
+        int numeroEquipos = equiposOriginal.size(); // siempre par
 
-        // Para registrar enfrentamientos únicos: "id1-id2" donde id1 < id2
-        ArrayList<String> enfrentamientosRealizados = new ArrayList<>();
-        int contadorJornadas = 0;
-        int contadorEnfrentamientos=0;
-        while (contadorJornadas < numeroEquipos) {
-            jornadaController.crearJornada();
-            System.out.println("nueva jornada");
-            // Copia temporal para esta jornada
-            ArrayList<Equipo> disponibles = new ArrayList<>(equipos);
+        int totalJornadas = numeroEquipos - 1;
+        int partidosPorJornada = numeroEquipos / 2;
 
-            for (int o = 0; o < numeroEquipos / 2; o++) {
-                Equipo atacante = null;
-                Equipo defensor = null;
+        // Creamos una lista mutable para rotar (sin afectar la original)
+        ArrayList<Equipo> equipos = new ArrayList<>(equiposOriginal);
 
-                // Buscar una pareja que no se haya enfrentado antes
-                while (contadorEnfrentamientos<numeroEquipos/2) {
-                    atacante = selecionarEquipoRandom(disponibles);
-                    disponibles.remove(atacante);
+        for (int jornada = 0; jornada < totalJornadas; jornada++) {
+            ArrayList<Enfrentamiento> enfrentamientos = new ArrayList<>();
+            Jornada jornadaNueva = new Jornada(LocalDate.now(),2,enfrentamientos);
+            Jornada jornadaEnfren = jornadaController.crearJornada(jornadaNueva);
+            System.out.println("Jornada " + (jornada + 1) + " creada");
 
-                    defensor = selecionarEquipoRandom(disponibles);
-                    disponibles.remove(defensor);
+            for (int i = 0; i < partidosPorJornada; i++) {
+                Equipo local = equipos.get(i);
+                Equipo visitante = equipos.get(numeroEquipos - 1 - i);
+                ArrayList<Equipo> generarGnador = new ArrayList<>();
+                generarGnador.add(local);
+                generarGnador.add(visitante);
+                Collections.shuffle(generarGnador);
+                Equipo ganador = generarGnador.get(0);
+                Enfrentamiento enfrentamiento = new Enfrentamiento(LocalDate.now(),LocalTime.now(),local,visitante,jornadaEnfren,ganador);
+                enfrentamientos.add(enfrentamiento);
+                enfrentamientoController.crearEnfrentamiento(enfrentamiento);
+                System.out.println(local.getNombre() + " vs " + visitante.getNombre());
 
-                    // Generar clave única ordenada (por IDs o nombres)
-                    String key = generarClaveUnica(atacante, defensor,enfrentamientosRealizados);
-
-                    /*if (!enfrentamientosRealizados.contains(key)) {
-                        enfrentamientosRealizados.add(key);
-                        encontrado = true;
-                        System.out.println("Enfrentamiento: " + key);
-                    } else {
-                        // Si ya se enfrentaron, devolver al pool y seguir buscando
-                        disponibles.add(atacante);
-                        disponibles.add(defensor);
-                        atacante = null;
-                        defensor = null;
-                    }*/
-                }
-
-                /* Si no se encontró pareja válida, salir del bucle
-                if (atacante != null && defensor != null) {
-                    enfrentamientoController.crearEnfrentamiento(atacante, defensor);
-                } else {
-                    System.out.println("No se pudo asignar enfrentamiento sin repetir.");
-                }
-            }*/
-                contadorJornadas++;
-            }
+            // Rotación: el primer equipo queda fijo, los demás giran a la derecha
+            Equipo fijo = equipos.get(0);
+            equipos.remove(0);
+            Equipo ultimo = equipos.remove(equipos.size() - 1);
+            equipos.add(0, ultimo); // el nuevo segundo
+            equipos.add(0, fijo);   // el primero se mantiene fijo
         }
     }
-
-    // Método para generar clave única para una pareja de equipos
-    private String generarClaveUnica(Equipo e1, Equipo e2, ArrayList<String> enfrentamientosRealizados) {
-        String id1 = e1.getNombre(); // o e1.getId() si tienes ID numérico
-        String id2 = e2.getNombre();
-
-        // Ordenar para que "A-B" sea igual que "B-A"
-        String clave;
-        if (id1.compareTo(id2) < 0) {
-            clave = id1 + "-" + id2;
-        } else {
-            clave = id2 + "-" + id1;
-        }
-
-        // Insertar clave en la lista
-        enfrentamientosRealizados.add(clave);
-
-        return clave;
-    }
-
-    private boolean buscarEnfrentamiento(String clave, ArrayList<String> enfrentamientosRealizados) {
-        boolean encontrado = false;
-        for(int i=0;i<enfrentamientosRealizados.size();i++){
-            if(enfrentamientosRealizados.get(i).equals(clave)){
-                encontrado= true;
-            }
-        }
-        return encontrado;
-    }
-
-
-
-    private Equipo selecionarEquipoRandom(ArrayList<Equipo> equipos) {
-        Random random = new Random();
-        int indiceAleatorio = random.nextInt(equipos.size());
-
-        // Obtener y remover el equipo seleccionado para evitar repeticiones
-        Equipo equipoSeleccionado = equipos.remove(indiceAleatorio);
-
-        return equipoSeleccionado;
-    }
-
 
     public void crearCuenta(String nombre, String clave) {
         usuarioController.crearCuenta(nombre, clave);

@@ -145,7 +145,6 @@ public class VentanaModificarJugador extends JDialog {
                 cJugador.getSelectedItem().toString()
         );
         dispose();
-
     }
 
     private void onCancel() {

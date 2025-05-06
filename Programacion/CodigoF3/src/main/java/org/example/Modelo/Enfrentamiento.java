@@ -29,6 +29,15 @@ public class Enfrentamiento {
         EquipoGanador = equipoGanador;
     }
 
+    public Enfrentamiento(LocalDate fechEnfrentamiento, LocalTime horaEnfrentamiento, Equipo equipoAtacante, Equipo equipoDefensor, Jornada jornada, Equipo equipoGanador) {
+        this.fechEnfrentamiento = fechEnfrentamiento;
+        this.horaEnfrentamiento = horaEnfrentamiento;
+        this.equipoAtacante = equipoAtacante;
+        this.equipoDefensor = equipoDefensor;
+        this.jornada = jornada;
+        EquipoGanador = equipoGanador;
+    }
+
     public String getIdEnfrentamiento() {
         return idEnfrentamiento;
     }
