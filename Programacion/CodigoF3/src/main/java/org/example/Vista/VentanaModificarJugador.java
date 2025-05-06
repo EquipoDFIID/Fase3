@@ -1,7 +1,7 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
-import org.example.Modelo.Jugador;
+import org.example.Modelo.Equipo;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -20,7 +20,7 @@ public class VentanaModificarJugador extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JButton button1;
+    private JButton bLogo;
     private JTextField jNickname;
     private JTextField jSueldo;
     private JComboBox cJugador;
@@ -31,9 +31,12 @@ public class VentanaModificarJugador extends JDialog {
     private JTextField jFecha;
     private JComboBox jEquipo;
     private static VistaController vc;
+    private Equipo ej;
+    private static String nombre;
 
-    public VentanaModificarJugador(VistaController vc) {
+    public VentanaModificarJugador(VistaController vc, String aNombre) {
         this.vc = vc;
+        this.nombre = aNombre;
         setContentPane(pPrincipal);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -109,7 +112,14 @@ public class VentanaModificarJugador extends JDialog {
         });
 
 
-
+        bLogo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VentanaInicio ventanaInicio = new VentanaInicio(vc);
+                ventanaInicio.setVisible(true);
+                dispose();
+            }
+        });
     }
     /*public void llenarComboBox(){
         ArrayList<Jugador> listaJugadores=vc.();
@@ -125,25 +135,27 @@ public class VentanaModificarJugador extends JDialog {
     }*/
 
     private void onOK() {
-        Jugador jugador = new Jugador();
-        jugador.setNombre(jNombre.getText());
-        jugador.setApellido(jApellido.getText());
-        jugador.setNacionalidad(jNacionalidad.getText());
-        jugador.setFechaNacimiento(convertirFecha(jFecha.getText()));
-        jugador.setNickname(jNickname.getText());
-        jugador.setSueldo(Double.parseDouble(jSueldo.getText()));
-        jugador.setEquipo(vc.buscarComboBoxE(jEquipo));
-        vc.modificarJugador(jugador, cJugador.getSelectedItem().toString());
+        vc.modificarJugador(
+                jNombre.getText(),
+                jApellido.getText(),
+                jNacionalidad.getText(),
+                convertirFecha(jFecha.getText()),
+                jNickname.getText(),
+                Double.parseDouble(jSueldo.getText()),
+                ej = vc.buscarComboBoxE(jEquipo),
+                cJugador.getSelectedItem().toString()
+        );
         dispose();
     }
 
     private void onCancel() {
-        // Código adicional si hace falta
+        VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc, nombre);
+        ventanaAdministrador.setVisible(true);
         dispose();
     }
 
     public static void main(String[] args) {
-        VentanaModificarJugador dialog = new VentanaModificarJugador(vc);
+        VentanaModificarJugador dialog = new VentanaModificarJugador(vc, nombre);
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);

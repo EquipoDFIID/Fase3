@@ -1,8 +1,6 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
-import org.example.Modelo.Equipo;
-import org.example.Modelo.Jugador;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -11,15 +9,12 @@ import java.awt.event.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class VentanaAltaJugador extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JButton button1;
+    private JButton bLogo;
     private JTextField jID;
     private JTextField jNickname;
     private JTextField jSueldo;
@@ -29,11 +24,13 @@ public class VentanaAltaJugador extends JDialog {
     private JTextField jFecha;
     private JComboBox jEquipo;
     private static VistaController vc;
+    private static String nombre;
 
     private static VentanaAdministrador ventana;
 
-    public VentanaAltaJugador(VistaController vc) {
+    public VentanaAltaJugador(VistaController vc, String aNombre) {
         this.vc = vc;
+        this.nombre = aNombre;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -59,6 +56,14 @@ public class VentanaAltaJugador extends JDialog {
                 JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         agregarListeners();
+        bLogo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VentanaInicio ventanaInicio = new VentanaInicio(vc);
+                ventanaInicio.setVisible(true);
+                dispose();
+            }
+        });
     }
 
     private void inicializarCampos() {
@@ -307,11 +312,13 @@ public class VentanaAltaJugador extends JDialog {
     }
 
     private void onCancel() {
+        VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc, nombre);
+        ventanaAdministrador.setVisible(true);
         dispose();
     }
 
     public static void main(String[] args) {
-        VentanaAltaJugador dialog = new VentanaAltaJugador(vc);
+        VentanaAltaJugador dialog = new VentanaAltaJugador(vc, nombre);
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);

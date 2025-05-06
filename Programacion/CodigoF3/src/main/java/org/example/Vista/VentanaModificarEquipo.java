@@ -1,7 +1,6 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
-import org.example.Modelo.Equipo;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -15,21 +14,22 @@ import java.awt.event.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 
 
 public class VentanaModificarEquipo extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JButton button1;
+    private JButton bLogo;
     private JTextField eNombre;
     private JTextField eFecha;
     private JComboBox cNombre;
     private static VistaController vc;
+    private static String nombre;
 
-    public VentanaModificarEquipo(VistaController vc) {
+    public VentanaModificarEquipo(VistaController vc, String aNombre) {
         this.vc = vc;
+        this.nombre = aNombre;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -88,17 +88,24 @@ public class VentanaModificarEquipo extends JDialog {
                 }
             }
         });
+        bLogo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VentanaInicio ventanaInicio = new VentanaInicio(vc);
+                ventanaInicio.setVisible(true);
+                dispose();
+            }
+        });
     }
 
     private void onOK() {
-        Equipo equipo = new Equipo();
-        equipo.setNombre(eNombre.getText());
-        equipo.setFechaFund(convertirFecha(eFecha.getText()));
-        vc.modificarEquipo(equipo, cNombre.getSelectedItem().toString());
+        vc.modificarEquipo(eNombre.getText(), eFecha.getText(), cNombre.getSelectedItem().toString());
         dispose();
     }
 
     private void onCancel() {
+        VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc, nombre);
+        ventanaAdministrador.setVisible(true);
         dispose();
     }
     /*public void llenarComboBox(){
@@ -115,7 +122,7 @@ public class VentanaModificarEquipo extends JDialog {
     }*/
 
     public static void main(String[] args) {
-        VentanaModificarEquipo dialog = new VentanaModificarEquipo(vc);
+        VentanaModificarEquipo dialog = new VentanaModificarEquipo(vc, nombre);
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);

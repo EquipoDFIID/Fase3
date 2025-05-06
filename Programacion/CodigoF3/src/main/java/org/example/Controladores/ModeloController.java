@@ -3,7 +3,6 @@ package org.example.Controladores;
 import org.example.Modelo.*;
 
 import java.sql.Connection;
-import java.sql.Wrapper;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -71,8 +70,7 @@ public class ModeloController {
 
     public void buscarJugador(String nombreJugador) {jugadorController.buscarJugador(nombreJugador);
     }
-    public void buscarEquipo(String nombreEquipo) {
-        equipoController.buscarEquipo(nombreEquipo);
+    public void buscarEquipo(String nombreEquipo) {equipoController.buscarEquipo(nombreEquipo);
     }
 
     public void altaEquipo(String nombre, String fecha){
@@ -81,21 +79,21 @@ public class ModeloController {
     public void bajaEquipo() {
         equipoController.bajaEquipo();
     }
-    public void modificarEquipo(Equipo e) {
-        equipoController.modificarEquipo(e);
+    public void modificarEquipo(String nombre, String fecha) {
+        equipoController.modificarEquipo(nombre, fecha);
     }
 
-    public void altaJugador(String nombre, String apellido, String nacionalidad,
-                            LocalDate fechaNacimiento, String nickname,
-                            double sueldo, Equipo equipo){
+    public void altaJugador(String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento, String nickname, double sueldo, Equipo equipo){
          jugadorController.altaJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, equipo);
     }
     public void bajaJugador( String nombreJugador) {
         jugadorController.bajaJugador( nombreJugador);
     }
-    public void modificarJugador(Jugador jugador) {
-        jugadorController.modificarJugador(jugador);
+    public void modificarJugador(String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento, String nickname, double sueldo, Equipo ej) {
+        jugadorController.modificarJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, ej);
     }
+
+
 
     public Usuario selectNombre(String nombreUsuario) {
         return usuarioController.selectNombre(nombreUsuario);
@@ -129,7 +127,6 @@ public class ModeloController {
                 enfrentamientos.add(enfrentamiento);
                 enfrentamientoController.crearEnfrentamiento(enfrentamiento);
                 System.out.println(local.getNombre() + " vs " + visitante.getNombre());
-            }
 
             // Rotación: el primer equipo queda fijo, los demás giran a la derecha
             Equipo fijo = equipos.get(0);
@@ -139,7 +136,6 @@ public class ModeloController {
             equipos.add(0, fijo);   // el primero se mantiene fijo
         }
     }
-
 
     public void crearCuenta(String nombre, String clave) {
         usuarioController.crearCuenta(nombre, clave);

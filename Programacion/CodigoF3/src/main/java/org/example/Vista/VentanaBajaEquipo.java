@@ -1,11 +1,9 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
-import org.example.Modelo.Equipo;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 /**
  * Clase que representa la ventana de baja de equipo.
@@ -15,12 +13,14 @@ public class VentanaBajaEquipo extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JButton button1;
+    private JButton bLogo;
     private JComboBox cNombre;
     private static VistaController vc;
+    private static String nombre;
 
-    public VentanaBajaEquipo(VistaController vc) {
+    public VentanaBajaEquipo(VistaController vc, String aNombre) {
         this.vc = vc;
+        this.nombre = aNombre;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -67,6 +67,14 @@ public class VentanaBajaEquipo extends JDialog {
                 }
             }
         });
+        bLogo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VentanaInicio ventanaInicio = new VentanaInicio(vc);
+                ventanaInicio.setVisible(true);
+                dispose();
+            }
+        });
     }
 
     private void onOK() {
@@ -75,12 +83,13 @@ public class VentanaBajaEquipo extends JDialog {
     }
 
     private void onCancel() {
-        // add your code here if necessary
+        VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc, nombre);
+        ventanaAdministrador.setVisible(true);
         dispose();
     }
 
     public static void main(String[] args) {
-        VentanaBajaEquipo dialog = new VentanaBajaEquipo(vc);
+        VentanaBajaEquipo dialog = new VentanaBajaEquipo(vc, nombre);
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);

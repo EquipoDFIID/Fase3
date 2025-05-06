@@ -7,13 +7,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class VentanaResultados extends JFrame {
-    private JButton button1;
+    private JButton bLogo;
     private JButton SALIRButton;
     private JTextArea textArea1;
     private JPanel pPrincipal;
     private static VistaController vc;
 
-    public VentanaResultados(VistaController vc) {
+    public VentanaResultados(VistaController vc, String nombre) {
         this.vc = vc;
         setContentPane(pPrincipal);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,6 +25,16 @@ public class VentanaResultados extends JFrame {
         SALIRButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                VentanaUsuario ventanaUsuario = new VentanaUsuario(vc, nombre);
+                ventanaUsuario.setVisible(true);
+                dispose();
+            }
+        });
+        bLogo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VentanaInicio ventanaInicio = new VentanaInicio(vc);
+                ventanaInicio.setVisible(true);
                 dispose();
             }
         });

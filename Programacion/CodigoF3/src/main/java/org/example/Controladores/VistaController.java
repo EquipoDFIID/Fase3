@@ -38,9 +38,9 @@ public class VistaController {
         modeloController.buscarEquipo(nombreEquipo);
         modeloController.bajaEquipo();
     }
-    public void modificarEquipo(Equipo equipo, String nombreEquipo){
+    public void modificarEquipo(String nombre, String fecha, String nombreEquipo){
         modeloController.buscarEquipo(nombreEquipo);
-        modeloController.modificarEquipo(equipo);
+        modeloController.modificarEquipo(nombre, fecha);
 
     }
 
@@ -53,9 +53,11 @@ public class VistaController {
         modeloController.buscarJugador(nombreJugador);
         modeloController.bajaJugador(nombreJugador);
     }
-    public void modificarJugador(Jugador jugador, String nombreJugador){
+    public void modificarJugador(String nombre, String apellido, String nacionalidad,
+                                 LocalDate fechaNacimiento, String nickname,
+                                 double sueldo, Equipo ej, String nombreJugador){
         modeloController.buscarJugador(nombreJugador);
-        modeloController.modificarJugador(jugador);
+        modeloController.modificarJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, ej);
     }
 
     public Usuario selectNombre(String nombreUsuario) {

@@ -1,7 +1,6 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
-import org.example.Modelo.Usuario;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -15,7 +14,7 @@ import java.awt.event.*;
 public class VentanaCrearCuenta extends JFrame {
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JButton button1;
+    private JButton bLogo;
     private JTextField cClave;
     private JTextField ccClave;
     private JPanel pPrincipal;
@@ -130,6 +129,8 @@ public class VentanaCrearCuenta extends JFrame {
         buttonCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                VentanaInicio ventanaInicio = new VentanaInicio(vc);
+                ventanaInicio.setVisible(true);
                 dispose();
             }
         });
@@ -138,6 +139,14 @@ public class VentanaCrearCuenta extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 vc.crearCuenta(cNombre.getText(), cClave.getText());
                 JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "Usuario creado exitosamente", "Exitosamente", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+            }
+        });
+        bLogo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VentanaInicio ventanaInicio = new VentanaInicio(vc);
+                ventanaInicio.setVisible(true);
                 dispose();
             }
         });

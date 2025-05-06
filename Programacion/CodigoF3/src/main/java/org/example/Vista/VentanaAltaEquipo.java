@@ -1,8 +1,6 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
-import org.example.Modelo.Equipo;
-import org.example.Modelo.Jugador;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -11,27 +9,27 @@ import java.awt.event.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class VentanaAltaEquipo extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JButton button1;
+    private JButton bLogo;
     private JTextField eID;
     private JTextField eNombre;
     private JTextField eFecha;
     private static VistaController vc;
     private static VentanaAltaEquipo ventana;
+    private static String nombre;
 
     /**
      * Clase que representa la ventana de alta de equipo.
      * Esta ventana permite al usuario introducir los datos necesarios
      * para registrar un nuevo equipo en la aplicación.
      */
-    public VentanaAltaEquipo(VistaController vc) {
+    public VentanaAltaEquipo(VistaController vc, String aNombre) {
         this.vc = vc;
+        this.nombre = aNombre;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -69,6 +67,14 @@ public class VentanaAltaEquipo extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         agregarListeners();
+        bLogo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VentanaInicio ventanaInicio = new VentanaInicio(vc);
+                ventanaInicio.setVisible(true);
+                dispose();
+            }
+        });
     }
 
     private void inicializarCampos() {
@@ -153,12 +159,13 @@ public class VentanaAltaEquipo extends JDialog {
     }
 
     private void onCancel() {
-        // add your code here if necessary
+        VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc, nombre);
+        ventanaAdministrador.setVisible(true);
         dispose();
     }
 
     public static void main(String[] args) {
-        VentanaAltaEquipo dialog = new VentanaAltaEquipo(vc);
+        VentanaAltaEquipo dialog = new VentanaAltaEquipo(vc, nombre);
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);

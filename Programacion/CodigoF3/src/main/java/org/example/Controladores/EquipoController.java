@@ -57,15 +57,11 @@ public class EquipoController {
         return variable;
     }
 
-    public static LocalDate solicitarFecha() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String fechaS = JOptionPane.showInputDialog("Ingrese la fecha de fundación: ");
-        LocalDate fecha = LocalDate.parse(fechaS, formatter);
-        return fecha;
-    }
     public void buscarEquipo(String nombre){
         eb = equipoDAO.buscarEquipo(nombre);
     }
+
+
     public void altaEquipo(String nombre, String fecha) {
         Equipo e = new Equipo();
         e.setNombre(nombre);
@@ -75,9 +71,15 @@ public class EquipoController {
     public void bajaEquipo() {
         equipoDAO.borrarEquipo(eb);
     }
-    public void modificarEquipo(Equipo e) {
-        equipoDAO.modificarEquipo(e, eb);
+    public void modificarEquipo(String nombre, String fecha) {
+        Equipo equipo = new Equipo();
+        equipo.setNombre(nombre);
+        equipo.setFechaFund(convertirFecha(fecha));
+        equipoDAO.modificarEquipo(equipo, eb);
     }
+
+
+
     public ArrayList<Equipo> selectObjetosEquipo(){
         return equipoDAO.selectObjetosEquipo();
     }
