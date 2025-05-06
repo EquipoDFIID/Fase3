@@ -32,6 +32,9 @@ public class VentanaUsuario extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        setIconImage(icon.getImage());
+
         this.uNombre.setText(uNombre);
         this.uNombre.setEnabled(false);
 
@@ -53,16 +56,14 @@ public class VentanaUsuario extends JFrame {
         informacionEquiposButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaEquipos ventanaEquipo = new VentanaEquipos(vc, uNombre);
-                ventanaEquipo.setVisible(true);
+                vc.mostrarVentanaEquipos(uNombre, VentanaUsuario.this);
                 dispose();
             }
         });
         resultadosDeÚltimaJornadaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaResultados ventanaResultados = new VentanaResultados(vc, uNombre);
-                ventanaResultados.setVisible(true);
+                vc.mostrarVentanaResultados(uNombre, VentanaUsuario.this);
                 dispose();
             }
         });

@@ -13,21 +13,26 @@ public class VentanaBajaJugador extends JDialog {
     private JComboBox cJugador;
     private static VistaController vc;
     private static String nombre;
+    private JFrame ventanaAdministrador;
 
     /**
      * Clase que representa la ventana de baja de jugador.
      * Esta ventana permite al usuario seleccionar un jugador y proceder con su baja.
      */
 
-    public VentanaBajaJugador(VistaController vc, String aNombre) {
+    public VentanaBajaJugador(VistaController vc, String aNombre, JFrame ventanaAdmin) {
         this.vc = vc;
         this.nombre = aNombre;
+        this.ventanaAdministrador = ventanaAdmin;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         setSize(500, 580);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        setIconImage(icon.getImage());
 
         vc.llenarComboBoxJ(cJugador);
         buttonOK.setEnabled(false);
@@ -97,15 +102,7 @@ public class VentanaBajaJugador extends JDialog {
     }
 
     private void onCancel() {
-        VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc, nombre);
-        ventanaAdministrador.setVisible(true);
-        dispose();
-    }
-
-    public static void main(String[] args) {
-        VentanaBajaJugador dialog = new VentanaBajaJugador(vc, nombre);
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
+        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+        dispose(); //
     }
 }

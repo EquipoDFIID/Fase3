@@ -26,16 +26,21 @@ public class VentanaModificarEquipo extends JDialog {
     private JComboBox cNombre;
     private static VistaController vc;
     private static String nombre;
+    private JFrame ventanaAdministrador;
 
-    public VentanaModificarEquipo(VistaController vc, String aNombre) {
+    public VentanaModificarEquipo(VistaController vc, String aNombre, JFrame ventanaAdministrador) {
         this.vc = vc;
         this.nombre = aNombre;
+        this.ventanaAdministrador = ventanaAdministrador;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         setSize(500, 580);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        setIconImage(icon.getImage());
 
         eNombre.setEnabled(false);
         eFecha.setEnabled(false);
@@ -103,9 +108,8 @@ public class VentanaModificarEquipo extends JDialog {
     }
 
     private void onCancel() {
-        VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc, nombre);
-        ventanaAdministrador.setVisible(true);
-        dispose();
+        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+        dispose(); //
     }
     /*public void llenarComboBox(){
         ArrayList<Equipo> listaEquipos=vc.selectObjetoEquipo();
@@ -119,13 +123,6 @@ public class VentanaModificarEquipo extends JDialog {
 
         cNombre.setSelectedIndex(0);
     }*/
-
-    public static void main(String[] args) {
-        VentanaModificarEquipo dialog = new VentanaModificarEquipo(vc, nombre);
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
-    }
 
     private LocalDate convertirFecha(String fechaTexto) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

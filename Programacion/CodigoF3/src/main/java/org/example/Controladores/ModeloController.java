@@ -10,7 +10,7 @@ import java.util.Collections;
 
 public class ModeloController {
 
-    private CampeonatoDao campeonatoDao;
+    private CampeonatoDAO campeonatoDao;
     private CampeonatoController campeonatoController;
 
     private EnfrentamientoController enfrentamientoController;
@@ -35,7 +35,7 @@ public class ModeloController {
             //BaseDatos.abrirConexion();
             Connection con =BD.getConnection();
 
-            campeonatoDao=new CampeonatoDao();
+            campeonatoDao=new CampeonatoDAO();
             campeonatoController= new CampeonatoController(campeonatoDao);
 
             enfrentamientoDao=new EnfrentamientoDAO();
@@ -105,7 +105,9 @@ public class ModeloController {
         return usuarioController.selectNombre(nombreUsuario);
     }
 
-    public void inscripcionCerrada() {
+    public boolean cerrarInscripcion() {
+        boolean cerrada = false;
+
         ArrayList<Equipo> equiposOriginal = equipoController.selectAllEquipos();
         int numeroEquipos = equiposOriginal.size(); // siempre par
 
@@ -140,8 +142,10 @@ public class ModeloController {
             equipos.remove(0);
             Equipo ultimo = equipos.remove(equipos.size() - 1);
             equipos.add(0, ultimo); // el nuevo segundo
-            equipos.add(0, fijo);   // el primero se mantiene fijo
+            equipos.add(0, fijo);// el primero se mantiene fijo
+            cerrada = true;
         }
+        return cerrada;
     }
 
     public void crearCuenta(String nombre, String clave){

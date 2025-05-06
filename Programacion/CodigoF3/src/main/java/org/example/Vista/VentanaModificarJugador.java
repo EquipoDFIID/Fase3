@@ -33,16 +33,21 @@ public class VentanaModificarJugador extends JDialog {
     private static VistaController vc;
     private Equipo ej;
     private static String nombre;
+    private JFrame ventanaAdministrador;
 
-    public VentanaModificarJugador(VistaController vc, String aNombre) {
+    public VentanaModificarJugador(VistaController vc, String aNombre, JFrame ventanaAdmin) {
         this.vc = vc;
         this.nombre = aNombre;
+        this.ventanaAdministrador = ventanaAdmin;
         setContentPane(pPrincipal);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         setSize(500, 580);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        setIconImage(icon.getImage());
 
         jNombre.setEnabled(false);
         jApellido.setEnabled(false);
@@ -148,17 +153,11 @@ public class VentanaModificarJugador extends JDialog {
     }
 
     private void onCancel() {
-        VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc, nombre);
-        ventanaAdministrador.setVisible(true);
-        dispose();
+        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+        dispose(); //
     }
 
-    public static void main(String[] args) {
-        VentanaModificarJugador dialog = new VentanaModificarJugador(vc, nombre);
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
-    }
+
 
     private LocalDate convertirFecha(String fechaTexto) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

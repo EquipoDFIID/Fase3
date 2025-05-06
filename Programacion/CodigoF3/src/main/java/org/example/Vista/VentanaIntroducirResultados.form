@@ -313,9 +313,25 @@
     </children>
   </grid>
   <buttonGroups>
-    <group name="gButtons">
+    <group name="enf2">
+      <member id="fc290"/>
+      <member id="1a5ee"/>
+    </group>
+    <group name="enf1">
       <member id="f5f0f"/>
       <member id="543bc"/>
+    </group>
+    <group name="enf3">
+      <member id="178f3"/>
+      <member id="ce4c6"/>
+    </group>
+    <group name="enf4">
+      <member id="17eac"/>
+      <member id="a76eb"/>
+    </group>
+    <group name="enf5">
+      <member id="b5735"/>
+      <member id="8a1ba"/>
     </group>
   </buttonGroups>
 </form>
