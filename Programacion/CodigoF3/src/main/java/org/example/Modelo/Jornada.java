@@ -15,15 +15,12 @@ public class Jornada {
     public Jornada() {
     }
 
-    public Jornada(int idJornada, LocalDate fecha, Campeonato campeonato, ArrayList<Enfrentamiento> listaEnfrentamientos) {
-        this.idJornada = idJornada;
-        this.fecha = fecha;
+    public Jornada(ArrayList<Enfrentamiento> enfrentamientos, LocalDate now, Campeonato campeonato) {
+        this.listaEnfrentamientos = enfrentamientos;
+        this.fecha = now;
         this.campeonato = campeonato;
-        this.listaEnfrentamientos = listaEnfrentamientos;
     }
 
-    public Jornada(LocalDate now, int i, ArrayList<Enfrentamiento> enfrentamientos) {
-    }
 
     public int getIdJornada() {
         return idJornada;

@@ -12,7 +12,7 @@ public class Campeonato {
     private String Nombre;
     private String estado;
 
-    private static final String[] ESTADOSVALIDOS = {"Inscripción", "Curso", "Finalizado"};
+    private static final String[] ESTADOSVALIDOS = {"inscripción", "en curso", "finalizada"};
 
     public Campeonato() {
     }

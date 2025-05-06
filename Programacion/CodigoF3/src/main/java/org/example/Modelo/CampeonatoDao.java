@@ -6,10 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import static org.example.Modelo.JornadaDAO.con;
+
 
 public class CampeonatoDao {
-
+    static Connection con = BD.getConnection();
     public CampeonatoDao() {
     }
 
