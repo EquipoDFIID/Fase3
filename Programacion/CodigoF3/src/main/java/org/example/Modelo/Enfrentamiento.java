@@ -7,7 +7,7 @@ import java.time.LocalTime;
  * incluyendo la fecha, hora y el equipo ganador del enfrentamiento.
  */
 public class Enfrentamiento {
-    private String idEnfrentamiento;
+    private int idEnfrentamiento;
     private LocalDate fechEnfrentamiento;
     private LocalTime horaEnfrentamiento;
     private Equipo equipoAtacante;
@@ -19,7 +19,7 @@ public class Enfrentamiento {
 
     }
 
-    public Enfrentamiento(String idEnfrentamiento, LocalDate fechEnfrentamiento, LocalTime horaEnfrentamiento, Equipo equipoAtacante, Equipo equipoDefensor, Jornada jornada, Equipo equipoGanador) {
+    public Enfrentamiento(int idEnfrentamiento, LocalDate fechEnfrentamiento, LocalTime horaEnfrentamiento, Equipo equipoAtacante, Equipo equipoDefensor, Jornada jornada, Equipo equipoGanador) {
         this.idEnfrentamiento = idEnfrentamiento;
         this.fechEnfrentamiento = fechEnfrentamiento;
         this.horaEnfrentamiento = horaEnfrentamiento;
@@ -38,11 +38,11 @@ public class Enfrentamiento {
         EquipoGanador = equipoGanador;
     }
 
-    public String getIdEnfrentamiento() {
+    public int getIdEnfrentamiento() {
         return idEnfrentamiento;
     }
 
-    public void setIdEnfrentamiento(String idEnfrentamiento) {
+    public void setIdEnfrentamiento(int idEnfrentamiento) {
         this.idEnfrentamiento = idEnfrentamiento;
     }
 

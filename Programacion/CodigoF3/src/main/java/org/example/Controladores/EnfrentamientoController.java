@@ -87,15 +87,7 @@ public class EnfrentamientoController {
     }*/
 
 
-    public static Enfrentamiento solicitarValidarDatos() {
-        String idEnfrentamiento = solicitarDato("ID Enfrentamiento", "Teclea el id del enfrentamiento", "^[0-9]{4}[A-Z]{1}$");
-        LocalDate fechaEnfrentamiento = solicitarFecha();
-        LocalTime horaEnfrentamiento = solicitarHora();
 
-
-        Enfrentamiento e = new Enfrentamiento(idEnfrentamiento, fechaEnfrentamiento, horaEnfrentamiento, null, null, null, null);
-        return e;
-    }
 
     public static String solicitarDato(String dato, String mensaje, String expresionRegular)
     {

@@ -1,9 +1,7 @@
 package org.example.Modelo;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
+import java.util.ArrayList;
 
 public class JornadaDAO {
     static Connection con = BD.getConnection();
@@ -27,6 +25,48 @@ public class JornadaDAO {
 
         } catch (Exception e) {
             System.out.println("Error al insertar jornada: " + e.getMessage());
+        }
+        return jornada;
+    }
+
+    public static Jornada buscarJornada(int idJornada) {
+        Jornada j = new Jornada();
+
+        try {
+            String sql = "SELECT * FROM JORNADAS WHERE ID_JORNADA = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idJornada);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                j.setIdJornada(rs.getInt("ID_JORNADA"));
+                j.setFecha(rs.getDate("FECHA").toLocalDate());
+                j.setCampeonato(rs.getInt("ID_JORNADA"));
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return j;
+    }
+
+    public ArrayList selectAllJornada() {
+        ArrayList<Jornada> jornada = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM JORNADAS";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) { // ← CAMBIADO DE "if" A "while"
+                Jornada j = new Jornada();
+                j.setIdJornada(rs.getInt("ID_JORNADA"));
+                j.setFecha(rs.getDate("FECHA").toLocalDate());
+                j.setCampeonato(rs.getInt("ID_COMPETICION"));
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
         return jornada;
     }

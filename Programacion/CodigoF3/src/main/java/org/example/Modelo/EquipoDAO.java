@@ -97,6 +97,26 @@ public class EquipoDAO {
         }
         return e;
     }
+    public static Equipo buscarEquipoInt(int nombreEquipo) {
+        Equipo e = new Equipo();
+
+        try {
+            String sql = "SELECT * FROM EQUIPOS WHERE ID_EQUIPO = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, nombreEquipo);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                e.setIdEquipo(rs.getInt("id_equipo"));
+                e.setNombre(rs.getString("nombre"));
+                e.setFechaFund(rs.getDate("fecha_fund").toLocalDate());
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return e;
+    }
     public int selectCountEquipos(){
         int cantidad=0;
         try{
