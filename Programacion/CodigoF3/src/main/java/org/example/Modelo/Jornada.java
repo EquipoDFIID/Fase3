@@ -7,15 +7,15 @@ import java.util.ArrayList;
  * una lista de enfrentamientos que se disputan en una fecha específica.
  */
 public class Jornada {
-    private String idJornada;
-    private String fecha;
+    private int idJornada;
+    private LocalDate fecha;
     private Campeonato campeonato;
     private ArrayList <Enfrentamiento> listaEnfrentamientos;
 
     public Jornada() {
     }
 
-    public Jornada(String idJornada, String fecha, Campeonato campeonato, ArrayList<Enfrentamiento> listaEnfrentamientos) {
+    public Jornada(int idJornada, LocalDate fecha, Campeonato campeonato, ArrayList<Enfrentamiento> listaEnfrentamientos) {
         this.idJornada = idJornada;
         this.fecha = fecha;
         this.campeonato = campeonato;
@@ -25,19 +25,19 @@ public class Jornada {
     public Jornada(LocalDate now, int i, ArrayList<Enfrentamiento> enfrentamientos) {
     }
 
-    public String getIdJornada() {
+    public int getIdJornada() {
         return idJornada;
     }
 
-    public void setIdJornada(String idJornada) {
+    public void setIdJornada(int idJornada) {
         this.idJornada = idJornada;
     }
 
-    public String getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

@@ -1,5 +1,6 @@
 package org.example.Controladores;
 
+import org.example.Modelo.Campeonato;
 import org.example.Modelo.Jornada;
 import org.example.Modelo.JornadaDAO;
 
@@ -8,29 +9,18 @@ import java.util.ArrayList;
 public class JornadaController {
 
     private static JornadaDAO dao;
+    private static CampeonatoController campeonatoController;
 
     public JornadaController(JornadaDAO jornadaDao) {
         this.dao = jornadaDao;
     }
 
+    public Campeonato buscarCompeticion(int idCompeticion) {
+        return campeonatoController.buscarCompeticion(idCompeticion);
+    }
+
     // Método para generar las jornadas
     /*public void generarJornada() {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         StringBuilder sb = new StringBuilder();
         boolean correcto = true;
         List<Enfrentamiento> enfrentamientosDisponibles = new ArrayList<>(enfrentamientos);
