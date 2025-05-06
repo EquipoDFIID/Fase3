@@ -1,10 +1,14 @@
 package org.example.Modelo;
 
+import org.example.Controladores.JornadaController;
+
 import java.sql.*;
 import java.util.ArrayList;
 
 public class JornadaDAO {
     static Connection con = BD.getConnection();
+    private static JornadaController jornadaController;
+
     public JornadaDAO() {
     }
     public static Jornada altaJornada(Jornada jornada) {
@@ -13,7 +17,7 @@ public class JornadaDAO {
             String sql = "INSERT INTO JORNADAS (FECHA, ID_COMPETICION) VALUES (?, ?)";
             PreparedStatement ps = con.prepareStatement(sql, new String[] { "ID_JORNADA" }); // permite recuperar la clave generada
             ps.setDate(1, Date.valueOf(jornada.getFecha()));
-            ps.setInt(2, jornada.getCampeonato());
+            ps.setString(2, jornada.getCampeonato().getNombre());
             ps.executeUpdate();
 
             // Recuperar el ID generado
@@ -41,7 +45,7 @@ public class JornadaDAO {
             if (rs.next()) {
                 j.setIdJornada(rs.getInt("ID_JORNADA"));
                 j.setFecha(rs.getDate("FECHA").toLocalDate());
-                j.setCampeonato(rs.getInt("ID_JORNADA"));
+                j.setCampeonato(jornadaController.buscarCompeticion(rs.getInt("ID_COMPETICION")));
             }
 
         } catch (SQLException ex) {
@@ -62,7 +66,7 @@ public class JornadaDAO {
                 Jornada j = new Jornada();
                 j.setIdJornada(rs.getInt("ID_JORNADA"));
                 j.setFecha(rs.getDate("FECHA").toLocalDate());
-                j.setCampeonato(rs.getInt("ID_COMPETICION"));
+                j.setCampeonato(jornadaController.buscarCompeticion(rs.getInt("ID_COMPETICION")));
             }
 
         } catch (SQLException ex) {

@@ -7,6 +7,12 @@ import javax.swing.*;
 import java.time.LocalDate;
 
 public class CampeonatoController {
+    private static CampeonatoDao campeonatoDao;
+
     public CampeonatoController(CampeonatoDao campeonatoDao) {
+    }
+
+    public Campeonato buscarCompeticion(int idCampeonato) {
+        return campeonatoDao.buscarCompeticion(idCampeonato);
     }
 }
