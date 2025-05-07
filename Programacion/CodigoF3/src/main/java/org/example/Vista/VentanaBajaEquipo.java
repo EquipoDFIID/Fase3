@@ -68,6 +68,7 @@ public class VentanaBajaEquipo extends JDialog {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     String selectedItem = (String) cNombre.getSelectedItem();
+                    getRootPane().setDefaultButton(buttonOK); // Agregado
                     buttonOK.setEnabled(selectedItem != null && !selectedItem.equals("Selecciona un equipo..."));
                 }
             }

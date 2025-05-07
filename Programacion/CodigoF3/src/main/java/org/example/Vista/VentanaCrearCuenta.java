@@ -137,6 +137,7 @@ public class VentanaCrearCuenta extends JFrame {
                         cClave.setBorder(new LineBorder(Color.GREEN, 1));
                         ccClave.setBorder(new LineBorder(Color.GREEN, 1));
                         buttonOK.setEnabled(true);
+                        //getRootPane().setDefaultButton(buttonOK); // Agregado
                     } else {
                         cClave.setBorder(new LineBorder(Color.RED, 1));
                         ccClave.setBorder(new LineBorder(Color.RED, 1));

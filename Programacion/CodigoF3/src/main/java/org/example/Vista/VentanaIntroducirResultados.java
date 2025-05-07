@@ -52,6 +52,7 @@ public class VentanaIntroducirResultados extends JFrame {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     vc.rellenarEquiposEnfrentamientos(panelEquipos, cJornada.getSelectedIndex(), bAceptar, VentanaIntroducirResultados.this);
                     bAceptar.setEnabled(comprobarSelecciones());
+                    getRootPane().setDefaultButton(bAceptar); // Agregado
                 }
             }
         });

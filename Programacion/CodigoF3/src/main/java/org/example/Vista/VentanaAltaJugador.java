@@ -161,6 +161,7 @@ public class VentanaAltaJugador extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 if (jEquipo.isEnabled() && jEquipo.getSelectedIndex() > 0) {
                     buttonOK.setEnabled(true);
+                    getRootPane().setDefaultButton(buttonOK); // Agregado
                     jEquipo.setBorder(new LineBorder(Color.black, 1));
                 } else {
                     buttonOK.setEnabled(false);

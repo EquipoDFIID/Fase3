@@ -145,6 +145,7 @@ public class VentanaModificarEquipo extends JDialog {
             public void keyReleased(KeyEvent e) {
                 if (validarFecha()) {
                     buttonOK.setEnabled(true);
+                    getRootPane().setDefaultButton(buttonOK); // Agregado
                     eFecha.setBorder(new LineBorder(Color.GREEN, 1));
                 } else {
                     buttonOK.setEnabled(false);
