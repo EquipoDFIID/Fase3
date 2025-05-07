@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 /**
@@ -214,6 +215,7 @@ public class VistaController {
         }
     }
 
+
     public ArrayList<ButtonGroup> pasarGrupos() {
         return gruposEquipos;
     }
@@ -267,12 +269,31 @@ public class VistaController {
         jJornada.setSelectedIndex(0);
     }
 
+    public void procesarGanadoresSeleccionados(int indexJornadaSeleccionada) {
+        Jornada jornada = modeloController.jornadas.get(indexJornadaSeleccionada - 1);
+        List<Enfrentamiento> enfrentamientos = jornada.getListaEnfrentamientos();
 
-    public void asociarJornada(JComboBox jJornada) {
-        int posicion = jJornada.getSelectedIndex();
-        ArrayList <Jornada> jornadas = listaJornadas;
+        for (int i = 0; i < gruposEquipos.size(); i++) {
+            ButtonGroup grupo = gruposEquipos.get(i);
+            Enfrentamiento enfrentamiento = enfrentamientos.get(i);
 
+            Enumeration<AbstractButton> botones = grupo.getElements();
+            while (botones.hasMoreElements()) {
+                AbstractButton boton = botones.nextElement();
+                if (boton.isSelected()) {
+                    String nombreEquipoGanador = boton.getText();
+                    if (enfrentamiento.getEquipoAtacante().getNombre().equals(nombreEquipoGanador)) {
+                        enfrentamiento.setEquipoGanador(enfrentamiento.getEquipoAtacante());
+                    } else {
+                        enfrentamiento.setEquipoGanador(enfrentamiento.getEquipoDefensor());
+                    }
+                    break;
+                }
+            }
+        }
+        modeloController.asignarGanadoresEnfrentamientos(jornada);
     }
+
 
     public void crearCuenta(String nickname, String nombre, String clave){
         modeloController.crearCuenta(nickname, nombre, clave);

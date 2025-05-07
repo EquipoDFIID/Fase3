@@ -6,9 +6,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
+import java.sql.Date;
 
 /**
  * Clase `UsuarioController` que actúa como controlador para gestionar las operaciones
@@ -37,6 +39,8 @@ public class ModeloController {
     private UsuarioDAO usuarioDao;
 
     private VistaController vc;
+    private Enfrentamiento enfrentamiento;
+    private Equipo ganador;
 
 
     ArrayList <Jornada> jornadas = new ArrayList<>();
@@ -158,17 +162,13 @@ public class ModeloController {
             for (int i = 0; i < partidosPorJornada; i++) {
                 Equipo local = equipos.get(i);
                 Equipo visitante = equipos.get(numeroEquipos - 1 - i);
-                ArrayList<Equipo> generarGnador = new ArrayList<>();
-                generarGnador.add(local);
-                generarGnador.add(visitante);
-                Collections.shuffle(generarGnador);
-                Equipo ganador = generarGnador.get(0);
-                Enfrentamiento enfrentamiento = new Enfrentamiento(LocalDate.now(), LocalTime.now(), local, visitante, jornadaEnfren, ganador);
+                LocalTime hora = LocalTime.now().truncatedTo(ChronoUnit.SECONDS);
+                Enfrentamiento enfrentamiento = new Enfrentamiento(LocalDate.now(), hora, local, visitante, jornadaEnfren);
                 enfrentamientos.add(enfrentamiento);
-                enfrentamientoController.crearEnfrentamiento(enfrentamiento);
                 System.out.println(local.getNombre() + " vs " + visitante.getNombre());
             }
 
+            enfrentamientoController.crearEnfrentamientos(enfrentamientos);
             // Rotación: el primer equipo queda fijo, los demás giran a la derecha
             Equipo fijo = equipos.get(0);
             equipos.remove(0);
@@ -191,4 +191,11 @@ public class ModeloController {
     public boolean comprobarNickname(String nickname) {
         return usuarioController.comprobarNickname(nickname);
     }
+
+    public void asignarGanadoresEnfrentamientos(Jornada jornada) {
+        for (Enfrentamiento enfrentamiento : jornada.getListaEnfrentamientos()) {
+            enfrentamientoController.asignarGanadorEnfrentamiento(enfrentamiento);
+        }
+    }
+
 }

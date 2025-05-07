@@ -19,23 +19,12 @@ public class Enfrentamiento {
 
     }
 
-    public Enfrentamiento(int idEnfrentamiento, LocalDate fechEnfrentamiento, LocalTime horaEnfrentamiento, Equipo equipoAtacante, Equipo equipoDefensor, Jornada jornada, Equipo equipoGanador) {
-        this.idEnfrentamiento = idEnfrentamiento;
+    public Enfrentamiento(LocalDate fechEnfrentamiento, LocalTime horaEnfrentamiento, Equipo equipoAtacante, Equipo equipoDefensor, Jornada jornada) {
         this.fechEnfrentamiento = fechEnfrentamiento;
         this.horaEnfrentamiento = horaEnfrentamiento;
         this.equipoAtacante = equipoAtacante;
         this.equipoDefensor = equipoDefensor;
         this.jornada = jornada;
-        EquipoGanador = equipoGanador;
-    }
-
-    public Enfrentamiento(LocalDate fechEnfrentamiento, LocalTime horaEnfrentamiento, Equipo equipoAtacante, Equipo equipoDefensor, Jornada jornada, Equipo equipoGanador) {
-        this.fechEnfrentamiento = fechEnfrentamiento;
-        this.horaEnfrentamiento = horaEnfrentamiento;
-        this.equipoAtacante = equipoAtacante;
-        this.equipoDefensor = equipoDefensor;
-        this.jornada = jornada;
-        EquipoGanador = equipoGanador;
     }
 
     public int getIdEnfrentamiento() {

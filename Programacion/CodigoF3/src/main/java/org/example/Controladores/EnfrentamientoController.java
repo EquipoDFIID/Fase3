@@ -140,14 +140,21 @@ public class EnfrentamientoController {
     /**
      * Crea un nuevo enfrentamiento y lo guarda en la base de datos.
      *
-     * @param enfrentamiento Objeto `Enfrentamiento` que se desea crear.
+     * @param enfrentamientos Objeto `Enfrentamiento` que se desea crear.
      */
-    public void crearEnfrentamiento(Enfrentamiento enfrentamiento) {
-        dao.altaEnfrentamiento(enfrentamiento);
-        listaEnfrentamientos.add(enfrentamiento);
+    public void crearEnfrentamientos(ArrayList<Enfrentamiento> enfrentamientos) {
+        for (Enfrentamiento enfrentamiento : enfrentamientos) {
+            dao.altaEnfrentamiento(enfrentamiento);
+            listaEnfrentamientos.add(enfrentamiento);
+
+        }
     }
 
     public ArrayList<Enfrentamiento> rellenarEquiposEnfrentamientos(){
         return listaEnfrentamientos;
+    }
+
+    public void asignarGanadorEnfrentamiento(Enfrentamiento enfrentamiento) {
+        dao.asignarGanadorEnfrentamiento(enfrentamiento);
     }
 }
