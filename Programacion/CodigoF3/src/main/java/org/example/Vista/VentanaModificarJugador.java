@@ -32,9 +32,9 @@ public class VentanaModificarJugador extends JDialog {
     private JTextField jNacionalidad;
     private JTextField jFecha;
     private JComboBox jEquipo;
-    private static VistaController vc;
+    private VistaController vc;
     private Equipo ej;
-    private static String nombre;
+    private String nombre;
     private JFrame ventanaAdministrador;
 
     public VentanaModificarJugador(VistaController vc, String aNombre, JFrame ventanaAdmin) {

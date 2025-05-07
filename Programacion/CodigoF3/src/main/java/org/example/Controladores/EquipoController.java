@@ -62,19 +62,19 @@ public class EquipoController {
     }
 
 
-    public void altaEquipo(String nombre, String fecha) {
+    public void altaEquipo(String nombre, LocalDate fecha) {
         Equipo e = new Equipo();
         e.setNombre(nombre);
-        e.setFechaFund(convertirFecha(fecha));
+        e.setFechaFund(fecha);
         equipoDAO.altaEquipo(e);
     }
     public void bajaEquipo() {
         equipoDAO.borrarEquipo(eb);
     }
-    public void modificarEquipo(String nombre, String fecha) {
+    public void modificarEquipo(String nombre, LocalDate fecha) {
         Equipo equipo = new Equipo();
         equipo.setNombre(nombre);
-        equipo.setFechaFund(convertirFecha(fecha));
+        equipo.setFechaFund(fecha);
         equipoDAO.modificarEquipo(equipo, eb);
     }
 
