@@ -19,10 +19,14 @@ public class VentanaCrearCuenta extends JFrame {
     private JTextField ccClave;
     private JPanel pPrincipal;
     private JTextField cNombre;
-    private static VistaController vc;
+    private JTextField cNickname;
+    private VistaController vc;
+    private JFrame ventanaInicio;
 
-    public VentanaCrearCuenta(VistaController vc) {
+
+    public VentanaCrearCuenta(VistaController vc, JFrame ventanaIni) {
         this.vc = vc;
+        this.ventanaInicio = ventanaIni;
         setContentPane(pPrincipal);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("VentanaCrearCuenta");
@@ -34,8 +38,35 @@ public class VentanaCrearCuenta extends JFrame {
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
         setIconImage(icon.getImage());
 
+        cNombre.setEnabled(false);
         cClave.setEnabled(false);
         ccClave.setEnabled(false);
+
+        cNickname.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                if (validarNickname()) {
+                    cNombre.setEnabled(true);
+                    cNickname.setBorder(new LineBorder(Color.GREEN, 1));
+                } else {
+                    cNombre.setEnabled(false);
+                    cNickname.setBorder(new LineBorder(Color.RED, 1));
+                }
+            }
+        });
+
+        cNickname.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (cNickname.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "El campo nickname no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+                    cNickname.requestFocus();
+                } else if (!validarNickname()) {
+                    JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "El nickname no es válido", "Error", JOptionPane.ERROR_MESSAGE);
+                    cNickname.requestFocus();
+                }
+                cNickname.setBorder(new LineBorder(Color.black, 1));
+            }
+        });
 
         cNombre.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
@@ -132,17 +163,23 @@ public class VentanaCrearCuenta extends JFrame {
         buttonCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaInicio ventanaInicio = new VentanaInicio(vc);
-                ventanaInicio.setVisible(true);
+                ventanaInicio.setVisible(true); // Vuelve a mostrar la ventana de administrador
                 dispose();
             }
         });
         buttonOK.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                vc.crearCuenta(cNombre.getText(), cClave.getText());
-                JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "Usuario creado exitosamente", "Exitosamente", JOptionPane.INFORMATION_MESSAGE);
-                dispose();
+                if(!vc.comprobarNickname(cNickname.getText())) {
+                    vc.crearCuenta(cNickname.getText(), cNombre.getText(), cClave.getText());
+                    JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "Usuario creado exitosamente", "Exitosamente", JOptionPane.INFORMATION_MESSAGE);
+                    ventanaInicio.setVisible(true);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "El nickname ya existe", "Error", JOptionPane.ERROR_MESSAGE);
+                    cNickname.requestFocus();
+                }
+
             }
         });
         bLogo.addActionListener(new ActionListener() {
@@ -152,6 +189,11 @@ public class VentanaCrearCuenta extends JFrame {
                 vc.mostrarVentanaInicio();
             }
         });
+    }
+
+    private boolean validarNickname() {
+        String nick = cNickname.getText();
+        return nick.matches("^[a-zA-Z0-9_]{3,15}$");
     }
 
     private boolean validarNombre() {
