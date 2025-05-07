@@ -5,7 +5,10 @@ import org.example.Modelo.Jornada;
 import org.example.Modelo.JornadaDAO;
 
 import java.util.ArrayList;
-
+/**
+ * Clase `JornadaController` que actúa como controlador para gestionar las operaciones
+ * relacionadas con las jornadas, interactuando con la capa de datos (`JornadaDAO`).
+ */
 public class JornadaController {
 
     private static JornadaDAO dao;

@@ -15,7 +15,10 @@ import java.util.regex.Pattern;
 
 import org.example.Modelo.EquipoDAO;
 import org.example.Vista.VentanaAltaEquipo;
-
+/**
+ * Clase `EquipoController` que actúa como controlador para gestionar las operaciones
+ * relacionadas con los equipos, interactuando con la capa de datos (`EquipoDAO`).
+ */
 public class EquipoController {
     private EquipoDAO equipoDAO;
     private Equipo eb;
@@ -32,7 +35,15 @@ public class EquipoController {
         Equipo e = new Equipo(idEquipo,fechaFund,nombre);
         return e;
     }*/
-
+    /**
+     * Solicita un dato al usuario y lo valida contra una expresión regular.
+     *
+     * @param dato Nombre del dato que se solicita.
+     * @param mensaje Mensaje que se muestra al usuario.
+     * @param expresionRegular Expresión regular para validar el dato ingresado.
+     * @return El dato ingresado y validado.
+     * @throws DatoNoValido Si el dato no cumple con los requisitos.
+     */
     public String solicitarDato(String dato, String mensaje,String expresionRegular)
     {
         String variable = "";
