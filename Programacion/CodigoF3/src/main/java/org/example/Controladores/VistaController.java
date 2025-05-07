@@ -172,38 +172,39 @@ private  ArrayList<JRadioButton> botonesEquipos = new ArrayList<>();
     public void rellenarJornadas(){
         listaJornadas = modeloController.selectObjetosJornada();
     }
-    public void rellenarEquiposEnfrentamientos(JPanel panelEquipos) {
+    public void rellenarEquiposEnfrentamientos(JPanel panelEquipos, int indexJornada) {
         panelEquipos.removeAll(); // Limpiar antes de rellenar
 
+        if (indexJornada >= 0 && indexJornada < modeloController.jornadas.size()) {
+            Jornada jornadaSeleccionada =  modeloController.jornadas.get(indexJornada-1);
+            List<Enfrentamiento> enfrentamientos = jornadaSeleccionada.getListaEnfrentamientos(); // ajusta nombre si es distinto
 
-        listaEnfrentamientos = modeloController.rellenarEquiposEnfrentamientos();
+            for (Enfrentamiento enf : enfrentamientos) {
+                JRadioButton bAtacante = new JRadioButton();
+                JRadioButton bDefensor = new JRadioButton();
+                ButtonGroup grupo = new ButtonGroup();
 
-        for(int i=0; i<listaEnfrentamientos.size(); i++) {
-            JRadioButton bAtacante = new JRadioButton();
-            JRadioButton bDefensor = new JRadioButton();
-            ButtonGroup grupo = new ButtonGroup();
+                bAtacante.setBackground(Color.white);
+                bDefensor.setBackground(Color.white);
 
-            bAtacante.setBackground(Color.white);
-            bDefensor.setBackground(Color.white);
+                bAtacante.setText(enf.getEquipoAtacante().getNombre());
+                bDefensor.setText(enf.getEquipoDefensor().getNombre());
 
-            bAtacante.setText(listaEnfrentamientos.get(i).getEquipoAtacante().getNombre());
-            bDefensor.setText(listaEnfrentamientos.get(i).getEquipoDefensor().getNombre());
+                botonesEquipos.add(bAtacante);
+                botonesEquipos.add(bDefensor);
 
-            botonesEquipos.add(bAtacante);
-            botonesEquipos.add(bDefensor);
+                grupo.add(bAtacante);
+                grupo.add(bDefensor);
 
-            grupo.add(bAtacante);
-            grupo.add(bDefensor);
+                panelEquipos.add(bAtacante);
+                panelEquipos.add(bDefensor);
+            }
 
-
-
-            // Añadir los botones al panel
-            panelEquipos.add(bAtacante);
-            panelEquipos.add(bDefensor);
+            panelEquipos.revalidate();
+            panelEquipos.repaint();
         }
-        panelEquipos.revalidate();
-        panelEquipos.repaint();
     }
+
 
     public boolean cerrarInscripcion(){
         return  modeloController.cerrarInscripcion();
@@ -251,6 +252,13 @@ private  ArrayList<JRadioButton> botonesEquipos = new ArrayList<>();
             jJornada.addItem(jornada.getIdJornada());
         }
         jJornada.setSelectedIndex(0);
+    }
+
+
+    public void asociarJornada(JComboBox jJornada) {
+        int posicion = jJornada.getSelectedIndex();
+        ArrayList <Jornada> jornadas = listaJornadas;
+
     }
 
     public void crearCuenta(String nombre, String clave, String nickname){
