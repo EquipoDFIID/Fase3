@@ -72,14 +72,14 @@ FOR EACH ROW
 DECLARE
     v_existe_calendario NUMBER;
 BEGIN
-    -- Verificar si existe al menos una competición cuyo estado no sea 'INSCRIPCION'
+-- Verificar si existe al menos una competición cuyo estado no sea 'INSCRIPCION'
     SELECT COUNT(*) INTO v_existe_calendario
     FROM competiciones
     WHERE Estado != 'inscripcion';
 
     IF v_existe_calendario > 0 THEN
         RAISE_APPLICATION_ERROR(-20005,
-        'No se permiten modificaciones a jugadores una vez generado el calendario de competición');
+'No se permiten modificaciones a jugadores una vez generado el calendario de competición');
     END IF;
 END;
 --4. Trigger que no permite modificaciones fuera de la etapa de inscripción, en Equipos:
@@ -97,7 +97,8 @@ BEGIN
 
     IF v_existe_calendario > 0 THEN
         RAISE_APPLICATION_ERROR(-20006,
-        'No se permiten modificaciones en equipos una vez generado el calendario de competición');
+        'No se permiten modificaciones en equipos una vez generado 
+        el calendario de competición');
     END IF;
 END;
 --5. Trigger para que el sueldo del jugador sea mayor que el SMI:
@@ -107,9 +108,42 @@ BEFORE INSERT OR UPDATE OF sueldo ON jugadores
 FOR EACH ROW
 BEGIN
     IF :NEW.Sueldo < 1184 THEN
-        RAISE_APPLICATION_ERROR(-20004, 'El sueldo del jugador debe ser mayor a 1184.');
+RAISE_APPLICATION_ERROR(-20004, 'El sueldo del jugador debe ser mayor a 1184.');
     END IF;
 END;
+
+
+--6. Trigger para comprobar que haya un número par de equipos, una vez que el estado de la competición sea "en curso":
+create trigger TRG_VAL_EQU_PARA_COMP
+    before insert
+    on COMPETICIONES
+DECLARE
+v_equipos_invalidos NUMBER;
+v_minimo_jugadores NUMBER := 2;
+v_minimo_jug_exception EXCEPTION;
+
+BEGIN
+
+SELECT COUNT(*)
+INTO v_equipos_invalidos
+FROM EQUIPOS e
+WHERE (
+SELECT COUNT(*)
+FROM JUGADORES j
+WHERE j.ID_EQUIPO = e.ID_EQUIPO
+) < v_minimo_jugadores;
+
+    IF v_equipos_invalidos > 0 THEN
+    RAISE v_minimo_jug_exception;
+    END IF;
+
+EXCEPTION
+WHEN v_minimo_jug_exception THEN
+RAISE_APPLICATION_ERROR(-20011,
+'No se puede crear la competici?n: ' || v_equipos_invalidos ||
+' equipos tienen menos de ' || v_minimo_jugadores || ' jugadores');
+END;
+
 
 
 
