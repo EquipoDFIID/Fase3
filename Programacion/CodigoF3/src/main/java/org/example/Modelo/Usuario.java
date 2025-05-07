@@ -2,6 +2,7 @@
 
 public class Usuario {
     private int idUsuario;
+    private String nickname;
     private String nombre;
     private String clave;
     private String tipoUsuario;
@@ -9,8 +10,9 @@ public class Usuario {
 
     }
 
-    public Usuario(int idUsuario, String nombre, String clave, String tipoUsuario) {
+    public Usuario(int idUsuario, String nickname, String nombre, String clave, String tipoUsuario) {
         this.idUsuario = idUsuario;
+        this.nickname = nickname;
         this.nombre = nombre;
         this.clave = clave;
         this.tipoUsuario = tipoUsuario;
@@ -22,6 +24,14 @@ public class Usuario {
 
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getNombre() {
