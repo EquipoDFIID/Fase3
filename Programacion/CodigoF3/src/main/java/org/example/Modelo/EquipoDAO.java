@@ -194,7 +194,7 @@ public class EquipoDAO {
         }
     }
 
-    public ArrayList selectAllEquipo() {
+    public ArrayList selectAllEquipo() throws SQLException{
         ArrayList<Equipo> equipos = new ArrayList<>();
 
         try {

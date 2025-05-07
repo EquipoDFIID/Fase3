@@ -20,7 +20,7 @@ public class VentanaInicio extends JFrame {
     private JRadioButton usuarioRadioButton;
     private JTextField aNombre;
     private JTextField aClave;
-    private JTextField uNombre;
+    private JTextField uNickname;
     private JTextField uClave;
     private JButton uIniciarSesionButton;
     private JButton aIniciarSesionButton;
@@ -51,7 +51,7 @@ public class VentanaInicio extends JFrame {
             relleno.setVisible(false);
             jAdmin.setVisible(true);
             jUsuario.setVisible(false);
-            uNombre.setText("");
+            uNickname.setText("");
             uClave.setText("");
             relleno.setVisible(false);
             buttonImagen.setHorizontalAlignment(SwingConstants.LEFT);
@@ -69,7 +69,7 @@ public class VentanaInicio extends JFrame {
             buttonImagen.setHorizontalAlignment(SwingConstants.LEFT);
 
             uClave.setEnabled(false);
-            uNombre.requestFocus();
+            uNickname.requestFocus();
         });
 
         aNombre.addKeyListener(new KeyAdapter() {
@@ -83,17 +83,17 @@ public class VentanaInicio extends JFrame {
             }
         });
 
-        uNombre.addKeyListener(new KeyAdapter() {
+        uNickname.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                if (uNombre.getText().isEmpty()) {
+                if (uNickname.getText().isEmpty()) {
                    bCrearCuenta.setEnabled(true);
                 } else {
                     bCrearCuenta.setEnabled(false);
                     uIniciarSesionButton.setEnabled(false);
                 }
 
-                if (validarNombre(uNombre.getText())) {
+                if (validarNombre(uNickname.getText())) {
                     uClave.setEnabled(true);
                 } else {
                     uClave.setEnabled(false);
@@ -125,7 +125,7 @@ public class VentanaInicio extends JFrame {
 
         aIniciarSesionButton.addActionListener(e -> {
             tipo = "admin";
-            vc.selectUsuario(aNombre.getText(), aClave.getText());
+            vc.selectUsuarioNom(aNombre.getText(), aClave.getText());
             if (vc.comprobarNombreClave(tipo)) {
                 vc.mostrarVentanaAdministrador(aNombre.getText());
                 setVisible(false);
@@ -141,16 +141,22 @@ public class VentanaInicio extends JFrame {
 
         uIniciarSesionButton.addActionListener(e -> {
             tipo = "user";
-            vc.selectUsuario(uNombre.getText(), uClave.getText());
+            vc.selectUsuarioNick(uNickname.getText(), uClave.getText());
             if (vc.comprobarNombreClave(tipo)) {
-                vc.mostrarVentanaUsuario(uNombre.getText());
+                vc.mostrarVentanaUsuario(uNickname.getText());
                 setVisible(false);
+                JOptionPane.showMessageDialog(
+                        VentanaInicio.this,
+                        "¡Bienvenido, " + uNickname.getText() + "!",
+                        "Acceso concedido",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
             } else {
                 JOptionPane.showMessageDialog(VentanaInicio.this, "No se ha encontrado el usuario", "Datos incorrectos", JOptionPane.ERROR_MESSAGE);
-                uNombre.setText("");
+                uNickname.setText("");
                 uClave.setText("");
                 uClave.setEnabled(false);
-                uNombre.requestFocus();
+                uNickname.requestFocus();
                 uIniciarSesionButton.setEnabled(false);
                 bCrearCuenta.setEnabled(true);
             }

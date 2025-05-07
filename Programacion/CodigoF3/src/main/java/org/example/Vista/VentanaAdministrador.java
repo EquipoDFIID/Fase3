@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class VentanaAdministrador extends JFrame {
     public JPanel panel1;
@@ -131,17 +133,23 @@ public class VentanaAdministrador extends JFrame {
         bInscripcion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!estadoInscripcion) {
-                    estadoInscripcion = vc.cerrarInscripcion();
-                    disableCrud();
-                    bIntroducirResultados.setEnabled(true);
-                    bVerInformes.setEnabled(true);
-                } else {
-                    JOptionPane.showMessageDialog(VentanaAdministrador.this, "La inscripción ya ha sido cerrada");
+                try {
+                    if (!estadoInscripcion) {
+                        estadoInscripcion = vc.cerrarInscripcion();
+                        disableCrud();
+                        bIntroducirResultados.setEnabled(true);
+                        bVerInformes.setEnabled(true);
+                    } else {
+                        String mensaje = "La inscripción ya ha sido cerrada";
+                        JOptionPane.showMessageDialog(VentanaAdministrador.this, mensaje);
+                    }
+                } catch (SQLException ex) {
+                    String mensajeError = "Error al cerrar inscripción: " + ex.getMessage();
+                    JOptionPane.showMessageDialog(VentanaAdministrador.this, mensajeError);
                 }
-
             }
         });
+
     }
 
     public void disableCrud(){

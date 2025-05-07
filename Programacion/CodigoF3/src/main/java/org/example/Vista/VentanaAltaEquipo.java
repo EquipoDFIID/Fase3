@@ -161,7 +161,8 @@ public class VentanaAltaEquipo extends JDialog {
 
     private void onOK() {
         vc.altaEquipo(eNombre.getText(), convertirFecha(eFecha.getText()));
-        dispose();
+        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+        dispose(); //
     }
 
     private void onCancel() {

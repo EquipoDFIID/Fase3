@@ -378,7 +378,8 @@ public class VentanaModificarJugador extends JDialog {
                 ej = vc.buscarComboBoxE(jEquipo),
                 cJugador.getSelectedItem().toString()
         );
-        dispose();
+        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+        dispose(); //
     }
 
     private void onCancel() {

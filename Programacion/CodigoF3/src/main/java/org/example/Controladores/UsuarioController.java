@@ -12,11 +12,13 @@ public class UsuarioController {
         this.usuarioDAO=usuarioDao;
     }
 
-    public Usuario selectUsuario(String nombreJugador, String clave) {
-        return usuarioDAO.selectUsuario(nombreJugador, clave);
+    public Usuario selectUsuarioNick(String nickUsuario, String clave) {
+        return usuarioDAO.selectUsuarioNick(nickUsuario.toLowerCase(), clave);
     }
-
-    public void crearCuenta(String nombre, String clave, String nickname){
+    public Usuario selectUsuarioNom(String nombreUsuario, String clave) {
+        return usuarioDAO.selectUsuarioNom(nombreUsuario.toLowerCase(), clave);
+    }
+    public void crearCuenta(String nickname, String nombre, String clave){
         Usuario usuario = new Usuario();
         usuario.setNickname(nickname);
         usuario.setNombre(nombre);

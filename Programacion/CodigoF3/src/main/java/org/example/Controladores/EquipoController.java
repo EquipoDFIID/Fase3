@@ -5,6 +5,7 @@ import org.example.Modelo.Equipo;
 import org.example.Modelo.EquipoDAO;
 
 import javax.swing.*;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -99,7 +100,7 @@ public class EquipoController {
         return equipoDAO.selectCountEquipos();
     }
 
-    public ArrayList selectAllEquipos() {
+    public ArrayList selectAllEquipos() throws SQLException {
         return equipoDAO.selectAllEquipo();
     }
 

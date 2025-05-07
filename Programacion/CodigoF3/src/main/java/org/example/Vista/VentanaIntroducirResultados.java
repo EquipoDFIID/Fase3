@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class VentanaIntroducirResultados extends JFrame {
@@ -21,6 +22,7 @@ public class VentanaIntroducirResultados extends JFrame {
     private VistaController vc;
     private String nombre;
     private JFrame ventanaAdministrador;
+    private ArrayList<ButtonGroup> gruposEquipos = new ArrayList<>();
 
     public VentanaIntroducirResultados(VistaController vc, String aNombre, JFrame ventanaAdmin) {
         this.vc = vc;
@@ -40,7 +42,7 @@ public class VentanaIntroducirResultados extends JFrame {
 
 
 
-        vc.rellenarEquiposEnfrentamientos(panelEquipos,0);
+        vc.rellenarEquiposEnfrentamientos(panelEquipos, 0, bAceptar, this);
         vc.llenarComboBoxJor(cJornada);
         //Quiero que la jornada al seleccionarla haga una select y luego salgan los radioButtons de esa jornada
 
@@ -51,11 +53,12 @@ public class VentanaIntroducirResultados extends JFrame {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    int indexSeleccionado = cJornada.getSelectedIndex();
-                    vc.rellenarEquiposEnfrentamientos(panelEquipos, indexSeleccionado);
+                    vc.rellenarEquiposEnfrentamientos(panelEquipos, cJornada.getSelectedIndex(), bAceptar, VentanaIntroducirResultados.this);
+                    bAceptar.setEnabled(comprobarSelecciones());
                 }
             }
         });
+
 
        /* cJornada.addItemListener(new ItemListener() {
             @Override
@@ -249,5 +252,18 @@ public class VentanaIntroducirResultados extends JFrame {
         bEquipo10.setText("Equipo 10");
     }*/
 
+    public boolean comprobarSelecciones(){
+        ArrayList<ButtonGroup> gruposEquipos = vc.pasarGrupos();
 
+        boolean todosSeleccionados = true;
+        for (ButtonGroup grupo : gruposEquipos) {
+            if (grupo.getSelection() == null) {
+                todosSeleccionados = false;
+                break;
+            }
+        }
+
+        return todosSeleccionados;
+    }
 }
+
