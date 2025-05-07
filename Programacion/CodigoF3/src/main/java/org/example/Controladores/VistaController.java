@@ -4,8 +4,10 @@ import org.example.Modelo.*;
 import org.example.Vista.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Controlador de la vista que gestiona la interacción entre las ventanas y el modelo.
@@ -31,7 +33,7 @@ public class VistaController {
     private ArrayList<Jugador> listaJugadores = new ArrayList<>();
     private ArrayList<Jornada> listaJornadas = new ArrayList<>();
     private ArrayList<Enfrentamiento> listaEnfrentamientos = new ArrayList<>();
-
+private  ArrayList<JRadioButton> botonesEquipos = new ArrayList<>();
     public VistaController(ModeloController modeloController) {
         this.modeloController = modeloController;
         ventanaInicio = new VentanaInicio(this);
@@ -174,25 +176,37 @@ public class VistaController {
     public void rellenarJornadas(){
         listaJornadas = modeloController.selectObjetosJornada();
     }
-    public void rellenarEquiposEnfrentamientos(JRadioButton bEquipo1, JRadioButton bEquipo2, JRadioButton bEquipo3, JRadioButton bEquipo4, JRadioButton bEquipo5, JRadioButton bEquipo6, JRadioButton bEquipo7, JRadioButton bEquipo8, JRadioButton bEquipo9, JRadioButton bEquipo10) {
+    public void rellenarEquiposEnfrentamientos(JPanel panelEquipos) {
+        panelEquipos.removeAll(); // Limpiar antes de rellenar
+
+
         listaEnfrentamientos = modeloController.rellenarEquiposEnfrentamientos();
 
-        if (listaEnfrentamientos.size() >= 5) {
-            bEquipo1.setText(listaEnfrentamientos.get(0).getEquipoAtacante().getNombre());
-            bEquipo2.setText(listaEnfrentamientos.get(0).getEquipoDefensor().getNombre());
+        for(int i=0; i<listaEnfrentamientos.size(); i++) {
+            JRadioButton bAtacante = new JRadioButton();
+            JRadioButton bDefensor = new JRadioButton();
+            ButtonGroup grupo = new ButtonGroup();
 
-            bEquipo3.setText(listaEnfrentamientos.get(1).getEquipoAtacante().getNombre());
-            bEquipo4.setText(listaEnfrentamientos.get(1).getEquipoDefensor().getNombre());
+            bAtacante.setBackground(Color.white);
+            bDefensor.setBackground(Color.white);
 
-            bEquipo5.setText(listaEnfrentamientos.get(2).getEquipoAtacante().getNombre());
-            bEquipo6.setText(listaEnfrentamientos.get(2).getEquipoDefensor().getNombre());
+            bAtacante.setText(listaEnfrentamientos.get(i).getEquipoAtacante().getNombre());
+            bDefensor.setText(listaEnfrentamientos.get(i).getEquipoDefensor().getNombre());
 
-            bEquipo7.setText(listaEnfrentamientos.get(3).getEquipoAtacante().getNombre());
-            bEquipo8.setText(listaEnfrentamientos.get(3).getEquipoDefensor().getNombre());
+            botonesEquipos.add(bAtacante);
+            botonesEquipos.add(bDefensor);
 
-            bEquipo9.setText(listaEnfrentamientos.get(4).getEquipoAtacante().getNombre());
-            bEquipo10.setText(listaEnfrentamientos.get(4).getEquipoDefensor().getNombre());
+            grupo.add(bAtacante);
+            grupo.add(bDefensor);
+
+
+
+            // Añadir los botones al panel
+            panelEquipos.add(bAtacante);
+            panelEquipos.add(bDefensor);
         }
+        panelEquipos.revalidate();
+        panelEquipos.repaint();
     }
 
     public boolean cerrarInscripcion(){

@@ -3,28 +3,21 @@ package org.example.Vista;
 import org.example.Controladores.VistaController;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Objects;
 
 public class VentanaIntroducirResultados extends JFrame {
     private JPanel panel1;
     private JButton bLogo;
-    private JRadioButton bEquipo1;
-    private JRadioButton bEquipo2;
     private JButton bAceptar;
     private JPanel pPrincipal;
     private JButton bSalir;
     private JComboBox cJornada;
-    private JRadioButton bEquipo3;
-    private JRadioButton bEquipo4;
-    private JRadioButton bEquipo5;
-    private JRadioButton bEquipo6;
-    private JRadioButton bEquipo7;
-    private JRadioButton bEquipo8;
-    private JRadioButton bEquipo9;
-    private JRadioButton bEquipo10;
+    private JPanel panelEquipos;
     private VistaController vc;
     private String nombre;
     private JFrame ventanaAdministrador;
@@ -38,15 +31,23 @@ public class VentanaIntroducirResultados extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("icon.png")));
         setIconImage(icon.getImage());
 
+        // Usa layout si y solo si NO usas el GUI Designer
+        panelEquipos.setLayout(new GridLayout(0, 2, 10, 5));
+
+        // No volver a añadir el panel si ya está en el .form
+        // add(panelEquipos, BorderLayout.CENTER); <-- Elimina esta línea si ya está en el .form
+
+        vc.rellenarEquiposEnfrentamientos(panelEquipos);
         vc.llenarComboBoxJor(cJornada);
-        disableGanadores();
+
         bAceptar.setEnabled(false);
 
 
-        cJornada.addItemListener(new ItemListener() {
+
+       /* cJornada.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -54,7 +55,7 @@ public class VentanaIntroducirResultados extends JFrame {
                     if (!selectedItem.equals("Selecciona una jornada...")) {
                         bEquipo1.setEnabled(true);
                         bEquipo2.setEnabled(true);
-                        vc.rellenarEquiposEnfrentamientos(bEquipo1, bEquipo2, bEquipo3, bEquipo4, bEquipo5, bEquipo6, bEquipo7, bEquipo8, bEquipo9, bEquipo10);
+                        vc.rellenarEquiposEnfrentamientos(panelEquipos);
                     }
                 } else {
                     String selectedItem = cJornada.getSelectedItem().toString();
@@ -66,7 +67,9 @@ public class VentanaIntroducirResultados extends JFrame {
                 }
             }
         });
+        */
 
+        /*
         bEquipo1.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -192,7 +195,7 @@ public class VentanaIntroducirResultados extends JFrame {
 
                 }
             }
-        });
+        });*/
 
         bSalir.addActionListener(new ActionListener() {
             @Override
@@ -210,7 +213,7 @@ public class VentanaIntroducirResultados extends JFrame {
         });
     }
 
-    public void disableGanadores(){
+   /* public void disableGanadores(){
         bEquipo1.setEnabled(false);
         bEquipo2.setEnabled(false);
         bEquipo3.setEnabled(false);
@@ -234,5 +237,7 @@ public class VentanaIntroducirResultados extends JFrame {
         bEquipo8.setText("Equipo 8");
         bEquipo9.setText("Equipo 9");
         bEquipo10.setText("Equipo 10");
-    }
+    }*/
+
+
 }
