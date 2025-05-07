@@ -39,10 +39,7 @@ public class VentanaIntroducirResultados extends JFrame {
         // Usa layout si y solo si NO usas el GUI Designer
         panelEquipos.setLayout(new GridLayout(0, 2, 10, 5));
 
-
-
-
-        vc.rellenarEquiposEnfrentamientos(panelEquipos, 0, bAceptar, this);
+        //vc.rellenarEquiposEnfrentamientos(panelEquipos, 0, bAceptar, this);
         vc.llenarComboBoxJor(cJornada);
         //Quiero que la jornada al seleccionarla haga una select y luego salgan los radioButtons de esa jornada
 
@@ -59,156 +56,12 @@ public class VentanaIntroducirResultados extends JFrame {
             }
         });
 
-
-       /* cJornada.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    String selectedItem = cJornada.getSelectedItem().toString();
-                    if (!selectedItem.equals("Selecciona una jornada...")) {
-                        bEquipo1.setEnabled(true);
-                        bEquipo2.setEnabled(true);
-                        vc.rellenarEquiposEnfrentamientos(panelEquipos);
-                    }
-                } else {
-                    String selectedItem = cJornada.getSelectedItem().toString();
-                    if (selectedItem.equals("Selecciona una jornada...")) {
-                        bEquipo1.setEnabled(false);
-                        bEquipo2.setEnabled(false);
-                        defaultEquipos();
-                    }
-                }
-            }
-        });
-        */
-
-        /*
-        bEquipo1.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    bEquipo3.setEnabled(true);
-                    bEquipo4.setEnabled(true);
-                } else {
-                    bEquipo3.setEnabled(false);
-                    bEquipo4.setEnabled(false);
-                }
-            }
+        bAceptar.addActionListener(e -> {
+            vc.procesarGanadoresSeleccionados(cJornada.getSelectedIndex());
+            JOptionPane.showMessageDialog(this, "Resultados registrados correctamente.");
+            dispose();
         });
 
-        bEquipo2.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    bEquipo3.setEnabled(true);
-                    bEquipo4.setEnabled(true);
-                } else {
-                    bEquipo3.setEnabled(false);
-                    bEquipo4.setEnabled(false);
-                }
-            }
-        });
-
-        bEquipo3.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    bEquipo5.setEnabled(true);
-                    bEquipo6.setEnabled(true);
-                } else {
-                    bEquipo5.setEnabled(false);
-                    bEquipo6.setEnabled(false);
-                }
-            }
-        });
-
-        bEquipo4.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    bEquipo5.setEnabled(true);
-                    bEquipo6.setEnabled(true);
-                } else {
-                    bEquipo5.setEnabled(false);
-                    bEquipo6.setEnabled(false);
-                }
-            }
-        });
-
-        bEquipo5.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    bEquipo7.setEnabled(true);
-                    bEquipo8.setEnabled(true);
-                } else {
-                    bEquipo7.setEnabled(false);
-                    bEquipo8.setEnabled(false);
-                }
-            }
-        });
-
-        bEquipo6.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    bEquipo7.setEnabled(true);
-                    bEquipo8.setEnabled(true);
-                } else {
-                    bEquipo7.setEnabled(false);
-                    bEquipo8.setEnabled(false);
-                }
-            }
-        });
-
-        bEquipo7.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    bEquipo9.setEnabled(true);
-                    bEquipo10.setEnabled(true);
-                } else {
-                    bEquipo9.setEnabled(false);
-                    bEquipo10.setEnabled(false);
-                }
-            }
-        });
-
-        bEquipo8.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    bEquipo9.setEnabled(true);
-                    bEquipo10.setEnabled(true);
-                } else {
-                    bEquipo9.setEnabled(false);
-                    bEquipo10.setEnabled(false);
-                }
-            }
-        });
-
-        bEquipo9.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    bAceptar.setEnabled(true);
-                } else {
-                    bAceptar.setEnabled(false);
-                }
-            }
-        });
-
-        bEquipo10.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    bAceptar.setEnabled(true);
-                } else {
-                    bAceptar.setEnabled(false);
-
-                }
-            }
-        });*/
 
         bSalir.addActionListener(new ActionListener() {
             @Override
@@ -224,6 +77,7 @@ public class VentanaIntroducirResultados extends JFrame {
                 vc.mostrarVentanaInicio();
             }
         });
+
     }
 
    /* public void disableGanadores(){

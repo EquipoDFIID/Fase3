@@ -11,21 +11,21 @@ public class EnfrentamientoDAO {
     }
 
     public static void altaEnfrentamiento(Enfrentamiento enfrentamiento) {
-        try{
-            String sql = "INSERT INTO ENFRENTAMIENTOS(HORA,FECHA_ENF,EQUIPO_ATACANTE,EQUIPO_DEFENSOR,EQUIPO_GANADOR,ID_JORNADA) VALUES(?,?,?,?,?,?)";
-            PreparedStatement ps = con.prepareStatement(sql);
+        String sql = "INSERT INTO ENFRENTAMIENTOS (HORA, FECHA_ENF, EQUIPO_ATACANTE, EQUIPO_DEFENSOR, ID_JORNADA) VALUES (?, ?, ?, ?, ?)";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setTime(1, Time.valueOf(enfrentamiento.getHoraEnfrentamiento()));
-            ps.setDate(2,Date.valueOf(enfrentamiento.getFechEnfrentamiento()));
-            ps.setInt(3,enfrentamiento.getEquipoAtacante().getIdEquipo());
-            ps.setInt(4,enfrentamiento.getEquipoDefensor().getIdEquipo());
-            ps.setInt(5,enfrentamiento.getEquipoGanador().getIdEquipo());
-            ps.setInt(6,enfrentamiento.getJornada().getIdJornada());
+            ps.setDate(2, Date.valueOf(enfrentamiento.getFechEnfrentamiento()));
+            ps.setInt(3, enfrentamiento.getEquipoAtacante().getIdEquipo());
+            ps.setInt(4, enfrentamiento.getEquipoDefensor().getIdEquipo());
+            ps.setInt(5, enfrentamiento.getJornada().getIdJornada());
+
             ps.executeUpdate();
-        }
-        catch(Exception e){
-            System.out.println(e);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
+
 
     public static ArrayList<Enfrentamiento> selectAllEnfrentamientos(int idJornada) {
         ArrayList<Enfrentamiento> enfrentamientos = new ArrayList<>();
@@ -51,6 +51,20 @@ public class EnfrentamientoDAO {
             System.out.println(ex.getMessage());
         }
         return enfrentamientos;
+    }
+
+
+    public void asignarGanadorEnfrentamiento(Enfrentamiento enfrentamiento) {
+        try {
+            String sql = "UPDATE enfrentamientos SET equipo_ganador = ? WHERE id_enfrentamiento = ? AND id_jornada = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, enfrentamiento.getEquipoGanador().getIdEquipo());
+            ps.setInt(2, enfrentamiento.getIdEnfrentamiento());
+            ps.setInt(3, enfrentamiento.getJornada().getIdJornada());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
