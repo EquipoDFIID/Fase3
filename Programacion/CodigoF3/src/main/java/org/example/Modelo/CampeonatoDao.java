@@ -32,4 +32,14 @@ public class CampeonatoDAO {
         return c;
     }
 
+    public void competicionUpdateInscripcion(String estado) {
+        try{
+            String sql = "UPDATE COMPETICIONES SET ESTADO = ? WHERE ID_COMPETICION = 2";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, estado);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

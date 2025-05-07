@@ -10,6 +10,8 @@ import java.util.Collections;
 
 public class ModeloController {
 
+
+
     private CampeonatoDAO campeonatoDao;
     private CampeonatoController campeonatoController;
 
@@ -119,6 +121,7 @@ public class ModeloController {
 
         for (int jornada = 0; jornada < totalJornadas; jornada++) {
             ArrayList<Enfrentamiento> enfrentamientos = new ArrayList<>();
+            competicionUpdateInscripcion("en curso");
             Jornada jornadaNueva = new Jornada(enfrentamientos,LocalDate.now(),campeonatoController.buscarCompeticion(2));
             Jornada jornadaEnfren = jornadaController.crearJornada(jornadaNueva);
             System.out.println("Jornada " + (jornada + 1) + " creada");
@@ -154,5 +157,9 @@ public class ModeloController {
 
     public ArrayList selectAllEquipos() {
         return equipoController.selectAllEquipos();
+    }
+
+    public void competicionUpdateInscripcion(String inscripcion) {
+        campeonatoController.competicionUpdateInscripcion(inscripcion);
     }
 }
