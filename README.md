@@ -69,10 +69,6 @@ Pantalla inicial con selección de tipo de usuario:
 
   <img src="readmeImg/ventanaInicio.png" alt="Pantalla principal" width="300"/>
 
-Pantalla de login de administrador y pantalla de login de usuario con opción de registro:
-
-  <img src="readmeImg/inicioAdmin.png" alt="Selección de usuario" width="200"/>  <img src="readmeImg/inicioUsr.png" alt="Selección de usuario" width="200"/>
-
 ---
 
 <h1 id="instalacion">◾ Instalación</h1>
