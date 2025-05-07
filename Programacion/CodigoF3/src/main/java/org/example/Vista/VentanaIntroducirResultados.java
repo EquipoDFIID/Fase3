@@ -37,15 +37,25 @@ public class VentanaIntroducirResultados extends JFrame {
         // Usa layout si y solo si NO usas el GUI Designer
         panelEquipos.setLayout(new GridLayout(0, 2, 10, 5));
 
-        // No volver a añadir el panel si ya está en el .form
-        // add(panelEquipos, BorderLayout.CENTER); <-- Elimina esta línea si ya está en el .form
 
-        vc.rellenarEquiposEnfrentamientos(panelEquipos);
+
+
+        vc.rellenarEquiposEnfrentamientos(panelEquipos,0);
         vc.llenarComboBoxJor(cJornada);
+        //Quiero que la jornada al seleccionarla haga una select y luego salgan los radioButtons de esa jornada
 
         bAceptar.setEnabled(false);
 
 
+        cJornada.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    int indexSeleccionado = cJornada.getSelectedIndex();
+                    vc.rellenarEquiposEnfrentamientos(panelEquipos, indexSeleccionado);
+                }
+            }
+        });
 
        /* cJornada.addItemListener(new ItemListener() {
             @Override

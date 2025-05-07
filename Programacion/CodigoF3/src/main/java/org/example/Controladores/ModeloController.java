@@ -35,6 +35,8 @@ public class ModeloController {
 
     private VistaController vc;
 
+    ArrayList <Jornada> jornadas = new ArrayList<>();
+
     public ModeloController() {
         try{
             //BaseDatos.abrirConexion();
@@ -123,9 +125,11 @@ public class ModeloController {
         ArrayList<Equipo> equipos = new ArrayList<>(equiposOriginal);
 
         for (int jornada = 0; jornada < totalJornadas; jornada++) {
+
             ArrayList<Enfrentamiento> enfrentamientos = new ArrayList<>();
             competicionUpdateInscripcion("en curso");
             Jornada jornadaNueva = new Jornada(enfrentamientos,LocalDate.now(),campeonatoController.buscarCompeticion(2));
+            jornadas.add(jornadaNueva);
             Jornada jornadaEnfren = jornadaController.crearJornada(jornadaNueva);
             System.out.println("Jornada " + (jornada + 1) + " creada");
 
@@ -161,6 +165,8 @@ public class ModeloController {
     public ArrayList selectAllEquipos() {
         return equipoController.selectAllEquipos();
     }
+
+
 
     public void competicionUpdateInscripcion(String inscripcion) {
         campeonatoController.competicionUpdateInscripcion(inscripcion);
