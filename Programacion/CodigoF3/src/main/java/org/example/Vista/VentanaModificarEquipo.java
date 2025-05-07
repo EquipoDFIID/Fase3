@@ -3,6 +3,8 @@ package org.example.Vista;
 import org.example.Controladores.VistaController;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.*;
 
 /**
@@ -24,8 +26,8 @@ public class VentanaModificarEquipo extends JDialog {
     private JTextField eNombre;
     private JTextField eFecha;
     private JComboBox cNombre;
-    private static VistaController vc;
-    private static String nombre;
+    private VistaController vc;
+    private String nombre;
     private JFrame ventanaAdministrador;
 
     public VentanaModificarEquipo(VistaController vc, String aNombre, JFrame ventanaAdministrador) {
@@ -44,6 +46,7 @@ public class VentanaModificarEquipo extends JDialog {
 
         eNombre.setEnabled(false);
         eFecha.setEnabled(false);
+        buttonOK.setEnabled(false);
         vc.llenarComboBoxE(cNombre);
 
         buttonOK.addActionListener(new ActionListener() {
@@ -81,18 +84,75 @@ public class VentanaModificarEquipo extends JDialog {
                     String selectedItem = (String) cNombre.getSelectedItem();
                     if (!selectedItem.equals("Selecciona un equipo...")) {
                         eNombre.setEnabled(true);
-                        eFecha.setEnabled(true);
                     }
                 }
                 if (e.getStateChange() == ItemEvent.DESELECTED) {
                     String selectedItem = (String) cNombre.getSelectedItem();
                     if (selectedItem.equals("Selecciona un equipo...")) {
                         eNombre.setEnabled(false);
-                        eFecha.setEnabled(false);
                     }
                 }
             }
         });
+
+        eNombre.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                Component opposite = e.getOppositeComponent();
+                if ((opposite instanceof JRadioButton) || opposite == cNombre) return;
+
+                if (eNombre.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(VentanaModificarEquipo.this, "El campo nombre no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+                    eNombre.requestFocus();
+                } else if (!validarNombre()) {
+                    JOptionPane.showMessageDialog(VentanaModificarEquipo.this, "El nombre no es válido", "Error", JOptionPane.ERROR_MESSAGE);
+                    eNombre.requestFocus();
+                }
+                eNombre.setBorder(new LineBorder(Color.black, 1));
+            }
+        });
+
+        eNombre.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                if (validarNombre()) {
+                    eFecha.setEnabled(true);
+                    eNombre.setBorder(new LineBorder(Color.GREEN, 1));
+                } else {
+                    eFecha.setEnabled(false);
+                    eNombre.setBorder(new LineBorder(Color.RED, 1));
+                }
+            }
+        });
+
+        eFecha.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                Component opposite = e.getOppositeComponent();
+                if ((opposite instanceof JRadioButton) || opposite == cNombre || opposite == eNombre) return;
+
+                if (eFecha.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(VentanaModificarEquipo.this, "El campo fecha no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+                    eFecha.requestFocus();
+                } else if (!validarFecha()) {
+                    JOptionPane.showMessageDialog(VentanaModificarEquipo.this, "La fecha no es válida. Formato esperado: dd/mm/yyyy", "Error", JOptionPane.ERROR_MESSAGE);
+                    eFecha.requestFocus();
+                }
+                eFecha.setBorder(new LineBorder(Color.black, 1));
+            }
+        });
+
+        eFecha.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                if (validarFecha()) {
+                    buttonOK.setEnabled(true);
+                    eFecha.setBorder(new LineBorder(Color.GREEN, 1));
+                } else {
+                    buttonOK.setEnabled(false);
+                    eFecha.setBorder(new LineBorder(Color.RED, 1));
+                }
+            }
+        });
+
         bLogo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -103,7 +163,7 @@ public class VentanaModificarEquipo extends JDialog {
     }
 
     private void onOK() {
-        vc.modificarEquipo(eNombre.getText(), eFecha.getText(), cNombre.getSelectedItem().toString());
+        vc.modificarEquipo(eNombre.getText(), convertirFecha(eFecha.getText()), cNombre.getSelectedItem().toString());
         dispose();
     }
 
@@ -111,18 +171,6 @@ public class VentanaModificarEquipo extends JDialog {
         ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
         dispose(); //
     }
-    /*public void llenarComboBox(){
-        ArrayList<Equipo> listaEquipos=vc.selectObjetoEquipo();
-        cNombre.removeAllItems();
-
-        cNombre.addItem("Selecciona un equipo...");
-
-        for (Equipo equipo : listaEquipos){
-            cNombre.addItem(equipo.getNombre());
-        }
-
-        cNombre.setSelectedIndex(0);
-    }*/
 
     private LocalDate convertirFecha(String fechaTexto) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -131,6 +179,22 @@ public class VentanaModificarEquipo extends JDialog {
         } catch (DateTimeParseException e) {
             JOptionPane.showMessageDialog(this, "La fecha no tiene el formato válido (dd/mm/aaaa) o es inválida.");
             return null;
+        }
+    }
+
+    private boolean validarNombre() {
+        String nombre = eNombre.getText();
+        return nombre.matches("^[A-ZÁÉÍÓÚÑa-záéíóúñ]+$");
+    }
+
+    private boolean validarFecha() {
+        String fechaTexto = eFecha.getText();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            LocalDate.parse(fechaTexto, formatter);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
         }
     }
 }

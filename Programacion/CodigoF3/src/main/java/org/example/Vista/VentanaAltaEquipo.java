@@ -160,12 +160,22 @@ public class VentanaAltaEquipo extends JDialog {
     }
 
     private void onOK() {
-        vc.altaEquipo(eNombre.getText(), eFecha.getText());
+        vc.altaEquipo(eNombre.getText(), convertirFecha(eFecha.getText()));
         dispose();
     }
 
     private void onCancel() {
         ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
         dispose(); // Cierra la ventana actual
+    }
+
+    private LocalDate convertirFecha(String fechaTexto) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            return LocalDate.parse(fechaTexto, formatter);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "La fecha no tiene el formato válido (dd/mm/aaaa) o es inválida.");
+            return null;
+        }
     }
 }

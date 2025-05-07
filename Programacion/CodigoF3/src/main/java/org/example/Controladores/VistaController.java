@@ -122,14 +122,14 @@ public class VistaController {
 
 
 
-    public void altaEquipo(String nombre, String fecha){
+    public void altaEquipo(String nombre, LocalDate fecha){
         modeloController.altaEquipo(nombre, fecha);
     }
     public void bajaEquipo(String nombreEquipo){
         modeloController.buscarEquipo(nombreEquipo);
         modeloController.bajaEquipo();
     }
-    public void modificarEquipo(String nombre, String fecha, String nombreEquipo){
+    public void modificarEquipo(String nombre, LocalDate fecha, String nombreEquipo){
         modeloController.buscarEquipo(nombreEquipo);
         modeloController.modificarEquipo(nombre, fecha);
 

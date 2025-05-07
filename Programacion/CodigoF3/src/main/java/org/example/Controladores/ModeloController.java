@@ -79,13 +79,13 @@ public class ModeloController {
     public void buscarEquipo(String nombreEquipo) {equipoController.buscarEquipo(nombreEquipo);
     }
 
-    public void altaEquipo(String nombre, String fecha){
+    public void altaEquipo(String nombre, LocalDate fecha){
         equipoController.altaEquipo(nombre, fecha);
     }
     public void bajaEquipo() {
         equipoController.bajaEquipo();
     }
-    public void modificarEquipo(String nombre, String fecha) {
+    public void modificarEquipo(String nombre, LocalDate fecha) {
         equipoController.modificarEquipo(nombre, fecha);
     }
 
