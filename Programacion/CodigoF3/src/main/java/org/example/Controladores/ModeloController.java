@@ -3,6 +3,7 @@ package org.example.Controladores;
 import org.example.Modelo.*;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -114,8 +115,11 @@ public class ModeloController {
 
 
 
-    public void selectUsuario(String nombreUsuario, String clave) {
-        usuario = usuarioController.selectUsuario(nombreUsuario, clave);
+    public void selectUsuarioNick(String nickUsuario, String clave) {
+        usuario = usuarioController.selectUsuarioNick(nickUsuario, clave);
+    }
+    public void selectUsuarioNom(String nombreUsuario, String clave) {
+        usuario = usuarioController.selectUsuarioNom(nombreUsuario, clave);
     }
     public boolean comprobarNombreClave(String tipo){
         boolean encontrado=false;
@@ -130,7 +134,7 @@ public class ModeloController {
     }
 
 
-    public boolean cerrarInscripcion() {
+    public boolean cerrarInscripcion() throws SQLException {
         boolean cerrada = false;
 
         ArrayList<Equipo> equiposOriginal = equipoController.selectAllEquipos();
@@ -176,15 +180,9 @@ public class ModeloController {
         return cerrada;
     }
 
-    public void crearCuenta(String nombre, String clave, String nickname){
-            usuarioController.crearCuenta(nombre, clave, nickname);
+    public void crearCuenta(String nickname, String nombre, String clave){
+            usuarioController.crearCuenta(nickname, nombre, clave);
     }
-
-    public ArrayList selectAllEquipos() {
-        return equipoController.selectAllEquipos();
-    }
-
-
 
     public void competicionUpdateInscripcion(String inscripcion) {
         campeonatoController.competicionUpdateInscripcion(inscripcion);

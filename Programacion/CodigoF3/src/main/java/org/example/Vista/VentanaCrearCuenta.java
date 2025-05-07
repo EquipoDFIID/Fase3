@@ -177,9 +177,8 @@ public class VentanaCrearCuenta extends JFrame {
                     dispose();
                 } else {
                     JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "El nickname ya existe", "Error", JOptionPane.ERROR_MESSAGE);
-                    cNickname.requestFocus();
+                    resetCampos();
                 }
-
             }
         });
         bLogo.addActionListener(new ActionListener() {
@@ -204,5 +203,17 @@ public class VentanaCrearCuenta extends JFrame {
     private boolean validarClave() {
         String clave = cClave.getText();
         return clave.matches("^[0-9]{4}$");
+    }
+
+    public void resetCampos() {
+        cNickname.setText("");
+        cNombre.setText("");
+        cClave.setText("");
+        ccClave.setText("");
+        cNickname.setBorder(new LineBorder(Color.black, 1));
+        cNombre.setBorder(new LineBorder(Color.black, 1));
+        cClave.setBorder(new LineBorder(Color.black, 1));
+        ccClave.setBorder(new LineBorder(Color.black, 1));
+        cNickname.requestFocus();
     }
 }

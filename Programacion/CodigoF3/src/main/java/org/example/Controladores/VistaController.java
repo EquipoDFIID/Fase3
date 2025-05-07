@@ -5,6 +5,8 @@ import org.example.Vista.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,9 @@ public class VistaController {
     private ArrayList<Jugador> listaJugadores = new ArrayList<>();
     private ArrayList<Jornada> listaJornadas = new ArrayList<>();
     private ArrayList<Enfrentamiento> listaEnfrentamientos = new ArrayList<>();
-private  ArrayList<JRadioButton> botonesEquipos = new ArrayList<>();
+    private  ArrayList<JRadioButton> botonesEquipos = new ArrayList<>();
+    private ArrayList<ButtonGroup > gruposEquipos = new ArrayList<>(2);
+
     public VistaController(ModeloController modeloController) {
         this.modeloController = modeloController;
         ventanaInicio = new VentanaInicio(this);
@@ -123,10 +127,6 @@ private  ArrayList<JRadioButton> botonesEquipos = new ArrayList<>();
     }
 
 
-
-
-
-
     public void altaEquipo(String nombre, LocalDate fecha){
         modeloController.altaEquipo(nombre, fecha);
     }
@@ -156,8 +156,11 @@ private  ArrayList<JRadioButton> botonesEquipos = new ArrayList<>();
         modeloController.modificarJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, ej);
     }
 
-    public void selectUsuario(String nombreUsuario, String clave) {
-        modeloController.selectUsuario(nombreUsuario, clave);
+    public void selectUsuarioNick(String nickUsuario, String clave) {
+        modeloController.selectUsuarioNick(nickUsuario, clave);
+    }
+    public void selectUsuarioNom(String nombreUsuario, String clave) {
+        modeloController.selectUsuarioNom(nombreUsuario, clave);
     }
     public boolean comprobarNombreClave(String tipo) {
         return  modeloController.comprobarNombreClave(tipo);
@@ -172,29 +175,35 @@ private  ArrayList<JRadioButton> botonesEquipos = new ArrayList<>();
     public void rellenarJornadas(){
         listaJornadas = modeloController.selectObjetosJornada();
     }
-    public void rellenarEquiposEnfrentamientos(JPanel panelEquipos, int indexJornada) {
-        panelEquipos.removeAll(); // Limpiar antes de rellenar
+    public void rellenarEquiposEnfrentamientos(JPanel panelEquipos, int indexJornada, JButton bAceptar, VentanaIntroducirResultados ventana) {
+        panelEquipos.setEnabled(false);
+        panelEquipos.removeAll();
+        gruposEquipos.clear(); // Asegúrate de vaciar los anteriores
+        botonesEquipos.clear();
 
-        if (indexJornada >= 0 && indexJornada < modeloController.jornadas.size()) {
-            Jornada jornadaSeleccionada =  modeloController.jornadas.get(indexJornada-1);
-            List<Enfrentamiento> enfrentamientos = jornadaSeleccionada.getListaEnfrentamientos(); // ajusta nombre si es distinto
+        if (indexJornada > 0 && indexJornada <= modeloController.jornadas.size()) {
+            panelEquipos.setEnabled(true);
+
+            Jornada jornadaSeleccionada = modeloController.jornadas.get(indexJornada - 1);
+            List<Enfrentamiento> enfrentamientos = jornadaSeleccionada.getListaEnfrentamientos();
 
             for (Enfrentamiento enf : enfrentamientos) {
-                JRadioButton bAtacante = new JRadioButton();
-                JRadioButton bDefensor = new JRadioButton();
+                JRadioButton bAtacante = new JRadioButton(enf.getEquipoAtacante().getNombre());
+                JRadioButton bDefensor = new JRadioButton(enf.getEquipoDefensor().getNombre());
                 ButtonGroup grupo = new ButtonGroup();
 
                 bAtacante.setBackground(Color.white);
                 bDefensor.setBackground(Color.white);
 
-                bAtacante.setText(enf.getEquipoAtacante().getNombre());
-                bDefensor.setText(enf.getEquipoDefensor().getNombre());
+                // Agrega el listener aquí
+                ActionListener listener = e -> bAceptar.setEnabled(ventana.comprobarSelecciones());
 
-                botonesEquipos.add(bAtacante);
-                botonesEquipos.add(bDefensor);
+                bAtacante.addActionListener(listener);
+                bDefensor.addActionListener(listener);
 
                 grupo.add(bAtacante);
                 grupo.add(bDefensor);
+                gruposEquipos.add(grupo);
 
                 panelEquipos.add(bAtacante);
                 panelEquipos.add(bDefensor);
@@ -205,8 +214,12 @@ private  ArrayList<JRadioButton> botonesEquipos = new ArrayList<>();
         }
     }
 
+    public ArrayList<ButtonGroup> pasarGrupos() {
+        return gruposEquipos;
+    }
 
-    public boolean cerrarInscripcion(){
+
+    public boolean cerrarInscripcion() throws SQLException {
         return  modeloController.cerrarInscripcion();
     }
 
@@ -261,8 +274,8 @@ private  ArrayList<JRadioButton> botonesEquipos = new ArrayList<>();
 
     }
 
-    public void crearCuenta(String nombre, String clave, String nickname){
-        modeloController.crearCuenta(nombre, clave, nickname);
+    public void crearCuenta(String nickname, String nombre, String clave){
+        modeloController.crearCuenta(nickname, nombre, clave);
     }
 
     public boolean comprobarNickname(String nickname){

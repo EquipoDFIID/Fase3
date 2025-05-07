@@ -40,7 +40,7 @@ public class CampeonatoDAO {
             ps.setString(1, estado);
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 }

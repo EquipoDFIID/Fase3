@@ -14,15 +14,46 @@ public class UsuarioDAO {
     /**
      * Busca un usuario en la base de datos según su nombre.
      *
-     * @param nombre Nombre del usuario que se desea buscar.
+     * @param nombreUsuario Nombre del usuario que se desea buscar.
      * @return Objeto `Usuario` si se encuentra en la base de datos, o `null` si no existe.
      */
-    public Usuario selectUsuario(String nombre, String clave){
+    public Usuario selectUsuarioNom(String nombreUsuario, String clave){
         Usuario u= null;
         try {
-            String sql = "SELECT * FROM USUARIOS WHERE INITCAP(nombre) = ? AND CLAVE=?";
+            String sql = "SELECT * FROM USUARIOS WHERE LOWER(NOMBRE) = ? AND CLAVE=?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, nombre);
+            ps.setString(1, nombreUsuario);
+            ps.setString(2, clave);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                u = new Usuario();
+                u.setIdUsuario(rs.getInt("id_usuario"));
+                u.setNombre(rs.getString("nombre"));
+                u.setClave(rs.getString("clave"));
+                u.setTipoUsuario(rs.getString("tipo_usuario"));
+                System.out.println(u.getNombre());
+                return u;
+
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * Busca un usuario en la base de datos según su nombre.
+     *
+     * @param nickUsuario Nombre del usuario que se desea buscar.
+     * @return Objeto `Usuario` si se encuentra en la base de datos, o `null` si no existe.
+     */
+    public Usuario selectUsuarioNick(String nickUsuario, String clave){
+        Usuario u= null;
+        try {
+            String sql = "SELECT * FROM USUARIOS WHERE lower(NICKNAME) = ? AND CLAVE=?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, nickUsuario);
             ps.setString(2, clave);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {

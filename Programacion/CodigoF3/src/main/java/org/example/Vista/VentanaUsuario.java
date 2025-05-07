@@ -37,7 +37,6 @@ public class VentanaUsuario extends JFrame {
 
         this.uNombre.setText(uNombre);
         this.uNombre.setEnabled(false);
-
         uCambiarCuenta.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

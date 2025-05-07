@@ -325,7 +325,8 @@ public class VentanaAltaJugador extends JDialog {
                 Double.parseDouble(jSueldo.getText()),
                 vc.buscarComboBoxE(jEquipo)
         );
-        dispose();
+        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+        dispose(); //
     }
 
     private void onCancel() {

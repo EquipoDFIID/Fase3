@@ -164,7 +164,8 @@ public class VentanaModificarEquipo extends JDialog {
 
     private void onOK() {
         vc.modificarEquipo(eNombre.getText(), convertirFecha(eFecha.getText()), cNombre.getSelectedItem().toString());
-        dispose();
+        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+        dispose(); //
     }
 
     private void onCancel() {

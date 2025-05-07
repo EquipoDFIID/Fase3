@@ -83,7 +83,8 @@ public class VentanaBajaEquipo extends JDialog {
 
     private void onOK() {
         vc.bajaEquipo(cNombre.getSelectedItem().toString());
-        dispose();
+        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+        dispose(); //
     }
 
     private void onCancel() {
