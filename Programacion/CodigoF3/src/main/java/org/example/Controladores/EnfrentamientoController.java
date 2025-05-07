@@ -17,7 +17,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+/**
+ * Clase `EnfrentamientoController` que actúa como controlador para gestionar las operaciones
+ * relacionadas con los enfrentamientos, interactuando con la capa de datos (`EnfrentamientoDAO`).
+ */
 public class EnfrentamientoController {
     private EnfrentamientoDAO dao;
     private ArrayList<Enfrentamiento> listaEnfrentamientos = new ArrayList<>();
@@ -88,7 +91,15 @@ public class EnfrentamientoController {
     }*/
 
 
-
+    /**
+     * Solicita un dato al usuario y lo valida contra una expresión regular.
+     *
+     * @param dato Nombre del dato que se solicita.
+     * @param mensaje Mensaje que se muestra al usuario.
+     * @param expresionRegular Expresión regular para validar el dato ingresado.
+     * @return El dato ingresado y validado.
+     * @throws DatoNoValido Si el dato no cumple con los requisitos.
+     */
 
     public static String solicitarDato(String dato, String mensaje, String expresionRegular)
     {
@@ -126,7 +137,11 @@ public class EnfrentamientoController {
         LocalTime hora= LocalTime.parse(horaInput, formatter);
         return hora;
     }
-
+    /**
+     * Crea un nuevo enfrentamiento y lo guarda en la base de datos.
+     *
+     * @param enfrentamiento Objeto `Enfrentamiento` que se desea crear.
+     */
     public void crearEnfrentamiento(Enfrentamiento enfrentamiento) {
         dao.altaEnfrentamiento(enfrentamiento);
         listaEnfrentamientos.add(enfrentamiento);

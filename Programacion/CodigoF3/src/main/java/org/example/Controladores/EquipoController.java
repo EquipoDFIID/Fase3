@@ -15,7 +15,10 @@ import java.util.regex.Pattern;
 
 import org.example.Modelo.EquipoDAO;
 import org.example.Vista.VentanaAltaEquipo;
-
+/**
+ * Clase `EquipoController` que actúa como controlador para gestionar las operaciones
+ * relacionadas con los equipos, interactuando con la capa de datos (`EquipoDAO`).
+ */
 public class EquipoController {
     private EquipoDAO equipoDAO;
     private Equipo eb;
@@ -32,7 +35,15 @@ public class EquipoController {
         Equipo e = new Equipo(idEquipo,fechaFund,nombre);
         return e;
     }*/
-
+    /**
+     * Solicita un dato al usuario y lo valida contra una expresión regular.
+     *
+     * @param dato Nombre del dato que se solicita.
+     * @param mensaje Mensaje que se muestra al usuario.
+     * @param expresionRegular Expresión regular para validar el dato ingresado.
+     * @return El dato ingresado y validado.
+     * @throws DatoNoValido Si el dato no cumple con los requisitos.
+     */
     public String solicitarDato(String dato, String mensaje,String expresionRegular)
     {
         String variable = "";
@@ -62,19 +73,19 @@ public class EquipoController {
     }
 
 
-    public void altaEquipo(String nombre, String fecha) {
+    public void altaEquipo(String nombre, LocalDate fecha) {
         Equipo e = new Equipo();
         e.setNombre(nombre);
-        e.setFechaFund(convertirFecha(fecha));
+        e.setFechaFund(fecha);
         equipoDAO.altaEquipo(e);
     }
     public void bajaEquipo() {
         equipoDAO.borrarEquipo(eb);
     }
-    public void modificarEquipo(String nombre, String fecha) {
+    public void modificarEquipo(String nombre, LocalDate fecha) {
         Equipo equipo = new Equipo();
         equipo.setNombre(nombre);
-        equipo.setFechaFund(convertirFecha(fecha));
+        equipo.setFechaFund(fecha);
         equipoDAO.modificarEquipo(equipo, eb);
     }
 

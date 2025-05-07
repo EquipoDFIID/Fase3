@@ -7,6 +7,9 @@ import javax.swing.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * Controlador de la vista que gestiona la interacción entre las ventanas y el modelo.
+ */
 public class VistaController {
     private VentanaInicio ventanaInicio;
     private VentanaAdministrador ventanaAdministrador;
@@ -122,14 +125,14 @@ public class VistaController {
 
 
 
-    public void altaEquipo(String nombre, String fecha){
+    public void altaEquipo(String nombre, LocalDate fecha){
         modeloController.altaEquipo(nombre, fecha);
     }
     public void bajaEquipo(String nombreEquipo){
         modeloController.buscarEquipo(nombreEquipo);
         modeloController.bajaEquipo();
     }
-    public void modificarEquipo(String nombre, String fecha, String nombreEquipo){
+    public void modificarEquipo(String nombre, LocalDate fecha, String nombreEquipo){
         modeloController.buscarEquipo(nombreEquipo);
         modeloController.modificarEquipo(nombre, fecha);
 

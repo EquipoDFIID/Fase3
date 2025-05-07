@@ -32,6 +32,7 @@ public class CampeonatoDAO {
         return c;
     }
 
+
     public void competicionUpdateInscripcion(String estado) {
         try{
             String sql = "UPDATE COMPETICIONES SET ESTADO = ? WHERE ID_COMPETICION = 2";
