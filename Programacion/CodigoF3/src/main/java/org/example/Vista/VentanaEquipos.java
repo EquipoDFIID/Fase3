@@ -1,8 +1,10 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
+import org.example.Modelo.EquipoDAO;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,12 +22,18 @@ public class VentanaEquipos extends JFrame {
         setContentPane(pPrincipal);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("MenuPrincipal");
-        setSize(500,580);
+        setSize(680,580);
         setLocationRelativeTo(null);
-        setResizable(false);
+        setResizable(true);
 
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
         setIconImage(icon.getImage());
+
+        tEquipos.setText(EquipoDAO.procedimientoEquipos());
+        tEquipos.setFont(new Font("Monospaced", Font.PLAIN, 12));
+
+
+
 
         SALIRButton.addActionListener(new ActionListener() {
             @Override
