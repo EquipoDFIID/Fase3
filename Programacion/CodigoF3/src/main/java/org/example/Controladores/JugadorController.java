@@ -12,7 +12,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+/**
+ * Clase `UsuarioController` que actúa como controlador para gestionar las operaciones
+ * relacionadas con los usuarios, interactuando con la capa de datos (`UsuarioDAO`).
+ */
 public class JugadorController {
     private JugadorDAO jugadorDAO;
     private Jugador jb;
@@ -47,6 +50,7 @@ public class JugadorController {
 
 
     /*
+
        public static Jugador solicitarValidarDatos() {
         // Copia de la versión anterior.
         String idJugador = solicitarDato("ID Jugador", "Teclea ID del jugador", "^[0-9]{4}[A-Z]{1}$");

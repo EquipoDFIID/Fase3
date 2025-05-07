@@ -7,7 +7,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
-
+/**
+ * Clase `UsuarioController` que actúa como controlador para gestionar las operaciones
+ * relacionadas con los usuarios, interactuando con la capa de datos (`UsuarioDAO`).
+ */
 public class ModeloController {
 
     private CampeonatoDAO campeonatoDao;

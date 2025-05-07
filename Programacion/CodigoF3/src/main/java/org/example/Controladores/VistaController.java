@@ -7,6 +7,9 @@ import javax.swing.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * Controlador de la vista que gestiona la interacción entre las ventanas y el modelo.
+ */
 public class VistaController {
     private VentanaInicio ventanaInicio;
     private VentanaAdministrador ventanaAdministrador;
