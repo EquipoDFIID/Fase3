@@ -1,15 +1,9 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
-import org.example.Excepciones.DatoNoValido;
-import org.example.Modelo.Jugador;
-import org.example.Modelo.Usuario;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
-import java.awt.*;
 import java.awt.event.*;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 /**
  * Clase que representa la ventana de inicio de sesión del sistema.
@@ -19,7 +13,7 @@ public class VentanaInicio extends JFrame {
     private JPanel panel1;
     private JButton button1;
     private JButton buttonImagen;
-    private JButton crearCuentaButton;
+    private JButton bCrearCuenta;
     private JPanel jAdmin;
     private JPanel jUsuario;
     private JRadioButton administradorRadioButton;
@@ -33,6 +27,7 @@ public class VentanaInicio extends JFrame {
     private JLabel relleno;
     private JPanel buttons;
     private static VistaController vc;
+    private String tipo;
 
 
     public VentanaInicio(VistaController vc) {
@@ -60,6 +55,9 @@ public class VentanaInicio extends JFrame {
             uClave.setText("");
             relleno.setVisible(false);
             buttonImagen.setHorizontalAlignment(SwingConstants.LEFT);
+
+            aClave.setEnabled(false);
+            aNombre.requestFocus();
         });
 
         usuarioRadioButton.addActionListener(e -> {
@@ -69,131 +67,18 @@ public class VentanaInicio extends JFrame {
             aNombre.setText("");
             aClave.setText("");
             buttonImagen.setHorizontalAlignment(SwingConstants.LEFT);
+
+            uClave.setEnabled(false);
+            uNombre.requestFocus();
         });
 
-        aNombre.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                Component opposite = e.getOppositeComponent();
-                if ((opposite instanceof JRadioButton)) return;
-
-                try {
-                    if (aNombre.getText().isEmpty()) {
-                        JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío");
-                        aNombre.requestFocus();
-                    } else {
-                        Usuario a = vc.selectNombre(aNombre.getText());
-                        Pattern p = Pattern.compile("^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]*$");
-                        Matcher m = p.matcher(aNombre.getText());
-                        if (!m.matches()) {
-                            JOptionPane.showMessageDialog(null, "El nombre debe comenzar por una mayúscula");
-                            aNombre.requestFocus();
-                        } else {
-                            if (a == null) {
-                                throw new DatoNoValido("No existe un administrador con ese nombre");
-                            } else if (!a.getTipoUsuario().equals("admin")) {
-                                throw new DatoNoValido("El nombre no corresponde a un admin");
-                            }
-                        }
-                    }
-                } catch (DatoNoValido ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage());
-                }
-            }
-        });
-
-        aClave.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                Component opposite = e.getOppositeComponent();
-                if ((opposite instanceof JRadioButton) || opposite == aNombre) return;
-
-                String nombre = aNombre.getText().trim();
-                String claveTexto = aClave.getText().trim();
-
-                // Validar nombre (por si se ha escrito después de perder foco)
-                if (!validarNombre(nombre)) {
-                    aIniciarSesionButton.setEnabled(false);
-                    return;
-                }
-
-                // Validar clave vacía
-                if (claveTexto.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "La clave no puede estar vacía");
-                    aIniciarSesionButton.setEnabled(false);
-                    aClave.requestFocus();
-                    return;
-                }
-
-                int clave;
-                try {
-                    clave = Integer.parseInt(claveTexto);
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "La clave debe ser un número");
-                    aClave.setText("");
-                    aIniciarSesionButton.setEnabled(false);
-                    aClave.requestFocus();
-                    return;
-                }
-
-                if (!validarClave(String.valueOf(clave))) {
-                    aClave.setText("");
-                    JOptionPane.showMessageDialog(null, "La clave no tiene el formato correcto");
-                    aIniciarSesionButton.setEnabled(false);
-                    aClave.requestFocus();
-                    return;
-                }
-
-                // Buscar usuario y comparar clave
-                Usuario u = vc.selectNombre(nombre);
-                if (u != null && Integer.parseInt(u.getClave()) == clave) {
-                    aIniciarSesionButton.setEnabled(true);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Nombre o clave incorrectos");
-                    aIniciarSesionButton.setEnabled(false);
-                }
-            }
-
-            @Override
-            public void focusGained(FocusEvent e) {
-                aIniciarSesionButton.setEnabled(false);
-            }
-        });
-
-
-        aClave.addKeyListener(new KeyAdapter() {
+        aNombre.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                if (validarNombre(aNombre.getText()) && validarClave(aClave.getText())) {
-                    aIniciarSesionButton.setEnabled(true);
-                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                        // Ejecutar la acción como si se hubiera hecho clic
-                        aIniciarSesionButton.doClick();
-                    }
+                if (validarNombre(aNombre.getText())) {
+                    aClave.setEnabled(true);
                 } else {
-                    aIniciarSesionButton.setEnabled(false);
-                }
-            }
-        });
-
-
-
-        uNombre.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                Component opposite = e.getOppositeComponent();
-                if ((opposite instanceof JRadioButton)) return;
-
-                if (uNombre.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío");
-                    uNombre.requestFocus();
-                } else {
-                    Pattern p = Pattern.compile("^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]*$");
-                    Matcher m = p.matcher(uNombre.getText());
-                    if (!m.matches()) {
-                        JOptionPane.showMessageDialog(null, "El nombre debe comenzar por una mayúscula");
-                        uNombre.requestFocus();
-                    }
+                    aClave.setEnabled(false);
                 }
             }
         });
@@ -201,55 +86,37 @@ public class VentanaInicio extends JFrame {
         uNombre.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                super.keyReleased(e);
-
-                if (!uNombre.getText().isEmpty()) {
-                    crearCuentaButton.setEnabled(false);
+                if (uNombre.getText().isEmpty()) {
+                   bCrearCuenta.setEnabled(true);
                 } else {
-                    crearCuentaButton.setEnabled(true);
+                    bCrearCuenta.setEnabled(false);
+                    uIniciarSesionButton.setEnabled(false);
+                }
+
+                if (validarNombre(uNombre.getText())) {
+                    uClave.setEnabled(true);
+                } else {
+                    uClave.setEnabled(false);
                 }
             }
         });
 
-        uClave.addFocusListener(new FocusAdapter() {
+        aClave.addKeyListener(new KeyAdapter() {
             @Override
-            public void focusLost(FocusEvent e) {
-                Component opposite = e.getOppositeComponent();
-                if ((opposite instanceof JRadioButton) || opposite == uNombre) return;
-
-                if (!validarNombre(uNombre.getText())) {
-                    uIniciarSesionButton.setEnabled(false);
-                    return;
+            public void keyReleased(KeyEvent e) {
+                if (validarClave(aClave.getText())) {
+                    aIniciarSesionButton.setEnabled(true);
+                } else {
+                    aIniciarSesionButton.setEnabled(false);
                 }
-
-                String clave = uClave.getText();
-                if (clave.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "La clave no puede estar vacía");
-                    uIniciarSesionButton.setEnabled(false);
-                    uClave.requestFocus();
-                } else if (!validarClave(clave)) {
-                    uClave.setText("");
-                    JOptionPane.showMessageDialog(null, "La clave no puede tener ese formato");
-                    uIniciarSesionButton.setEnabled(false);
-                    uClave.requestFocus();
-                }
-            }
-
-            @Override
-            public void focusGained(FocusEvent e) {
-                uIniciarSesionButton.setEnabled(false);
             }
         });
 
         uClave.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                if (validarNombre(uNombre.getText()) && validarClave(uClave.getText())) {
+                if (validarClave(uClave.getText())) {
                     uIniciarSesionButton.setEnabled(true);
-                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                        // Ejecutar la acción como si se hubiera hecho clic
-                        uIniciarSesionButton.doClick();
-                    }
                 } else {
                     uIniciarSesionButton.setEnabled(false);
                 }
@@ -257,16 +124,39 @@ public class VentanaInicio extends JFrame {
         });
 
         aIniciarSesionButton.addActionListener(e -> {
-            vc.mostrarVentanaAdministrador(aNombre.getText());
-            setVisible(false);
+            tipo = "admin";
+            vc.selectUsuario(aNombre.getText(), aClave.getText());
+            if (vc.comprobarNombreClave(tipo)) {
+                vc.mostrarVentanaAdministrador(aNombre.getText());
+                setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(VentanaInicio.this, "No se ha encontrado el administrador", "Datos incorrectos", JOptionPane.ERROR_MESSAGE);
+                aNombre.setText("");
+                aClave.setText("");
+                aClave.setEnabled(false);
+                aNombre.requestFocus();
+                aIniciarSesionButton.setEnabled(false);
+            }
         });
 
         uIniciarSesionButton.addActionListener(e -> {
-            vc.mostrarVentanaUsuario(uNombre.getText());
-            setVisible(false);
+            tipo = "user";
+            vc.selectUsuario(uNombre.getText(), uClave.getText());
+            if (vc.comprobarNombreClave(tipo)) {
+                vc.mostrarVentanaUsuario(uNombre.getText());
+                setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(VentanaInicio.this, "No se ha encontrado el usuario", "Datos incorrectos", JOptionPane.ERROR_MESSAGE);
+                uNombre.setText("");
+                uClave.setText("");
+                uClave.setEnabled(false);
+                uNombre.requestFocus();
+                uIniciarSesionButton.setEnabled(false);
+                bCrearCuenta.setEnabled(true);
+            }
         });
 
-        crearCuentaButton.addActionListener(e -> {
+        bCrearCuenta.addActionListener(e -> {
             vc.mostrarVentanaCuenta(VentanaInicio.this);
             setVisible(false);
         });

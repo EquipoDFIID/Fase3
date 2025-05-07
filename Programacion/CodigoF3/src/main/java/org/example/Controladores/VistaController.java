@@ -58,7 +58,7 @@ private  ArrayList<JRadioButton> botonesEquipos = new ArrayList<>();
     }
     public void mostrarVentanaCuenta(JFrame ventanaInicio) {
         ventanaInicio.setVisible(false);
-        ventanaCuenta = new VentanaCrearCuenta(this);
+        ventanaCuenta = new VentanaCrearCuenta(this, ventanaInicio);
         ventanaCuenta.setVisible(true);
     }
 
@@ -156,16 +156,12 @@ private  ArrayList<JRadioButton> botonesEquipos = new ArrayList<>();
         modeloController.modificarJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, ej);
     }
 
-    public Usuario selectNombre(String nombreUsuario) {
-        return modeloController.selectNombre(nombreUsuario);
+    public void selectUsuario(String nombreUsuario, String clave) {
+        modeloController.selectUsuario(nombreUsuario, clave);
     }
-
-
-
-
-    public void generarJornada(){}
-
-    public void generarEnfrentamientos(){}
+    public boolean comprobarNombreClave(String tipo) {
+        return  modeloController.comprobarNombreClave(tipo);
+    }
 
     public void rellenarEquipos(){
         listaEquipos = modeloController.selectObjetosEquipo();
@@ -257,7 +253,11 @@ private  ArrayList<JRadioButton> botonesEquipos = new ArrayList<>();
         jJornada.setSelectedIndex(0);
     }
 
-    public void crearCuenta(String nombre, String clave){
-        modeloController.crearCuenta(nombre, clave);
+    public void crearCuenta(String nombre, String clave, String nickname){
+        modeloController.crearCuenta(nombre, clave, nickname);
+    }
+
+    public boolean comprobarNickname(String nickname){
+        return modeloController.comprobarNickname(nickname);
     }
 }

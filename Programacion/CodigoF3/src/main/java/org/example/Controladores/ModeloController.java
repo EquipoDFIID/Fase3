@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
+
 /**
  * Clase `UsuarioController` que actúa como controlador para gestionar las operaciones
  * relacionadas con los usuarios, interactuando con la capa de datos (`UsuarioDAO`).
@@ -34,6 +36,9 @@ public class ModeloController {
     private UsuarioDAO usuarioDao;
 
     private VistaController vc;
+
+    private Usuario usuario;
+    private String tipoUsuario;
 
     public ModeloController() {
         try{
@@ -106,9 +111,21 @@ public class ModeloController {
 
 
 
-    public Usuario selectNombre(String nombreUsuario) {
-        return usuarioController.selectNombre(nombreUsuario);
+    public void selectUsuario(String nombreUsuario, String clave) {
+        usuario = usuarioController.selectUsuario(nombreUsuario, clave);
     }
+    public boolean comprobarNombreClave(String tipo){
+        boolean encontrado=false;
+
+        if (usuario != null){
+            if (tipo.equals(usuario.getTipoUsuario())){
+                encontrado = true;
+            }
+        }
+
+        return encontrado;
+    }
+
 
     public boolean cerrarInscripcion() {
         boolean cerrada = false;
@@ -154,8 +171,8 @@ public class ModeloController {
         return cerrada;
     }
 
-    public void crearCuenta(String nombre, String clave){
-            usuarioController.crearCuenta(nombre, clave);
+    public void crearCuenta(String nombre, String clave, String nickname){
+            usuarioController.crearCuenta(nombre, clave, nickname);
     }
 
     public ArrayList selectAllEquipos() {
@@ -164,5 +181,9 @@ public class ModeloController {
 
     public void competicionUpdateInscripcion(String inscripcion) {
         campeonatoController.competicionUpdateInscripcion(inscripcion);
+    }
+
+    public boolean comprobarNickname(String nickname) {
+        return usuarioController.comprobarNickname(nickname);
     }
 }
