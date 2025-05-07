@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 
 public class EnfrentamientoController {
     private EnfrentamientoDAO dao;
+    private ArrayList<Enfrentamiento> listaEnfrentamientos = new ArrayList<>();
 
     public EnfrentamientoController(EnfrentamientoDAO enfrentamientoDAO) {
         this.dao = enfrentamientoDAO;
@@ -87,15 +88,7 @@ public class EnfrentamientoController {
     }*/
 
 
-    public static Enfrentamiento solicitarValidarDatos() {
-        String idEnfrentamiento = solicitarDato("ID Enfrentamiento", "Teclea el id del enfrentamiento", "^[0-9]{4}[A-Z]{1}$");
-        LocalDate fechaEnfrentamiento = solicitarFecha();
-        LocalTime horaEnfrentamiento = solicitarHora();
 
-
-        Enfrentamiento e = new Enfrentamiento(idEnfrentamiento, fechaEnfrentamiento, horaEnfrentamiento, null, null, null, null);
-        return e;
-    }
 
     public static String solicitarDato(String dato, String mensaje, String expresionRegular)
     {
@@ -134,17 +127,12 @@ public class EnfrentamientoController {
         return hora;
     }
 
-
-
-
-    public void crearEnfrentamiento() {
-    }
-
-    public void crearEnfrentamiento(Equipo atacante, Equipo defensor) {
-    }
-
     public void crearEnfrentamiento(Enfrentamiento enfrentamiento) {
         dao.altaEnfrentamiento(enfrentamiento);
+        listaEnfrentamientos.add(enfrentamiento);
+    }
 
+    public ArrayList<Enfrentamiento> rellenarEquiposEnfrentamientos(){
+        return listaEnfrentamientos;
     }
 }

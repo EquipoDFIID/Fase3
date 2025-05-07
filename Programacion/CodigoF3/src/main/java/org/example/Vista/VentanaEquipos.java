@@ -9,18 +9,23 @@ import java.awt.event.ActionListener;
 public class VentanaEquipos extends JFrame {
     private JButton bLogo;
     private JButton SALIRButton;
-    private JTextArea textArea1;
+    private JTextArea tEquipos;
     private JPanel pPrincipal;
-    private static VistaController vc;
+    private VistaController vc;
+    private JFrame ventanaUser;
 
-    public VentanaEquipos(VistaController vc, String nombre) {
+    public VentanaEquipos(VistaController vc, String nombre, JFrame ventanaUsuario) {
         this.vc = vc;
+        this.ventanaUser = ventanaUsuario;
         setContentPane(pPrincipal);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("MenuPrincipal");
         setSize(500,580);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        setIconImage(icon.getImage());
 
         SALIRButton.addActionListener(new ActionListener() {
             @Override
@@ -33,10 +38,10 @@ public class VentanaEquipos extends JFrame {
         bLogo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaInicio ventanaInicio = new VentanaInicio(vc);
-                ventanaInicio.setVisible(true);
                 dispose();
+                vc.mostrarVentanaInicio();
             }
         });
+
     }
 }

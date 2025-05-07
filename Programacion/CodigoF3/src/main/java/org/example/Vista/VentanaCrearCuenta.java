@@ -31,6 +31,9 @@ public class VentanaCrearCuenta extends JFrame {
         buttonOK.setEnabled(false);
         setResizable(false);
 
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        setIconImage(icon.getImage());
+
         cClave.setEnabled(false);
         ccClave.setEnabled(false);
 
@@ -145,9 +148,8 @@ public class VentanaCrearCuenta extends JFrame {
         bLogo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaInicio ventanaInicio = new VentanaInicio(vc);
-                ventanaInicio.setVisible(true);
                 dispose();
+                vc.mostrarVentanaInicio();
             }
         });
     }

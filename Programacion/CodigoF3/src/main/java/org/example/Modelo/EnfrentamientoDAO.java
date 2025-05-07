@@ -1,9 +1,6 @@
 package org.example.Modelo;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.Time;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +25,32 @@ public class EnfrentamientoDAO {
         catch(Exception e){
             System.out.println(e);
         }
+    }
+
+    public static ArrayList<Enfrentamiento> selectAllEnfrentamientos(int idJornada) {
+        ArrayList<Enfrentamiento> enfrentamientos = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM ENFRENTAMIENTOS WHERE ID_JORNADA = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idJornada);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) { // ← CAMBIADO DE "if" A "while"
+                Enfrentamiento e = new Enfrentamiento();
+                e.setIdEnfrentamiento(rs.getInt("ID_ENFRENTAMIENTO"));
+                e.setHoraEnfrentamiento(rs.getTime("HORA").toLocalTime());
+                e.setFechEnfrentamiento(rs.getDate("FECHA_ENF").toLocalDate());
+                //lo de abajo igual esta mal
+                e.setEquipoAtacante(EquipoDAO.buscarEquipoInt(rs.getInt("EQUIPO_ATACANTE")));
+                e.setEquipoDefensor(EquipoDAO.buscarEquipoInt(rs.getInt("EQUIPO_DEFENSOR")));
+                e.setEquipoGanador(EquipoDAO.buscarEquipoInt(rs.getInt("EQUIPO_GANADOR")));
+                e.setJornada(JornadaDAO.buscarJornada(rs.getInt("ID_JORNADA")));
+                enfrentamientos.add(e);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return enfrentamientos;
     }
 
 }

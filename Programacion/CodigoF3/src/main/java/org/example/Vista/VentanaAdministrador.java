@@ -3,24 +3,28 @@ package org.example.Vista;
 import org.example.Controladores.VistaController;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 public class VentanaAdministrador extends JFrame {
     public JPanel panel1;
     private JButton bLogo;
-    private JButton altaJugadorButton;
-    private JButton modificarJugadorButton;
-    private JButton bajaJugadorButton;
-    private JButton altaEquipoButton;
-    private JButton modificarEquipoButton;
-    private JButton bajaEquipoButton;
-    private JButton introducirResultadosButton;
-    private JButton verInformesButton;
+    private JButton bAltaJugador;
+    private JButton bModificarJugador;
+    private JButton bBajaJugador;
+    private JButton bAltaEquipo;
+    private JButton bModificarEquipo;
+    private JButton bBajaEquipo;
+    private JButton bIntroducirResultados;
+    private JButton bVerInformes;
     private JMenuItem jSalir;
     private JMenuItem jCambiarCuenta;
     private JMenuItem jNombre;
+    private JButton bInscripcion;
     private static VistaController vc;
+    private boolean estadoInscripcion;
 
 
     /**
@@ -38,13 +42,19 @@ public class VentanaAdministrador extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        setIconImage(icon.getImage());
+
         jNombre.setText(aNombre);
         jNombre.setEnabled(false);
+        bIntroducirResultados.setEnabled(false);
+        bVerInformes.setEnabled(false);
 
         jCambiarCuenta.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
+                vc.mostrarVentanaInicio();
             }
         });
 
@@ -55,79 +65,91 @@ public class VentanaAdministrador extends JFrame {
             }
         });
 
-        altaJugadorButton.addActionListener(new ActionListener() {
+        bAltaJugador.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaAltaJugador ventanaAltaJugador = new VentanaAltaJugador(vc, aNombre);
-                ventanaAltaJugador.setVisible(true);
-                dispose();
-            }
-        });
-        modificarJugadorButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                VentanaModificarJugador ventanaModificarJugador = new VentanaModificarJugador(vc, aNombre);
-                ventanaModificarJugador.setVisible(true);
-                dispose();
-            }
-        });
-        bajaJugadorButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                VentanaBajaJugador ventanaBajaJugador = new VentanaBajaJugador(vc, aNombre);
-                ventanaBajaJugador.setVisible(true);
-                dispose();
+                vc.mostrarVentanaAltaJugador(aNombre, VentanaAdministrador.this);
             }
         });
 
-        altaEquipoButton.addActionListener(new ActionListener() {
+        bModificarJugador.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaAltaEquipo ventanaAltaEquipo = new VentanaAltaEquipo(vc, aNombre);
-                ventanaAltaEquipo.setVisible(true);
-                dispose();
-            }
-        });
-        modificarEquipoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                VentanaModificarEquipo ventanaModificarEquipo = new VentanaModificarEquipo(vc, aNombre);
-                ventanaModificarEquipo.setVisible(true);
-                dispose();
-            }
-        });
-        bajaEquipoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                VentanaBajaEquipo ventanaBajaEquipo = new VentanaBajaEquipo(vc, aNombre);
-                ventanaBajaEquipo.setVisible(true);
-                dispose();
-            }
-        });
-        introducirResultadosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                VentanaIntroducirResultados ventanaIntroducirResultados = new VentanaIntroducirResultados(vc, aNombre);
-                ventanaIntroducirResultados.setVisible(true);
-                dispose();
+                vc.mostrarVentanaModificarJugador(aNombre, VentanaAdministrador.this);
             }
         });
 
-        verInformesButton.addActionListener(new ActionListener() {
+        bBajaJugador.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaInformes ventanaInformes = new VentanaInformes(vc, aNombre);
-                ventanaInformes.setVisible(true);
-                dispose();
+                vc.mostrarVentanaBajaJugador(aNombre, VentanaAdministrador.this);
             }
         });
+
+        bAltaEquipo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                vc.mostrarVentanaAltaEquipo(aNombre, VentanaAdministrador.this);
+            }
+        });
+
+        bModificarEquipo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                vc.mostrarVentanaModificarEquipo(aNombre, VentanaAdministrador.this);
+            }
+        });
+
+        bBajaEquipo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                vc.mostrarVentanaBajaEquipo(aNombre, VentanaAdministrador.this);
+            }
+        });
+
+        bIntroducirResultados.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                vc.mostrarVentanaIntroducirResultados(aNombre, VentanaAdministrador.this);
+            }
+        });
+
+        bVerInformes.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                vc.mostrarVentanaInformes(aNombre, VentanaAdministrador.this);
+            }
+        });
+
         bLogo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaInicio ventanaInicio = new VentanaInicio(vc);
-                ventanaInicio.setVisible(true);
                 dispose();
+                vc.mostrarVentanaInicio();
             }
         });
+        bInscripcion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!estadoInscripcion) {
+                    estadoInscripcion = vc.cerrarInscripcion();
+                    disableCrud();
+                    bIntroducirResultados.setEnabled(true);
+                    bVerInformes.setEnabled(true);
+                } else {
+                    JOptionPane.showMessageDialog(VentanaAdministrador.this, "La inscripción ya ha sido cerrada");
+                }
+
+            }
+        });
+    }
+
+    public void disableCrud(){
+        bAltaJugador.setEnabled(false);
+        bAltaEquipo.setEnabled(false);
+        bModificarJugador.setEnabled(false);
+        bModificarEquipo.setEnabled(false);
+        bBajaJugador.setEnabled(false);
+        bBajaEquipo.setEnabled(false);
     }
 }

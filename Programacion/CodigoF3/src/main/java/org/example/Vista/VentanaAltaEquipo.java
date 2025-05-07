@@ -19,7 +19,7 @@ public class VentanaAltaEquipo extends JDialog {
     private JTextField eNombre;
     private JTextField eFecha;
     private static VistaController vc;
-    private static VentanaAltaEquipo ventana;
+    private static JFrame ventanaAdministrador;
     private static String nombre;
 
     /**
@@ -27,15 +27,19 @@ public class VentanaAltaEquipo extends JDialog {
      * Esta ventana permite al usuario introducir los datos necesarios
      * para registrar un nuevo equipo en la aplicación.
      */
-    public VentanaAltaEquipo(VistaController vc, String aNombre) {
+    public VentanaAltaEquipo(VistaController vc, String aNombre, JFrame ventanaAdmin) {
         this.vc = vc;
         this.nombre = aNombre;
+        this.ventanaAdministrador = ventanaAdmin;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         setSize(500, 580);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        setIconImage(icon.getImage());
 
         inicializarCampos();
 
@@ -70,9 +74,8 @@ public class VentanaAltaEquipo extends JDialog {
         bLogo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaInicio ventanaInicio = new VentanaInicio(vc);
-                ventanaInicio.setVisible(true);
                 dispose();
+                vc.mostrarVentanaInicio();
             }
         });
     }
@@ -125,6 +128,9 @@ public class VentanaAltaEquipo extends JDialog {
         eFecha.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
+                Component opposite = e.getOppositeComponent();
+                if ((opposite instanceof JRadioButton) || opposite == eNombre) return;
+
                 if (eFecha.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(VentanaAltaEquipo.this, "El campo fecha no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
                     eFecha.requestFocus();
@@ -159,15 +165,7 @@ public class VentanaAltaEquipo extends JDialog {
     }
 
     private void onCancel() {
-        VentanaAdministrador ventanaAdministrador = new VentanaAdministrador(vc, nombre);
-        ventanaAdministrador.setVisible(true);
-        dispose();
-    }
-
-    public static void main(String[] args) {
-        VentanaAltaEquipo dialog = new VentanaAltaEquipo(vc, nombre);
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
+        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+        dispose(); // Cierra la ventana actual
     }
 }

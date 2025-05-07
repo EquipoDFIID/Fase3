@@ -9,24 +9,18 @@ import java.util.ArrayList;
 public class Jornada {
     private int idJornada;
     private LocalDate fecha;
-    private int campeonato;
+    private Campeonato campeonato;
     private ArrayList <Enfrentamiento> listaEnfrentamientos;
 
     public Jornada() {
     }
 
-    public Jornada(int idJornada, LocalDate fecha, int campeonato, ArrayList<Enfrentamiento> listaEnfrentamientos) {
-        this.idJornada = idJornada;
-        this.fecha = fecha;
+    public Jornada(ArrayList<Enfrentamiento> enfrentamientos, LocalDate now, Campeonato campeonato) {
+        this.listaEnfrentamientos = enfrentamientos;
+        this.fecha = now;
         this.campeonato = campeonato;
-        this.listaEnfrentamientos = listaEnfrentamientos;
     }
 
-    public Jornada(LocalDate fecha, int campeonato, ArrayList<Enfrentamiento> listaEnfrentamientos) {
-        this.fecha = fecha;
-        this.campeonato = campeonato;
-        this.listaEnfrentamientos = listaEnfrentamientos;
-    }
 
     public int getIdJornada() {
         return idJornada;
@@ -44,11 +38,11 @@ public class Jornada {
         this.fecha = fecha;
     }
 
-    public int getCampeonato() {
+    public Campeonato getCampeonato() {
         return campeonato;
     }
 
-    public void setCampeonato(int campeonato) {
+    public void setCampeonato(Campeonato campeonato) {
         this.campeonato = campeonato;
     }
 

@@ -85,7 +85,7 @@
               <color color="-16777216"/>
             </border>
             <children>
-              <component id="d6e8b" class="javax.swing.JButton" binding="altaJugadorButton" default-binding="true">
+              <component id="d6e8b" class="javax.swing.JButton" binding="bAltaJugador">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -98,7 +98,7 @@
                   <text value="Alta Jugador"/>
                 </properties>
               </component>
-              <component id="98bba" class="javax.swing.JButton" binding="modificarJugadorButton" default-binding="true">
+              <component id="98bba" class="javax.swing.JButton" binding="bModificarJugador">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -109,7 +109,7 @@
                   <text value="Modificar Jugador"/>
                 </properties>
               </component>
-              <component id="fa838" class="javax.swing.JButton" binding="bajaJugadorButton" default-binding="true">
+              <component id="fa838" class="javax.swing.JButton" binding="bBajaJugador">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -120,7 +120,7 @@
                   <text value="Baja Jugador"/>
                 </properties>
               </component>
-              <component id="72977" class="javax.swing.JButton" binding="altaEquipoButton" default-binding="true">
+              <component id="72977" class="javax.swing.JButton" binding="bAltaEquipo">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -132,7 +132,7 @@
                   <text value="Alta Equipo"/>
                 </properties>
               </component>
-              <component id="c0e0a" class="javax.swing.JButton" binding="modificarEquipoButton" default-binding="true">
+              <component id="c0e0a" class="javax.swing.JButton" binding="bModificarEquipo">
                 <constraints>
                   <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -144,7 +144,7 @@
                   <text value="Modificar Equipo"/>
                 </properties>
               </component>
-              <component id="afbb1" class="javax.swing.JButton" binding="bajaEquipoButton" default-binding="true">
+              <component id="afbb1" class="javax.swing.JButton" binding="bBajaEquipo">
                 <constraints>
                   <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -167,7 +167,7 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="450f8" class="javax.swing.JButton" binding="introducirResultadosButton" default-binding="true">
+              <component id="450f8" class="javax.swing.JButton" binding="bIntroducirResultados">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -178,7 +178,7 @@
                   <text value="Introducir Resultados"/>
                 </properties>
               </component>
-              <component id="4754" class="javax.swing.JButton" binding="verInformesButton">
+              <component id="4754" class="javax.swing.JButton" binding="bVerInformes">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -189,7 +189,7 @@
                   <text value="Ver todos los informes"/>
                 </properties>
               </component>
-              <component id="6b3d" class="javax.swing.JButton" default-binding="true">
+              <component id="6b3d" class="javax.swing.JButton" binding="bInscripcion">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>

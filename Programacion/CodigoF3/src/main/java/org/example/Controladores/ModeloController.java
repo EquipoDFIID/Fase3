@@ -7,11 +7,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 
 public class ModeloController {
 
-    private CampeonatoDao campeonatoDao;
+    private CampeonatoDAO campeonatoDao;
     private CampeonatoController campeonatoController;
 
     private EnfrentamientoController enfrentamientoController;
@@ -36,7 +35,7 @@ public class ModeloController {
             //BaseDatos.abrirConexion();
             Connection con =BD.getConnection();
 
-            campeonatoDao=new CampeonatoDao();
+            campeonatoDao=new CampeonatoDAO();
             campeonatoController= new CampeonatoController(campeonatoDao);
 
             enfrentamientoDao=new EnfrentamientoDAO();
@@ -66,6 +65,13 @@ public class ModeloController {
         return equipoController.selectObjetosEquipo();
     }
     public ArrayList <Jugador> selectObjetosJugador() {return jugadorController.selectObjetosJugador();
+    }
+    public ArrayList <Jornada> selectObjetosJornada() {
+        return jornadaController.selectObjetosJornada();
+    }
+
+    public ArrayList <Enfrentamiento> rellenarEquiposEnfrentamientos() {
+        return enfrentamientoController.rellenarEquiposEnfrentamientos();
     }
 
     public void buscarJugador(String nombreJugador) {jugadorController.buscarJugador(nombreJugador);
@@ -99,7 +105,9 @@ public class ModeloController {
         return usuarioController.selectNombre(nombreUsuario);
     }
 
-    public void inscripcionCerrada() {
+    public boolean cerrarInscripcion() {
+        boolean cerrada = false;
+
         ArrayList<Equipo> equiposOriginal = equipoController.selectAllEquipos();
         int numeroEquipos = equiposOriginal.size(); // siempre par
 
@@ -111,7 +119,7 @@ public class ModeloController {
 
         for (int jornada = 0; jornada < totalJornadas; jornada++) {
             ArrayList<Enfrentamiento> enfrentamientos = new ArrayList<>();
-            Jornada jornadaNueva = new Jornada(LocalDate.now(),2,enfrentamientos);
+            Jornada jornadaNueva = new Jornada(enfrentamientos,LocalDate.now(),campeonatoController.buscarCompeticion(2));
             Jornada jornadaEnfren = jornadaController.crearJornada(jornadaNueva);
             System.out.println("Jornada " + (jornada + 1) + " creada");
 
@@ -123,21 +131,28 @@ public class ModeloController {
                 generarGnador.add(visitante);
                 Collections.shuffle(generarGnador);
                 Equipo ganador = generarGnador.get(0);
-                Enfrentamiento enfrentamiento = new Enfrentamiento(LocalDate.now(),LocalTime.now(),local,visitante,jornadaEnfren,ganador);
+                Enfrentamiento enfrentamiento = new Enfrentamiento(LocalDate.now(), LocalTime.now(), local, visitante, jornadaEnfren, ganador);
                 enfrentamientos.add(enfrentamiento);
                 enfrentamientoController.crearEnfrentamiento(enfrentamiento);
                 System.out.println(local.getNombre() + " vs " + visitante.getNombre());
+            }
 
             // Rotación: el primer equipo queda fijo, los demás giran a la derecha
             Equipo fijo = equipos.get(0);
             equipos.remove(0);
             Equipo ultimo = equipos.remove(equipos.size() - 1);
             equipos.add(0, ultimo); // el nuevo segundo
-            equipos.add(0, fijo);   // el primero se mantiene fijo
+            equipos.add(0, fijo);// el primero se mantiene fijo
+            cerrada = true;
         }
+        return cerrada;
     }
 
-    public void crearCuenta(String nombre, String clave) {
-        usuarioController.crearCuenta(nombre, clave);
+    public void crearCuenta(String nombre, String clave){
+            usuarioController.crearCuenta(nombre, clave);
+    }
+
+    public ArrayList selectAllEquipos() {
+        return equipoController.selectAllEquipos();
     }
 }

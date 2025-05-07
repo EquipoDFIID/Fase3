@@ -11,16 +11,21 @@ public class VentanaResultados extends JFrame {
     private JButton SALIRButton;
     private JTextArea textArea1;
     private JPanel pPrincipal;
-    private static VistaController vc;
+    private VistaController vc;
+    private JFrame ventanaUser;
 
-    public VentanaResultados(VistaController vc, String nombre) {
+    public VentanaResultados(VistaController vc, String nombre, JFrame ventanaUsuario) {
         this.vc = vc;
+        this.ventanaUser = ventanaUsuario;
         setContentPane(pPrincipal);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("MenuPrincipal");
         setSize(500,580);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        setIconImage(icon.getImage());
 
         SALIRButton.addActionListener(new ActionListener() {
             @Override
@@ -33,9 +38,8 @@ public class VentanaResultados extends JFrame {
         bLogo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaInicio ventanaInicio = new VentanaInicio(vc);
-                ventanaInicio.setVisible(true);
                 dispose();
+                vc.mostrarVentanaInicio();
             }
         });
     }

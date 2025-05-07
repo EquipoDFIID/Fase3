@@ -10,19 +10,17 @@ import java.util.Arrays;
 public class Campeonato {
     private int ID;
     private String Nombre;
-    private LocalDate fechaInicio;
     private String estado;
 
-    private static final String[] ESTADOSVALIDOS = {"Inscripción", "Curso", "Finalizado"};
+    private static final String[] ESTADOSVALIDOS = {"inscripción", "en curso", "finalizada"};
 
     public Campeonato() {
     }
 
 
-    public Campeonato(int ID, String nombre, LocalDate fecha_inicio, String estado) {
+    public Campeonato(int ID, String nombre , String estado) {
         this.ID = ID;
         this.Nombre = nombre;
-        this.fechaInicio = fechaInicio;
         setEstado(estado);
     }
 
@@ -40,14 +38,6 @@ public class Campeonato {
 
     public void setNombre(String nombre) {
         Nombre = nombre;
-    }
-
-    public LocalDate getFecha_inicio() {
-        return fechaInicio;
-    }
-
-    public void setFecha_inicio(LocalDate fecha_inicio) {
-        fechaInicio = fechaInicio;
     }
 
     public String getEstado() {
