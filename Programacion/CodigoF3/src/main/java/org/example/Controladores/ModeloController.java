@@ -108,7 +108,7 @@ public class ModeloController {
     }
 
     public void altaJugador(String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento, String nickname, double sueldo, Equipo equipo){
-         jugadorController.altaJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, equipo);
+        jugadorController.altaJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, equipo);
     }
     public void bajaJugador( String nombreJugador) {
         jugadorController.bajaJugador( nombreJugador);
@@ -181,7 +181,7 @@ public class ModeloController {
     }
 
     public void crearCuenta(String nickname, String nombre, String clave){
-            usuarioController.crearCuenta(nickname, nombre, clave);
+        usuarioController.crearCuenta(nickname, nombre, clave);
     }
 
     public void competicionUpdateInscripcion(String inscripcion) {
