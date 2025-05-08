@@ -11,7 +11,7 @@ public class EnfrentamientoDAO {
     public EnfrentamientoDAO() {
     }
 
-    public static void altaEnfrentamiento(Enfrentamiento enfrentamiento) {
+    public static void altaEnfrentamiento(Enfrentamiento enfrentamiento) throws Exception {
         String sql = "INSERT INTO ENFRENTAMIENTOS (HORA, FECHA_ENF, EQUIPO_ATACANTE, EQUIPO_DEFENSOR, ID_JORNADA) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -22,40 +22,12 @@ public class EnfrentamientoDAO {
             ps.setInt(5, enfrentamiento.getJornada().getIdJornada());
 
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public static ArrayList<Enfrentamiento> selectAllEnfrentamientos(int idJornada) {
-        ArrayList<Enfrentamiento> enfrentamientos = new ArrayList<>();
-        try {
-            String sql = "SELECT * FROM ENFRENTAMIENTOS WHERE ID_JORNADA = ?";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, idJornada);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) { // ← CAMBIADO DE "if" A "while"
-                Enfrentamiento e = new Enfrentamiento();
-                e.setIdEnfrentamiento(rs.getInt("ID_ENFRENTAMIENTO"));
-                e.setHoraEnfrentamiento(rs.getTime("HORA").toLocalTime());
-                e.setFechEnfrentamiento(rs.getDate("FECHA_ENF").toLocalDate());
-                //lo de abajo igual esta mal
-                e.setEquipoAtacante(EquipoDAO.buscarEquipoInt(rs.getInt("EQUIPO_ATACANTE")));
-                e.setEquipoDefensor(EquipoDAO.buscarEquipoInt(rs.getInt("EQUIPO_DEFENSOR")));
-                e.setEquipoGanador(EquipoDAO.buscarEquipoInt(rs.getInt("EQUIPO_GANADOR")));
-                e.setJornada(JornadaDAO.buscarJornada(rs.getInt("ID_JORNADA")));
-                enfrentamientos.add(e);
-            }
-
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        return enfrentamientos;
     }
 
-
-    public void asignarGanadorEnfrentamiento(Enfrentamiento enfrentamiento) {
+    public void asignarGanadorEnfrentamiento(Enfrentamiento enfrentamiento) throws Exception {
         try {
             String sql = "UPDATE enfrentamientos SET equipo_ganador = ? WHERE id_enfrentamiento = ?";
             PreparedStatement ps = con.prepareStatement(sql);
@@ -63,12 +35,12 @@ public class EnfrentamientoDAO {
             ps.setInt(2, enfrentamiento.getIdEnfrentamiento());
 
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
-    public ArrayList<Enfrentamiento> selectEnfrentamientosJornada(int idJornada) {
+    public ArrayList<Enfrentamiento> selectEnfrentamientosJornada(int idJornada) throws Exception {
         ArrayList<Enfrentamiento> enfrentamientos = new ArrayList<>();
 
         try {
@@ -94,5 +66,4 @@ public class EnfrentamientoDAO {
         }
         return enfrentamientos;
     }
-
 }

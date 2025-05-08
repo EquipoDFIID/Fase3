@@ -17,7 +17,7 @@ public class UsuarioDAO {
      * @param nombreUsuario Nombre del usuario que se desea buscar.
      * @return Objeto `Usuario` si se encuentra en la base de datos, o `null` si no existe.
      */
-    public Usuario selectUsuarioNom(String nombreUsuario, String clave){
+    public Usuario selectUsuarioNom(String nombreUsuario, String clave) throws Exception {
         Usuario u= null;
         try {
             String sql = "SELECT * FROM USUARIOS WHERE LOWER(NOMBRE) = ? AND CLAVE=?";
@@ -48,7 +48,7 @@ public class UsuarioDAO {
      * @param nickUsuario Nombre del usuario que se desea buscar.
      * @return Objeto `Usuario` si se encuentra en la base de datos, o `null` si no existe.
      */
-    public Usuario selectUsuarioNick(String nickUsuario, String clave){
+    public Usuario selectUsuarioNick(String nickUsuario, String clave) throws Exception {
         Usuario u= null;
         try {
             String sql = "SELECT * FROM USUARIOS WHERE lower(NICKNAME) = ? AND CLAVE=?";
@@ -78,7 +78,7 @@ public class UsuarioDAO {
      *
      * @param usuario Objeto `Usuario` que contiene los datos del usuario a crear.
      */
-    public void crearUsuario (Usuario usuario){
+    public void crearUsuario (Usuario usuario) throws Exception {
         try {
             String sql = "INSERT INTO USUARIOS (nickname, nombre, clave, tipo_usuario) VALUES(?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(sql);
@@ -92,7 +92,7 @@ public class UsuarioDAO {
         }
     }
 
-    public boolean comprobarNickname(String nickname){
+    public boolean comprobarNickname(String nickname) throws Exception {
         boolean encontrado = false;
 
         try {

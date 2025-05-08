@@ -27,63 +27,21 @@ public class EquipoController {
         this.equipoDAO = equipoDAO;
     }
 
-   /* public Equipo solicitarValidarDatos() {
-        // Copia de la versión anterior.
-        String idEquipo = solicitarDato("ID", "Teclea el ID del equipo", "^[A-Z]{1}[0-9]{3}$");
-        String nombre = solicitarDato("Nombre","Teclea el nombre del equipo","^[0-9a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\\\\s]{3,15}$");
-        LocalDate fechaFund = solicitarFecha();
-
-        Equipo e = new Equipo(idEquipo,fechaFund,nombre);
-        return e;
-    }*/
-    /**
-     * Solicita un dato al usuario y lo valida contra una expresión regular.
-     *
-     * @param dato Nombre del dato que se solicita.
-     * @param mensaje Mensaje que se muestra al usuario.
-     * @param expresionRegular Expresión regular para validar el dato ingresado.
-     * @return El dato ingresado y validado.
-     * @throws DatoNoValido Si el dato no cumple con los requisitos.
-     */
-    public String solicitarDato(String dato, String mensaje,String expresionRegular)
-    {
-        String variable = "";
-        boolean error;
-        do
-        {
-            try {
-                variable = JOptionPane.showInputDialog(mensaje);
-                if (variable.isEmpty())
-                    throw new DatoNoValido(dato + " es un campo obligatorio");
-                Pattern pat = Pattern.compile(expresionRegular);
-                Matcher mat = pat.matcher(variable);
-                if (!mat.matches())
-                    throw new DatoNoValido(dato + " no tiene un formato adecuado");
-                error = false;
-            } catch (DatoNoValido e) {
-                error = true;
-                JOptionPane.showMessageDialog(null, e.getMessage());
-            }
-        }
-        while(error);
-        return variable;
-    }
-
-    public void buscarEquipo(String nombre){
+    public void buscarEquipo(String nombre) throws Exception {
         eb = equipoDAO.buscarEquipo(nombre);
     }
 
 
-    public void altaEquipo(String nombre, LocalDate fecha) {
+    public void altaEquipo(String nombre, LocalDate fecha) throws Exception {
         Equipo e = new Equipo();
         e.setNombre(nombre);
         e.setFechaFund(fecha);
         equipoDAO.altaEquipo(e);
     }
-    public void bajaEquipo() {
+    public void bajaEquipo() throws Exception {
         equipoDAO.borrarEquipo(eb);
     }
-    public void modificarEquipo(String nombre, LocalDate fecha) {
+    public void modificarEquipo(String nombre, LocalDate fecha) throws Exception {
         Equipo equipo = new Equipo();
         equipo.setNombre(nombre);
         equipo.setFechaFund(fecha);
@@ -92,15 +50,15 @@ public class EquipoController {
 
 
 
-    public ArrayList<Equipo> selectObjetosEquipo(){
+    public ArrayList<Equipo> selectObjetosEquipo() throws Exception{
         return equipoDAO.selectObjetosEquipo();
     }
 
-    public int selectCountEquipos() {
+    public int selectCountEquipos() throws Exception {
         return equipoDAO.selectCountEquipos();
     }
 
-    public ArrayList selectAllEquipos() throws SQLException {
+    public ArrayList selectAllEquipos() throws Exception {
         return equipoDAO.selectAllEquipo();
     }
 

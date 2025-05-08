@@ -143,7 +143,7 @@ public class VentanaAdministrador extends JFrame {
                         String mensaje = "La inscripción ya ha sido cerrada";
                         JOptionPane.showMessageDialog(VentanaAdministrador.this, mensaje);
                     }
-                } catch (SQLException ex) {
+                } catch (Exception ex) {
                     String mensajeError = "Error al cerrar inscripción: " + ex.getMessage();
                     JOptionPane.showMessageDialog(VentanaAdministrador.this, mensajeError);
                 }

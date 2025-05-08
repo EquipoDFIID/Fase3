@@ -17,39 +17,42 @@ public class VentanaEquipos extends JFrame {
     private JFrame ventanaUser;
 
     public VentanaEquipos(VistaController vc, String nombre, JFrame ventanaUsuario) {
-        this.vc = vc;
-        this.ventanaUser = ventanaUsuario;
-        setContentPane(pPrincipal);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("MenuPrincipal");
-        setSize(680,580);
-        setLocationRelativeTo(null);
-        setResizable(true);
+        try {
+            this.vc = vc;
+            this.ventanaUser = ventanaUsuario;
+            setContentPane(pPrincipal);
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            setTitle("MenuPrincipal");
+            setSize(680,580);
+            setLocationRelativeTo(null);
+            setResizable(true);
 
-        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
-        setIconImage(icon.getImage());
+            ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+            setIconImage(icon.getImage());
 
-        tEquipos.setText(EquipoDAO.procedimientoEquipos());
-        tEquipos.setFont(new Font("Monospaced", Font.PLAIN, 12));
-
-
+            tEquipos.setText(EquipoDAO.procedimientoEquipos());
+            tEquipos.setFont(new Font("Monospaced", Font.PLAIN, 12));
 
 
-        SALIRButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                VentanaUsuario ventanaUsuario = new VentanaUsuario(vc, nombre);
-                ventanaUsuario.setVisible(true);
-                dispose();
-            }
-        });
-        bLogo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                vc.mostrarVentanaInicio();
-            }
-        });
 
+
+            SALIRButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    VentanaUsuario ventanaUsuario = new VentanaUsuario(vc, nombre);
+                    ventanaUsuario.setVisible(true);
+                    dispose();
+                }
+            });
+            bLogo.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                    vc.mostrarVentanaInicio();
+                }
+            });
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

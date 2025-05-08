@@ -22,7 +22,7 @@ public class EquipoDAO {
      * @return Objeto Equipo si se encuentra, o null si no existe.
      */
 
-    public Equipo selectEquipo(String id) {
+    public Equipo selectEquipo(String id) throws Exception {
         Equipo e= null;
         try {
             String sql = "SELECT * FROM EQUIPOS WHERE id_equipo = ?";
@@ -48,7 +48,7 @@ public class EquipoDAO {
 
 
 
-    public ArrayList<Equipo> selectObjetosEquipo(){
+    public ArrayList<Equipo> selectObjetosEquipo() throws Exception {
         ArrayList<Equipo> equipos = new ArrayList<>();
 
         try {
@@ -77,9 +77,9 @@ public class EquipoDAO {
      * @return Objeto Equipo si se encuentra, o null si no existe.
      */
 
-    public static Equipo buscarEquipo(String nombreEquipo) {
+    public static Equipo buscarEquipo(String nombreEquipo) throws Exception {
         Equipo e = new Equipo();
-        e.setNombre(nombreEquipo);
+
         try {
             String sql = "SELECT * FROM EQUIPOS WHERE NOMBRE = ?";
             PreparedStatement ps = con.prepareStatement(sql);
@@ -97,7 +97,8 @@ public class EquipoDAO {
         }
         return e;
     }
-    public static Equipo buscarEquipoInt(int nombreEquipo) {
+
+    public static Equipo buscarEquipoInt(int nombreEquipo) throws Exception {
         Equipo e = new Equipo();
 
         try {
@@ -117,8 +118,9 @@ public class EquipoDAO {
         }
         return e;
     }
-    public int selectCountEquipos(){
+    public int selectCountEquipos() throws Exception {
         int cantidad=0;
+
         try{
             String sql = "select count(*) from EQUIPOS";
             PreparedStatement ps = con.prepareStatement(sql);
@@ -140,7 +142,7 @@ public class EquipoDAO {
      * Inserta un nuevo equipo en la base de datos.
      * @param equipo Objeto Equipo con los datos a insertar.
      */
-    public static void altaEquipo(Equipo equipo) {
+    public static void altaEquipo(Equipo equipo) throws Exception {
         try {
             String sql = "INSERT INTO equipos (NOMBRE, FECHA_FUND) VALUES(?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
@@ -162,7 +164,7 @@ public class EquipoDAO {
      * @param equipoAnterior Objeto del equipo para identificar el registro a modificar.
      */
 
-    public static void modificarEquipo(Equipo equipo, Equipo equipoAnterior) {
+    public static void modificarEquipo(Equipo equipo, Equipo equipoAnterior) throws Exception {
         try {
             String sql = "UPDATE EQUIPOS SET NOMBRE = ?,FECHA_FUND = ? WHERE NOMBRE= ?";
             PreparedStatement ps = con.prepareStatement(sql);
@@ -183,7 +185,7 @@ public class EquipoDAO {
      * Elimina un equipo de la base de datos según su ID.
      * @param e Objeto Equipo que se desea eliminar.
      */
-    public static void borrarEquipo(Equipo e) {
+    public static void borrarEquipo(Equipo e) throws Exception {
         try {
             String sql = "DELETE FROM EQUIPOS WHERE NOMBRE = ?";
             PreparedStatement ps = con.prepareStatement(sql);
@@ -215,7 +217,7 @@ public class EquipoDAO {
         }
         return equipos;
     }
-    public static String procedimientoEquipos() {
+    public static String procedimientoEquipos() throws Exception {
         StringBuilder tabla = new StringBuilder();
         CallableStatement cstmt = null;
 
