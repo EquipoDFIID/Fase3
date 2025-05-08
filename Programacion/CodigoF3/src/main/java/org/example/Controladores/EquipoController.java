@@ -69,21 +69,21 @@ public class EquipoController {
         return variable;
     }
 
-    public void buscarEquipo(String nombre){
+    public void buscarEquipo(String nombre) throws Exception {
         eb = equipoDAO.buscarEquipo(nombre);
     }
 
 
-    public void altaEquipo(String nombre, LocalDate fecha) {
+    public void altaEquipo(String nombre, LocalDate fecha) throws Exception {
         Equipo e = new Equipo();
         e.setNombre(nombre);
         e.setFechaFund(fecha);
         equipoDAO.altaEquipo(e);
     }
-    public void bajaEquipo() {
+    public void bajaEquipo() throws Exception {
         equipoDAO.borrarEquipo(eb);
     }
-    public void modificarEquipo(String nombre, LocalDate fecha) {
+    public void modificarEquipo(String nombre, LocalDate fecha) throws Exception {
         Equipo equipo = new Equipo();
         equipo.setNombre(nombre);
         equipo.setFechaFund(fecha);
@@ -92,15 +92,15 @@ public class EquipoController {
 
 
 
-    public ArrayList<Equipo> selectObjetosEquipo(){
+    public ArrayList<Equipo> selectObjetosEquipo() throws Exception {
         return equipoDAO.selectObjetosEquipo();
     }
 
-    public int selectCountEquipos() {
+    public int selectCountEquipos() throws Exception {
         return equipoDAO.selectCountEquipos();
     }
 
-    public ArrayList selectAllEquipos() throws SQLException {
+    public ArrayList selectAllEquipos() throws Exception {
         return equipoDAO.selectAllEquipo();
     }
 

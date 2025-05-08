@@ -6,7 +6,7 @@ import org.example.Modelo.BD;
 import org.example.Modelo.EquipoDAO;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         ModeloController mc = new ModeloController();
         VistaController vc = new VistaController(mc);

@@ -22,9 +22,9 @@ public class EquipoDAO {
      * @return Objeto Equipo si se encuentra, o null si no existe.
      */
 
-    public Equipo selectEquipo(String id) {
+    public Equipo selectEquipo(String id) throws Exception {
         Equipo e= null;
-        try {
+
             String sql = "SELECT * FROM EQUIPOS WHERE id_equipo = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, id);
@@ -35,9 +35,7 @@ public class EquipoDAO {
                 e.setFechaFund(rs.getDate("fecha_fund").toLocalDate());
             }
 
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+
         return e;
     }
     /**
@@ -48,10 +46,9 @@ public class EquipoDAO {
 
 
 
-    public ArrayList<Equipo> selectObjetosEquipo(){
+    public ArrayList<Equipo> selectObjetosEquipo() throws Exception{
         ArrayList<Equipo> equipos = new ArrayList<>();
 
-        try {
             String sql = "SELECT * FROM EQUIPOS";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -64,9 +61,7 @@ public class EquipoDAO {
                 equipos.add(e);
             }
 
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+
         return equipos;
     }
 
@@ -77,10 +72,10 @@ public class EquipoDAO {
      * @return Objeto Equipo si se encuentra, o null si no existe.
      */
 
-    public static Equipo buscarEquipo(String nombreEquipo) {
+    public static Equipo buscarEquipo(String nombreEquipo) throws Exception{
         Equipo e = new Equipo();
         e.setNombre(nombreEquipo);
-        try {
+
             String sql = "SELECT * FROM EQUIPOS WHERE NOMBRE = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, nombreEquipo);
@@ -92,15 +87,13 @@ public class EquipoDAO {
                 e.setFechaFund(rs.getDate("fecha_fund").toLocalDate());
             }
 
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+
         return e;
     }
-    public static Equipo buscarEquipoInt(int nombreEquipo) {
+    public static Equipo buscarEquipoInt(int nombreEquipo) throws Exception{
         Equipo e = new Equipo();
 
-        try {
+
             String sql = "SELECT * FROM EQUIPOS WHERE ID_EQUIPO = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, nombreEquipo);
@@ -112,24 +105,19 @@ public class EquipoDAO {
                 e.setFechaFund(rs.getDate("fecha_fund").toLocalDate());
             }
 
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+
         return e;
     }
-    public int selectCountEquipos(){
+    public int selectCountEquipos()throws Exception{
         int cantidad=0;
-        try{
+
             String sql = "select count(*) from EQUIPOS";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 cantidad=rs.getInt(1);
             }
-        }
-        catch(SQLException ex){
-            System.out.println(ex.getMessage());
-        }
+
         return cantidad;
     }
 
@@ -140,16 +128,14 @@ public class EquipoDAO {
      * Inserta un nuevo equipo en la base de datos.
      * @param equipo Objeto Equipo con los datos a insertar.
      */
-    public static void altaEquipo(Equipo equipo) {
-        try {
+    public static void altaEquipo(Equipo equipo) throws Exception {
+
             String sql = "INSERT INTO equipos (NOMBRE, FECHA_FUND) VALUES(?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, equipo.getNombre());
             ps.setDate(2, Date.valueOf(equipo.getFechaFund()));
             ps.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
+
     }
 
 // =============================================
@@ -162,17 +148,15 @@ public class EquipoDAO {
      * @param equipoAnterior Objeto del equipo para identificar el registro a modificar.
      */
 
-    public static void modificarEquipo(Equipo equipo, Equipo equipoAnterior) {
-        try {
+    public static void modificarEquipo(Equipo equipo, Equipo equipoAnterior) throws Exception{
+
             String sql = "UPDATE EQUIPOS SET NOMBRE = ?,FECHA_FUND = ? WHERE NOMBRE= ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, equipo.getNombre());
             ps.setDate(2, Date.valueOf(equipo.getFechaFund()));
             ps.setString(3, equipoAnterior.getNombre());
             ps.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
+
     }
 
 // =============================================
@@ -183,21 +167,19 @@ public class EquipoDAO {
      * Elimina un equipo de la base de datos según su ID.
      * @param e Objeto Equipo que se desea eliminar.
      */
-    public static void borrarEquipo(Equipo e) {
-        try {
+    public static void borrarEquipo(Equipo e) throws Exception{
+
             String sql = "DELETE FROM EQUIPOS WHERE NOMBRE = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, e.getNombre());
             ps.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
+
     }
 
-    public ArrayList selectAllEquipo() throws SQLException{
+    public ArrayList selectAllEquipo() throws Exception{
         ArrayList<Equipo> equipos = new ArrayList<>();
 
-        try {
+
             String sql = "SELECT * FROM EQUIPOS";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -210,22 +192,19 @@ public class EquipoDAO {
                 equipos.add(e);
             }
 
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+
         return equipos;
     }
-    public static String procedimientoEquipos() {
+    public static String procedimientoEquipos() throws Exception{
         StringBuilder tabla = new StringBuilder();
         CallableStatement cstmt = null;
 
-        try {
             String sql = "{ call sp_informe_equipos_cursor(?) }";
             cstmt = con.prepareCall(sql);
             cstmt.registerOutParameter(1, oracle.jdbc.OracleTypes.CURSOR);
             cstmt.execute();
 
-            try (ResultSet rs = (ResultSet) cstmt.getObject(1)) {
+            ResultSet rs = (ResultSet) cstmt.getObject(1);
                 // Encabezados de la tabla
                 tabla.append("| EQUIPO            | FUNDACIÓN           | JUGADORES | SUELDO MÁX | SUELDO MÍN | PROMEDIO  |\n");
                 tabla.append("|-------------------|---------------------|-----------|------------|------------|-----------|\n");
@@ -247,19 +226,18 @@ public class EquipoDAO {
                             sueldoMin,
                             sueldoPromedio));
                 }
-            }
-        } catch (Exception ex) {
-            tabla.append("Error al generar la tabla: ").append(ex.getMessage());
-        } finally {
+
+       /*finally {
             if (cstmt != null) {
                 try {
                     cstmt.close();
                 } catch (SQLException e) {
                     System.err.println("Error al cerrar el statement: " + e.getMessage());
                 }
-            }
+            }*/
+        return tabla.toString();
         }
 
-        return tabla.toString();
+
     }
-}
+//}

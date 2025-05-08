@@ -129,14 +129,14 @@ public class VistaController {
     }
 
 
-    public void altaEquipo(String nombre, LocalDate fecha){
+    public void altaEquipo(String nombre, LocalDate fecha) throws Exception {
         modeloController.altaEquipo(nombre, fecha);
     }
-    public void bajaEquipo(String nombreEquipo){
+    public void bajaEquipo(String nombreEquipo) throws Exception {
         modeloController.buscarEquipo(nombreEquipo);
         modeloController.bajaEquipo();
     }
-    public void modificarEquipo(String nombre, LocalDate fecha, String nombreEquipo){
+    public void modificarEquipo(String nombre, LocalDate fecha, String nombreEquipo) throws Exception {
         modeloController.buscarEquipo(nombreEquipo);
         modeloController.modificarEquipo(nombre, fecha);
 
@@ -144,34 +144,34 @@ public class VistaController {
 
     public void altaJugador(String nombre, String apellido, String nacionalidad,
                             LocalDate fechaNacimiento, String nickname,
-                            double sueldo, Equipo equipo) {
+                            double sueldo, Equipo equipo) throws Exception {
         modeloController.altaJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, equipo);
     }
-    public void bajaJugador(String nombreJugador){
+    public void bajaJugador(String nombreJugador) throws Exception {
         modeloController.buscarJugador(nombreJugador);
         modeloController.bajaJugador(nombreJugador);
     }
     public void modificarJugador(String nombre, String apellido, String nacionalidad,
                                  LocalDate fechaNacimiento, String nickname,
-                                 double sueldo, Equipo ej, String nombreJugador){
+                                 double sueldo, Equipo ej, String nombreJugador) throws Exception {
         modeloController.buscarJugador(nombreJugador);
         modeloController.modificarJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, ej);
     }
 
-    public void selectUsuarioNick(String nickUsuario, String clave) {
+    public void selectUsuarioNick(String nickUsuario, String clave) throws Exception {
         modeloController.selectUsuarioNick(nickUsuario, clave);
     }
-    public void selectUsuarioNom(String nombreUsuario, String clave) {
+    public void selectUsuarioNom(String nombreUsuario, String clave) throws Exception {
         modeloController.selectUsuarioNom(nombreUsuario, clave);
     }
     public boolean comprobarNombreClave(String tipo) {
         return  modeloController.comprobarNombreClave(tipo);
     }
 
-    public void rellenarEquipos(){
+    public void rellenarEquipos() throws Exception {
         listaEquipos = modeloController.selectObjetosEquipo();
     }
-    public void rellenarJugadores(){
+    public void rellenarJugadores() throws Exception {
         listaJugadores = modeloController.selectObjetosJugador();
     }
     public void rellenarJornadas(){
@@ -222,7 +222,7 @@ public class VistaController {
     }
 
 
-    public boolean cerrarInscripcion() throws SQLException {
+    public boolean cerrarInscripcion() throws Exception {
         return  modeloController.cerrarInscripcion();
     }
 
@@ -233,7 +233,7 @@ public class VistaController {
        equipos.add(equipo);
     }*/
 
-    public void llenarComboBoxE(JComboBox jEquipo) {
+    public void llenarComboBoxE(JComboBox jEquipo) throws Exception {
         rellenarEquipos();
         jEquipo.removeAllItems();
         jEquipo.addItem("Selecciona un equipo...");
@@ -244,7 +244,7 @@ public class VistaController {
         jEquipo.setSelectedIndex(0);
     }
 
-    public void llenarComboBoxJ(JComboBox jJugador) {
+    public void llenarComboBoxJ(JComboBox jJugador) throws Exception {
         rellenarJugadores();
         jJugador.removeAllItems();
         jJugador.addItem("Selecciona un jugador...");
@@ -270,7 +270,7 @@ public class VistaController {
         jJornada.setSelectedIndex(0);
     }
 
-    public void procesarGanadoresSeleccionados(int indexJornadaSeleccionada) {
+    public void procesarGanadoresSeleccionados(int indexJornadaSeleccionada)throws Exception{
         Jornada jornada = modeloController.jornadas.get(indexJornadaSeleccionada - 1);
         List<Enfrentamiento> enfrentamientos = jornada.getListaEnfrentamientos();
 
@@ -296,11 +296,11 @@ public class VistaController {
     }
 
 
-    public void crearCuenta(String nickname, String nombre, String clave){
+    public void crearCuenta(String nickname, String nombre, String clave) throws Exception {
         modeloController.crearCuenta(nickname, nombre, clave);
     }
 
-    public boolean comprobarNickname(String nickname){
+    public boolean comprobarNickname(String nickname) throws Exception {
         return modeloController.comprobarNickname(nickname);
     }
 

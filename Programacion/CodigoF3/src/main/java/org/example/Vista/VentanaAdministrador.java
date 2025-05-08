@@ -55,8 +55,12 @@ public class VentanaAdministrador extends JFrame {
         jCambiarCuenta.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
-                vc.mostrarVentanaInicio();
+                try {
+                    dispose();
+                    vc.mostrarVentanaInicio();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
             }
         });
 
@@ -143,7 +147,7 @@ public class VentanaAdministrador extends JFrame {
                         String mensaje = "La inscripción ya ha sido cerrada";
                         JOptionPane.showMessageDialog(VentanaAdministrador.this, mensaje);
                     }
-                } catch (SQLException ex) {
+                } catch (Exception ex) {
                     String mensajeError = "Error al cerrar inscripción: " + ex.getMessage();
                     JOptionPane.showMessageDialog(VentanaAdministrador.this, mensajeError);
                 }
