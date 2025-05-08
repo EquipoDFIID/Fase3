@@ -28,44 +28,48 @@ public class VentanaAltaJugador extends JDialog {
     private static JFrame ventanaAdministrador;
 
     public VentanaAltaJugador(VistaController vc, String aNombre, JFrame ventanaAdmin) {
-        this.vc = vc;
-        this.nombre = aNombre;
-        this.ventanaAdministrador = ventanaAdmin;
-        setContentPane(contentPane);
-        setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
-        setSize(500, 580);
-        setLocationRelativeTo(null);
-        setResizable(false);
+        try {
+            this.vc = vc;
+            this.nombre = aNombre;
+            this.ventanaAdministrador = ventanaAdmin;
+            setContentPane(contentPane);
+            setModal(true);
+            getRootPane().setDefaultButton(buttonOK);
+            setSize(500, 580);
+            setLocationRelativeTo(null);
+            setResizable(false);
 
-        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
-        setIconImage(icon.getImage());
+            ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+            setIconImage(icon.getImage());
 
-        vc.llenarComboBoxE(jEquipo);
-        inicializarCampos();
+            vc.llenarComboBoxE(jEquipo);
+            inicializarCampos();
 
-        // Acciones de botones
-        buttonOK.addActionListener(e -> onOK());
-        buttonCancel.addActionListener(e -> onCancel());
+            // Acciones de botones
+            buttonOK.addActionListener(e -> onOK());
+            buttonCancel.addActionListener(e -> onCancel());
 
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                onCancel();
-            }
-        });
+            setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+            addWindowListener(new WindowAdapter() {
+                public void windowClosing(WindowEvent e) {
+                    onCancel();
+                }
+            });
 
-        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
-                JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+            contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+                    JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        agregarListeners();
-        bLogo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                vc.mostrarVentanaInicio();
-            }
-        });
+            agregarListeners();
+            bLogo.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                    vc.mostrarVentanaInicio();
+                }
+            });
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void inicializarCampos() {
@@ -317,21 +321,25 @@ public class VentanaAltaJugador extends JDialog {
     }
 
     private void onOK() {
-        vc.altaJugador(
-                jNombre.getText(),
-                jApellido.getText(),
-                jNacionalidad.getText(),
-                convertirFecha(jFecha.getText()),
-                jNickname.getText(),
-                Double.parseDouble(jSueldo.getText()),
-                vc.buscarComboBoxE(jEquipo)
-        );
-        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
-        dispose(); //
+        try {
+            vc.altaJugador(
+                    jNombre.getText(),
+                    jApellido.getText(),
+                    jNacionalidad.getText(),
+                    convertirFecha(jFecha.getText()),
+                    jNickname.getText(),
+                    Double.parseDouble(jSueldo.getText()),
+                    vc.buscarComboBoxE(jEquipo)
+            );
+            ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+            dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(VentanaAltaJugador.this, ex, "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void onCancel() {
         ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
-        dispose(); //
+        dispose();
     }
 }

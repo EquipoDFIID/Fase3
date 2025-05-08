@@ -4,11 +4,10 @@ import org.example.Controladores.ModeloController;
 import org.example.Controladores.VistaController;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         ModeloController mc = new ModeloController();
         VistaController vc = new VistaController(mc);
         mc.competicionUpdateInscripcion("inscripcion");
         mc.setVista(vc);
-
     }
 }

@@ -12,12 +12,12 @@ public class JugadorDAO {
 // =============================================
 // == OPERACIONES DE CONSULTA (SELECT)
 // =============================================
-    public ArrayList<Jugador> selectObjetosJugador() {
-        ArrayList<Jugador> jugadores = new ArrayList<>();
     /**
      * Obtiene una lista de jugadores con su ID y nickname.
      * @return Lista de objetos Jugador con ID y nickname.
      */
+    public ArrayList<Jugador> selectObjetosJugador() throws Exception {
+        ArrayList<Jugador> jugadores = new ArrayList<>();
         try {
             String sql = "SELECT * FROM JUGADORES";
             PreparedStatement ps = con.prepareStatement(sql);
@@ -48,7 +48,7 @@ public class JugadorDAO {
      * @param nombreJugador Nombre del jugador a buscar.
      * @return Objeto Jugador con los detalles del jugador, o null si no se encuentra.
      */
-    public static Jugador buscarJugador(String nombreJugador) {
+    public static Jugador buscarJugador(String nombreJugador) throws Exception {
        Jugador j = new Jugador();
        j.setNickname(nombreJugador);
         try {
@@ -68,8 +68,8 @@ public class JugadorDAO {
                 j.setEquipo(EquipoDAO.buscarEquipo(rs.getString("ID_EQUIPO")));
             }
 
-        } catch (SQLException e) {
-            System.out.println(e);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
         return j;
     }
@@ -81,7 +81,7 @@ public class JugadorDAO {
      * Inserta un nuevo jugador en la base de datos.
      * @param jugador Objeto Jugador con los datos a insertar.
      */
-    public static void altaJugador(Jugador jugador) {
+    public static void altaJugador(Jugador jugador) throws Exception {
         try {
             String sql = "INSERT INTO jugadores (NOMBRE, APELLIDO, NACIONALIDAD, FECHA_NAC, NICKNAME, SUELDO, ID_EQUIPO) VALUES(?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
@@ -93,8 +93,8 @@ public class JugadorDAO {
             ps.setDouble(6, jugador.getSueldo());
             ps.setInt(7, jugador.getEquipo().getIdEquipo());
             ps.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -106,7 +106,7 @@ public class JugadorDAO {
      * @param jugador Objeto Jugador con los nuevos datos.
      * @param jugadorAnterior Objeto del jugador para identificar el registro a modificar.
      */
-    public static void modificarJugador(Jugador jugador, Jugador jugadorAnterior) {
+    public static void modificarJugador(Jugador jugador, Jugador jugadorAnterior) throws Exception {
         try {
             String sql = "UPDATE JUGADORES SET NOMBRE = ?," +
                          "apellido = ?,nacionalidad = ?,fecha_nac = ?,nickname = ?,sueldo = ?," +
@@ -121,8 +121,8 @@ public class JugadorDAO {
             ps.setInt(7, jugador.getEquipo().getIdEquipo());
             ps.setString(8, jugadorAnterior.getNickname());
             ps.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -134,17 +134,17 @@ public class JugadorDAO {
      * @param nombreJugador Nombre del jugador a eliminar.
      */
 
-    public static void borrarJugador(String nombreJugador) {
+    public static void borrarJugador(String nombreJugador) throws Exception {
         try {
             String sql = "DELETE FROM JUGADORES WHERE NICKNAME = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, nombreJugador);
             ps.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
     }
-    public static String obtenerJugadoresPorEquipo(String nombreEquipo) {
+    public static String obtenerJugadoresPorEquipo(String nombreEquipo) throws Exception {
         StringBuilder tabla = new StringBuilder();
         CallableStatement cstmt = null;
 

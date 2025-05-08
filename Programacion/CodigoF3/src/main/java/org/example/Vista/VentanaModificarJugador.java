@@ -38,96 +38,88 @@ public class VentanaModificarJugador extends JDialog {
     private JFrame ventanaAdministrador;
 
     public VentanaModificarJugador(VistaController vc, String aNombre, JFrame ventanaAdmin) {
-        this.vc = vc;
-        this.nombre = aNombre;
-        this.ventanaAdministrador = ventanaAdmin;
-        setContentPane(pPrincipal);
-        setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
-        setSize(500, 580);
-        setLocationRelativeTo(null);
-        setResizable(false);
+        try {
+            this.vc = vc;
+            this.nombre = aNombre;
+            this.ventanaAdministrador = ventanaAdmin;
+            setContentPane(pPrincipal);
+            setModal(true);
+            getRootPane().setDefaultButton(buttonOK);
+            setSize(500, 580);
+            setLocationRelativeTo(null);
+            setResizable(false);
 
-        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
-        setIconImage(icon.getImage());
+            ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+            setIconImage(icon.getImage());
 
-        jNombre.setEnabled(false);
-        jApellido.setEnabled(false);
-        jNacionalidad.setEnabled(false);
-        jFecha.setEnabled(false);
-        jNickname.setEnabled(false);
-        jSueldo.setEnabled(false);
-        jEquipo.setEnabled(false);
-        vc.llenarComboBoxJ(cJugador);
-        vc.llenarComboBoxE(jEquipo);
+            jNombre.setEnabled(false);
+            jApellido.setEnabled(false);
+            jNacionalidad.setEnabled(false);
+            jFecha.setEnabled(false);
+            jNickname.setEnabled(false);
+            jSueldo.setEnabled(false);
+            jEquipo.setEnabled(false);
+            vc.llenarComboBoxJ(cJugador);
+            vc.llenarComboBoxE(jEquipo);
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
+            buttonOK.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    onOK();
+                }
+            });
 
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+            buttonCancel.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    onCancel();
+                }
+            });
 
-        // call onCancel() when cross is clicked
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                onCancel();
-            }
-        });
+            // call onCancel() when cross is clicked
+            setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+            addWindowListener(new WindowAdapter() {
+                public void windowClosing(WindowEvent e) {
+                    onCancel();
+                }
+            });
 
-        // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+            // call onCancel() on ESCAPE
+            contentPane.registerKeyboardAction(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    onCancel();
+                }
+            }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        cJugador.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    String selectedItem = (String) cJugador.getSelectedItem();
-                    if (!selectedItem.equals("Selecciona un jugador...")) {
-                        jNombre.setEnabled(true);
+            cJugador.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    if (e.getStateChange() == ItemEvent.SELECTED) {
+                        String selectedItem = (String) cJugador.getSelectedItem();
+                        if (!selectedItem.equals("Selecciona un jugador...")) {
+                            jNombre.setEnabled(true);
 
+                        }
+                    }
+                    if (e.getStateChange() == ItemEvent.DESELECTED) {
+                        String selectedItem = (String) cJugador.getSelectedItem();
+                        if (selectedItem.equals("Selecciona un jugador...")) {
+                            jNombre.setEnabled(false);
+                        }
                     }
                 }
-                if (e.getStateChange() == ItemEvent.DESELECTED) {
-                    String selectedItem = (String) cJugador.getSelectedItem();
-                    if (selectedItem.equals("Selecciona un jugador...")) {
-                        jNombre.setEnabled(false);
-                    }
+            });
+
+            agregarListeners();
+            bLogo.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                    vc.mostrarVentanaInicio();
                 }
-            }
-        });
-
-        agregarListeners();
-        bLogo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                vc.mostrarVentanaInicio();
-            }
-        });
-    }
-    /*public void llenarComboBox(){
-        ArrayList<Jugador> listaJugadores=vc.();
-        cJugador.removeAllItems();
-
-        cJugador.addItem("Selecciona un jugador...");
-
-        for (Jugador jugador : listaJugadores) {
-            cJugador.addItem(jugador.getNombre());
+            });
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-        cJugador.setSelectedIndex(0);
-    }*/
+    }
 
     private void agregarListeners() {
         jNombre.addKeyListener(new KeyAdapter() {
@@ -369,26 +361,28 @@ public class VentanaModificarJugador extends JDialog {
     }
 
     private void onOK() {
-        vc.modificarJugador(
-                jNombre.getText(),
-                jApellido.getText(),
-                jNacionalidad.getText(),
-                convertirFecha(jFecha.getText()),
-                jNickname.getText(),
-                Double.parseDouble(jSueldo.getText()),
-                ej = vc.buscarComboBoxE(jEquipo),
-                cJugador.getSelectedItem().toString()
-        );
-        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
-        dispose(); //
+        try {
+            vc.modificarJugador(
+                    jNombre.getText(),
+                    jApellido.getText(),
+                    jNacionalidad.getText(),
+                    convertirFecha(jFecha.getText()),
+                    jNickname.getText(),
+                    Double.parseDouble(jSueldo.getText()),
+                    ej = vc.buscarComboBoxE(jEquipo),
+                    cJugador.getSelectedItem().toString()
+            );
+            ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+            dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void onCancel() {
         ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
         dispose(); //
     }
-
-
 
     private LocalDate convertirFecha(String fechaTexto) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

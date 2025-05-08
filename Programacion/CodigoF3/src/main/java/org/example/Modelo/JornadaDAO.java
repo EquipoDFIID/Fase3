@@ -10,8 +10,7 @@ public class JornadaDAO {
 
     public JornadaDAO() {
     }
-    public static Jornada altaJornada(Jornada jornada) {
-
+    public static Jornada altaJornada(Jornada jornada) throws Exception {
         try {
             String sql = "INSERT INTO JORNADAS (FECHA, ID_COMPETICION) VALUES (?, ?)";
             PreparedStatement ps = con.prepareStatement(sql, new String[] { "ID_JORNADA" }); // permite recuperar la clave generada
@@ -26,13 +25,13 @@ public class JornadaDAO {
                 jornada.setIdJornada(idGenerado); // asignar el ID al objeto Jornada
             }
 
-        } catch (Exception e) {
-            System.out.println("Error al insertar jornada: " + e.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
         return jornada;
     }
 
-    public static Jornada buscarJornada(int idJornada) {
+    public static Jornada buscarJornada(int idJornada) throws Exception {
         Jornada j = new Jornada();
 
         try {
@@ -51,26 +50,5 @@ public class JornadaDAO {
             System.out.println(ex.getMessage());
         }
         return j;
-    }
-
-    public ArrayList selectAllJornada() {
-        ArrayList<Jornada> jornada = new ArrayList<>();
-
-        try {
-            String sql = "SELECT * FROM JORNADAS";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) { // ← CAMBIADO DE "if" A "while"
-                Jornada j = new Jornada();
-                j.setIdJornada(rs.getInt("ID_JORNADA"));
-                j.setFecha(rs.getDate("FECHA").toLocalDate());
-                j.setCampeonato(CampeonatoDAO.buscarCompeticion(rs.getInt("ID_COMPETICION")));
-            }
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return jornada;
     }
 }
