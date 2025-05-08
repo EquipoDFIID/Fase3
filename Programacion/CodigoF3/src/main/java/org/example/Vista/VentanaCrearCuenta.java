@@ -171,14 +171,18 @@ public class VentanaCrearCuenta extends JFrame {
         buttonOK.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!vc.comprobarNickname(cNickname.getText())) {
-                    vc.crearCuenta(cNickname.getText(), cNombre.getText(), cClave.getText());
-                    JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "Usuario creado exitosamente", "Exitosamente", JOptionPane.INFORMATION_MESSAGE);
-                    ventanaInicio.setVisible(true);
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "El nickname ya existe", "Error", JOptionPane.ERROR_MESSAGE);
-                    resetCampos();
+                try {
+                    if (!vc.comprobarNickname(cNickname.getText())) {
+                        vc.crearCuenta(cNickname.getText(), cNombre.getText(), cClave.getText());
+                        JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "Usuario creado exitosamente", "Exitosamente", JOptionPane.INFORMATION_MESSAGE);
+                        ventanaInicio.setVisible(true);
+                        dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "El nickname ya existe", "Error", JOptionPane.ERROR_MESSAGE);
+                        resetCampos();
+                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "Error al crear la cuenta");
                 }
             }
         });

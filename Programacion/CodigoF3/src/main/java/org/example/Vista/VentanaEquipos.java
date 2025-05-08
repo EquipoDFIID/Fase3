@@ -29,8 +29,12 @@ public class VentanaEquipos extends JFrame {
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
         setIconImage(icon.getImage());
 
-        tEquipos.setText(EquipoDAO.procedimientoEquipos());
-        tEquipos.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        try {
+            tEquipos.setText(EquipoDAO.procedimientoEquipos());
+            tEquipos.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al mostrar los datos de los equipos");
+        }
 
 
 

@@ -28,6 +28,7 @@ public class VentanaAltaJugador extends JDialog {
     private static JFrame ventanaAdministrador;
 
     public VentanaAltaJugador(VistaController vc, String aNombre, JFrame ventanaAdmin) {
+
         this.vc = vc;
         this.nombre = aNombre;
         this.ventanaAdministrador = ventanaAdmin;
@@ -40,9 +41,12 @@ public class VentanaAltaJugador extends JDialog {
 
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
         setIconImage(icon.getImage());
-
-        vc.llenarComboBoxE(jEquipo);
-        inicializarCampos();
+        try {
+            vc.llenarComboBoxE(jEquipo);
+            inicializarCampos();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al asociar el equipo");
+        }
 
         // Acciones de botones
         buttonOK.addActionListener(e -> onOK());
@@ -317,17 +321,22 @@ public class VentanaAltaJugador extends JDialog {
     }
 
     private void onOK() {
-        vc.altaJugador(
-                jNombre.getText(),
-                jApellido.getText(),
-                jNacionalidad.getText(),
-                convertirFecha(jFecha.getText()),
-                jNickname.getText(),
-                Double.parseDouble(jSueldo.getText()),
-                vc.buscarComboBoxE(jEquipo)
-        );
-        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
-        dispose(); //
+        try {
+            vc.altaJugador(
+                    jNombre.getText(),
+                    jApellido.getText(),
+                    jNacionalidad.getText(),
+                    convertirFecha(jFecha.getText()),
+                    jNickname.getText(),
+                    Double.parseDouble(jSueldo.getText()),
+                    vc.buscarComboBoxE(jEquipo)
+            );
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al dar de alta al jugador");
+        }
+            ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+            dispose(); //
+
     }
 
     private void onCancel() {

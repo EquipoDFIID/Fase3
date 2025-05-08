@@ -10,9 +10,9 @@ public class JornadaDAO {
 
     public JornadaDAO() {
     }
-    public static Jornada altaJornada(Jornada jornada) {
+    public static Jornada altaJornada(Jornada jornada) throws Exception{
 
-        try {
+
             String sql = "INSERT INTO JORNADAS (FECHA, ID_COMPETICION) VALUES (?, ?)";
             PreparedStatement ps = con.prepareStatement(sql, new String[] { "ID_JORNADA" }); // permite recuperar la clave generada
             ps.setDate(1, Date.valueOf(jornada.getFecha()));
@@ -25,17 +25,13 @@ public class JornadaDAO {
                 int idGenerado = rs.getInt(1);
                 jornada.setIdJornada(idGenerado); // asignar el ID al objeto Jornada
             }
-
-        } catch (Exception e) {
-            System.out.println("Error al insertar jornada: " + e.getMessage());
-        }
         return jornada;
     }
 
-    public static Jornada buscarJornada(int idJornada) {
+    public static Jornada buscarJornada(int idJornada) throws Exception {
         Jornada j = new Jornada();
 
-        try {
+
             String sql = "SELECT * FROM JORNADAS WHERE ID_JORNADA = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idJornada);
@@ -47,16 +43,13 @@ public class JornadaDAO {
                 j.setCampeonato(CampeonatoDAO.buscarCompeticion(rs.getInt("ID_COMPETICION")));
             }
 
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+
         return j;
     }
 
-    public ArrayList selectAllJornada() {
+    public ArrayList selectAllJornada() throws Exception{
         ArrayList<Jornada> jornada = new ArrayList<>();
 
-        try {
             String sql = "SELECT * FROM JORNADAS";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -68,9 +61,6 @@ public class JornadaDAO {
                 j.setCampeonato(CampeonatoDAO.buscarCompeticion(rs.getInt("ID_COMPETICION")));
             }
 
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
         return jornada;
     }
 }

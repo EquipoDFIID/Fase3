@@ -142,7 +142,7 @@ public class EnfrentamientoController {
      *
      * @param enfrentamientos Objeto `Enfrentamiento` que se desea crear.
      */
-    public void crearEnfrentamientos(ArrayList<Enfrentamiento> enfrentamientos) {
+    public void crearEnfrentamientos(ArrayList<Enfrentamiento> enfrentamientos) throws Exception {
         for (Enfrentamiento enfrentamiento : enfrentamientos) {
             dao.altaEnfrentamiento(enfrentamiento);
         }
@@ -152,7 +152,7 @@ public class EnfrentamientoController {
         return listaEnfrentamientos;
     }
 
-    public void asignarGanadorEnfrentamiento(Enfrentamiento enfrentamiento) {
+    public void asignarGanadorEnfrentamiento(Enfrentamiento enfrentamiento) throws Exception{
         dao.asignarGanadorEnfrentamiento(enfrentamiento);
     }
 

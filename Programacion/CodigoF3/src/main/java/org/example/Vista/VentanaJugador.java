@@ -33,21 +33,29 @@ public class VentanaJugador extends JFrame {
         setIconImage(icon.getImage());
 
         tJugadores.setEditable(false);
-        vc.llenarComboBoxE(cEquipos);
+        try {
+            vc.llenarComboBoxE(cEquipos);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(ventanaUsuario, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
         tJugadores.setFont(new Font("Monospaced", Font.PLAIN, 12));
         cEquipos.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    String selectedItem = (String) cEquipos.getSelectedItem();
-                    if (!selectedItem.equals("Selecciona un equipo...")) {
-                        tJugadores.setEditable(true);
-                        tJugadores.setText(JugadorDAO.obtenerJugadoresPorEquipo(cEquipos.getSelectedItem().toString()));
-                    } else {
-                        tJugadores.setEditable(false);
-                        tJugadores.setText("");
+                try {
+                    if (e.getStateChange() == ItemEvent.SELECTED) {
+                        String selectedItem = (String) cEquipos.getSelectedItem();
+                        if (!selectedItem.equals("Selecciona un equipo...")) {
+                            tJugadores.setEditable(true);
+                            tJugadores.setText(JugadorDAO.obtenerJugadoresPorEquipo(cEquipos.getSelectedItem().toString()));
+                        } else {
+                            tJugadores.setEditable(false);
+                            tJugadores.setText("");
+                        }
                     }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(ventanaUsuario, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
 
             }
