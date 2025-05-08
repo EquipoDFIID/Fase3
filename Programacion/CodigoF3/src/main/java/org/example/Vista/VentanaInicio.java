@@ -106,17 +106,20 @@ public class VentanaInicio extends JFrame {
             public void keyReleased(KeyEvent e) {
                 if (validarClave(aClave.getText())) {
                     aIniciarSesionButton.setEnabled(true);
+                    getRootPane().setDefaultButton(aIniciarSesionButton); // Agregado
                 } else {
                     aIniciarSesionButton.setEnabled(false);
                 }
             }
         });
 
+
         uClave.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 if (validarClave(uClave.getText())) {
                     uIniciarSesionButton.setEnabled(true);
+                    getRootPane().setDefaultButton(uIniciarSesionButton); // Agregado
                 } else {
                     uIniciarSesionButton.setEnabled(false);
                 }

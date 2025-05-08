@@ -69,6 +69,7 @@ public class VentanaBajaJugador extends JDialog {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     String selectedItem = (String) cJugador.getSelectedItem();
+                    getRootPane().setDefaultButton(buttonOK); // Agregado
                     buttonOK.setEnabled(selectedItem != null && !selectedItem.equals("Selecciona un jugador..."));
                 }
             }
