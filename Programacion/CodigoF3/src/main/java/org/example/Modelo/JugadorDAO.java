@@ -144,5 +144,47 @@ public class JugadorDAO {
             System.out.println(e);
         }
     }
+    public static String obtenerJugadoresPorEquipo(String nombreEquipo) {
+        StringBuilder tabla = new StringBuilder();
+        CallableStatement cstmt = null;
+
+        try {
+            String sql = "{ call obtener_jugadores_equipo(?, ?) }";
+            cstmt = con.prepareCall(sql);
+            cstmt.setString(1, nombreEquipo); // Parámetro de entrada
+            cstmt.registerOutParameter(2, oracle.jdbc.OracleTypes.CURSOR); // Parámetro de salida (cursor)
+            cstmt.execute();
+
+            try (ResultSet rs = (ResultSet) cstmt.getObject(2)) {
+                // Encabezados de la tabla
+                tabla.append("| NOMBRE            | APELLIDO           | SUELDO     |\n");
+                tabla.append("|-------------------|--------------------|------------|\n");
+
+                // Procesar cada fila
+                while (rs.next()) {
+                    String nombreJugador = rs.getString("NOMBRE");
+                    String apellidoJugador = rs.getString("APELLIDO");
+                    double sueldo = rs.getDouble("SUELDO");
+
+                    tabla.append(String.format("| %-17s | %-18s | %-10.2f |\n",
+                            nombreJugador,
+                            apellidoJugador,
+                            sueldo));
+                }
+            }
+        } catch (Exception ex) {
+            tabla.append("Error al obtener los jugadores del equipo: ").append(ex.getMessage());
+        } finally {
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    System.err.println("Error al cerrar el statement: " + e.getMessage());
+                }
+            }
+        }
+
+        return tabla.toString();
+    }
 
 }

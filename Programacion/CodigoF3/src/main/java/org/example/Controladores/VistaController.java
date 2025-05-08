@@ -30,6 +30,7 @@ public class VistaController {
     private VentanaIntroducirResultados ventanaIntroducirResultados;
     private VentanaEquipos ventanaEquipos;
     private VentanaResultados ventanaResultados;
+    private VentanaJugador ventanaJugador;
 
     private ModeloController modeloController;
     private ArrayList<Equipo> listaEquipos = new ArrayList<>();
@@ -302,4 +303,13 @@ public class VistaController {
     public boolean comprobarNickname(String nickname){
         return modeloController.comprobarNickname(nickname);
     }
+
+    public void mostrarventanaJugadores(String uNombre, VentanaUsuario ventanaUsuario) {
+        ventanaJugador = new VentanaJugador(this, uNombre, ventanaUsuario);
+        ventanaJugador.setVisible(true);
+
+    }
+
+
+
 }

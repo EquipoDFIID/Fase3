@@ -215,4 +215,51 @@ public class EquipoDAO {
         }
         return equipos;
     }
+    public static String procedimientoEquipos() {
+        StringBuilder tabla = new StringBuilder();
+        CallableStatement cstmt = null;
+
+        try {
+            String sql = "{ call sp_informe_equipos_cursor(?) }";
+            cstmt = con.prepareCall(sql);
+            cstmt.registerOutParameter(1, oracle.jdbc.OracleTypes.CURSOR);
+            cstmt.execute();
+
+            try (ResultSet rs = (ResultSet) cstmt.getObject(1)) {
+                // Encabezados de la tabla
+                tabla.append("| EQUIPO            | FUNDACIÓN           | JUGADORES | SUELDO MÁX | SUELDO MÍN | PROMEDIO  |\n");
+                tabla.append("|-------------------|---------------------|-----------|------------|------------|-----------|\n");
+
+                // Procesar cada fila
+                while (rs.next()) {
+                    String nombreEquipo = rs.getString("nombre_equipo");
+                    String fechaFundacion = rs.getString("fecha_fundacion");
+                    int cantidadJugadores = rs.getInt("cantidad_jugadores");
+                    double sueldoMax = rs.getDouble("sueldo_max");
+                    double sueldoMin = rs.getDouble("sueldo_min");
+                    double sueldoPromedio = rs.getDouble("sueldo_promedio");
+
+                    tabla.append(String.format("| %-17s | %-18s | %-9d | %-10.2f | %-10.2f | %-9.2f |\n",
+                            nombreEquipo,
+                            fechaFundacion,
+                            cantidadJugadores,
+                            sueldoMax,
+                            sueldoMin,
+                            sueldoPromedio));
+                }
+            }
+        } catch (Exception ex) {
+            tabla.append("Error al generar la tabla: ").append(ex.getMessage());
+        } finally {
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    System.err.println("Error al cerrar el statement: " + e.getMessage());
+                }
+            }
+        }
+
+        return tabla.toString();
+    }
 }
