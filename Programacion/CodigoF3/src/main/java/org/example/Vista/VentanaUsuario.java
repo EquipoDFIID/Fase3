@@ -21,6 +21,7 @@ public class VentanaUsuario extends JFrame {
     private JMenuItem uNombre;
     private JMenuItem uCambiarCuenta;
     private JMenuItem uSalir;
+    private JButton infoJugadores;
     private VistaController vc;
 
     public VentanaUsuario(VistaController vc, String uNombre) {
@@ -59,6 +60,7 @@ public class VentanaUsuario extends JFrame {
                 dispose();
             }
         });
+
         resultadosDeÚltimaJornadaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -71,6 +73,13 @@ public class VentanaUsuario extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 vc.mostrarVentanaInicio();
+            }
+        });
+        infoJugadores.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                vc.mostrarventanaJugadores(uNombre,VentanaUsuario.this);
+                dispose();
             }
         });
     }
