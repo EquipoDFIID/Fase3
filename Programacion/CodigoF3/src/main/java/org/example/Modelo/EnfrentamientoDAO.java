@@ -7,6 +7,7 @@ import java.util.List;
 public class EnfrentamientoDAO {
 
     static Connection con = BD.getConnection();
+
     public EnfrentamientoDAO() {
     }
 
@@ -56,15 +57,42 @@ public class EnfrentamientoDAO {
 
     public void asignarGanadorEnfrentamiento(Enfrentamiento enfrentamiento) {
         try {
-            String sql = "UPDATE enfrentamientos SET equipo_ganador = ? WHERE id_enfrentamiento = ? AND id_jornada = ?";
+            String sql = "UPDATE enfrentamientos SET equipo_ganador = ? WHERE id_enfrentamiento = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, enfrentamiento.getEquipoGanador().getIdEquipo());
             ps.setInt(2, enfrentamiento.getIdEnfrentamiento());
-            ps.setInt(3, enfrentamiento.getJornada().getIdJornada());
+
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<Enfrentamiento> selectEnfrentamientosJornada(int idJornada) {
+        ArrayList<Enfrentamiento> enfrentamientos = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM ENFRENTAMIENTOS WHERE ID_JORNADA = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idJornada);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) { // ← CAMBIADO DE "if" A "while"
+                Enfrentamiento e = new Enfrentamiento();
+                e.setIdEnfrentamiento(rs.getInt("ID_ENFRENTAMIENTO"));
+                e.setHoraEnfrentamiento(rs.getTime("HORA").toLocalTime());
+                e.setFechEnfrentamiento(rs.getDate("FECHA_ENF").toLocalDate());
+                //lo de abajo igual esta mal
+                e.setEquipoAtacante(EquipoDAO.buscarEquipoInt(rs.getInt("EQUIPO_ATACANTE")));
+                e.setEquipoDefensor(EquipoDAO.buscarEquipoInt(rs.getInt("EQUIPO_DEFENSOR")));
+                e.setEquipoGanador(EquipoDAO.buscarEquipoInt(rs.getInt("EQUIPO_GANADOR")));
+                e.setJornada(JornadaDAO.buscarJornada(rs.getInt("ID_JORNADA")));
+                enfrentamientos.add(e);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return enfrentamientos;
     }
 
 }

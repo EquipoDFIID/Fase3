@@ -56,14 +56,14 @@ public class ModeloController {
             campeonatoDao=new CampeonatoDAO();
             campeonatoController= new CampeonatoController(campeonatoDao);
 
+            jornadaDao=new JornadaDAO();
+            jornadaController=new JornadaController(jornadaDao);
+
             enfrentamientoDao=new EnfrentamientoDAO();
             enfrentamientoController=new EnfrentamientoController(enfrentamientoDao);
 
             equipoDao=new EquipoDAO();
             equipoController=new EquipoController(equipoDao);
-
-            jornadaDao=new JornadaDAO();
-            jornadaController=new JornadaController(jornadaDao);
 
             jugadorDao=new JugadorDAO();
             jugadorController=new JugadorController(jugadorDao);
@@ -192,10 +192,13 @@ public class ModeloController {
         return usuarioController.comprobarNickname(nickname);
     }
 
-    public void asignarGanadoresEnfrentamientos(Jornada jornada) {
-        for (Enfrentamiento enfrentamiento : jornada.getListaEnfrentamientos()) {
+    public void asignarGanadoresEnfrentamientos(ArrayList<Enfrentamiento> enfrentamientos) {
+        for (Enfrentamiento enfrentamiento : enfrentamientos) {
             enfrentamientoController.asignarGanadorEnfrentamiento(enfrentamiento);
         }
     }
 
+    public ArrayList<Enfrentamiento> selectEnfrentamientosJornada(int idJornada) {
+        return enfrentamientoController.selectEnfrentamientosJornada(idJornada);
+    }
 }
