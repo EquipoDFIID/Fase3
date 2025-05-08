@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 public class JornadaDAO {
     static Connection con = BD.getConnection();
-    private static JornadaController jornadaController;
 
     public JornadaDAO() {
     }
@@ -41,7 +40,7 @@ public class JornadaDAO {
             if (rs.next()) {
                 j.setIdJornada(rs.getInt("ID_JORNADA"));
                 j.setFecha(rs.getDate("FECHA").toLocalDate());
-                j.setCampeonato(jornadaController.buscarCompeticion(rs.getInt("ID_COMPETICION")));
+                j.setCampeonato(CampeonatoDAO.buscarCompeticion(rs.getInt("ID_COMPETICION")));
             }
 
 
@@ -59,7 +58,7 @@ public class JornadaDAO {
                 Jornada j = new Jornada();
                 j.setIdJornada(rs.getInt("ID_JORNADA"));
                 j.setFecha(rs.getDate("FECHA").toLocalDate());
-                j.setCampeonato(jornadaController.buscarCompeticion(rs.getInt("ID_COMPETICION")));
+                j.setCampeonato(CampeonatoDAO.buscarCompeticion(rs.getInt("ID_COMPETICION")));
             }
 
         return jornada;

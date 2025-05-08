@@ -145,8 +145,6 @@ public class EnfrentamientoController {
     public void crearEnfrentamientos(ArrayList<Enfrentamiento> enfrentamientos) throws Exception {
         for (Enfrentamiento enfrentamiento : enfrentamientos) {
             dao.altaEnfrentamiento(enfrentamiento);
-            listaEnfrentamientos.add(enfrentamiento);
-
         }
     }
 
@@ -156,5 +154,9 @@ public class EnfrentamientoController {
 
     public void asignarGanadorEnfrentamiento(Enfrentamiento enfrentamiento) throws Exception{
         dao.asignarGanadorEnfrentamiento(enfrentamiento);
+    }
+
+    public ArrayList<Enfrentamiento> selectEnfrentamientosJornada(int idJornada) {
+        return dao.selectEnfrentamientosJornada(idJornada);
     }
 }

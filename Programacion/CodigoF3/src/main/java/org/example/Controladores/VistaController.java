@@ -292,8 +292,22 @@ public class VistaController {
                 }
             }
         }
-        modeloController.asignarGanadoresEnfrentamientos(jornada);
+
+        // Lista con IDs (viene de BD)
+        ArrayList<Enfrentamiento> enfren = modeloController.selectEnfrentamientosJornada(jornada.getIdJornada());
+
+        // Sincroniza equipoGanador desde enfrentamientos (interfaz) hacia enfren (BD)
+        for (int i = 0; i < enfren.size(); i++) {
+            Enfrentamiento enfrentamientoBD = enfren.get(i);
+            Enfrentamiento enfrentamientoGUI = enfrentamientos.get(i);
+
+            enfrentamientoBD.setEquipoGanador(enfrentamientoGUI.getEquipoGanador());
+        }
+
+        // Ahora enfren tiene id + equipoGanador
+        modeloController.asignarGanadoresEnfrentamientos(enfren);
     }
+
 
 
     public void crearCuenta(String nickname, String nombre, String clave) throws Exception {

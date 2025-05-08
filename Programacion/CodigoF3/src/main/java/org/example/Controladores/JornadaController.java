@@ -15,8 +15,8 @@ public class JornadaController {
     private static CampeonatoController campeonatoController;
     ArrayList<Jornada> listaJornadas = new ArrayList<>();
 
-    public JornadaController(JornadaDAO jornadaDao) {
-        this.dao = jornadaDao;
+    public JornadaController(JornadaDAO jornadaDAO) {
+        dao=jornadaDAO;
     }
 
     public Campeonato buscarCompeticion(int idCompeticion) throws Exception {

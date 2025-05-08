@@ -56,14 +56,14 @@ public class ModeloController {
             campeonatoDao=new CampeonatoDAO();
             campeonatoController= new CampeonatoController(campeonatoDao);
 
+            jornadaDao=new JornadaDAO();
+            jornadaController=new JornadaController(jornadaDao);
+
             enfrentamientoDao=new EnfrentamientoDAO();
             enfrentamientoController=new EnfrentamientoController(enfrentamientoDao);
 
             equipoDao=new EquipoDAO();
             equipoController=new EquipoController(equipoDao);
-
-            jornadaDao=new JornadaDAO();
-            jornadaController=new JornadaController(jornadaDao);
 
             jugadorDao=new JugadorDAO();
             jugadorController=new JugadorController(jugadorDao);
@@ -180,6 +180,7 @@ public class ModeloController {
         return cerrada;
     }
 
+
     public void crearCuenta(String nickname, String nombre, String clave) throws Exception {
             usuarioController.crearCuenta(nickname, nombre, clave);
     }
@@ -198,4 +199,7 @@ public class ModeloController {
         }
     }
 
+    public ArrayList<Enfrentamiento> selectEnfrentamientosJornada(int idJornada) {
+        return enfrentamientoController.selectEnfrentamientosJornada(idJornada);
+    }
 }
