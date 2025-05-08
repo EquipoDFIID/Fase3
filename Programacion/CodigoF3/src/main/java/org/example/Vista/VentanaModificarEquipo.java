@@ -47,11 +47,7 @@ public class VentanaModificarEquipo extends JDialog {
         eNombre.setEnabled(false);
         eFecha.setEnabled(false);
         buttonOK.setEnabled(false);
-        try {
-            vc.llenarComboBoxE(cNombre);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        vc.llenarComboBoxE(cNombre);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -168,13 +164,9 @@ public class VentanaModificarEquipo extends JDialog {
     }
 
     private void onOK() {
-        try {
-            vc.modificarEquipo(eNombre.getText(), convertirFecha(eFecha.getText()), cNombre.getSelectedItem().toString());
-            ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
-            dispose(); //
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        vc.modificarEquipo(eNombre.getText(), convertirFecha(eFecha.getText()), cNombre.getSelectedItem().toString());
+        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+        dispose(); //
     }
 
     private void onCancel() {

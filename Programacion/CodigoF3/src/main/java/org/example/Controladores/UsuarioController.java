@@ -12,13 +12,13 @@ public class UsuarioController {
         this.usuarioDAO=usuarioDao;
     }
 
-    public Usuario selectUsuarioNick(String nickUsuario, String clave) throws Exception {
+    public Usuario selectUsuarioNick(String nickUsuario, String clave) {
         return usuarioDAO.selectUsuarioNick(nickUsuario.toLowerCase(), clave);
     }
-    public Usuario selectUsuarioNom(String nombreUsuario, String clave) throws Exception {
+    public Usuario selectUsuarioNom(String nombreUsuario, String clave) {
         return usuarioDAO.selectUsuarioNom(nombreUsuario.toLowerCase(), clave);
     }
-    public void crearCuenta(String nickname, String nombre, String clave) throws Exception{
+    public void crearCuenta(String nickname, String nombre, String clave){
         Usuario usuario = new Usuario();
         usuario.setNickname(nickname);
         usuario.setNombre(nombre);
@@ -27,7 +27,7 @@ public class UsuarioController {
         usuarioDAO.crearUsuario(usuario);
     }
 
-    public boolean comprobarNickname(String nickname)throws Exception {
+    public boolean comprobarNickname(String nickname) {
         return usuarioDAO.comprobarNickname(nickname.toLowerCase());
     }
 }

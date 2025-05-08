@@ -16,11 +16,11 @@ public class CampeonatoController {
         this.campeonatoDao = campeonatoDao;
     }
 
-    public Campeonato buscarCompeticion(int idCampeonato) throws Exception {
+    public Campeonato buscarCompeticion(int idCampeonato) {
         return campeonatoDao.buscarCompeticion(idCampeonato);
     }
 
-    public void competicionUpdateInscripcion(String inscripcion) throws Exception  {
+    public void competicionUpdateInscripcion(String inscripcion)  {
         campeonatoDao.competicionUpdateInscripcion(inscripcion);
 
     }

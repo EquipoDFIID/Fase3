@@ -19,7 +19,7 @@ public class JornadaController {
         dao=jornadaDAO;
     }
 
-    public Campeonato buscarCompeticion(int idCompeticion) throws Exception {
+    public Campeonato buscarCompeticion(int idCompeticion) {
         return campeonatoController.buscarCompeticion(idCompeticion);
     }
 
@@ -72,7 +72,7 @@ public class JornadaController {
         } while (correcto);
     }*/
 
-    public Jornada crearJornada(Jornada jornadaNueva) throws Exception {
+    public Jornada crearJornada(Jornada jornadaNueva) {
         listaJornadas.add(jornadaNueva);
         return dao.altaJornada(jornadaNueva);
     }

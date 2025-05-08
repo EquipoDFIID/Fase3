@@ -41,10 +41,8 @@ public class VentanaUsuario extends JFrame {
         uCambiarCuenta.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                    dispose();
-                    vc.mostrarVentanaInicio();
-
+                dispose();
+                vc.mostrarVentanaInicio();
             }
         });
 

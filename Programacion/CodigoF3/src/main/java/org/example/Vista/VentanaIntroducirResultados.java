@@ -58,13 +58,9 @@ public class VentanaIntroducirResultados extends JFrame {
         });
 
         bAceptar.addActionListener(e -> {
-            try {
-                vc.procesarGanadoresSeleccionados(cJornada.getSelectedIndex());
-                JOptionPane.showMessageDialog(this, "Resultados registrados correctamente.");
-                dispose();
-            }catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage());
-            }
+            vc.procesarGanadoresSeleccionados(cJornada.getSelectedIndex());
+            JOptionPane.showMessageDialog(this, "Resultados registrados correctamente.");
+            dispose();
         });
 
 

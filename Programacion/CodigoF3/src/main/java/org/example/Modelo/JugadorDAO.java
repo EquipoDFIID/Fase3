@@ -12,13 +12,13 @@ public class JugadorDAO {
 // =============================================
 // == OPERACIONES DE CONSULTA (SELECT)
 // =============================================
-    public ArrayList<Jugador> selectObjetosJugador() throws Exception{
+    public ArrayList<Jugador> selectObjetosJugador() {
         ArrayList<Jugador> jugadores = new ArrayList<>();
     /**
      * Obtiene una lista de jugadores con su ID y nickname.
      * @return Lista de objetos Jugador con ID y nickname.
      */
-
+        try {
             String sql = "SELECT * FROM JUGADORES";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -35,7 +35,9 @@ public class JugadorDAO {
                 jugadores.add(j);
             }
 
-
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
         return jugadores;
     }
 
@@ -46,10 +48,10 @@ public class JugadorDAO {
      * @param nombreJugador Nombre del jugador a buscar.
      * @return Objeto Jugador con los detalles del jugador, o null si no se encuentra.
      */
-    public static Jugador buscarJugador(String nombreJugador) throws Exception {
+    public static Jugador buscarJugador(String nombreJugador) {
        Jugador j = new Jugador();
        j.setNickname(nombreJugador);
-
+        try {
             String sql = "SELECT * FROM JUGADORES WHERE NICKNAME = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, nombreJugador);
@@ -66,7 +68,9 @@ public class JugadorDAO {
                 j.setEquipo(EquipoDAO.buscarEquipo(rs.getString("ID_EQUIPO")));
             }
 
-
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
         return j;
     }
 
@@ -77,8 +81,8 @@ public class JugadorDAO {
      * Inserta un nuevo jugador en la base de datos.
      * @param jugador Objeto Jugador con los datos a insertar.
      */
-    public static void altaJugador(Jugador jugador) throws Exception{
-
+    public static void altaJugador(Jugador jugador) {
+        try {
             String sql = "INSERT INTO jugadores (NOMBRE, APELLIDO, NACIONALIDAD, FECHA_NAC, NICKNAME, SUELDO, ID_EQUIPO) VALUES(?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, jugador.getNombre());
@@ -89,7 +93,9 @@ public class JugadorDAO {
             ps.setDouble(6, jugador.getSueldo());
             ps.setInt(7, jugador.getEquipo().getIdEquipo());
             ps.executeUpdate();
-
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 
 // =============================================
@@ -100,8 +106,8 @@ public class JugadorDAO {
      * @param jugador Objeto Jugador con los nuevos datos.
      * @param jugadorAnterior Objeto del jugador para identificar el registro a modificar.
      */
-    public static void modificarJugador(Jugador jugador, Jugador jugadorAnterior) throws Exception {
-
+    public static void modificarJugador(Jugador jugador, Jugador jugadorAnterior) {
+        try {
             String sql = "UPDATE JUGADORES SET NOMBRE = ?," +
                          "apellido = ?,nacionalidad = ?,fecha_nac = ?,nickname = ?,sueldo = ?," +
                          "id_equipo = ? WHERE NICKNAME = ?";
@@ -115,7 +121,9 @@ public class JugadorDAO {
             ps.setInt(7, jugador.getEquipo().getIdEquipo());
             ps.setString(8, jugadorAnterior.getNickname());
             ps.executeUpdate();
-
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 
 // =============================================
@@ -126,19 +134,21 @@ public class JugadorDAO {
      * @param nombreJugador Nombre del jugador a eliminar.
      */
 
-    public static void borrarJugador(String nombreJugador) throws Exception {
-
+    public static void borrarJugador(String nombreJugador) {
+        try {
             String sql = "DELETE FROM JUGADORES WHERE NICKNAME = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, nombreJugador);
             ps.executeUpdate();
-
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
-    public static String obtenerJugadoresPorEquipo(String nombreEquipo) throws Exception {
+    public static String obtenerJugadoresPorEquipo(String nombreEquipo) {
         StringBuilder tabla = new StringBuilder();
         CallableStatement cstmt = null;
 
-
+        try {
             String sql = "{ call obtener_jugadores_equipo(?, ?) }";
             cstmt = con.prepareCall(sql);
             cstmt.setString(1, nombreEquipo); // Parámetro de entrada
@@ -162,7 +172,9 @@ public class JugadorDAO {
                             sueldo));
                 }
             }
-        /*finally {
+        } catch (Exception ex) {
+            tabla.append("Error al obtener los jugadores del equipo: ").append(ex.getMessage());
+        } finally {
             if (cstmt != null) {
                 try {
                     cstmt.close();
@@ -170,7 +182,7 @@ public class JugadorDAO {
                     System.err.println("Error al cerrar el statement: " + e.getMessage());
                 }
             }
-        } */
+        }
 
         return tabla.toString();
     }
