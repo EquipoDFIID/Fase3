@@ -33,11 +33,7 @@ public class VentanaBajaEquipo extends JDialog {
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
         setIconImage(icon.getImage());
 
-        try {
-            vc.llenarComboBoxE(cNombre);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al buscar el equipo");
-        }
+        vc.llenarComboBoxE(cNombre);
         buttonOK.setEnabled(false); // Asegurarse de que esté desactivado inicialmente
 
         buttonOK.addActionListener(new ActionListener() {
@@ -87,13 +83,9 @@ public class VentanaBajaEquipo extends JDialog {
     }
 
     private void onOK() {
-        try {
-            vc.bajaEquipo(cNombre.getSelectedItem().toString());
-            ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
-            dispose(); //
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al eliminar el equipo");
-        }
+        vc.bajaEquipo(cNombre.getSelectedItem().toString());
+        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+        dispose(); //
     }
 
     private void onCancel() {

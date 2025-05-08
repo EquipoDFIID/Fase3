@@ -34,11 +34,7 @@ public class VentanaBajaJugador extends JDialog {
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
         setIconImage(icon.getImage());
 
-        try {
-            vc.llenarComboBoxJ(cJugador);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al mostrar los jugadores");
-        }
+        vc.llenarComboBoxJ(cJugador);
         buttonOK.setEnabled(false);
 
         buttonOK.addActionListener(new ActionListener() {
@@ -102,13 +98,9 @@ public class VentanaBajaJugador extends JDialog {
     }*/
 
     private void onOK() {
-        try {
-            vc.bajaJugador(cJugador.getSelectedItem().toString());
-            ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
-            dispose(); //
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al borrar el jugador");
-        }
+        vc.bajaJugador(cJugador.getSelectedItem().toString());
+        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+        dispose(); //
     }
 
     private void onCancel() {

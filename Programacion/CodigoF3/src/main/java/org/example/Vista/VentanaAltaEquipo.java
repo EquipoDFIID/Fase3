@@ -161,13 +161,9 @@ public class VentanaAltaEquipo extends JDialog {
     }
 
     private void onOK() {
-        try {
-            vc.altaEquipo(eNombre.getText(), convertirFecha(eFecha.getText()));
-            ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
-            dispose(); //
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al insertar el equipo");
-        }
+        vc.altaEquipo(eNombre.getText(), convertirFecha(eFecha.getText()));
+        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+        dispose(); //
     }
 
     private void onCancel() {

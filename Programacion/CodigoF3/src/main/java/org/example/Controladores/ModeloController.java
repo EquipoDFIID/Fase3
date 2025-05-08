@@ -79,10 +79,10 @@ public class ModeloController {
         this.vc=vc;
     }
 
-    public ArrayList <Equipo> selectObjetosEquipo()throws Exception {
+    public ArrayList <Equipo> selectObjetosEquipo() {
         return equipoController.selectObjetosEquipo();
     }
-    public ArrayList <Jugador> selectObjetosJugador() throws Exception{return jugadorController.selectObjetosJugador();
+    public ArrayList <Jugador> selectObjetosJugador() {return jugadorController.selectObjetosJugador();
     }
     public ArrayList <Jornada> selectObjetosJornada() {
         return jornadaController.selectObjetosJornada();
@@ -92,37 +92,37 @@ public class ModeloController {
         return enfrentamientoController.rellenarEquiposEnfrentamientos();
     }
 
-    public void buscarJugador(String nombreJugador) throws Exception {jugadorController.buscarJugador(nombreJugador);
+    public void buscarJugador(String nombreJugador) {jugadorController.buscarJugador(nombreJugador);
     }
-    public void buscarEquipo(String nombreEquipo) throws Exception {equipoController.buscarEquipo(nombreEquipo);
+    public void buscarEquipo(String nombreEquipo) {equipoController.buscarEquipo(nombreEquipo);
     }
 
-    public void altaEquipo(String nombre, LocalDate fecha) throws Exception {
+    public void altaEquipo(String nombre, LocalDate fecha){
         equipoController.altaEquipo(nombre, fecha);
     }
-    public void bajaEquipo() throws Exception {
+    public void bajaEquipo() {
         equipoController.bajaEquipo();
     }
-    public void modificarEquipo(String nombre, LocalDate fecha) throws Exception {
+    public void modificarEquipo(String nombre, LocalDate fecha) {
         equipoController.modificarEquipo(nombre, fecha);
     }
 
-    public void altaJugador(String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento, String nickname, double sueldo, Equipo equipo) throws Exception{
-         jugadorController.altaJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, equipo);
+    public void altaJugador(String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento, String nickname, double sueldo, Equipo equipo){
+        jugadorController.altaJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, equipo);
     }
-    public void bajaJugador( String nombreJugador) throws Exception {
+    public void bajaJugador( String nombreJugador) {
         jugadorController.bajaJugador( nombreJugador);
     }
-    public void modificarJugador(String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento, String nickname, double sueldo, Equipo ej) throws Exception{
+    public void modificarJugador(String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento, String nickname, double sueldo, Equipo ej) {
         jugadorController.modificarJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, ej);
     }
 
 
 
-    public void selectUsuarioNick(String nickUsuario, String clave) throws Exception {
+    public void selectUsuarioNick(String nickUsuario, String clave) {
         usuario = usuarioController.selectUsuarioNick(nickUsuario, clave);
     }
-    public void selectUsuarioNom(String nombreUsuario, String clave) throws Exception {
+    public void selectUsuarioNom(String nombreUsuario, String clave) {
         usuario = usuarioController.selectUsuarioNom(nombreUsuario, clave);
     }
     public boolean comprobarNombreClave(String tipo){
@@ -138,7 +138,7 @@ public class ModeloController {
     }
 
 
-    public boolean cerrarInscripcion() throws Exception {
+    public boolean cerrarInscripcion() throws SQLException {
         boolean cerrada = false;
 
         ArrayList<Equipo> equiposOriginal = equipoController.selectAllEquipos();
@@ -180,21 +180,20 @@ public class ModeloController {
         return cerrada;
     }
 
-
-    public void crearCuenta(String nickname, String nombre, String clave) throws Exception {
-            usuarioController.crearCuenta(nickname, nombre, clave);
+    public void crearCuenta(String nickname, String nombre, String clave){
+        usuarioController.crearCuenta(nickname, nombre, clave);
     }
 
-    public void competicionUpdateInscripcion(String inscripcion) throws Exception{
+    public void competicionUpdateInscripcion(String inscripcion) {
         campeonatoController.competicionUpdateInscripcion(inscripcion);
     }
 
-    public boolean comprobarNickname(String nickname) throws Exception {
+    public boolean comprobarNickname(String nickname) {
         return usuarioController.comprobarNickname(nickname);
     }
 
-    public void asignarGanadoresEnfrentamientos(Jornada jornada) throws Exception {
-        for (Enfrentamiento enfrentamiento : jornada.getListaEnfrentamientos()) {
+    public void asignarGanadoresEnfrentamientos(ArrayList<Enfrentamiento> enfrentamientos) {
+        for (Enfrentamiento enfrentamiento : enfrentamientos) {
             enfrentamientoController.asignarGanadorEnfrentamiento(enfrentamiento);
         }
     }

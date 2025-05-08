@@ -27,24 +27,24 @@ public class JugadorController {
 
     public void altaJugador(String nombre, String apellido, String nacionalidad,
                             LocalDate fechaNacimiento, String nickname,
-                            double sueldo, Equipo equipo) throws Exception{
+                            double sueldo, Equipo equipo) {
         Jugador j = new Jugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, equipo);
          jugadorDAO.altaJugador(j);
     }
-    public void bajaJugador( String nombreJugador) throws Exception {
+    public void bajaJugador( String nombreJugador) {
         jugadorDAO.borrarJugador(nombreJugador);
     }
     public void modificarJugador(String nombre, String apellido, String nacionalidad,
                                  LocalDate fechaNacimiento, String nickname,
-                                 double sueldo, Equipo ej) throws Exception{
+                                 double sueldo, Equipo ej) {
         Jugador jugador = new Jugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, ej);
         jugadorDAO.modificarJugador(jugador, jb);
     }
-    public void buscarJugador(String nombreJugador) throws Exception {
+    public void buscarJugador(String nombreJugador) {
         jb = jugadorDAO.buscarJugador(nombreJugador);
     }
 
-    public ArrayList<Jugador> selectObjetosJugador() throws Exception{
+    public ArrayList<Jugador> selectObjetosJugador(){
         return jugadorDAO.selectObjetosJugador();
     }
 

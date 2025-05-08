@@ -127,50 +127,41 @@ public class VentanaInicio extends JFrame {
         });
 
         aIniciarSesionButton.addActionListener(e -> {
-            try {
-                tipo = "admin";
-                vc.selectUsuarioNom(aNombre.getText(), aClave.getText());
-                if (vc.comprobarNombreClave(tipo)) {
-                    vc.mostrarVentanaAdministrador(aNombre.getText());
-                    setVisible(false);
-                } else {
-                    JOptionPane.showMessageDialog(VentanaInicio.this, "No se ha encontrado el administrador", "Datos incorrectos", JOptionPane.ERROR_MESSAGE);
-                    aNombre.setText("");
-                    aClave.setText("");
-                    aClave.setEnabled(false);
-                    aNombre.requestFocus();
-                    aIniciarSesionButton.setEnabled(false);
-                }
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Error al acceder");
+            tipo = "admin";
+            vc.selectUsuarioNom(aNombre.getText(), aClave.getText());
+            if (vc.comprobarNombreClave(tipo)) {
+                vc.mostrarVentanaAdministrador(aNombre.getText());
+                setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(VentanaInicio.this, "No se ha encontrado el administrador", "Datos incorrectos", JOptionPane.ERROR_MESSAGE);
+                aNombre.setText("");
+                aClave.setText("");
+                aClave.setEnabled(false);
+                aNombre.requestFocus();
+                aIniciarSesionButton.setEnabled(false);
             }
         });
 
         uIniciarSesionButton.addActionListener(e -> {
-            try {
-                tipo = "user";
-
-                vc.selectUsuarioNick(uNickname.getText(), uClave.getText());
-                if (vc.comprobarNombreClave(tipo)) {
-                    vc.mostrarVentanaUsuario(uNickname.getText());
-                    setVisible(false);
-                    JOptionPane.showMessageDialog(
-                            VentanaInicio.this,
-                            "¡Bienvenido, " + uNickname.getText() + "!",
-                            "Acceso concedido",
-                            JOptionPane.INFORMATION_MESSAGE
-                    );
-                } else {
-                    JOptionPane.showMessageDialog(VentanaInicio.this, "No se ha encontrado el usuario", "Datos incorrectos", JOptionPane.ERROR_MESSAGE);
-                    uNickname.setText("");
-                    uClave.setText("");
-                    uClave.setEnabled(false);
-                    uNickname.requestFocus();
-                    uIniciarSesionButton.setEnabled(false);
-                    bCrearCuenta.setEnabled(true);
-                }
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Error al acceder");
+            tipo = "user";
+            vc.selectUsuarioNick(uNickname.getText(), uClave.getText());
+            if (vc.comprobarNombreClave(tipo)) {
+                vc.mostrarVentanaUsuario(uNickname.getText());
+                setVisible(false);
+                JOptionPane.showMessageDialog(
+                        VentanaInicio.this,
+                        "¡Bienvenido, " + uNickname.getText() + "!",
+                        "Acceso concedido",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+            } else {
+                JOptionPane.showMessageDialog(VentanaInicio.this, "No se ha encontrado el usuario", "Datos incorrectos", JOptionPane.ERROR_MESSAGE);
+                uNickname.setText("");
+                uClave.setText("");
+                uClave.setEnabled(false);
+                uNickname.requestFocus();
+                uIniciarSesionButton.setEnabled(false);
+                bCrearCuenta.setEnabled(true);
             }
         });
 
