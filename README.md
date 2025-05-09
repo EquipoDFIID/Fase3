@@ -40,7 +40,7 @@ Ofrece funcionalidades para administrar equipos, jugadores y partidos, así como
 <h1 id="stack">◾ Stack Tecnológico</h1>
 
 -  **Tecnologías de Desarrollo**
-
+ 
     ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ_IDEA-white?logo=intellijidea&logoColor=black&color=white)
     ![Java](https://img.shields.io/badge/Java-white?logo=coffeescript&logoColor=black&color=white)
     ![Oracle_SQL](https://img.shields.io/badge/Oracle_SQL-white?logo=liquibase&logoColor=black&color=white)
@@ -49,6 +49,7 @@ Ofrece funcionalidades para administrar equipos, jugadores y partidos, así como
 
 -  **Herramientas de Organización y Comunicación**
 
+    ![GitHub](https://img.shields.io/badge/GitHub-white?logo=github&logoColor=black&color=white)
     ![Trello](https://img.shields.io/badge/Trello-white?logo=trello&logoColor=black&color=white)
     ![WhatsApp](https://img.shields.io/badge/WhatsApp-white?logo=whatsapp&logoColor=black&color=white)
     ![Discord](https://img.shields.io/badge/Discord-white?logo=discord&logoColor=black&color=white)
@@ -84,9 +85,7 @@ Pantalla inicial con selección de tipo de usuario:
 
 2. Abrir el proyecto en **IntelliJ IDEA** (u otro IDE compatible).
 
-3. Configurar los parámetros de conexión a la base de datos **Oracle**.
-
-4. Ejecutar la clase principal para lanzar la aplicación.
+3. Ejecutar la clase principal para lanzar la aplicación.
 
 ---
 
