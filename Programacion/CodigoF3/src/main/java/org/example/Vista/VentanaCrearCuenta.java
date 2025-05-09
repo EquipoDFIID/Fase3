@@ -1,6 +1,7 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
+import org.example.Excepciones.DatoNoValido;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -184,16 +185,25 @@ public class VentanaCrearCuenta extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     if(!vc.comprobarNickname(cNickname.getText())) {
-                        vc.crearCuenta(cNickname.getText(), cNombre.getText(), cClave.getText());
-                        JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "Usuario creado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+                        boolean creada;
+                        creada = vc.crearCuenta(cNickname.getText(), cNombre.getText(), cClave.getText());
+
+                        if (creada) {
+                            JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "Usuario creado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            throw new DatoNoValido("Error al crear el Usuario");
+                        }
+
                         ventanaInicio.setVisible(true);
                         dispose();
                     } else {
                         JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "El nickname ya existe", "Error", JOptionPane.ERROR_MESSAGE);
                         resetCampos();
                     }
+                } catch (DatoNoValido error) {
+                    JOptionPane.showMessageDialog(VentanaCrearCuenta.this, error.getMessage(), "Error de validación", JOptionPane.ERROR_MESSAGE);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(VentanaCrearCuenta.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

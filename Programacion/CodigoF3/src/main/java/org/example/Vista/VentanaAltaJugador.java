@@ -1,6 +1,7 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
+import org.example.Excepciones.DatoNoValido;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -324,7 +325,8 @@ public class VentanaAltaJugador extends JDialog {
 
     private void onOK() {
         try {
-            vc.altaJugador(
+            boolean insertado;
+            insertado = vc.altaJugador(
                     jNombre.getText(),
                     jApellido.getText(),
                     jNacionalidad.getText(),
@@ -333,11 +335,19 @@ public class VentanaAltaJugador extends JDialog {
                     Double.parseDouble(jSueldo.getText()),
                     vc.buscarComboBoxE(jEquipo)
             );
-            JOptionPane.showMessageDialog(VentanaAltaJugador.this, "Jugador creado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+
+            if (insertado) {
+                JOptionPane.showMessageDialog(VentanaAltaJugador.this, "Jugador creado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                throw new DatoNoValido("Error al insertar el jugador");
+            }
+
             ventanaAdministrador.setVisible(true);
             dispose();
+        } catch (DatoNoValido error) {
+            JOptionPane.showMessageDialog(VentanaAltaJugador.this, error.getMessage(), "Error de validación", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(VentanaAltaJugador.this, ex, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(VentanaAltaJugador.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

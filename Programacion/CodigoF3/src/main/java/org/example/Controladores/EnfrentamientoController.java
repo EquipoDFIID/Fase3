@@ -44,8 +44,8 @@ public class EnfrentamientoController {
         return listaEnfrentamientos;
     }
 
-    public void asignarGanadorEnfrentamiento(Enfrentamiento enfrentamiento) throws Exception {
-        dao.asignarGanadorEnfrentamiento(enfrentamiento);
+    public boolean asignarGanadorEnfrentamiento(Enfrentamiento enfrentamiento) throws Exception {
+        return dao.asignarGanadorEnfrentamiento(enfrentamiento);
     }
 
     public ArrayList<Enfrentamiento> selectEnfrentamientosJornada(int idJornada) throws Exception {

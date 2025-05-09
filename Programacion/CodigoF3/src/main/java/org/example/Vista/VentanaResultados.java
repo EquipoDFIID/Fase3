@@ -16,24 +16,35 @@ public class VentanaResultados extends JFrame {
     private JFrame ventanaUser;
 
     public VentanaResultados(VistaController vc, String nombre, JFrame ventanaUsuario) {
-        this.vc = vc;
-        this.ventanaUser = ventanaUsuario;
-        setContentPane(pPrincipal);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("MenuPrincipal");
-        setSize(680,580);
-        setLocationRelativeTo(null);
-        setResizable(true);
-
-        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
-        setIconImage(icon.getImage());
-
         try{
-            textArea1.setText(vc.mostrarProcedimientoResultado());
-            textArea1.setFont(new Font("Monospaced", Font.PLAIN, 12));
+            this.vc = vc;
+            this.ventanaUser = ventanaUsuario;
+            setContentPane(pPrincipal);
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            setTitle("MenuPrincipal");
+            setSize(680,580);
+            setLocationRelativeTo(null);
+            setResizable(true);
+            iconoVentana();
+
+            inicializarCampos();
+            agregarListeners(nombre);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void iconoVentana(){
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        setIconImage(icon.getImage());
+    }
+
+    public void inicializarCampos() throws Exception{
+        textArea1.setText(vc.mostrarProcedimientoResultado());
+        textArea1.setFont(new Font("Monospaced", Font.PLAIN, 12));
+    }
+
+    public void agregarListeners(String nombre) {
         SALIRButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

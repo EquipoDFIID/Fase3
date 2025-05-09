@@ -142,16 +142,19 @@ public class EquipoDAO {
      * Inserta un nuevo equipo en la base de datos.
      * @param equipo Objeto Equipo con los datos a insertar.
      */
-    public static void altaEquipo(Equipo equipo) throws Exception {
+    public static boolean altaEquipo(Equipo equipo) throws Exception {
+        boolean insertado = false;
         try {
             String sql = "INSERT INTO equipos (NOMBRE, FECHA_FUND) VALUES(?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, equipo.getNombre());
             ps.setDate(2, Date.valueOf(equipo.getFechaFund()));
             ps.executeUpdate();
+            insertado = true;
         } catch (SQLException e) {
             System.out.println(e);
         }
+        return insertado;
     }
 
 // =============================================
@@ -164,7 +167,9 @@ public class EquipoDAO {
      * @param equipoAnterior Objeto del equipo para identificar el registro a modificar.
      */
 
-    public static void modificarEquipo(Equipo equipo, Equipo equipoAnterior) throws Exception {
+    public static boolean modificarEquipo(Equipo equipo, Equipo equipoAnterior) throws Exception {
+        boolean modificado = false;
+
         try {
             String sql = "UPDATE EQUIPOS SET NOMBRE = ?,FECHA_FUND = ? WHERE NOMBRE= ?";
             PreparedStatement ps = con.prepareStatement(sql);
@@ -172,9 +177,11 @@ public class EquipoDAO {
             ps.setDate(2, Date.valueOf(equipo.getFechaFund()));
             ps.setString(3, equipoAnterior.getNombre());
             ps.executeUpdate();
+            modificado = true;
         } catch (SQLException e) {
             System.out.println(e);
         }
+        return modificado;
     }
 
 // =============================================
@@ -185,15 +192,18 @@ public class EquipoDAO {
      * Elimina un equipo de la base de datos según su ID.
      * @param e Objeto Equipo que se desea eliminar.
      */
-    public static void borrarEquipo(Equipo e) throws Exception {
+    public static boolean borrarEquipo(Equipo e) throws Exception {
+        boolean eliminado = false;
         try {
             String sql = "DELETE FROM EQUIPOS WHERE NOMBRE = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, e.getNombre());
             ps.executeUpdate();
+            eliminado = true;
         } catch (SQLException ex) {
             System.out.println(ex);
         }
+        return eliminado;
     }
 
     public ArrayList selectAllEquipo() throws SQLException{

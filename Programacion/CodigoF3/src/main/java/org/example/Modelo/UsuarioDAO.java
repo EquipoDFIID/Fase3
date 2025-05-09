@@ -78,7 +78,9 @@ public class UsuarioDAO {
      *
      * @param usuario Objeto `Usuario` que contiene los datos del usuario a crear.
      */
-    public void crearUsuario (Usuario usuario) throws Exception {
+    public boolean crearUsuario (Usuario usuario) throws Exception {
+        boolean creado = false;
+
         try {
             String sql = "INSERT INTO USUARIOS (nickname, nombre, clave, tipo_usuario) VALUES(?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(sql);
@@ -87,9 +89,11 @@ public class UsuarioDAO {
             ps.setString(3, usuario.getClave());
             ps.setString(4, usuario.getTipoUsuario());
             ps.executeUpdate();
+            creado = true;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        return creado;
     }
 
     public boolean comprobarNickname(String nickname) throws Exception {
