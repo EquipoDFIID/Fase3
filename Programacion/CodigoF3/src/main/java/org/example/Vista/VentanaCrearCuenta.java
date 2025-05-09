@@ -107,14 +107,10 @@ public class VentanaCrearCuenta extends JFrame {
 
         cClave.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
-                String clave1 = cClave.getText();
-                String clave2 = ccClave.getText();
-
                 if (!validarClave()) {
                     cClave.setBorder(new LineBorder(Color.RED, 1));
                     ccClave.setEnabled(false);
                     buttonOK.setEnabled(false);
-                    return;
                 } else {
                     cClave.setBorder(new LineBorder(Color.GREEN, 1));
                     ccClave.setEnabled(true);
@@ -143,7 +139,6 @@ public class VentanaCrearCuenta extends JFrame {
                 String clave2 = ccClave.getText();
                 String clave1 = cClave.getText();
 
-                // Si ya hay algo en ccClave, validar coincidencia
                 if (!clave2.isEmpty()) {
                     if (clave1.equals(clave2)) {
                         cClave.setBorder(new LineBorder(Color.GREEN, 1));

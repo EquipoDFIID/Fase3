@@ -9,8 +9,10 @@ import java.awt.event.ActionListener;
 public class VentanaInformes extends JFrame {
     private JButton bLogo;
     private JButton bSalir;
-    private JTextArea textArea1;
     private JPanel pPrincipal;
+    private JButton resultadosDeÚltimaJornadaButton;
+    private JButton informacionEquiposButton;
+    private JButton infoJugadores;
     private VistaController vc;
     private String nombre;
     private JFrame ventanaAdministrador;
@@ -25,7 +27,7 @@ public class VentanaInformes extends JFrame {
         setResizable(false);
         iconoVentana();
 
-        agregarListeners();
+        agregarListeners(aNombre);
     }
 
     public void iconoVentana(){
@@ -33,7 +35,7 @@ public class VentanaInformes extends JFrame {
         setIconImage(icon.getImage());
     }
 
-    public void agregarListeners(){
+    public void agregarListeners(String aNombre){
         bSalir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -46,6 +48,28 @@ public class VentanaInformes extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 vc.mostrarVentanaInicio();
+            }
+        });
+        infoJugadores.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                vc.mostrarventanaJugadoresA(aNombre,VentanaInformes.this);
+                dispose();
+            }
+        });
+        informacionEquiposButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                vc.mostrarVentanaEquiposA(aNombre, VentanaInformes.this);
+                dispose();
+            }
+        });
+
+        resultadosDeÚltimaJornadaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                vc.mostrarVentanaResultadosA(aNombre, VentanaInformes.this);
+                dispose();
             }
         });
     }

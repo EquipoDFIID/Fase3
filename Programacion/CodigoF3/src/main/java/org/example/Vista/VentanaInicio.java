@@ -163,11 +163,8 @@ public class VentanaInicio extends JFrame {
                 if (vc.comprobarNombreClave(tipo)) {
                     vc.mostrarVentanaUsuario(uNickname.getText());
                     setVisible(false);
-                    JOptionPane.showMessageDialog(
-                            VentanaInicio.this,
-                            "¡Bienvenido, " + uNickname.getText() + "!",
-                            "Acceso concedido",
-                            JOptionPane.INFORMATION_MESSAGE
+                    JOptionPane.showOptionDialog(VentanaInicio.this, "¡Bienvenido, " + uNickname.getText() + "!", "Acceso concedido",
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"ENTRAR"}, "ENTRAR"
                     );
                 } else {
                     JOptionPane.showMessageDialog(VentanaInicio.this, "No se ha encontrado el usuario", "Datos incorrectos", JOptionPane.ERROR_MESSAGE);

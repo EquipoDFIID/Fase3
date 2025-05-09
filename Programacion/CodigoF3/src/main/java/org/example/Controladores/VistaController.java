@@ -31,6 +31,9 @@ public class VistaController {
     private VentanaEquipos ventanaEquipos;
     private VentanaResultados ventanaResultados;
     private VentanaJugador ventanaJugador;
+    private VentanaEquiposA ventanaEquiposA;
+    private VentanaJugadorA ventanaJugadorA;
+    private VentanaResultadosA ventanaResultadosA;
 
     private ModeloController modeloController;
     private ArrayList<Equipo> listaEquipos = new ArrayList<>();
@@ -152,8 +155,6 @@ public class VistaController {
         modeloController.buscarJugador(nombreJugador);
         return modeloController.modificarJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, ej);
     }
-
-
 
     public void selectUsuarioNick(String nickUsuario, String clave) throws Exception {
         modeloController.selectUsuarioNick(nickUsuario, clave);
@@ -311,7 +312,6 @@ public class VistaController {
         ventanaJugador.setVisible(true);
     }
 
-
     public String mostrarProcedimientoResultado() throws Exception {
         return modeloController.mostrarProcedimientoResultado();
     }
@@ -320,4 +320,18 @@ public class VistaController {
         return modeloController.hayJornadasAnterioresSinResultados(idJornadaActual);
     }
 
+    public void mostrarVentanaEquiposA(String uNombre, JFrame ventanaAdmin) {
+        ventanaEquiposA = new VentanaEquiposA(this, uNombre, ventanaAdmin);
+        ventanaEquiposA.setVisible(true);
+    }
+
+    public void mostrarventanaJugadoresA(String uNombre, JFrame ventanaAdmin) {
+        ventanaJugadorA = new VentanaJugadorA(this, uNombre, ventanaAdmin);
+        ventanaJugadorA.setVisible(true);
+    }
+
+    public void mostrarVentanaResultadosA(String uNombre, JFrame ventanaAdmin) {
+        ventanaResultadosA = new VentanaResultadosA(this, uNombre, ventanaAdmin);
+        ventanaResultadosA.setVisible(true);
+    }
 }
