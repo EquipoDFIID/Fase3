@@ -110,8 +110,6 @@ public class EnfrentamientoDAO {
                     cstmt.close();
 
             }
-
-        System.out.println(tabla.toString());
         return tabla.toString();
     }
 }

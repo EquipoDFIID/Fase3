@@ -191,7 +191,7 @@ public class ModeloController {
             Jornada jornadaNueva = new Jornada(enfrentamientos, fechaJornada, campeonatoController.buscarCompeticion(2));
             jornadas.add(jornadaNueva);
             Jornada jornadaEnfren = jornadaController.crearJornada(jornadaNueva);
-            System.out.println("Jornada " + (jornada + 1) + " creada para el " + fechaJornada);
+            //System.out.println("Jornada " + (jornada + 1) + " creada para el " + fechaJornada);
 
             // Hora inicial - 9:00 AM para el primer enfrentamiento
             LocalTime horaEnfrentamiento = LocalTime.of(9, 0);
@@ -209,8 +209,8 @@ public class ModeloController {
                         jornadaEnfren
                 );
                 enfrentamientos.add(enfrentamiento);
-                System.out.println(local.getNombre() + " vs " + visitante.getNombre() +
-                        " a las " + horaEnfrentamiento);
+                /*System.out.println(local.getNombre() + " vs " + visitante.getNombre() +
+                        " a las " + horaEnfrentamiento);*/
 
                 // Sumar 2 horas para el próximo enfrentamiento
                 horaEnfrentamiento = horaEnfrentamiento.plusHours(2);

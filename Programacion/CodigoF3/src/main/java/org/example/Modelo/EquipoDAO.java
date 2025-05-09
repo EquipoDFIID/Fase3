@@ -14,33 +14,9 @@ public class EquipoDAO {
     }
 
     /**
-     * Busca un equipo en la base de datos según su ID.
-     * @param id ID del equipo que se desea buscar.
-     * @return Objeto Equipo si se encuentra, o null si no existe.
-     */
-
-    public Equipo selectEquipo(String id) throws Exception {
-        Equipo e= null;
-
-            String sql = "SELECT * FROM EQUIPOS WHERE id_equipo = ?";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                e.setIdEquipo(rs.getInt("id_equipo"));
-                e.setNombre(rs.getString("nombre"));
-                e.setFechaFund(rs.getDate("fecha_fund").toLocalDate());
-            }
-
-        return e;
-    }
-    /**
      * Obtiene una lista de todos los equipos con su ID y nombre.
      * @return Lista de objetos Equipo con ID y nombre.
      */
-
-
-
 
     public ArrayList<Equipo> selectObjetosEquipo() throws Exception {
         ArrayList<Equipo> equipos = new ArrayList<>();
@@ -226,9 +202,7 @@ public class EquipoDAO {
                 }
 
             if (cstmt != null) {
-
-                    cstmt.close();
-
+                cstmt.close();
             }
         return tabla.toString();
         }
