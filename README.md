@@ -45,7 +45,6 @@ Ofrece funcionalidades para administrar equipos, jugadores y partidos, así como
     ![Java](https://img.shields.io/badge/Java-white?logo=coffeescript&logoColor=black&color=white)
     ![Oracle_SQL](https://img.shields.io/badge/Oracle_SQL-white?logo=liquibase&logoColor=black&color=white)
     ![JUnit5](https://img.shields.io/badge/JUnit5-white?logo=jekyll&logoColor=black&color=white)
-    ![ChatGPT](https://img.shields.io/badge/ChatGPT-white?logo=openai&logoColor=black&color=white)
 
 -  **Herramientas de Organización y Comunicación**
 
@@ -53,6 +52,11 @@ Ofrece funcionalidades para administrar equipos, jugadores y partidos, así como
     ![Trello](https://img.shields.io/badge/Trello-white?logo=trello&logoColor=black&color=white)
     ![WhatsApp](https://img.shields.io/badge/WhatsApp-white?logo=whatsapp&logoColor=black&color=white)
     ![Discord](https://img.shields.io/badge/Discord-white?logo=discord&logoColor=black&color=white)
+
+-  **Dependencias y herramientas de build**
+
+    ![Maven](https://img.shields.io/badge/Maven-white?logo=apachemaven&logoColor=black&color=white)
+
 
 ---
 
