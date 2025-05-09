@@ -1,22 +1,11 @@
 package org.example.Controladores;
 
 
-import org.example.Excepciones.DatoNoValido;
 import org.example.Modelo.Enfrentamiento;
 import org.example.Modelo.EnfrentamientoDAO;
-import org.example.Modelo.Equipo;
-import org.example.Modelo.EquipoDAO;
 
-import javax.swing.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 /**
  * Clase `EnfrentamientoController` que actúa como controlador para gestionar las operaciones
  * relacionadas con los enfrentamientos, interactuando con la capa de datos (`EnfrentamientoDAO`).
