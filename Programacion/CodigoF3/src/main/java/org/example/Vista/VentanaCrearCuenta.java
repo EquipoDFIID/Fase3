@@ -34,14 +34,24 @@ public class VentanaCrearCuenta extends JFrame {
         setLocationRelativeTo(null);
         buttonOK.setEnabled(false);
         setResizable(false);
+        iconoVentana();
 
+        inicializarCampos();
+        agregarListeners();
+    }
+
+    public void iconoVentana(){
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
         setIconImage(icon.getImage());
+    }
 
+    public void inicializarCampos() {
         cNombre.setEnabled(false);
         cClave.setEnabled(false);
         ccClave.setEnabled(false);
+    }
 
+    public void agregarListeners() {
         cNickname.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
                 if (validarNickname()) {
@@ -131,13 +141,14 @@ public class VentanaCrearCuenta extends JFrame {
                 super.keyReleased(e);
                 String clave2 = ccClave.getText();
                 String clave1 = cClave.getText();
+
                 // Si ya hay algo en ccClave, validar coincidencia
                 if (!clave2.isEmpty()) {
                     if (clave1.equals(clave2)) {
                         cClave.setBorder(new LineBorder(Color.GREEN, 1));
                         ccClave.setBorder(new LineBorder(Color.GREEN, 1));
                         buttonOK.setEnabled(true);
-                        //getRootPane().setDefaultButton(buttonOK); // Agregado
+                        getRootPane().setDefaultButton(buttonOK); // Agregado
                     } else {
                         cClave.setBorder(new LineBorder(Color.RED, 1));
                         ccClave.setBorder(new LineBorder(Color.RED, 1));
@@ -164,7 +175,7 @@ public class VentanaCrearCuenta extends JFrame {
         buttonCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ventanaInicio.setVisible(true); // Vuelve a mostrar la ventana de administrador
+                ventanaInicio.setVisible(true);
                 dispose();
             }
         });
@@ -174,7 +185,7 @@ public class VentanaCrearCuenta extends JFrame {
                 try {
                     if(!vc.comprobarNickname(cNickname.getText())) {
                         vc.crearCuenta(cNickname.getText(), cNombre.getText(), cClave.getText());
-                        JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "Usuario creado exitosamente", "Exitosamente", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "Usuario creado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
                         ventanaInicio.setVisible(true);
                         dispose();
                     } else {

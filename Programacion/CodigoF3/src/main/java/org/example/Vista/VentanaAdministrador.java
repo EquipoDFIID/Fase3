@@ -27,6 +27,7 @@ public class VentanaAdministrador extends JFrame {
     private JButton bInscripcion;
     private static VistaController vc;
     private boolean estadoInscripcion;
+    private static String aNombre;
 
 
     /**
@@ -36,22 +37,34 @@ public class VentanaAdministrador extends JFrame {
      * introducir resultados en la competición.
      */
     public VentanaAdministrador(VistaController vc, String aNombre) {
+        //Set iniciales
         this.vc = vc;
+        this.aNombre = aNombre;
         setContentPane(panel1);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("MenuPrincipal");
         setSize(500, 580);
         setLocationRelativeTo(null);
         setResizable(false);
+        iconoVentana();
 
+        inicializarCampos();
+        agregarListeners();
+    }
+
+    public void iconoVentana(){
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
         setIconImage(icon.getImage());
+    }
 
+    public void inicializarCampos(){
         jNombre.setText(aNombre);
         jNombre.setEnabled(false);
         bIntroducirResultados.setEnabled(false);
         bVerInformes.setEnabled(false);
+    }
 
+    public void agregarListeners(){
         jCambiarCuenta.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -149,7 +162,6 @@ public class VentanaAdministrador extends JFrame {
                 }
             }
         });
-
     }
 
     public void disableCrud(){

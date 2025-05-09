@@ -37,11 +37,10 @@ public class VentanaAltaEquipo extends JDialog {
         setSize(500, 580);
         setLocationRelativeTo(null);
         setResizable(false);
-
-        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
-        setIconImage(icon.getImage());
+        iconoVentana();
 
         inicializarCampos();
+        agregarListeners();
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -55,7 +54,6 @@ public class VentanaAltaEquipo extends JDialog {
             }
         });
 
-        // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -63,21 +61,16 @@ public class VentanaAltaEquipo extends JDialog {
             }
         });
 
-        // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+    }
 
-        agregarListeners();
-        bLogo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                vc.mostrarVentanaInicio();
-            }
-        });
+    public void iconoVentana(){
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        setIconImage(icon.getImage());
     }
 
     private void inicializarCampos() {
@@ -142,6 +135,40 @@ public class VentanaAltaEquipo extends JDialog {
                 eFecha.setBorder(new LineBorder(Color.BLACK, 1));
             }
         });
+
+        bLogo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                vc.mostrarVentanaInicio();
+            }
+        });
+    }
+
+    private void onOK() {
+        try {
+            vc.altaEquipo(eNombre.getText(), convertirFecha(eFecha.getText()));
+            JOptionPane.showMessageDialog(VentanaAltaEquipo.this, "Equipo creado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            ventanaAdministrador.setVisible(true);
+            dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void onCancel() {
+        ventanaAdministrador.setVisible(true);
+        dispose();
+    }
+
+    private LocalDate convertirFecha(String fechaTexto) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            return LocalDate.parse(fechaTexto, formatter);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "La fecha no tiene el formato válido (dd/mm/aaaa) o es inválida.");
+            return null;
+        }
     }
 
     private boolean validarNombre() {
@@ -157,31 +184,6 @@ public class VentanaAltaEquipo extends JDialog {
             return true;
         } catch (DateTimeParseException e) {
             return false;
-        }
-    }
-
-    private void onOK() {
-        try {
-            vc.altaEquipo(eNombre.getText(), convertirFecha(eFecha.getText()));
-            ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
-            dispose();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void onCancel() {
-        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
-        dispose(); // Cierra la ventana actual
-    }
-
-    private LocalDate convertirFecha(String fechaTexto) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        try {
-            return LocalDate.parse(fechaTexto, formatter);
-        } catch (DateTimeParseException e) {
-            JOptionPane.showMessageDialog(this, "La fecha no tiene el formato válido (dd/mm/aaaa) o es inválida.");
-            return null;
         }
     }
 }
