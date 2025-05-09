@@ -3,14 +3,10 @@ package org.example.Controladores;
 import org.example.Modelo.*;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Objects;
-import java.sql.Date;
+
 
 /**
  * Clase `UsuarioController` que actúa como controlador para gestionar las operaciones

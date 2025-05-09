@@ -13,9 +13,6 @@ public class EquipoDAO {
     public EquipoDAO() {
     }
 
-// =============================================
-// == OPERACIONES DE CONSULTA (SELECT)
-// =============================================
     /**
      * Busca un equipo en la base de datos según su ID.
      * @param id ID del equipo que se desea buscar.
@@ -121,9 +118,6 @@ public class EquipoDAO {
         return cantidad;
     }
 
-// =============================================
-// == OPERACIONES DE INSERCIÓN (INSERT)
-// =============================================
     /**
      * Inserta un nuevo equipo en la base de datos.
      * @param equipo Objeto Equipo con los datos a insertar.
@@ -141,10 +135,6 @@ public class EquipoDAO {
         }
         return insertado;
     }
-
-// =============================================
-// == OPERACIONES DE ACTUALIZACIÓN (UPDATE)
-// =============================================
 
     /**
      * Actualiza los datos de un equipo en la base de datos.
@@ -165,10 +155,6 @@ public class EquipoDAO {
         }
         return modificado;
     }
-
-// =============================================
-// == OPERACIONES DE ELIMINACIÓN (DELETE)
-// =============================================
 
     /**
      * Elimina un equipo de la base de datos según su ID.
