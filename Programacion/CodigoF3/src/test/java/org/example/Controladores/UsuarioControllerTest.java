@@ -30,7 +30,7 @@ class UsuarioControllerTest {
     }
 
     @Test
-    void testCrearCuenta() {
+    void testCrearCuenta() throws Exception {
         usuarioController.crearCuenta("tester", "Test", "1234");
         Usuario usuario = usuarioDAO.selectUsuarioNick("tester", "1234");
         assertNotNull(usuario);
@@ -39,7 +39,7 @@ class UsuarioControllerTest {
     }
 
     @Test
-    void testSelectUsuarioNick() {
+    void testSelectUsuarioNick() throws Exception {
         usuarioController.crearCuenta("tester", "Test", "1234");
         Usuario usuario = usuarioController.selectUsuarioNick("tester", "1234");
         assertNotNull(usuario);
@@ -47,7 +47,7 @@ class UsuarioControllerTest {
     }
 
    @Test
-    void testSelectUsuarioNom() {
+    void testSelectUsuarioNom() throws Exception {
         usuarioController.crearCuenta("tester", "Test", "1234");
         Usuario usuario = usuarioController.selectUsuarioNom("Test", "1234");
         assertNotNull(usuario);
@@ -55,13 +55,13 @@ class UsuarioControllerTest {
     }
 
     @Test
-    void testComprobarNicknameTrue() {
+    void testComprobarNicknameTrue() throws Exception {
         usuarioController.crearCuenta("tester", "Test", "1234");
         assertTrue(usuarioController.comprobarNickname("tester"));
     }
 
     @Test
-    void testComprobarNicknameFalse() {
+    void testComprobarNicknameFalse() throws Exception {
         assertFalse(usuarioController.comprobarNickname("usuarioInexistente123"));
     }
 }

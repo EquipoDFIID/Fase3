@@ -12,14 +12,14 @@ class CampeonatoControllerTest {
     private static CampeonatoController campeonatoController;
 
     @BeforeAll
-    static void setUp() throws Exception {
+    static void setUp() {
         campeonatoDAO = new CampeonatoDAO();
         campeonatoController = new CampeonatoController(campeonatoDAO);
 
     }
 
     @Test
-    void buscarCompeticion() {
+    void buscarCompeticion() throws Exception {
         Campeonato campeonato = campeonatoController.buscarCompeticion(2);
         assertNotNull(campeonato);
         assertEquals(2, campeonato.getID());
@@ -27,7 +27,7 @@ class CampeonatoControllerTest {
     }
 
     @Test
-    void competicionUpdateInscripcion() {
+    void competicionUpdateInscripcion() throws Exception {
         campeonatoController.competicionUpdateInscripcion("finalizada");
         Campeonato campeonato = campeonatoController.buscarCompeticion(2);
         assertEquals("finalizada", campeonato.getEstado());

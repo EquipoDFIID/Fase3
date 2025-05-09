@@ -45,4 +45,8 @@ public class JornadaController {
     public boolean hayJornadasAnterioresSinResultados(int idJornadaActual) throws Exception {
         return dao.hayJornadasAnterioresSinResultados(idJornadaActual);
     }
+
+    public void resetDatos() throws Exception {
+        dao.resetDatos();
+    }
 }
