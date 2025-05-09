@@ -1,6 +1,7 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
+import org.example.Excepciones.DatoNoValido;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -21,21 +22,55 @@ public class VentanaBajaJugador extends JDialog {
      */
 
     public VentanaBajaJugador(VistaController vc, String aNombre, JFrame ventanaAdmin) {
-        this.vc = vc;
-        this.nombre = aNombre;
-        this.ventanaAdministrador = ventanaAdmin;
-        setContentPane(contentPane);
-        setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
-        setSize(500, 580);
-        setLocationRelativeTo(null);
-        setResizable(false);
+        try {
+            this.vc = vc;
+            this.nombre = aNombre;
+            this.ventanaAdministrador = ventanaAdmin;
+            setContentPane(contentPane);
+            setModal(true);
+            getRootPane().setDefaultButton(buttonOK);
+            setSize(500, 580);
+            setLocationRelativeTo(null);
+            setResizable(false);
+            iconoVentana();
 
+            inicializarCampos();
+            agregarListeners();
+
+            setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void iconoVentana(){
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
         setIconImage(icon.getImage());
+    }
 
+    public void inicializarCampos() throws Exception{
         vc.llenarComboBoxJ(cJugador);
         buttonOK.setEnabled(false);
+    }
+
+    public void agregarListeners(){
+        cJugador.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    String selectedItem = (String) cJugador.getSelectedItem();
+                    getRootPane().setDefaultButton(buttonOK);
+                    buttonOK.setEnabled(selectedItem != null && !selectedItem.equals("Selecciona un jugador..."));
+                }
+            }
+        });
+        bLogo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                vc.mostrarVentanaInicio();
+            }
+        });
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -49,62 +84,41 @@ public class VentanaBajaJugador extends JDialog {
             }
         });
 
-        // call onCancel() when cross is clicked
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 onCancel();
             }
         });
 
-        // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-
-        cJugador.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    String selectedItem = (String) cJugador.getSelectedItem();
-                    getRootPane().setDefaultButton(buttonOK); // Agregado
-                    buttonOK.setEnabled(selectedItem != null && !selectedItem.equals("Selecciona un jugador..."));
-                }
-            }
-        });
-        bLogo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                vc.mostrarVentanaInicio();
-            }
-        });
     }
-    /*public void llenarComboBox(){
-        ArrayList<Jugador> listaJugadores=vc.selectNicknameJugador();
-        cJugador.removeAllItems();
-
-        // Opción por defecto no válida
-        cJugador.addItem("Selecciona un jugador...");
-
-        for (Jugador jugador : listaJugadores) {
-            cJugador.addItem(jugador.getNombre());
-        }
-
-        // Selecciona por defecto la opción inicial (índice 0)
-        cJugador.setSelectedIndex(0);
-    }*/
 
     private void onOK() {
-        vc.bajaJugador(cJugador.getSelectedItem().toString());
-        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
-        dispose(); //
+        try {
+            boolean eliminado;
+            eliminado = vc.bajaJugador(cJugador.getSelectedItem().toString());
+
+            if (eliminado) {
+                JOptionPane.showMessageDialog(VentanaBajaJugador.this, "Jugador eliminado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                throw new DatoNoValido("Error al eliminar el Jugador");
+            }
+
+            ventanaAdministrador.setVisible(true);
+            dispose();
+        } catch (DatoNoValido error) {
+            JOptionPane.showMessageDialog(VentanaBajaJugador.this, error.getMessage(), "Error de validación", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(VentanaBajaJugador.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void onCancel() {
-        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
-        dispose(); //
+        ventanaAdministrador.setVisible(true);
+        dispose();
     }
 }

@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class BD{
 
 
-    private static final String URL = "jdbc:oracle:thin:@//ccsatserv.dnsdojo.com:1521/xepdb1";
+    public static String URL = "jdbc:oracle:thin:@//ccsatserv.dnsdojo.com:1521/xepdb1";
     private static final String USER = "equipoHiber";
     private static final String PASSWORD = "Jm12345";
 

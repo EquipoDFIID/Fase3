@@ -16,29 +16,40 @@ public class VentanaEquipos extends JFrame {
     private VistaController vc;
     private JFrame ventanaUser;
 
-    public VentanaEquipos(VistaController vc, String nombre, JFrame ventanaUsuario) {
-        this.vc = vc;
-        this.ventanaUser = ventanaUsuario;
-        setContentPane(pPrincipal);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("MenuPrincipal");
-        setSize(680,580);
-        setLocationRelativeTo(null);
-        setResizable(true);
+    public VentanaEquipos(VistaController vc, String aNombre, JFrame ventanaUsuario) {
+        try {
+            this.vc = vc;
+            this.ventanaUser = ventanaUsuario;
+            setContentPane(pPrincipal);
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            setTitle("MenuPrincipal");
+            setSize(680,580);
+            setLocationRelativeTo(null);
+            setResizable(true);
+            iconoVentana();
 
+            inicializarCampos();
+            agregarListeners(aNombre);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void iconoVentana(){
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
         setIconImage(icon.getImage());
+    }
 
+    public void inicializarCampos() throws Exception{
         tEquipos.setText(EquipoDAO.procedimientoEquipos());
         tEquipos.setFont(new Font("Monospaced", Font.PLAIN, 12));
+    }
 
-
-
-
+    public void agregarListeners(String aNombre){
         SALIRButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaUsuario ventanaUsuario = new VentanaUsuario(vc, nombre);
+                VentanaUsuario ventanaUsuario = new VentanaUsuario(vc, aNombre);
                 ventanaUsuario.setVisible(true);
                 dispose();
             }
@@ -50,6 +61,5 @@ public class VentanaEquipos extends JFrame {
                 vc.mostrarVentanaInicio();
             }
         });
-
     }
 }

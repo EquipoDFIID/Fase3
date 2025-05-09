@@ -1,6 +1,8 @@
 package org.example.Vista;
 
+import org.example.Controladores.JornadaController;
 import org.example.Controladores.VistaController;
+import org.example.Excepciones.DatoNoValido;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -31,52 +33,40 @@ public class VentanaModificarEquipo extends JDialog {
     private JFrame ventanaAdministrador;
 
     public VentanaModificarEquipo(VistaController vc, String aNombre, JFrame ventanaAdministrador) {
-        this.vc = vc;
-        this.nombre = aNombre;
-        this.ventanaAdministrador = ventanaAdministrador;
-        setContentPane(contentPane);
-        setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
-        setSize(500, 580);
-        setLocationRelativeTo(null);
-        setResizable(false);
+        try {
+            this.vc = vc;
+            this.nombre = aNombre;
+            this.ventanaAdministrador = ventanaAdministrador;
+            setContentPane(contentPane);
+            setModal(true);
+            getRootPane().setDefaultButton(buttonOK);
+            setSize(500, 580);
+            setLocationRelativeTo(null);
+            setResizable(false);
+            iconoVentana();
 
+            inicializarCampos();
+            agregarListeners();
+
+            setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void iconoVentana(){
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
         setIconImage(icon.getImage());
+    }
 
+    public void inicializarCampos() throws Exception {
         eNombre.setEnabled(false);
         eFecha.setEnabled(false);
         buttonOK.setEnabled(false);
         vc.llenarComboBoxE(cNombre);
+    }
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
-
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
-
-
-        // call onCancel() when cross is clicked
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                onCancel();
-            }
-        });
-
-        // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-
+    public void agregarListeners() {
         cNombre.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -145,7 +135,7 @@ public class VentanaModificarEquipo extends JDialog {
             public void keyReleased(KeyEvent e) {
                 if (validarFecha()) {
                     buttonOK.setEnabled(true);
-                    getRootPane().setDefaultButton(buttonOK); // Agregado
+                    getRootPane().setDefaultButton(buttonOK);
                     eFecha.setBorder(new LineBorder(Color.GREEN, 1));
                 } else {
                     buttonOK.setEnabled(false);
@@ -161,17 +151,56 @@ public class VentanaModificarEquipo extends JDialog {
                 vc.mostrarVentanaInicio();
             }
         });
+
+        buttonOK.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onOK();
+            }
+        });
+
+        buttonCancel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onCancel();
+            }
+        });
+
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                onCancel();
+            }
+        });
+
+        contentPane.registerKeyboardAction(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onCancel();
+            }
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     private void onOK() {
-        vc.modificarEquipo(eNombre.getText(), convertirFecha(eFecha.getText()), cNombre.getSelectedItem().toString());
-        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
-        dispose(); //
+        try {
+            boolean modificado;
+            modificado = vc.modificarEquipo(eNombre.getText(), convertirFecha(eFecha.getText()), cNombre.getSelectedItem().toString());
+
+            if (modificado) {
+                JOptionPane.showMessageDialog(VentanaModificarEquipo.this, "Equipo modificado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                throw new DatoNoValido("Error al modificar el Equipo");
+            }
+
+            ventanaAdministrador.setVisible(true);
+            dispose();
+        } catch (DatoNoValido error) {
+            JOptionPane.showMessageDialog(VentanaModificarEquipo.this, error.getMessage(), "Error de validación", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(VentanaModificarEquipo.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
     }
 
     private void onCancel() {
-        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
-        dispose(); //
+        ventanaAdministrador.setVisible(true);
+        dispose();
     }
 
     private LocalDate convertirFecha(String fechaTexto) {

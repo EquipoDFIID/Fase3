@@ -46,10 +46,6 @@ public class VistaController {
         ventanaInicio.setVisible(true);
     }
 
-
-
-
-
     public void mostrarVentanaInicio(){
         ventanaInicio = new VentanaInicio(this);
         ventanaInicio.setVisible(true);
@@ -116,8 +112,6 @@ public class VistaController {
         ventanaIntroducirResultados.setVisible(true);
     }
 
-
-
     public void mostrarVentanaEquipos(String uNombre, JFrame ventanaUsuario) {
         ventanaEquipos = new VentanaEquipos(this, uNombre, ventanaUsuario);
         ventanaEquipos.setVisible(true);
@@ -129,52 +123,55 @@ public class VistaController {
     }
 
 
-    public void altaEquipo(String nombre, LocalDate fecha){
-        modeloController.altaEquipo(nombre, fecha);
-    }
-    public void bajaEquipo(String nombreEquipo){
-        modeloController.buscarEquipo(nombreEquipo);
-        modeloController.bajaEquipo();
-    }
-    public void modificarEquipo(String nombre, LocalDate fecha, String nombreEquipo){
-        modeloController.buscarEquipo(nombreEquipo);
-        modeloController.modificarEquipo(nombre, fecha);
 
+    public boolean altaEquipo(String nombre, LocalDate fecha) throws Exception{
+        return modeloController.altaEquipo(nombre, fecha);
+    }
+    public boolean bajaEquipo(String nombreEquipo) throws Exception{
+        modeloController.buscarEquipo(nombreEquipo);
+        return modeloController.bajaEquipo();
+    }
+    public boolean modificarEquipo(String nombre, LocalDate fecha, String nombreEquipo) throws Exception{
+        modeloController.buscarEquipo(nombreEquipo);
+        return modeloController.modificarEquipo(nombre, fecha);
     }
 
-    public void altaJugador(String nombre, String apellido, String nacionalidad,
+
+    public boolean altaJugador(String nombre, String apellido, String nacionalidad,
                             LocalDate fechaNacimiento, String nickname,
-                            double sueldo, Equipo equipo) {
-        modeloController.altaJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, equipo);
+                            double sueldo, Equipo equipo) throws Exception {
+        return modeloController.altaJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, equipo);
     }
-    public void bajaJugador(String nombreJugador){
+    public boolean bajaJugador(String nombreJugador) throws Exception{
         modeloController.buscarJugador(nombreJugador);
-        modeloController.bajaJugador(nombreJugador);
+        return modeloController.bajaJugador(nombreJugador);
     }
-    public void modificarJugador(String nombre, String apellido, String nacionalidad,
+    public boolean modificarJugador(String nombre, String apellido, String nacionalidad,
                                  LocalDate fechaNacimiento, String nickname,
-                                 double sueldo, Equipo ej, String nombreJugador){
+                                 double sueldo, Equipo ej, String nombreJugador) throws Exception {
         modeloController.buscarJugador(nombreJugador);
-        modeloController.modificarJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, ej);
+        return modeloController.modificarJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, ej);
     }
 
-    public void selectUsuarioNick(String nickUsuario, String clave) {
+
+
+    public void selectUsuarioNick(String nickUsuario, String clave) throws Exception {
         modeloController.selectUsuarioNick(nickUsuario, clave);
     }
-    public void selectUsuarioNom(String nombreUsuario, String clave) {
+    public void selectUsuarioNom(String nombreUsuario, String clave) throws Exception {
         modeloController.selectUsuarioNom(nombreUsuario, clave);
     }
     public boolean comprobarNombreClave(String tipo) {
         return  modeloController.comprobarNombreClave(tipo);
     }
 
-    public void rellenarEquipos(){
+    public void rellenarEquipos() throws Exception{
         listaEquipos = modeloController.selectObjetosEquipo();
     }
-    public void rellenarJugadores(){
+    public void rellenarJugadores() throws Exception{
         listaJugadores = modeloController.selectObjetosJugador();
     }
-    public void rellenarJornadas(){
+    public void rellenarJornadas() {
         listaJornadas = modeloController.selectObjetosJornada();
     }
     public void rellenarEquiposEnfrentamientos(JPanel panelEquipos, int indexJornada, JButton bAceptar, VentanaIntroducirResultados ventana) {
@@ -216,24 +213,15 @@ public class VistaController {
         }
     }
 
-
     public ArrayList<ButtonGroup> pasarGrupos() {
         return gruposEquipos;
     }
 
-
-    public boolean cerrarInscripcion() throws SQLException {
+    public boolean cerrarInscripcion() throws Exception {
         return  modeloController.cerrarInscripcion();
     }
 
-   /* public void prueba(){
-       ArrayList<Equipo>equipos= modeloController.selectNombreEquipo();
-       equipos=new ArrayList<>();
-       Equipo equipo = null;
-       equipos.add(equipo);
-    }*/
-
-    public void llenarComboBoxE(JComboBox jEquipo) {
+    public void llenarComboBoxE(JComboBox jEquipo) throws Exception {
         rellenarEquipos();
         jEquipo.removeAllItems();
         jEquipo.addItem("Selecciona un equipo...");
@@ -244,7 +232,7 @@ public class VistaController {
         jEquipo.setSelectedIndex(0);
     }
 
-    public void llenarComboBoxJ(JComboBox jJugador) {
+    public void llenarComboBoxJ(JComboBox jJugador) throws Exception {
         rellenarJugadores();
         jJugador.removeAllItems();
         jJugador.addItem("Selecciona un jugador...");
@@ -270,7 +258,7 @@ public class VistaController {
         jJornada.setSelectedIndex(0);
     }
 
-    public void procesarGanadoresSeleccionados(int indexJornadaSeleccionada) {
+    public boolean procesarGanadoresSeleccionados(int indexJornadaSeleccionada) throws Exception {
         Jornada jornada = modeloController.jornadas.get(indexJornadaSeleccionada - 1);
         List<Enfrentamiento> enfrentamientos = jornada.getListaEnfrentamientos();
 
@@ -292,24 +280,39 @@ public class VistaController {
                 }
             }
         }
-        modeloController.asignarGanadoresEnfrentamientos(jornada);
+
+        // Lista con IDs (viene de BD)
+        ArrayList<Enfrentamiento> enfren = modeloController.selectEnfrentamientosJornada(jornada.getIdJornada());
+
+        // Sincroniza equipoGanador desde enfrentamientos (interfaz) hacia enfren (BD)
+        for (int i = 0; i < enfren.size(); i++) {
+            Enfrentamiento enfrentamientoBD = enfren.get(i);
+            Enfrentamiento enfrentamientoGUI = enfrentamientos.get(i);
+
+            enfrentamientoBD.setEquipoGanador(enfrentamientoGUI.getEquipoGanador());
+        }
+
+        // Ahora enfren tiene id + equipoGanador
+        return modeloController.asignarGanadoresEnfrentamientos(enfren);
     }
 
 
-    public void crearCuenta(String nickname, String nombre, String clave){
-        modeloController.crearCuenta(nickname, nombre, clave);
+
+    public boolean crearCuenta(String nickname, String nombre, String clave) throws Exception{
+        return modeloController.crearCuenta(nickname, nombre, clave);
     }
 
-    public boolean comprobarNickname(String nickname){
+    public boolean comprobarNickname(String nickname) throws Exception {
         return modeloController.comprobarNickname(nickname);
     }
 
     public void mostrarventanaJugadores(String uNombre, VentanaUsuario ventanaUsuario) {
         ventanaJugador = new VentanaJugador(this, uNombre, ventanaUsuario);
         ventanaJugador.setVisible(true);
-
     }
 
 
-
+    public String mostrarProcedimientoResultado() throws Exception {
+        return modeloController.mostrarProcedimientoResultado();
+    }
 }

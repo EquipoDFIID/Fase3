@@ -1,6 +1,7 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
+import org.example.Excepciones.DatoNoValido;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -28,47 +29,45 @@ public class VentanaAltaJugador extends JDialog {
     private static JFrame ventanaAdministrador;
 
     public VentanaAltaJugador(VistaController vc, String aNombre, JFrame ventanaAdmin) {
-        this.vc = vc;
-        this.nombre = aNombre;
-        this.ventanaAdministrador = ventanaAdmin;
-        setContentPane(contentPane);
-        setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
-        setSize(500, 580);
-        setLocationRelativeTo(null);
-        setResizable(false);
+        try {
+            this.vc = vc;
+            this.nombre = aNombre;
+            this.ventanaAdministrador = ventanaAdmin;
+            setContentPane(contentPane);
+            setModal(true);
+            getRootPane().setDefaultButton(buttonOK);
+            setSize(500, 580);
+            setLocationRelativeTo(null);
+            setResizable(false);
+            iconoVentana();
 
-        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
-        setIconImage(icon.getImage());
+            inicializarCampos();
+            agregarListeners();
 
-        vc.llenarComboBoxE(jEquipo);
-        inicializarCampos();
+            buttonOK.addActionListener(e -> onOK());
+            buttonCancel.addActionListener(e -> onCancel());
 
-        // Acciones de botones
-        buttonOK.addActionListener(e -> onOK());
-        buttonCancel.addActionListener(e -> onCancel());
+            setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+            addWindowListener(new WindowAdapter() {
+                public void windowClosing(WindowEvent e) {
+                    onCancel();
+                }
+            });
 
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                onCancel();
-            }
-        });
-
-        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
-                JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-
-        agregarListeners();
-        bLogo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                vc.mostrarVentanaInicio();
-            }
-        });
+            contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+                    JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
-    private void inicializarCampos() {
+    public void iconoVentana(){
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        setIconImage(icon.getImage());
+    }
+
+    private void inicializarCampos() throws Exception {
+        vc.llenarComboBoxE(jEquipo);
         jApellido.setEnabled(false);
         jNacionalidad.setEnabled(false);
         jFecha.setEnabled(false);
@@ -268,6 +267,14 @@ public class VentanaAltaJugador extends JDialog {
                 jSueldo.setBorder(new LineBorder(Color.black, 1));
             }
         });
+
+        bLogo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                vc.mostrarVentanaInicio();
+            }
+        });
     }
 
     private boolean validarNombre() {
@@ -317,21 +324,35 @@ public class VentanaAltaJugador extends JDialog {
     }
 
     private void onOK() {
-        vc.altaJugador(
-                jNombre.getText(),
-                jApellido.getText(),
-                jNacionalidad.getText(),
-                convertirFecha(jFecha.getText()),
-                jNickname.getText(),
-                Double.parseDouble(jSueldo.getText()),
-                vc.buscarComboBoxE(jEquipo)
-        );
-        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
-        dispose(); //
+        try {
+            boolean insertado;
+            insertado = vc.altaJugador(
+                    jNombre.getText(),
+                    jApellido.getText(),
+                    jNacionalidad.getText(),
+                    convertirFecha(jFecha.getText()),
+                    jNickname.getText(),
+                    Double.parseDouble(jSueldo.getText()),
+                    vc.buscarComboBoxE(jEquipo)
+            );
+
+            if (insertado) {
+                JOptionPane.showMessageDialog(VentanaAltaJugador.this, "Jugador creado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                throw new DatoNoValido("Error al insertar el jugador");
+            }
+
+            ventanaAdministrador.setVisible(true);
+            dispose();
+        } catch (DatoNoValido error) {
+            JOptionPane.showMessageDialog(VentanaAltaJugador.this, error.getMessage(), "Error de validación", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(VentanaAltaJugador.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void onCancel() {
-        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
-        dispose(); //
+        ventanaAdministrador.setVisible(true);
+        dispose();
     }
 }

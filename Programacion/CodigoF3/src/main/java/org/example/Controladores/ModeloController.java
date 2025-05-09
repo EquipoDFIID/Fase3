@@ -56,14 +56,14 @@ public class ModeloController {
             campeonatoDao=new CampeonatoDAO();
             campeonatoController= new CampeonatoController(campeonatoDao);
 
+            jornadaDao=new JornadaDAO();
+            jornadaController=new JornadaController(jornadaDao);
+
             enfrentamientoDao=new EnfrentamientoDAO();
             enfrentamientoController=new EnfrentamientoController(enfrentamientoDao);
 
             equipoDao=new EquipoDAO();
             equipoController=new EquipoController(equipoDao);
-
-            jornadaDao=new JornadaDAO();
-            jornadaController=new JornadaController(jornadaDao);
 
             jugadorDao=new JugadorDAO();
             jugadorController=new JugadorController(jugadorDao);
@@ -79,50 +79,50 @@ public class ModeloController {
         this.vc=vc;
     }
 
-    public ArrayList <Equipo> selectObjetosEquipo() {
+    public ArrayList <Equipo> selectObjetosEquipo() throws Exception {
         return equipoController.selectObjetosEquipo();
     }
-    public ArrayList <Jugador> selectObjetosJugador() {return jugadorController.selectObjetosJugador();
+    public ArrayList <Jugador> selectObjetosJugador() throws Exception {return jugadorController.selectObjetosJugador();
     }
     public ArrayList <Jornada> selectObjetosJornada() {
         return jornadaController.selectObjetosJornada();
     }
 
-    public ArrayList <Enfrentamiento> rellenarEquiposEnfrentamientos() {
+    public ArrayList <Enfrentamiento> rellenarEquiposEnfrentamientos() throws Exception {
         return enfrentamientoController.rellenarEquiposEnfrentamientos();
     }
 
-    public void buscarJugador(String nombreJugador) {jugadorController.buscarJugador(nombreJugador);
+    public void buscarJugador(String nombreJugador) throws Exception {jugadorController.buscarJugador(nombreJugador);
     }
-    public void buscarEquipo(String nombreEquipo) {equipoController.buscarEquipo(nombreEquipo);
-    }
-
-    public void altaEquipo(String nombre, LocalDate fecha){
-        equipoController.altaEquipo(nombre, fecha);
-    }
-    public void bajaEquipo() {
-        equipoController.bajaEquipo();
-    }
-    public void modificarEquipo(String nombre, LocalDate fecha) {
-        equipoController.modificarEquipo(nombre, fecha);
+    public void buscarEquipo(String nombreEquipo) throws Exception {equipoController.buscarEquipo(nombreEquipo);
     }
 
-    public void altaJugador(String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento, String nickname, double sueldo, Equipo equipo){
-         jugadorController.altaJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, equipo);
+    public boolean altaEquipo(String nombre, LocalDate fecha) throws Exception{
+        return equipoController.altaEquipo(nombre, fecha);
     }
-    public void bajaJugador( String nombreJugador) {
-        jugadorController.bajaJugador( nombreJugador);
+    public boolean bajaEquipo() throws Exception {
+        return equipoController.bajaEquipo();
     }
-    public void modificarJugador(String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento, String nickname, double sueldo, Equipo ej) {
-        jugadorController.modificarJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, ej);
+    public boolean modificarEquipo(String nombre, LocalDate fecha) throws Exception {
+        return equipoController.modificarEquipo(nombre, fecha);
+    }
+
+    public boolean altaJugador(String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento, String nickname, double sueldo, Equipo equipo) throws Exception {
+        return jugadorController.altaJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, equipo);
+    }
+    public boolean bajaJugador( String nombreJugador) throws Exception {
+        return jugadorController.bajaJugador( nombreJugador);
+    }
+    public boolean modificarJugador(String nombre, String apellido, String nacionalidad, LocalDate fechaNacimiento, String nickname, double sueldo, Equipo ej) throws Exception {
+        return jugadorController.modificarJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, ej);
     }
 
 
 
-    public void selectUsuarioNick(String nickUsuario, String clave) {
+    public void selectUsuarioNick(String nickUsuario, String clave) throws Exception {
         usuario = usuarioController.selectUsuarioNick(nickUsuario, clave);
     }
-    public void selectUsuarioNom(String nombreUsuario, String clave) {
+    public void selectUsuarioNom(String nombreUsuario, String clave) throws Exception {
         usuario = usuarioController.selectUsuarioNom(nombreUsuario, clave);
     }
     public boolean comprobarNombreClave(String tipo){
@@ -138,64 +138,97 @@ public class ModeloController {
     }
 
 
-    public boolean cerrarInscripcion() throws SQLException {
+    public boolean cerrarInscripcion() throws Exception {
+        competicionUpdateInscripcion("en curso");
         boolean cerrada = false;
-
         ArrayList<Equipo> equiposOriginal = equipoController.selectAllEquipos();
         int numeroEquipos = equiposOriginal.size(); // siempre par
-
         int totalJornadas = numeroEquipos - 1;
         int partidosPorJornada = numeroEquipos / 2;
 
         // Creamos una lista mutable para rotar (sin afectar la original)
         ArrayList<Equipo> equipos = new ArrayList<>(equiposOriginal);
 
-        for (int jornada = 0; jornada < totalJornadas; jornada++) {
+        // Fecha base - hoy para la primera jornada
+        LocalDate fechaJornada = LocalDate.now();
 
+        for (int jornada = 0; jornada < totalJornadas; jornada++) {
             ArrayList<Enfrentamiento> enfrentamientos = new ArrayList<>();
-            competicionUpdateInscripcion("en curso");
-            Jornada jornadaNueva = new Jornada(enfrentamientos,LocalDate.now(),campeonatoController.buscarCompeticion(2));
+            // Crear jornada con la fecha calculada
+            Jornada jornadaNueva = new Jornada(enfrentamientos, fechaJornada, campeonatoController.buscarCompeticion(2));
             jornadas.add(jornadaNueva);
             Jornada jornadaEnfren = jornadaController.crearJornada(jornadaNueva);
-            System.out.println("Jornada " + (jornada + 1) + " creada");
+            System.out.println("Jornada " + (jornada + 1) + " creada para el " + fechaJornada);
+
+            // Hora inicial - 9:00 AM para el primer enfrentamiento
+            LocalTime horaEnfrentamiento = LocalTime.of(9, 0);
 
             for (int i = 0; i < partidosPorJornada; i++) {
                 Equipo local = equipos.get(i);
                 Equipo visitante = equipos.get(numeroEquipos - 1 - i);
-                LocalTime hora = LocalTime.now().truncatedTo(ChronoUnit.SECONDS);
-                Enfrentamiento enfrentamiento = new Enfrentamiento(LocalDate.now(), hora, local, visitante, jornadaEnfren);
+
+                // Crear enfrentamiento con fecha de jornada y hora calculada
+                Enfrentamiento enfrentamiento = new Enfrentamiento(
+                        fechaJornada,
+                        horaEnfrentamiento,
+                        local,
+                        visitante,
+                        jornadaEnfren
+                );
                 enfrentamientos.add(enfrentamiento);
-                System.out.println(local.getNombre() + " vs " + visitante.getNombre());
+                System.out.println(local.getNombre() + " vs " + visitante.getNombre() +
+                        " a las " + horaEnfrentamiento);
+
+                // Sumar 2 horas para el próximo enfrentamiento
+                horaEnfrentamiento = horaEnfrentamiento.plusHours(2);
             }
 
             enfrentamientoController.crearEnfrentamientos(enfrentamientos);
-            // Rotación: el primer equipo queda fijo, los demás giran a la derecha
+
+            // Rotación de equipos
             Equipo fijo = equipos.get(0);
             equipos.remove(0);
             Equipo ultimo = equipos.remove(equipos.size() - 1);
             equipos.add(0, ultimo); // el nuevo segundo
-            equipos.add(0, fijo);// el primero se mantiene fijo
+            equipos.add(0, fijo); // el primero se mantiene fijo
+
+            // Sumar 1 semana para la próxima jornada
+            fechaJornada = fechaJornada.plusWeeks(1);
             cerrada = true;
         }
         return cerrada;
     }
 
-    public void crearCuenta(String nickname, String nombre, String clave){
-            usuarioController.crearCuenta(nickname, nombre, clave);
+    public boolean crearCuenta(String nickname, String nombre, String clave) throws Exception {
+        return usuarioController.crearCuenta(nickname, nombre, clave);
     }
 
-    public void competicionUpdateInscripcion(String inscripcion) {
+    public void competicionUpdateInscripcion(String inscripcion) throws Exception {
         campeonatoController.competicionUpdateInscripcion(inscripcion);
     }
 
-    public boolean comprobarNickname(String nickname) {
+    public boolean comprobarNickname(String nickname) throws Exception {
         return usuarioController.comprobarNickname(nickname);
     }
 
-    public void asignarGanadoresEnfrentamientos(Jornada jornada) {
-        for (Enfrentamiento enfrentamiento : jornada.getListaEnfrentamientos()) {
-            enfrentamientoController.asignarGanadorEnfrentamiento(enfrentamiento);
+    public boolean asignarGanadoresEnfrentamientos(ArrayList<Enfrentamiento> enfrentamientos) throws Exception {
+        boolean todosAsignados = true;
+
+        for (Enfrentamiento enfrentamiento : enfrentamientos) {
+            boolean asignado = enfrentamientoController.asignarGanadorEnfrentamiento(enfrentamiento);
+            if (!asignado) {
+                todosAsignados = false;
+            }
         }
+
+        return todosAsignados;
     }
 
+    public ArrayList<Enfrentamiento> selectEnfrentamientosJornada(int idJornada) throws Exception{
+        return enfrentamientoController.selectEnfrentamientosJornada(idJornada);
+    }
+
+    public String mostrarProcedimientoResultado() throws Exception {
+        return enfrentamientoController.mostrarProcedimientoResultado();
+    }
 }

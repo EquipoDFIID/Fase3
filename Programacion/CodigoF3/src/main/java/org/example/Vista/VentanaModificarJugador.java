@@ -1,6 +1,7 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
+import org.example.Excepciones.DatoNoValido;
 import org.example.Modelo.Equipo;
 
 import javax.swing.*;
@@ -38,19 +39,33 @@ public class VentanaModificarJugador extends JDialog {
     private JFrame ventanaAdministrador;
 
     public VentanaModificarJugador(VistaController vc, String aNombre, JFrame ventanaAdmin) {
-        this.vc = vc;
-        this.nombre = aNombre;
-        this.ventanaAdministrador = ventanaAdmin;
-        setContentPane(pPrincipal);
-        setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
-        setSize(500, 580);
-        setLocationRelativeTo(null);
-        setResizable(false);
+        try {
+            this.vc = vc;
+            this.nombre = aNombre;
+            this.ventanaAdministrador = ventanaAdmin;
+            setContentPane(pPrincipal);
+            setModal(true);
+            getRootPane().setDefaultButton(buttonOK);
+            setSize(500, 580);
+            setLocationRelativeTo(null);
+            setResizable(false);
+            iconoVentana();
 
+            inicializarCampos();
+            agregarListeners();
+
+            setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void iconoVentana(){
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
         setIconImage(icon.getImage());
+    }
 
+    public void inicializarCampos() throws Exception {
         jNombre.setEnabled(false);
         jApellido.setEnabled(false);
         jNacionalidad.setEnabled(false);
@@ -60,34 +75,9 @@ public class VentanaModificarJugador extends JDialog {
         jEquipo.setEnabled(false);
         vc.llenarComboBoxJ(cJugador);
         vc.llenarComboBoxE(jEquipo);
+    }
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
-
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
-
-        // call onCancel() when cross is clicked
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                onCancel();
-            }
-        });
-
-        // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-
+    public void agregarListeners() {
         cJugador.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -107,29 +97,6 @@ public class VentanaModificarJugador extends JDialog {
             }
         });
 
-        agregarListeners();
-        bLogo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                vc.mostrarVentanaInicio();
-            }
-        });
-    }
-    /*public void llenarComboBox(){
-        ArrayList<Jugador> listaJugadores=vc.();
-        cJugador.removeAllItems();
-
-        cJugador.addItem("Selecciona un jugador...");
-
-        for (Jugador jugador : listaJugadores) {
-            cJugador.addItem(jugador.getNombre());
-        }
-
-        cJugador.setSelectedIndex(0);
-    }*/
-
-    private void agregarListeners() {
         jNombre.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
                 if (validarNombre()) {
@@ -330,6 +297,38 @@ public class VentanaModificarJugador extends JDialog {
                 if ((opposite instanceof JRadioButton) || opposite == jNombre || opposite == jApellido || opposite == jNacionalidad || opposite == jFecha || opposite == jNickname || opposite == jSueldo|| opposite == cJugador) return;
             }
         });
+
+        bLogo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                vc.mostrarVentanaInicio();
+            }
+        });
+
+        buttonOK.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onOK();
+            }
+        });
+
+        buttonCancel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onCancel();
+            }
+        });
+
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                onCancel();
+            }
+        });
+
+        contentPane.registerKeyboardAction(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onCancel();
+            }
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     private boolean validarNombre() {
@@ -369,26 +368,39 @@ public class VentanaModificarJugador extends JDialog {
     }
 
     private void onOK() {
-        vc.modificarJugador(
-                jNombre.getText(),
-                jApellido.getText(),
-                jNacionalidad.getText(),
-                convertirFecha(jFecha.getText()),
-                jNickname.getText(),
-                Double.parseDouble(jSueldo.getText()),
-                ej = vc.buscarComboBoxE(jEquipo),
-                cJugador.getSelectedItem().toString()
-        );
-        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
-        dispose(); //
+        try {
+            boolean modificado;
+
+            modificado = vc.modificarJugador(
+                    jNombre.getText(),
+                    jApellido.getText(),
+                    jNacionalidad.getText(),
+                    convertirFecha(jFecha.getText()),
+                    jNickname.getText(),
+                    Double.parseDouble(jSueldo.getText()),
+                    ej = vc.buscarComboBoxE(jEquipo),
+                    cJugador.getSelectedItem().toString()
+            );
+
+            if (modificado) {
+                JOptionPane.showMessageDialog(VentanaModificarJugador.this, "Jugador modificado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                throw new DatoNoValido("Error al modificar el Jugador");
+            }
+
+            ventanaAdministrador.setVisible(true);
+            dispose();
+        } catch (DatoNoValido error) {
+            JOptionPane.showMessageDialog(VentanaModificarJugador.this, error.getMessage(), "Error de validación", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(VentanaModificarJugador.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void onCancel() {
-        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
-        dispose(); //
+        ventanaAdministrador.setVisible(true);
+        dispose();
     }
-
-
 
     private LocalDate convertirFecha(String fechaTexto) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

@@ -1,6 +1,7 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
+import org.example.Excepciones.DatoNoValido;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -34,14 +35,24 @@ public class VentanaCrearCuenta extends JFrame {
         setLocationRelativeTo(null);
         buttonOK.setEnabled(false);
         setResizable(false);
+        iconoVentana();
 
+        inicializarCampos();
+        agregarListeners();
+    }
+
+    public void iconoVentana(){
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
         setIconImage(icon.getImage());
+    }
 
+    public void inicializarCampos() {
         cNombre.setEnabled(false);
         cClave.setEnabled(false);
         ccClave.setEnabled(false);
+    }
 
+    public void agregarListeners() {
         cNickname.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
                 if (validarNickname()) {
@@ -131,13 +142,14 @@ public class VentanaCrearCuenta extends JFrame {
                 super.keyReleased(e);
                 String clave2 = ccClave.getText();
                 String clave1 = cClave.getText();
+
                 // Si ya hay algo en ccClave, validar coincidencia
                 if (!clave2.isEmpty()) {
                     if (clave1.equals(clave2)) {
                         cClave.setBorder(new LineBorder(Color.GREEN, 1));
                         ccClave.setBorder(new LineBorder(Color.GREEN, 1));
                         buttonOK.setEnabled(true);
-                        //getRootPane().setDefaultButton(buttonOK); // Agregado
+                        getRootPane().setDefaultButton(buttonOK); // Agregado
                     } else {
                         cClave.setBorder(new LineBorder(Color.RED, 1));
                         ccClave.setBorder(new LineBorder(Color.RED, 1));
@@ -164,21 +176,34 @@ public class VentanaCrearCuenta extends JFrame {
         buttonCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ventanaInicio.setVisible(true); // Vuelve a mostrar la ventana de administrador
+                ventanaInicio.setVisible(true);
                 dispose();
             }
         });
         buttonOK.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!vc.comprobarNickname(cNickname.getText())) {
-                    vc.crearCuenta(cNickname.getText(), cNombre.getText(), cClave.getText());
-                    JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "Usuario creado exitosamente", "Exitosamente", JOptionPane.INFORMATION_MESSAGE);
-                    ventanaInicio.setVisible(true);
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "El nickname ya existe", "Error", JOptionPane.ERROR_MESSAGE);
-                    resetCampos();
+                try {
+                    if(!vc.comprobarNickname(cNickname.getText())) {
+                        boolean creada;
+                        creada = vc.crearCuenta(cNickname.getText(), cNombre.getText(), cClave.getText());
+
+                        if (creada) {
+                            JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "Usuario creado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            throw new DatoNoValido("Error al crear el Usuario");
+                        }
+
+                        ventanaInicio.setVisible(true);
+                        dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "El nickname ya existe", "Error", JOptionPane.ERROR_MESSAGE);
+                        resetCampos();
+                    }
+                } catch (DatoNoValido error) {
+                    JOptionPane.showMessageDialog(VentanaCrearCuenta.this, error.getMessage(), "Error de validación", JOptionPane.ERROR_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(VentanaCrearCuenta.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
