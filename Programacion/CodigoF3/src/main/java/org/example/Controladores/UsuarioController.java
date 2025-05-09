@@ -18,6 +18,15 @@ public class UsuarioController {
     public Usuario selectUsuarioNom(String nombreUsuario, String clave) throws Exception {
         return usuarioDAO.selectUsuarioNom(nombreUsuario.toLowerCase(), clave);
     }
+
+    /**
+     * Creacion de un nuevo usuario
+     * @param nickname
+     * @param nombre
+     * @param clave
+     * @return
+     * @throws Exception
+     */
     public boolean crearCuenta(String nickname, String nombre, String clave) throws Exception {
         Usuario usuario = new Usuario();
         usuario.setNickname(nickname);

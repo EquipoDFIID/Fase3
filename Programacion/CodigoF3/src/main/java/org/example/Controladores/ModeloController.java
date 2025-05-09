@@ -14,6 +14,9 @@ import java.util.ArrayList;
  */
 public class ModeloController {
 
+    /**
+     * Creacion de los dao y controller de las clases que tenemos
+     */
 
 
     private CampeonatoDAO campeonatoDao;
@@ -75,6 +78,11 @@ public class ModeloController {
         this.vc=vc;
     }
 
+    /**
+     * Selecciones de objetos
+     * @return
+     * @throws Exception
+     */
     public ArrayList <Equipo> selectObjetosEquipo() throws Exception {
         return equipoController.selectObjetosEquipo();
     }
@@ -88,11 +96,23 @@ public class ModeloController {
         return enfrentamientoController.rellenarEquiposEnfrentamientos();
     }
 
+    /**
+     * Búsqueda de objetos
+     * @param nombreJugador
+     * @throws Exception
+     */
     public void buscarJugador(String nombreJugador) throws Exception {jugadorController.buscarJugador(nombreJugador);
     }
     public void buscarEquipo(String nombreEquipo) throws Exception {equipoController.buscarEquipo(nombreEquipo);
     }
 
+    /**
+     * Altas, bajas y modficaciones
+     * @param nombre
+     * @param fecha
+     * @return
+     * @throws Exception
+     */
     public boolean altaEquipo(String nombre, LocalDate fecha) throws Exception{
         return equipoController.altaEquipo(nombre, fecha);
     }
@@ -114,13 +134,24 @@ public class ModeloController {
     }
 
 
-
+    /**
+     * Consultas de usuario
+     * @param nickUsuario
+     * @param clave
+     * @throws Exception
+     */
     public void selectUsuarioNick(String nickUsuario, String clave) throws Exception {
         usuario = usuarioController.selectUsuarioNick(nickUsuario, clave);
     }
     public void selectUsuarioNom(String nombreUsuario, String clave) throws Exception {
         usuario = usuarioController.selectUsuarioNom(nombreUsuario, clave);
     }
+
+    /**
+     * Comprobacion de la clave
+     * @param tipo
+     * @return
+     */
     public boolean comprobarNombreClave(String tipo){
         boolean encontrado=false;
 
@@ -133,7 +164,11 @@ public class ModeloController {
         return encontrado;
     }
 
-
+    /**
+     * Cierre de inscripcion
+     * @return
+     * @throws Exception
+     */
     public boolean cerrarInscripcion() throws Exception {
         competicionUpdateInscripcion("en curso");
         boolean cerrada = false;
@@ -195,6 +230,14 @@ public class ModeloController {
         return cerrada;
     }
 
+    /**
+     * Creacion de la cuenta, pasandolo a usuarioController
+     * @param nickname
+     * @param nombre
+     * @param clave
+     * @return
+     * @throws Exception
+     */
     public boolean crearCuenta(String nickname, String nombre, String clave) throws Exception {
         return usuarioController.crearCuenta(nickname, nombre, clave);
     }
@@ -207,6 +250,12 @@ public class ModeloController {
         return usuarioController.comprobarNickname(nickname);
     }
 
+    /**
+     * Metodo para asignar el equipo ganador
+     * @param enfrentamientos
+     * @return
+     * @throws Exception
+     */
     public boolean asignarGanadoresEnfrentamientos(ArrayList<Enfrentamiento> enfrentamientos) throws Exception {
         boolean todosAsignados = true;
 

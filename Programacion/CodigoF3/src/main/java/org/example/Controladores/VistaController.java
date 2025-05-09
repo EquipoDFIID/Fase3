@@ -13,7 +13,8 @@ import java.util.Enumeration;
 import java.util.List;
 
 /**
- * Controlador de la vista que gestiona la interacción entre las ventanas y el modelo.
+ * Clase `VistaController` que gestiona la interacción entre la interfaz gráfica (ventanas) y el modelo de datos.
+ * Centraliza la apertura de diferentes vistas y coordina las acciones del usuario con el modelo.
  */
 public class VistaController {
     private VentanaInicio ventanaInicio;
@@ -43,12 +44,21 @@ public class VistaController {
     private  ArrayList<JRadioButton> botonesEquipos = new ArrayList<>();
     private ArrayList<ButtonGroup > gruposEquipos = new ArrayList<>(2);
 
+
+    /**
+     * Constructor del controlador de la vista.
+     * Inicializa el controlador del modelo y abre la ventana de inicio.
+     *
+     * @param modeloController Controlador del modelo de datos.
+     */
     public VistaController(ModeloController modeloController) {
         this.modeloController = modeloController;
         ventanaInicio = new VentanaInicio(this);
         ventanaInicio.setVisible(true);
     }
-
+    /**
+     * Muestra las diferentes ventanas
+     */
     public void mostrarVentanaInicio(){
         ventanaInicio = new VentanaInicio(this);
         ventanaInicio.setVisible(true);
@@ -126,14 +136,37 @@ public class VistaController {
     }
 
 
-
+    /**
+     * Da de alta un nuevo equipo a través del modelo.
+     *
+     * @param nombre Nombre del equipo.
+     * @param fecha Fecha de fundación del equipo.
+     * @return true si el equipo fue creado correctamente.
+     * @throws Exception Si ocurre un error durante la creación.
+     */
     public boolean altaEquipo(String nombre, LocalDate fecha) throws Exception{
         return modeloController.altaEquipo(nombre, fecha);
     }
+    /**
+     * Elimina un equipo mediante el modelo.
+     *
+     * @param nombreEquipo Nombre del equipo a eliminar.
+     * @return true si el equipo fue eliminado correctamente.
+     * @throws Exception Si ocurre un error durante la eliminación.
+     */
     public boolean bajaEquipo(String nombreEquipo) throws Exception{
         modeloController.buscarEquipo(nombreEquipo);
         return modeloController.bajaEquipo();
     }
+    /**
+     * Modifica los datos de un equipo.
+     *
+     * @param nombre Nuevo nombre del equipo.
+     * @param fecha Nueva fecha de fundación.
+     * @param nombreEquipo Nombre actual del equipo a modificar.
+     * @return true si la modificación fue exitosa.
+     * @throws Exception Si ocurre un error durante la modificación.
+     */
     public boolean modificarEquipo(String nombre, LocalDate fecha, String nombreEquipo) throws Exception{
         modeloController.buscarEquipo(nombreEquipo);
         return modeloController.modificarEquipo(nombre, fecha);
@@ -221,7 +254,12 @@ public class VistaController {
     public boolean cerrarInscripcion() throws Exception {
         return  modeloController.cerrarInscripcion();
     }
-
+    /**
+     * Rellena el comboBox con los nombres de los equipos.
+     *
+     * @param jEquipo ComboBox donde se cargarán los nombres.
+     * @throws Exception Si ocurre un error durante la carga.
+     */
     public void llenarComboBoxE(JComboBox jEquipo) throws Exception {
         rellenarEquipos();
         jEquipo.removeAllItems();
@@ -329,7 +367,12 @@ public class VistaController {
         ventanaJugadorA = new VentanaJugadorA(this, uNombre, ventanaAdmin);
         ventanaJugadorA.setVisible(true);
     }
-
+    /**
+     * Muestra la ventana de resultados para un usuario.
+     *
+     * @param uNombre Nombre del usuario.
+     * @param ventanaAdmin Ventana desde donde se solicita.
+     */
     public void mostrarVentanaResultadosA(String uNombre, JFrame ventanaAdmin) {
         ventanaResultadosA = new VentanaResultadosA(this, uNombre, ventanaAdmin);
         ventanaResultadosA.setVisible(true);
