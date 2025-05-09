@@ -14,7 +14,7 @@ public class EnfrentamientoDAO {
     public static void altaEnfrentamiento(Enfrentamiento enfrentamiento) throws Exception {
         String sql = "INSERT INTO ENFRENTAMIENTOS (HORA, FECHA_ENF, EQUIPO_ATACANTE, EQUIPO_DEFENSOR, ID_JORNADA) VALUES (?, ?, ?, ?, ?)";
 
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
+        PreparedStatement ps = con.prepareStatement(sql);
             ps.setTime(1, Time.valueOf(enfrentamiento.getHoraEnfrentamiento()));
             ps.setDate(2, Date.valueOf(enfrentamiento.getFechEnfrentamiento()));
             ps.setInt(3, enfrentamiento.getEquipoAtacante().getIdEquipo());
@@ -22,28 +22,24 @@ public class EnfrentamientoDAO {
             ps.setInt(5, enfrentamiento.getJornada().getIdJornada());
 
             ps.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+
     }
 
     public void asignarGanadorEnfrentamiento(Enfrentamiento enfrentamiento) throws Exception {
-        try {
+
             String sql = "UPDATE enfrentamientos SET equipo_ganador = ? WHERE id_enfrentamiento = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, enfrentamiento.getEquipoGanador().getIdEquipo());
             ps.setInt(2, enfrentamiento.getIdEnfrentamiento());
 
             ps.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+
     }
 
     public ArrayList<Enfrentamiento> selectEnfrentamientosJornada(int idJornada) throws Exception {
         ArrayList<Enfrentamiento> enfrentamientos = new ArrayList<>();
 
-        try {
+
             String sql = "SELECT * FROM ENFRENTAMIENTOS WHERE ID_JORNADA = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idJornada);
@@ -61,16 +57,13 @@ public class EnfrentamientoDAO {
                 enfrentamientos.add(e);
             }
 
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
         return enfrentamientos;
     }
     public static String procedimientoEnfrentamientosUltimaJornada() throws Exception {
         StringBuilder tabla = new StringBuilder();
         CallableStatement cstmt = null;
 
-        try {
+
             String sql = "{ call mostrar_enfrentamientos_ultima_jornada(?, ?) }";
             cstmt = con.prepareCall(sql);
 
@@ -111,17 +104,12 @@ public class EnfrentamientoDAO {
                 }
             }
 
-        } catch (Exception ex) {
-            tabla.append("Error al generar la tabla: ").append(ex.getMessage());
-        } finally {
             if (cstmt != null) {
-                try {
+
                     cstmt.close();
-                } catch (SQLException e) {
-                    System.err.println("Error al cerrar el statement: " + e.getMessage());
-                }
+
             }
-        }
+
         System.out.println(tabla.toString());
         return tabla.toString();
     }

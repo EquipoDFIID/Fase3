@@ -19,7 +19,7 @@ public class UsuarioDAO {
      */
     public Usuario selectUsuarioNom(String nombreUsuario, String clave) throws Exception {
         Usuario u= null;
-        try {
+
             String sql = "SELECT * FROM USUARIOS WHERE LOWER(NOMBRE) = ? AND CLAVE=?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, nombreUsuario);
@@ -36,9 +36,7 @@ public class UsuarioDAO {
 
             }
 
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+
         return null;
     }
 
@@ -50,7 +48,7 @@ public class UsuarioDAO {
      */
     public Usuario selectUsuarioNick(String nickUsuario, String clave) throws Exception {
         Usuario u= null;
-        try {
+
             String sql = "SELECT * FROM USUARIOS WHERE lower(NICKNAME) = ? AND CLAVE=?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, nickUsuario);
@@ -67,9 +65,7 @@ public class UsuarioDAO {
 
             }
 
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+
         return null;
     }
 
@@ -79,7 +75,7 @@ public class UsuarioDAO {
      * @param usuario Objeto `Usuario` que contiene los datos del usuario a crear.
      */
     public void crearUsuario (Usuario usuario) throws Exception {
-        try {
+
             String sql = "INSERT INTO USUARIOS (nickname, nombre, clave, tipo_usuario) VALUES(?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, usuario.getNickname());
@@ -87,15 +83,13 @@ public class UsuarioDAO {
             ps.setString(3, usuario.getClave());
             ps.setString(4, usuario.getTipoUsuario());
             ps.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+
     }
 
     public boolean comprobarNickname(String nickname) throws Exception {
         boolean encontrado = false;
 
-        try {
+
             String sql = "SELECT * FROM USUARIOS WHERE LOWER(nickname) = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, nickname);
@@ -104,9 +98,7 @@ public class UsuarioDAO {
                 encontrado = true;
             }
 
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+
 
         return encontrado;
     }

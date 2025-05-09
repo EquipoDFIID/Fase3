@@ -18,7 +18,7 @@ public class JugadorDAO {
      */
     public ArrayList<Jugador> selectObjetosJugador() throws Exception {
         ArrayList<Jugador> jugadores = new ArrayList<>();
-        try {
+
             String sql = "SELECT * FROM JUGADORES";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -35,9 +35,7 @@ public class JugadorDAO {
                 jugadores.add(j);
             }
 
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+
         return jugadores;
     }
 
@@ -51,7 +49,7 @@ public class JugadorDAO {
     public static Jugador buscarJugador(String nombreJugador) throws Exception {
        Jugador j = new Jugador();
        j.setNickname(nombreJugador);
-        try {
+
             String sql = "SELECT * FROM JUGADORES WHERE NICKNAME = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, nombreJugador);
@@ -68,9 +66,7 @@ public class JugadorDAO {
                 j.setEquipo(EquipoDAO.buscarEquipo(rs.getString("ID_EQUIPO")));
             }
 
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+
         return j;
     }
 
@@ -82,7 +78,7 @@ public class JugadorDAO {
      * @param jugador Objeto Jugador con los datos a insertar.
      */
     public static void altaJugador(Jugador jugador) throws Exception {
-        try {
+
             String sql = "INSERT INTO jugadores (NOMBRE, APELLIDO, NACIONALIDAD, FECHA_NAC, NICKNAME, SUELDO, ID_EQUIPO) VALUES(?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, jugador.getNombre());
@@ -93,9 +89,7 @@ public class JugadorDAO {
             ps.setDouble(6, jugador.getSueldo());
             ps.setInt(7, jugador.getEquipo().getIdEquipo());
             ps.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+
     }
 
 // =============================================
@@ -107,7 +101,7 @@ public class JugadorDAO {
      * @param jugadorAnterior Objeto del jugador para identificar el registro a modificar.
      */
     public static void modificarJugador(Jugador jugador, Jugador jugadorAnterior) throws Exception {
-        try {
+
             String sql = "UPDATE JUGADORES SET NOMBRE = ?," +
                          "apellido = ?,nacionalidad = ?,fecha_nac = ?,nickname = ?,sueldo = ?," +
                          "id_equipo = ? WHERE NICKNAME = ?";
@@ -121,9 +115,7 @@ public class JugadorDAO {
             ps.setInt(7, jugador.getEquipo().getIdEquipo());
             ps.setString(8, jugadorAnterior.getNickname());
             ps.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+
     }
 
 // =============================================
@@ -135,20 +127,18 @@ public class JugadorDAO {
      */
 
     public static void borrarJugador(String nombreJugador) throws Exception {
-        try {
+
             String sql = "DELETE FROM JUGADORES WHERE NICKNAME = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, nombreJugador);
             ps.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+
     }
     public static String obtenerJugadoresPorEquipo(String nombreEquipo) throws Exception {
         StringBuilder tabla = new StringBuilder();
         CallableStatement cstmt = null;
 
-        try {
+
             String sql = "{ call obtener_jugadores_equipo(?, ?) }";
             cstmt = con.prepareCall(sql);
             cstmt.setString(1, nombreEquipo); // Parámetro de entrada
@@ -172,16 +162,12 @@ public class JugadorDAO {
                             sueldo));
                 }
             }
-        } catch (Exception ex) {
-            tabla.append("Error al obtener los jugadores del equipo: ").append(ex.getMessage());
-        } finally {
+
             if (cstmt != null) {
-                try {
+
                     cstmt.close();
-                } catch (SQLException e) {
-                    System.err.println("Error al cerrar el statement: " + e.getMessage());
-                }
-            }
+
+
         }
 
         return tabla.toString();
