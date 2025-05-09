@@ -1,6 +1,7 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
+import org.example.Excepciones.DatoNoValido;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -148,12 +149,21 @@ public class VentanaAltaEquipo extends JDialog {
 
     private void onOK() {
         try {
-            vc.altaEquipo(eNombre.getText(), convertirFecha(eFecha.getText()));
-            JOptionPane.showMessageDialog(VentanaAltaEquipo.this, "Equipo creado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            boolean insertado;
+            insertado = vc.altaEquipo(eNombre.getText(), convertirFecha(eFecha.getText()));
+
+            if (insertado) {
+                JOptionPane.showMessageDialog(VentanaAltaEquipo.this, "Equipo creado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                throw new DatoNoValido("Error al insertar el Equipo");
+            }
+
             ventanaAdministrador.setVisible(true);
             dispose();
+        } catch (DatoNoValido error) {
+            JOptionPane.showMessageDialog(VentanaAltaEquipo.this, error.getMessage(), "Error de validación", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(VentanaAltaEquipo.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

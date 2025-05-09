@@ -3,8 +3,6 @@ package org.example.Controladores;
 import org.example.Modelo.Campeonato;
 import org.example.Modelo.CampeonatoDAO;
 
-import java.sql.SQLException;
-
 /**
  * Clase `CampeonatoController` que actúa como controlador para gestionar las operaciones
  * relacionadas con los campeonatos, interactuando con la capa de datos (`CampeonatoDAO`).

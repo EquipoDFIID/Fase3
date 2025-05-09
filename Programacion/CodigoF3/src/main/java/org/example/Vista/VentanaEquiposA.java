@@ -1,28 +1,25 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
+import org.example.Modelo.EquipoDAO;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-/**
- * Clase VentanaResultados.
- * Representa una ventana gráfica que muestra los resultados de un procedimiento
- * y permite al usuario interactuar con el sistema.
- */
-public class VentanaResultados extends JFrame {
+
+public class VentanaEquiposA extends JFrame {
     private JButton bLogo;
     private JButton SALIRButton;
-    private JTextArea textArea1;
+    private JTextArea tEquipos;
     private JPanel pPrincipal;
     private VistaController vc;
-    private JFrame ventanaUser;
+    private JFrame ventanaAdmin;
 
-    public VentanaResultados(VistaController vc, String nombre, JFrame ventanaUsuario) {
-        try{
+    public VentanaEquiposA(VistaController vc, String aNombre, JFrame ventanaAdmin) {
+        try {
             this.vc = vc;
-            this.ventanaUser = ventanaUsuario;
+            this.ventanaAdmin = ventanaAdmin;
             setContentPane(pPrincipal);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setTitle("MenuPrincipal");
@@ -32,9 +29,9 @@ public class VentanaResultados extends JFrame {
             iconoVentana();
 
             inicializarCampos();
-            agregarListeners(nombre);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            agregarListeners(aNombre);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -44,15 +41,15 @@ public class VentanaResultados extends JFrame {
     }
 
     public void inicializarCampos() throws Exception{
-        textArea1.setText(vc.mostrarProcedimientoResultado());
-        textArea1.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        tEquipos.setText(EquipoDAO.procedimientoEquipos());
+        tEquipos.setFont(new Font("Monospaced", Font.PLAIN, 12));
     }
 
-    public void agregarListeners(String nombre) {
+    public void agregarListeners(String aNombre){
         SALIRButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ventanaUser.setVisible(true);
+                ventanaAdmin.setVisible(true);
                 dispose();
             }
         });

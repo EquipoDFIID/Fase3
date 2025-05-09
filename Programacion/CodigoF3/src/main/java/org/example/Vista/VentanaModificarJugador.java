@@ -1,6 +1,7 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
+import org.example.Excepciones.DatoNoValido;
 import org.example.Modelo.Equipo;
 
 import javax.swing.*;
@@ -57,30 +58,7 @@ public class VentanaModificarJugador extends JDialog {
             inicializarCampos();
             agregarListeners();
 
-            buttonOK.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    onOK();
-                }
-            });
-
-            buttonCancel.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    onCancel();
-                }
-            });
-
             setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-            addWindowListener(new WindowAdapter() {
-                public void windowClosing(WindowEvent e) {
-                    onCancel();
-                }
-            });
-
-            contentPane.registerKeyboardAction(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    onCancel();
-                }
-            }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -340,6 +318,30 @@ public class VentanaModificarJugador extends JDialog {
                 vc.mostrarVentanaInicio();
             }
         });
+
+        buttonOK.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onOK();
+            }
+        });
+
+        buttonCancel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onCancel();
+            }
+        });
+
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                onCancel();
+            }
+        });
+
+        contentPane.registerKeyboardAction(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onCancel();
+            }
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     private boolean validarNombre() {
@@ -380,7 +382,9 @@ public class VentanaModificarJugador extends JDialog {
 
     private void onOK() {
         try {
-            vc.modificarJugador(
+            boolean modificado;
+
+            modificado = vc.modificarJugador(
                     jNombre.getText(),
                     jApellido.getText(),
                     jNacionalidad.getText(),
@@ -390,17 +394,25 @@ public class VentanaModificarJugador extends JDialog {
                     ej = vc.buscarComboBoxE(jEquipo),
                     cJugador.getSelectedItem().toString()
             );
-            JOptionPane.showMessageDialog(VentanaModificarJugador.this, "Jugador modificado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+
+            if (modificado) {
+                JOptionPane.showMessageDialog(VentanaModificarJugador.this, "Jugador modificado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                throw new DatoNoValido("Error al modificar el Jugador");
+            }
+
             ventanaAdministrador.setVisible(true);
             dispose();
+        } catch (DatoNoValido error) {
+            JOptionPane.showMessageDialog(VentanaModificarJugador.this, error.getMessage(), "Error de validación", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(VentanaModificarJugador.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void onCancel() {
         ventanaAdministrador.setVisible(true);
-        dispose(); //
+        dispose();
     }
 
     private LocalDate convertirFecha(String fechaTexto) {

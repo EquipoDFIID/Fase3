@@ -13,15 +13,15 @@
 
 <h1 id="estado">◾ Estado del Proyecto</h1>
 
-**En desarrollo 🔝**
-
-Se encuentra actualmente en fase activa de implementación y pruebas funcionales.
+**Finalizado ✅**
 
 ---
 
 <h1 id="descripcion">◾ Gestión de Competición CSGO</h1>
 
 Este proyecto corresponde a un programa orientado a la gestión de competiciones de *Counter-Strike: Global Offensive* (*CSGO*).
+
+<img src="readmeImg/banner.jpg" alt="banner" height="350" width="1000"/>
 
 Ofrece funcionalidades para administrar equipos, jugadores y partidos, así como registrar resultados y generar calendarios automáticos.
 
@@ -40,18 +40,23 @@ Ofrece funcionalidades para administrar equipos, jugadores y partidos, así como
 <h1 id="stack">◾ Stack Tecnológico</h1>
 
 -  **Tecnologías de Desarrollo**
-
+ 
     ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ_IDEA-white?logo=intellijidea&logoColor=black&color=white)
     ![Java](https://img.shields.io/badge/Java-white?logo=coffeescript&logoColor=black&color=white)
     ![Oracle_SQL](https://img.shields.io/badge/Oracle_SQL-white?logo=liquibase&logoColor=black&color=white)
     ![JUnit5](https://img.shields.io/badge/JUnit5-white?logo=jekyll&logoColor=black&color=white)
-    ![ChatGPT](https://img.shields.io/badge/ChatGPT-white?logo=openai&logoColor=black&color=white)
 
 -  **Herramientas de Organización y Comunicación**
 
+    ![GitHub](https://img.shields.io/badge/GitHub-white?logo=github&logoColor=black&color=white)
     ![Trello](https://img.shields.io/badge/Trello-white?logo=trello&logoColor=black&color=white)
     ![WhatsApp](https://img.shields.io/badge/WhatsApp-white?logo=whatsapp&logoColor=black&color=white)
     ![Discord](https://img.shields.io/badge/Discord-white?logo=discord&logoColor=black&color=white)
+
+-  **Dependencias y herramientas de build**
+
+    ![Maven](https://img.shields.io/badge/Maven-white?logo=apachemaven&logoColor=black&color=white)
+
 
 ---
 
@@ -59,7 +64,11 @@ Ofrece funcionalidades para administrar equipos, jugadores y partidos, así como
 
 - Se usó **JUnit 5** para pruebas unitarias.
 - Clases testeadas:
-> Añadir clases en las que se han hecho los test.
+  > BD
+   
+  > CamponatoController
+  
+  > UsuarioController
 
 ---
 
@@ -80,9 +89,7 @@ Pantalla inicial con selección de tipo de usuario:
 
 2. Abrir el proyecto en **IntelliJ IDEA** (u otro IDE compatible).
 
-3. Configurar los parámetros de conexión a la base de datos **Oracle**.
-
-4. Ejecutar la clase principal para lanzar la aplicación.
+3. Ejecutar la clase principal para lanzar la aplicación.
 
 ---
 
@@ -91,13 +98,11 @@ Pantalla inicial con selección de tipo de usuario:
 El sistema contempla dos tipos de usuarios:
 
   **Administrador**
-      Acceso completo para gestionar entidades y resultados del torneo.
+  - Acceso completo para gestionar entidades y resultados del torneo.
       
-  - Nombre: *Admin* |  Clave: *1111*
+     > Nombre: *Danel* |  Clave: *2424*
 
   **Usuario general**
-      Acceso de solo lectura para consultar estadísticas y reportes.
+  - Acceso de solo lectura para consultar estadísticas y reportes.
       
-- Nickname: *Usuario* | Clave: *2222*
-
----
+    > Nickname: *Ibaicito* | Clave: *1111*

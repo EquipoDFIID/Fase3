@@ -9,11 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
-import java.util.Objects;
-/**
- * Clase VentanaIntroducirResultados.
- * Representa una ventana gráfica que permite al usuario introducir los resultados de los enfrentamientos.
- */
+
 public class VentanaIntroducirResultados extends JFrame {
     private JPanel panel1;
     private JButton bLogo;
@@ -26,13 +22,7 @@ public class VentanaIntroducirResultados extends JFrame {
     private String nombre;
     private JFrame ventanaAdministrador;
     private ArrayList<ButtonGroup> gruposEquipos = new ArrayList<>();
-    /**
-     * Constructor de la clase VentanaIntroducirResultados.
-     *
-     * @param vc Controlador de la vista que gestiona la lógica de la aplicación.
-     * @param aNombre Nombre del usuario actual.
-     * @param ventanaAdmin Ventana de administrador desde la que se accedió a esta ventana.
-     */
+
     public VentanaIntroducirResultados(VistaController vc, String aNombre, JFrame ventanaAdmin) {
         try {
             this.vc = vc;
@@ -42,70 +32,122 @@ public class VentanaIntroducirResultados extends JFrame {
             setSize(500, 580);
             setLocationRelativeTo(null);
             setResizable(false);
+            iconoVentana();
 
-            ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("icon.png")));
-            setIconImage(icon.getImage());
+            inicializarCampos();
+            agregarListeners();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
-            // Usa layout si y solo si NO usas el GUI Designer
-            panelEquipos.setLayout(new GridLayout(0, 2, 10, 5));
+    public void iconoVentana() {
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        setIconImage(icon.getImage());
+    }
 
-            //vc.rellenarEquiposEnfrentamientos(panelEquipos, 0, bAceptar, this);
-            vc.llenarComboBoxJor(cJornada);
-            //Quiero que la jornada al seleccionarla haga una select y luego salgan los radioButtons de esa jornada
+    public void inicializarCampos() {
+        panelEquipos.setLayout(new GridLayout(0, 2, 10, 5));
+        vc.llenarComboBoxJor(cJornada);
+        bAceptar.setEnabled(false);
+    }
 
-            bAceptar.setEnabled(false);
+    public void agregarListeners() {
+        cJornada.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    // Comprobamos que el índice seleccionado no sea 0 (el valor predeterminado)
+                    int selectedIndex = cJornada.getSelectedIndex();
 
+                    if (selectedIndex > 0) { // Solo procesamos si no es la opción predeterminada
+                        Object seleccionado = cJornada.getSelectedItem();
 
-            cJornada.addItemListener(new ItemListener() {
-                @Override
-                public void itemStateChanged(ItemEvent e) {
-                    if (e.getStateChange() == ItemEvent.SELECTED) {
-                        vc.rellenarEquiposEnfrentamientos(panelEquipos, cJornada.getSelectedIndex(), bAceptar, VentanaIntroducirResultados.this);
-                        bAceptar.setEnabled(comprobarSelecciones());
-                        getRootPane().setDefaultButton(bAceptar); // Agregado
+                        if (seleccionado instanceof Integer) {
+                            int idJornada = (Integer) seleccionado;
+
+                            try {
+                                // Comprobamos si hay jornadas anteriores sin resultados
+                                if (vc.hayJornadasAnterioresSinResultados(idJornada)) {
+                                    JOptionPane.showMessageDialog(
+                                            VentanaIntroducirResultados.this,
+                                            "No puedes introducir resultados de esta jornada porque hay jornadas anteriores sin completar.",
+                                            "Jornadas pendientes",
+                                            JOptionPane.WARNING_MESSAGE
+                                    );
+                                    // Limpiar la vista si no es posible ingresar resultados
+                                    panelEquipos.removeAll();
+                                    panelEquipos.revalidate();
+                                    panelEquipos.repaint();
+                                    bAceptar.setEnabled(false);
+                                    cJornada.setSelectedIndex(0);
+                                } else {
+                                    // Si la jornada es válida, cargamos los enfrentamientos
+                                    vc.rellenarEquiposEnfrentamientos(panelEquipos, selectedIndex, bAceptar, VentanaIntroducirResultados.this);
+                                    bAceptar.setEnabled(comprobarSelecciones());
+                                    getRootPane().setDefaultButton(bAceptar);
+                                }
+                            } catch (Exception ex) {
+                                JOptionPane.showMessageDialog(VentanaIntroducirResultados.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }
+                    } else {
+                        // Si seleccionan "Selecciona una jornada", deshabilitamos el botón y limpiamos los enfrentamientos
+                        panelEquipos.removeAll();
+                        panelEquipos.revalidate();
+                        panelEquipos.repaint();
+                        bAceptar.setEnabled(false);
                     }
                 }
-            });
+            }
+        });
 
-
-            bAceptar.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
+        bAceptar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object seleccionado = cJornada.getSelectedItem();
+                if (!(seleccionado instanceof Integer)) {
+                    JOptionPane.showMessageDialog(
+                            VentanaIntroducirResultados.this,
+                            "Por favor, selecciona una jornada válida.",
+                            "Jornada inválida",
+                            JOptionPane.WARNING_MESSAGE
+                    );
+                } else {
+                    int idJornada = (Integer) seleccionado;
                     try {
                         vc.procesarGanadoresSeleccionados(cJornada.getSelectedIndex());
-                        JOptionPane.showMessageDialog(VentanaIntroducirResultados.this, "Resultados registrados correctamente.");
-                        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+                        JOptionPane.showMessageDialog(
+                                VentanaIntroducirResultados.this,
+                                "Resultados registrados correctamente."
+                        );
+                        ventanaAdministrador.setVisible(true);
                         dispose();
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
-            });
+            }
+        });
 
-            bSalir.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
-                    dispose(); //
-                }
-            });
-            bLogo.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dispose();
-                    vc.mostrarVentanaInicio();
-                }
-            });
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        bSalir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ventanaAdministrador.setVisible(true);
+                dispose();
+            }
+        });
+
+        bLogo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                vc.mostrarVentanaInicio();
+            }
+        });
     }
-    /**
-     * Comprueba si todos los grupos de botones tienen una selección.
-     *
-     * @return true si todos los grupos tienen una selección, false en caso contrario.
-     */
-    public boolean comprobarSelecciones(){
+
+    public boolean comprobarSelecciones() {
         ArrayList<ButtonGroup> gruposEquipos = vc.pasarGrupos();
 
         boolean todosSeleccionados = true;
@@ -119,4 +161,3 @@ public class VentanaIntroducirResultados extends JFrame {
         return todosSeleccionados;
     }
 }
-

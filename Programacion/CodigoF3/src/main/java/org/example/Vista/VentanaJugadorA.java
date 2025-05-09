@@ -9,26 +9,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-/**
- * Comprueba si todos los grupos de botones tienen una selección.
- *
- * @return true si todos los grupos tienen una selección, false en caso contrario.
- */
-public class VentanaJugador extends JFrame {
+
+public class VentanaJugadorA extends JFrame {
     private JPanel pPrincipal;
     private JTextArea tJugadores;
     private JButton bLogo;
     private JButton bSalir;
     private JComboBox cEquipos;
     private VistaController vc;
-    private JFrame ventanaUsuario;
+    private JFrame ventanaAdmin;
     private String nombre;
 
-    public VentanaJugador(VistaController vc, String uNombre, JFrame ventanaUser) {
+    public VentanaJugadorA(VistaController vc, String uNombre, JFrame ventanaAdmin) {
         try {
             this.vc = vc;
             this.nombre = uNombre;
-            this.ventanaUsuario = ventanaUser;
+            this.ventanaAdmin = ventanaAdmin;
             setContentPane(pPrincipal);
             setSize(500, 580);
             setLocationRelativeTo(null);
@@ -36,7 +32,7 @@ public class VentanaJugador extends JFrame {
             iconoVentana();
 
             inicializarCampos();
-            agregarListeners(ventanaUser);
+            agregarListeners(ventanaAdmin);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -77,8 +73,8 @@ public class VentanaJugador extends JFrame {
         bSalir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ventanaUser.setVisible(true); // Vuelve a mostrar la ventana de administrador
-                dispose(); //
+                ventanaAdmin.setVisible(true);
+                dispose();
             }
         });
         bLogo.addActionListener(new ActionListener() {

@@ -6,23 +6,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-/**
- * Clase VentanaResultados.
- * Representa una ventana gráfica que muestra los resultados de un procedimiento
- * y permite al usuario interactuar con el sistema.
- */
-public class VentanaResultados extends JFrame {
+
+public class VentanaResultadosA extends JFrame {
     private JButton bLogo;
     private JButton SALIRButton;
     private JTextArea textArea1;
     private JPanel pPrincipal;
     private VistaController vc;
-    private JFrame ventanaUser;
+    private JFrame ventanaAdmin;
 
-    public VentanaResultados(VistaController vc, String nombre, JFrame ventanaUsuario) {
+    public VentanaResultadosA(VistaController vc, String nombre, JFrame ventanaAdmin) {
         try{
             this.vc = vc;
-            this.ventanaUser = ventanaUsuario;
+            this.ventanaAdmin = ventanaAdmin;
             setContentPane(pPrincipal);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setTitle("MenuPrincipal");
@@ -52,7 +48,7 @@ public class VentanaResultados extends JFrame {
         SALIRButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ventanaUser.setVisible(true);
+                ventanaAdmin.setVisible(true);
                 dispose();
             }
         });
