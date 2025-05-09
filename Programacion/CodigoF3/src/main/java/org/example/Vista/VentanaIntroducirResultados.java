@@ -1,7 +1,6 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
-import org.example.Excepciones.DatoNoValido;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class VentanaIntroducirResultados extends JFrame {
     private JPanel panel1;
@@ -82,6 +80,7 @@ public class VentanaIntroducirResultados extends JFrame {
                                     panelEquipos.revalidate();
                                     panelEquipos.repaint();
                                     bAceptar.setEnabled(false);
+                                    cJornada.setSelectedIndex(0);
                                 } else {
                                     // Si la jornada es válida, cargamos los enfrentamientos
                                     vc.rellenarEquiposEnfrentamientos(panelEquipos, selectedIndex, bAceptar, VentanaIntroducirResultados.this);
@@ -101,45 +100,7 @@ public class VentanaIntroducirResultados extends JFrame {
                     }
                 }
             }
-
-            /*
-            cJornada.addItemListener(new ItemListener() {
-                @Override
-                public void itemStateChanged(ItemEvent e) {
-                    if (e.getStateChange() == ItemEvent.SELECTED) {
-                        vc.rellenarEquiposEnfrentamientos(panelEquipos, cJornada.getSelectedIndex(), bAceptar, VentanaIntroducirResultados.this);
-                        bAceptar.setEnabled(comprobarSelecciones());
-                        getRootPane().setDefaultButton(bAceptar);
-                    }
-                }
-            });
-            */
         });
-
-        /*
-        bAceptar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    boolean insertados;
-                    insertados = vc.procesarGanadoresSeleccionados(cJornada.getSelectedIndex());
-
-                    if (insertados) {
-                        JOptionPane.showMessageDialog(VentanaIntroducirResultados.this, "Resultados registrados correctamente.");
-                    } else {
-                        throw new DatoNoValido("Error al insertar los resultados");
-                    }
-
-                    ventanaAdministrador.setVisible(true);
-                    dispose();
-                } catch (DatoNoValido error) {
-                    JOptionPane.showMessageDialog(VentanaIntroducirResultados.this, error.getMessage(), "Error de validación", JOptionPane.ERROR_MESSAGE);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(VentanaIntroducirResultados.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
-        */
 
         bAceptar.addActionListener(new ActionListener() {
             @Override

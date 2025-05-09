@@ -334,4 +334,8 @@ public class VistaController {
         ventanaResultadosA = new VentanaResultadosA(this, uNombre, ventanaAdmin);
         ventanaResultadosA.setVisible(true);
     }
+
+    public void resetDatos() throws Exception{
+        modeloController.resetDatos();
+    }
 }

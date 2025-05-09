@@ -135,6 +135,8 @@ public class ModeloController {
 
 
     public boolean cerrarInscripcion() throws Exception {
+        vc.resetDatos();
+
         competicionUpdateInscripcion("en curso");
         boolean cerrada = false;
         ArrayList<Equipo> equiposOriginal = equipoController.selectAllEquipos();
@@ -230,5 +232,9 @@ public class ModeloController {
 
     public boolean hayJornadasAnterioresSinResultados(int idJornadaActual) throws Exception {
         return jornadaController.hayJornadasAnterioresSinResultados(idJornadaActual);
+    }
+
+    public void resetDatos() throws Exception {
+        jornadaController.resetDatos();
     }
 }
