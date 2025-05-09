@@ -377,6 +377,7 @@ public class VentanaModificarJugador extends JDialog {
                     ej = vc.buscarComboBoxE(jEquipo),
                     cJugador.getSelectedItem().toString()
             );
+            JOptionPane.showMessageDialog(VentanaModificarJugador.this, "Jugador modificado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
             ventanaAdministrador.setVisible(true);
             dispose();
         } catch (Exception ex) {

@@ -178,6 +178,7 @@ public class VentanaModificarEquipo extends JDialog {
     private void onOK() {
         try {
             vc.modificarEquipo(eNombre.getText(), convertirFecha(eFecha.getText()), cNombre.getSelectedItem().toString());
+            JOptionPane.showMessageDialog(VentanaModificarEquipo.this, "Equipo modificado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
             ventanaAdministrador.setVisible(true);
             dispose();
         } catch (Exception ex) {
