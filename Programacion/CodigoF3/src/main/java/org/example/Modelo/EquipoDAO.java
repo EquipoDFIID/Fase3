@@ -128,14 +128,18 @@ public class EquipoDAO {
      * Inserta un nuevo equipo en la base de datos.
      * @param equipo Objeto Equipo con los datos a insertar.
      */
-    public static void altaEquipo(Equipo equipo) throws Exception {
 
-            String sql = "INSERT INTO equipos (NOMBRE, FECHA_FUND) VALUES(?,?)";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, equipo.getNombre());
-            ps.setDate(2, Date.valueOf(equipo.getFechaFund()));
-            ps.executeUpdate();
-
+    public static boolean altaEquipo(Equipo equipo) throws Exception {
+        boolean insertado = false;
+        String sql = "INSERT INTO equipos (NOMBRE, FECHA_FUND) VALUES(?,?)";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, equipo.getNombre());
+        ps.setDate(2, Date.valueOf(equipo.getFechaFund()));
+        int filas = ps.executeUpdate();
+        if (filas > 0) {
+            insertados = true;
+        }
+        return insertado;
     }
 
 // =============================================
@@ -150,13 +154,19 @@ public class EquipoDAO {
 
     public static void modificarEquipo(Equipo equipo, Equipo equipoAnterior) throws Exception {
 
-            String sql = "UPDATE EQUIPOS SET NOMBRE = ?,FECHA_FUND = ? WHERE NOMBRE= ?";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, equipo.getNombre());
-            ps.setDate(2, Date.valueOf(equipo.getFechaFund()));
-            ps.setString(3, equipoAnterior.getNombre());
-            ps.executeUpdate();
 
+    public static boolean modificarEquipo(Equipo equipo, Equipo equipoAnterior) throws Exception {
+        boolean modificado = false;
+        String sql = "UPDATE EQUIPOS SET NOMBRE = ?,FECHA_FUND = ? WHERE NOMBRE= ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, equipo.getNombre());
+        ps.setDate(2, Date.valueOf(equipo.getFechaFund()));
+        ps.setString(3, equipoAnterior.getNombre());
+        int filas = ps.executeUpdate();
+        if (filas > 0) {
+            modificado = true;
+        }
+        return modificado;
     }
 
 // =============================================
@@ -167,13 +177,17 @@ public class EquipoDAO {
      * Elimina un equipo de la base de datos según su ID.
      * @param e Objeto Equipo que se desea eliminar.
      */
-    public static void borrarEquipo(Equipo e) throws Exception {
 
+    public static boolean borrarEquipo(Equipo e) throws Exception {
+        boolean eliminado = false;
             String sql = "DELETE FROM EQUIPOS WHERE NOMBRE = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, e.getNombre());
-            ps.executeUpdate();
-
+            int filas = ps.executeUpdate();
+            if (filas > 0) {
+                eliminado = true;
+            }
+        return eliminado;
     }
 
     public ArrayList selectAllEquipo() throws Exception{

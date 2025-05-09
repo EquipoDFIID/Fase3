@@ -33,11 +33,21 @@ public class VentanaUsuario extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
+        inicializarCampos(uNombre);
+        agregarListeners(uNombre);
+    }
+
+    public void iconoVentana(){
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
         setIconImage(icon.getImage());
+    }
 
+    public void inicializarCampos(String uNombre){
         this.uNombre.setText(uNombre);
         this.uNombre.setEnabled(false);
+    }
+
+    public void agregarListeners(String uNombre) {
         uCambiarCuenta.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

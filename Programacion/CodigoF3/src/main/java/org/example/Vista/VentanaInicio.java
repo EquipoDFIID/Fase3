@@ -38,15 +38,25 @@ public class VentanaInicio extends JFrame {
         setSize(500, 580);
         setLocationRelativeTo(null);
         setResizable(false);
+        iconoVentana();
 
+        inicializarCampos();
+        agregarListeners();
+    }
+
+    public void iconoVentana(){
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
         setIconImage(icon.getImage());
+    }
 
+    public void inicializarCampos(){
         jAdmin.setVisible(false);
         jUsuario.setVisible(false);
         aIniciarSesionButton.setEnabled(false);
         uIniciarSesionButton.setEnabled(false);
+    }
 
+    public void agregarListeners(){
         administradorRadioButton.addActionListener(e -> {
             relleno.setVisible(false);
             jAdmin.setVisible(true);
@@ -87,7 +97,7 @@ public class VentanaInicio extends JFrame {
             @Override
             public void keyReleased(KeyEvent e) {
                 if (uNickname.getText().isEmpty()) {
-                   bCrearCuenta.setEnabled(true);
+                    bCrearCuenta.setEnabled(true);
                 } else {
                     bCrearCuenta.setEnabled(false);
                     uIniciarSesionButton.setEnabled(false);
@@ -177,8 +187,8 @@ public class VentanaInicio extends JFrame {
             vc.mostrarVentanaCuenta(VentanaInicio.this);
             setVisible(false);
         });
-
     }
+
     /**
      * Valida que el nombre comience por mayúscula y solo tenga letras.
      * @param nombre Nombre a validar.
