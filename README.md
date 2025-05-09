@@ -59,7 +59,11 @@ Ofrece funcionalidades para administrar equipos, jugadores y partidos, así como
 
 - Se usó **JUnit 5** para pruebas unitarias.
 - Clases testeadas:
-> Añadir clases en las que se han hecho los test.
+  > BD
+   
+  > CamponatoController
+  
+  > UsuarioController
 
 ---
 
@@ -91,11 +95,11 @@ Pantalla inicial con selección de tipo de usuario:
 El sistema contempla dos tipos de usuarios:
 
   **Administrador**
-      Acceso completo para gestionar entidades y resultados del torneo.
+  - Acceso completo para gestionar entidades y resultados del torneo.
       
-  - Nombre: *Danel* |  Clave: *2424*
+     > Nombre: *Danel* |  Clave: *2424*
 
   **Usuario general**
-      Acceso de solo lectura para consultar estadísticas y reportes.
+  - Acceso de solo lectura para consultar estadísticas y reportes.
       
-- Nickname: *Ibaicito* | Clave: *1111*
+    > Nickname: *Ibaicito* | Clave: *1111*
