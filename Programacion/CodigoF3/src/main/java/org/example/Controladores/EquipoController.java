@@ -41,10 +41,21 @@ public class EquipoController {
         return equipoDAO.selectObjetosEquipo();
     }
 
+    /**
+
+
+     * @return retorna un int de la cantidad de equipos
+     * @throws Exception
+     */
     public int selectCountEquipos() throws Exception {
         return equipoDAO.selectCountEquipos();
     }
 
+    /**
+     *
+     * @return retorna el ArrayList de todos los equipos de la base de datos accediendo al dao
+     * @throws Exception
+     */
     public ArrayList selectAllEquipos() throws Exception {
         return equipoDAO.selectAllEquipo();
     }
