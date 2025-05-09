@@ -315,4 +315,9 @@ public class VistaController {
     public String mostrarProcedimientoResultado() throws Exception {
         return modeloController.mostrarProcedimientoResultado();
     }
+
+    public boolean hayJornadasAnterioresSinResultados(int idJornadaActual) throws Exception {
+        return modeloController.hayJornadasAnterioresSinResultados(idJornadaActual);
+    }
+
 }

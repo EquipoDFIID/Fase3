@@ -31,4 +31,8 @@ public class JornadaController {
         listaJornadas.add(jornadaNueva);
         return dao.altaJornada(jornadaNueva);
     }
+
+    public boolean hayJornadasAnterioresSinResultados(int idJornadaActual) throws Exception {
+        return dao.hayJornadasAnterioresSinResultados(idJornadaActual);
+    }
 }

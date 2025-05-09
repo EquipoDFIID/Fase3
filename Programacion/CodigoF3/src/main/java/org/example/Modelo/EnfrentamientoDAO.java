@@ -65,7 +65,7 @@ public class EnfrentamientoDAO {
         CallableStatement cstmt = null;
 
 
-            String sql = "{ call mostrar_enfrentamientos_ultima_jornada(?, ?) }";
+            String sql = "{ call mostrar_enfrentamientos_ultima(?, ?) }";
             cstmt = con.prepareCall(sql);
 
             // Registrar parámetros
