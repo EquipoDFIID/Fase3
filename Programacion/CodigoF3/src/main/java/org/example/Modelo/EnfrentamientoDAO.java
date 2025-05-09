@@ -66,4 +66,63 @@ public class EnfrentamientoDAO {
         }
         return enfrentamientos;
     }
+    public static String procedimientoEnfrentamientosUltimaJornada() throws Exception {
+        StringBuilder tabla = new StringBuilder();
+        CallableStatement cstmt = null;
+
+        try {
+            String sql = "{ call mostrar_enfrentamientos_ultima_jornada(?, ?) }";
+            cstmt = con.prepareCall(sql);
+
+            // Registrar parámetros
+            cstmt.registerOutParameter(1, oracle.jdbc.OracleTypes.CURSOR);
+            cstmt.registerOutParameter(2, java.sql.Types.VARCHAR);
+
+            cstmt.execute();
+
+            // Obtener mensaje de salida
+            String mensaje = cstmt.getString(2);
+            tabla.append(mensaje).append("\n\n");
+
+            // Si hay datos, procesar el cursor
+            if (mensaje.startsWith("Enfrentamientos")) {
+                try (ResultSet rs = (ResultSet) cstmt.getObject(1)) {
+                    // Encabezados de la tabla
+                    tabla.append("| ID   | HORA     | FECHA      | ATACANTE         | DEFENSOR         | GANADOR          |\n");
+                    tabla.append("|------|----------|------------|------------------|------------------|------------------|\n");
+
+                    // Procesar cada fila
+                    while (rs.next()) {
+                        int idEnfrentamiento = rs.getInt("ID_ENFRENTAMIENTO");
+                        String hora = rs.getString("HORA");
+                        String fecha = rs.getString("FECHA_ENF");
+                        String atacante = rs.getString("NOMBRE_ATACANTE");
+                        String defensor = rs.getString("NOMBRE_DEFENSOR");
+                        String ganador = rs.getString("NOMBRE_GANADOR");
+
+                        tabla.append(String.format("| %-4d | %-8s | %-10s | %-16s | %-16s | %-16s |\n",
+                                idEnfrentamiento,
+                                hora,
+                                fecha,
+                                atacante,
+                                defensor,
+                                ganador));
+                    }
+                }
+            }
+
+        } catch (Exception ex) {
+            tabla.append("Error al generar la tabla: ").append(ex.getMessage());
+        } finally {
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    System.err.println("Error al cerrar el statement: " + e.getMessage());
+                }
+            }
+        }
+        System.out.println(tabla.toString());
+        return tabla.toString();
+    }
 }

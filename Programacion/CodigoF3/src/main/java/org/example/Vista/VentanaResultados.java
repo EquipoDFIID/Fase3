@@ -3,6 +3,7 @@ package org.example.Vista;
 import org.example.Controladores.VistaController;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,13 +21,19 @@ public class VentanaResultados extends JFrame {
         setContentPane(pPrincipal);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("MenuPrincipal");
-        setSize(500,580);
+        setSize(680,580);
         setLocationRelativeTo(null);
-        setResizable(false);
+        setResizable(true);
 
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
         setIconImage(icon.getImage());
 
+        try{
+            textArea1.setText(vc.mostrarProcedimientoResultado());
+            textArea1.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         SALIRButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

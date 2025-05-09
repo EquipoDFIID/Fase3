@@ -313,5 +313,7 @@ public class VistaController {
     }
 
 
-
+    public String mostrarProcedimientoResultado() throws Exception {
+        return modeloController.mostrarProcedimientoResultado();
+    }
 }
