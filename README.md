@@ -21,7 +21,7 @@
 
 Este proyecto corresponde a un programa orientado a la gestión de competiciones de *Counter-Strike: Global Offensive* (*CSGO*).
 
-<img src="readmeImg/Banner.jpg" alt="banner"/>
+<img src="readmeImg/banner.jpg" alt="banner" height="400" width="1000"/>
 
 Ofrece funcionalidades para administrar equipos, jugadores y partidos, así como registrar resultados y generar calendarios automáticos.
 
