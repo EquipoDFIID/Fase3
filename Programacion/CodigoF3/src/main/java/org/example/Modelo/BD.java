@@ -11,9 +11,14 @@ import java.sql.SQLException;
 public class BD{
 
 
-    public static String URL = "jdbc:oracle:thin:@//ccsatserv.dnsdojo.com:1521/xepdb1";
+    /*public static String URL = "jdbc:oracle:thin:@//ccsatserv.dnsdojo.com:1521/xepdb1";
     private static final String USER = "equipoHiber";
-    private static final String PASSWORD = "Jm12345";
+    private static final String PASSWORD = "Jm12345";*/
+
+
+    private static final String USER = "eqdaw05";
+    private static final String PASSWORD = "eqdaw05";
+    public static String URL = "jdbc:oracle:thin:"+USER+"/"+PASSWORD+"@172.20.225.114:1521:orcl";
 
     public static Connection getConnection(){
         Connection conn = null;

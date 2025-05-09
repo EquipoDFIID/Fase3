@@ -63,8 +63,6 @@ public class EnfrentamientoDAO {
     public static String procedimientoEnfrentamientosUltimaJornada() throws Exception {
         StringBuilder tabla = new StringBuilder();
         CallableStatement cstmt = null;
-
-
             String sql = "{ call mostrar_enfrentamientos_ultima(?, ?) }";
             cstmt = con.prepareCall(sql);
 
