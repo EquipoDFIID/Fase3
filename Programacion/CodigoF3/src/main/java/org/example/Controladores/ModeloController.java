@@ -155,7 +155,7 @@ public class ModeloController {
         for (int jornada = 0; jornada < totalJornadas; jornada++) {
             ArrayList<Enfrentamiento> enfrentamientos = new ArrayList<>();
             // Crear jornada con la fecha calculada
-            Jornada jornadaNueva = new Jornada(enfrentamientos, fechaJornada, campeonatoController.buscarCompeticion(2));
+            Jornada jornadaNueva = new Jornada(enfrentamientos, fechaJornada, campeonatoController.buscarCompeticion(1));
             jornadas.add(jornadaNueva);
             Jornada jornadaEnfren = jornadaController.crearJornada(jornadaNueva);
             System.out.println("Jornada " + (jornada + 1) + " creada para el " + fechaJornada);

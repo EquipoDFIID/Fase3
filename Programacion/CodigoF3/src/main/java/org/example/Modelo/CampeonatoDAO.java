@@ -31,7 +31,7 @@ public class CampeonatoDAO {
 
 
     public void competicionUpdateInscripcion(String estado) throws Exception {
-        String sql = "UPDATE COMPETICIONES SET ESTADO = ? WHERE ID_COMPETICION = 2";
+        String sql = "UPDATE COMPETICIONES SET ESTADO = ? WHERE ID_COMPETICION = 1";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, estado);
         ps.executeUpdate();
