@@ -49,8 +49,7 @@ public class VentanaEquipos extends JFrame {
         SALIRButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaUsuario ventanaUsuario = new VentanaUsuario(vc, aNombre);
-                ventanaUsuario.setVisible(true);
+                ventanaUser.setVisible(true);
                 dispose();
             }
         });
