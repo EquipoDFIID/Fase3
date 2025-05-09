@@ -9,16 +9,13 @@ public class JugadorDAO {
     public JugadorDAO() {
     }
 
-// =============================================
-// == OPERACIONES DE CONSULTA (SELECT)
-// =============================================
     /**
      * Obtiene una lista de jugadores con su ID y nickname.
      * @return Lista de objetos Jugador con ID y nickname.
      */
     public ArrayList<Jugador> selectObjetosJugador() throws Exception {
         ArrayList<Jugador> jugadores = new ArrayList<>();
-        try {
+
             String sql = "SELECT * FROM JUGADORES";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -34,10 +31,6 @@ public class JugadorDAO {
                 j.setEquipo(EquipoDAO.buscarEquipo(rs.getString("ID_EQUIPO")));
                 jugadores.add(j);
             }
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
         return jugadores;
     }
 
@@ -51,7 +44,7 @@ public class JugadorDAO {
     public static Jugador buscarJugador(String nombreJugador) throws Exception {
        Jugador j = new Jugador();
        j.setNickname(nombreJugador);
-        try {
+
             String sql = "SELECT * FROM JUGADORES WHERE NICKNAME = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, nombreJugador);
@@ -68,87 +61,81 @@ public class JugadorDAO {
                 j.setEquipo(EquipoDAO.buscarEquipo(rs.getString("ID_EQUIPO")));
             }
 
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+
         return j;
     }
 
-// =============================================
-// == OPERACIONES DE INSERCIÓN (INSERT)
-// =============================================
     /**
      * Inserta un nuevo jugador en la base de datos.
      * @param jugador Objeto Jugador con los datos a insertar.
      */
-    public static void altaJugador(Jugador jugador) throws Exception {
-        try {
-            String sql = "INSERT INTO jugadores (NOMBRE, APELLIDO, NACIONALIDAD, FECHA_NAC, NICKNAME, SUELDO, ID_EQUIPO) VALUES(?,?,?,?,?,?,?)";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, jugador.getNombre());
-            ps.setString(2, jugador.getApellido());
-            ps.setString(3, jugador.getNacionalidad());
-            ps.setDate(4, Date.valueOf(jugador.getFechaNacimiento()));
-            ps.setString(5, jugador.getNickname());
-            ps.setDouble(6, jugador.getSueldo());
-            ps.setInt(7, jugador.getEquipo().getIdEquipo());
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+    public static boolean altaJugador(Jugador jugador) throws Exception {
+        boolean encontrado = false;
+        String sql = "INSERT INTO jugadores (NOMBRE, APELLIDO, NACIONALIDAD, FECHA_NAC, NICKNAME, SUELDO, ID_EQUIPO) VALUES(?,?,?,?,?,?,?)";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, jugador.getNombre());
+        ps.setString(2, jugador.getApellido());
+        ps.setString(3, jugador.getNacionalidad());
+        ps.setDate(4, Date.valueOf(jugador.getFechaNacimiento()));
+        ps.setString(5, jugador.getNickname());
+        ps.setDouble(6, jugador.getSueldo());
+        ps.setInt(7, jugador.getEquipo().getIdEquipo());
+        int filas = ps.executeUpdate();
+        if (filas > 0) {
+            encontrado = true;
         }
+       return encontrado;
     }
 
-// =============================================
-// == OPERACIONES DE ACTUALIZACIÓN (UPDATE)
-// =============================================
     /**
      * Modifica los detalles de un jugador en la base de datos.
      * @param jugador Objeto Jugador con los nuevos datos.
      * @param jugadorAnterior Objeto del jugador para identificar el registro a modificar.
      */
-    public static void modificarJugador(Jugador jugador, Jugador jugadorAnterior) throws Exception {
-        try {
-            String sql = "UPDATE JUGADORES SET NOMBRE = ?," +
-                         "apellido = ?,nacionalidad = ?,fecha_nac = ?,nickname = ?,sueldo = ?," +
-                         "id_equipo = ? WHERE NICKNAME = ?";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, jugador.getNombre());
-            ps.setString(2, jugador.getApellido());
-            ps.setString(3, jugador.getNacionalidad());
-            ps.setDate(4, Date.valueOf(jugador.getFechaNacimiento()));
-            ps.setString(5, jugador.getNickname());
-            ps.setDouble(6, jugador.getSueldo());
-            ps.setInt(7, jugador.getEquipo().getIdEquipo());
-            ps.setString(8, jugadorAnterior.getNickname());
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+    public static boolean modificarJugador(Jugador jugador, Jugador jugadorAnterior) throws Exception {
+        boolean modificado = false;
+
+        String sql = "UPDATE JUGADORES SET NOMBRE = ?," +
+                     "apellido = ?,nacionalidad = ?,fecha_nac = ?,nickname = ?,sueldo = ?," +
+                     "id_equipo = ? WHERE NICKNAME = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, jugador.getNombre());
+        ps.setString(2, jugador.getApellido());
+        ps.setString(3, jugador.getNacionalidad());
+        ps.setDate(4, Date.valueOf(jugador.getFechaNacimiento()));
+        ps.setString(5, jugador.getNickname());
+        ps.setDouble(6, jugador.getSueldo());
+        ps.setInt(7, jugador.getEquipo().getIdEquipo());
+        ps.setString(8, jugadorAnterior.getNickname());
+        int filas = ps.executeUpdate();
+        if (filas > 0) {
+            modificado = true;
         }
+        return modificado;
     }
 
-// =============================================
-// == OPERACIONES DE ELIMINACIÓN (DELETE)
-// =============================================
     /**
      * Elimina un jugador de la base de datos por su nombre.
      * @param nombreJugador Nombre del jugador a eliminar.
      */
 
-    public static void borrarJugador(String nombreJugador) throws Exception {
-        try {
-            String sql = "DELETE FROM JUGADORES WHERE NICKNAME = ?";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, nombreJugador);
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+
+    public static boolean borrarJugador(String nombreJugador) throws Exception {
+        boolean eliminado = false;
+        String sql = "DELETE FROM JUGADORES WHERE NICKNAME = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, nombreJugador);
+        int filas = ps.executeUpdate();
+        if (filas > 0) {
+            eliminado = true;
         }
+        return eliminado;
     }
     public static String obtenerJugadoresPorEquipo(String nombreEquipo) throws Exception {
         StringBuilder tabla = new StringBuilder();
         CallableStatement cstmt = null;
 
-        try {
+
             String sql = "{ call obtener_jugadores_equipo(?, ?) }";
             cstmt = con.prepareCall(sql);
             cstmt.setString(1, nombreEquipo); // Parámetro de entrada
@@ -172,18 +159,10 @@ public class JugadorDAO {
                             sueldo));
                 }
             }
-        } catch (Exception ex) {
-            tabla.append("Error al obtener los jugadores del equipo: ").append(ex.getMessage());
-        } finally {
-            if (cstmt != null) {
-                try {
-                    cstmt.close();
-                } catch (SQLException e) {
-                    System.err.println("Error al cerrar el statement: " + e.getMessage());
-                }
-            }
-        }
 
+            if (cstmt != null) {
+                cstmt.close();
+            }
         return tabla.toString();
     }
 

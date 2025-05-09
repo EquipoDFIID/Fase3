@@ -23,12 +23,26 @@ public class JornadaController {
         return campeonatoController.buscarCompeticion(idCompeticion);
     }
 
+    /**
+     *
+     * @return arraylist de todas las jornadas
+     */
     public ArrayList<Jornada> selectObjetosJornada() {
         return listaJornadas;
     }
 
+    /**
+     *
+     * @param jornadaNueva
+     * @return una nueva jornada
+     * @throws Exception
+     */
     public Jornada crearJornada(Jornada jornadaNueva) throws Exception {
         listaJornadas.add(jornadaNueva);
         return dao.altaJornada(jornadaNueva);
+    }
+
+    public boolean hayJornadasAnterioresSinResultados(int idJornadaActual) throws Exception {
+        return dao.hayJornadasAnterioresSinResultados(idJornadaActual);
     }
 }

@@ -1,6 +1,7 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
+import org.example.Excepciones.DatoNoValido;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -106,14 +107,10 @@ public class VentanaCrearCuenta extends JFrame {
 
         cClave.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
-                String clave1 = cClave.getText();
-                String clave2 = ccClave.getText();
-
                 if (!validarClave()) {
                     cClave.setBorder(new LineBorder(Color.RED, 1));
                     ccClave.setEnabled(false);
                     buttonOK.setEnabled(false);
-                    return;
                 } else {
                     cClave.setBorder(new LineBorder(Color.GREEN, 1));
                     ccClave.setEnabled(true);
@@ -142,7 +139,6 @@ public class VentanaCrearCuenta extends JFrame {
                 String clave2 = ccClave.getText();
                 String clave1 = cClave.getText();
 
-                // Si ya hay algo en ccClave, validar coincidencia
                 if (!clave2.isEmpty()) {
                     if (clave1.equals(clave2)) {
                         cClave.setBorder(new LineBorder(Color.GREEN, 1));
@@ -184,16 +180,25 @@ public class VentanaCrearCuenta extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     if(!vc.comprobarNickname(cNickname.getText())) {
-                        vc.crearCuenta(cNickname.getText(), cNombre.getText(), cClave.getText());
-                        JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "Usuario creado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+                        boolean creada;
+                        creada = vc.crearCuenta(cNickname.getText(), cNombre.getText(), cClave.getText());
+
+                        if (creada) {
+                            JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "Usuario creado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            throw new DatoNoValido("Error al crear el Usuario");
+                        }
+
                         ventanaInicio.setVisible(true);
                         dispose();
                     } else {
                         JOptionPane.showMessageDialog(VentanaCrearCuenta.this, "El nickname ya existe", "Error", JOptionPane.ERROR_MESSAGE);
                         resetCampos();
                     }
+                } catch (DatoNoValido error) {
+                    JOptionPane.showMessageDialog(VentanaCrearCuenta.this, error.getMessage(), "Error de validación", JOptionPane.ERROR_MESSAGE);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(VentanaCrearCuenta.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

@@ -18,13 +18,22 @@ public class UsuarioController {
     public Usuario selectUsuarioNom(String nombreUsuario, String clave) throws Exception {
         return usuarioDAO.selectUsuarioNom(nombreUsuario.toLowerCase(), clave);
     }
-    public void crearCuenta(String nickname, String nombre, String clave) throws Exception {
+
+    /**
+     * Creacion de un nuevo usuario
+     * @param nickname
+     * @param nombre
+     * @param clave
+     * @return
+     * @throws Exception
+     */
+    public boolean crearCuenta(String nickname, String nombre, String clave) throws Exception {
         Usuario usuario = new Usuario();
         usuario.setNickname(nickname);
         usuario.setNombre(nombre);
         usuario.setClave(clave);
         usuario.setTipoUsuario("user");
-        usuarioDAO.crearUsuario(usuario);
+        return usuarioDAO.crearUsuario(usuario);
     }
 
     public boolean comprobarNickname(String nickname) throws Exception {

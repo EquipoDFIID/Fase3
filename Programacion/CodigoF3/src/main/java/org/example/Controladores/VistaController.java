@@ -13,7 +13,8 @@ import java.util.Enumeration;
 import java.util.List;
 
 /**
- * Controlador de la vista que gestiona la interacción entre las ventanas y el modelo.
+ * Clase `VistaController` que gestiona la interacción entre la interfaz gráfica (ventanas) y el modelo de datos.
+ * Centraliza la apertura de diferentes vistas y coordina las acciones del usuario con el modelo.
  */
 public class VistaController {
     private VentanaInicio ventanaInicio;
@@ -31,6 +32,9 @@ public class VistaController {
     private VentanaEquipos ventanaEquipos;
     private VentanaResultados ventanaResultados;
     private VentanaJugador ventanaJugador;
+    private VentanaEquiposA ventanaEquiposA;
+    private VentanaJugadorA ventanaJugadorA;
+    private VentanaResultadosA ventanaResultadosA;
 
     private ModeloController modeloController;
     private ArrayList<Equipo> listaEquipos = new ArrayList<>();
@@ -40,12 +44,21 @@ public class VistaController {
     private  ArrayList<JRadioButton> botonesEquipos = new ArrayList<>();
     private ArrayList<ButtonGroup > gruposEquipos = new ArrayList<>(2);
 
+
+    /**
+     * Constructor del controlador de la vista.
+     * Inicializa el controlador del modelo y abre la ventana de inicio.
+     *
+     * @param modeloController Controlador del modelo de datos.
+     */
     public VistaController(ModeloController modeloController) {
         this.modeloController = modeloController;
         ventanaInicio = new VentanaInicio(this);
         ventanaInicio.setVisible(true);
     }
-
+    /**
+     * Muestra las diferentes ventanas
+     */
     public void mostrarVentanaInicio(){
         ventanaInicio = new VentanaInicio(this);
         ventanaInicio.setVisible(true);
@@ -123,38 +136,58 @@ public class VistaController {
     }
 
 
-
-    public void altaEquipo(String nombre, LocalDate fecha) throws Exception{
-        modeloController.altaEquipo(nombre, fecha);
+    /**
+     * Da de alta un nuevo equipo a través del modelo.
+     *
+     * @param nombre Nombre del equipo.
+     * @param fecha Fecha de fundación del equipo.
+     * @return true si el equipo fue creado correctamente.
+     * @throws Exception Si ocurre un error durante la creación.
+     */
+    public boolean altaEquipo(String nombre, LocalDate fecha) throws Exception{
+        return modeloController.altaEquipo(nombre, fecha);
     }
-    public void bajaEquipo(String nombreEquipo) throws Exception{
+    /**
+     * Elimina un equipo mediante el modelo.
+     *
+     * @param nombreEquipo Nombre del equipo a eliminar.
+     * @return true si el equipo fue eliminado correctamente.
+     * @throws Exception Si ocurre un error durante la eliminación.
+     */
+    public boolean bajaEquipo(String nombreEquipo) throws Exception{
         modeloController.buscarEquipo(nombreEquipo);
-        modeloController.bajaEquipo();
+        return modeloController.bajaEquipo();
     }
-    public void modificarEquipo(String nombre, LocalDate fecha, String nombreEquipo) throws Exception{
+    /**
+     * Modifica los datos de un equipo.
+     *
+     * @param nombre Nuevo nombre del equipo.
+     * @param fecha Nueva fecha de fundación.
+     * @param nombreEquipo Nombre actual del equipo a modificar.
+     * @return true si la modificación fue exitosa.
+     * @throws Exception Si ocurre un error durante la modificación.
+     */
+    public boolean modificarEquipo(String nombre, LocalDate fecha, String nombreEquipo) throws Exception{
         modeloController.buscarEquipo(nombreEquipo);
-        modeloController.modificarEquipo(nombre, fecha);
-
+        return modeloController.modificarEquipo(nombre, fecha);
     }
 
 
-    public void altaJugador(String nombre, String apellido, String nacionalidad,
+    public boolean altaJugador(String nombre, String apellido, String nacionalidad,
                             LocalDate fechaNacimiento, String nickname,
                             double sueldo, Equipo equipo) throws Exception {
-        modeloController.altaJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, equipo);
+        return modeloController.altaJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, equipo);
     }
-    public void bajaJugador(String nombreJugador) throws Exception{
+    public boolean bajaJugador(String nombreJugador) throws Exception{
         modeloController.buscarJugador(nombreJugador);
-        modeloController.bajaJugador(nombreJugador);
+        return modeloController.bajaJugador(nombreJugador);
     }
-    public void modificarJugador(String nombre, String apellido, String nacionalidad,
+    public boolean modificarJugador(String nombre, String apellido, String nacionalidad,
                                  LocalDate fechaNacimiento, String nickname,
                                  double sueldo, Equipo ej, String nombreJugador) throws Exception {
         modeloController.buscarJugador(nombreJugador);
-        modeloController.modificarJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, ej);
+        return modeloController.modificarJugador(nombre, apellido, nacionalidad, fechaNacimiento, nickname, sueldo, ej);
     }
-
-
 
     public void selectUsuarioNick(String nickUsuario, String clave) throws Exception {
         modeloController.selectUsuarioNick(nickUsuario, clave);
@@ -221,7 +254,12 @@ public class VistaController {
     public boolean cerrarInscripcion() throws Exception {
         return  modeloController.cerrarInscripcion();
     }
-
+    /**
+     * Rellena el comboBox con los nombres de los equipos.
+     *
+     * @param jEquipo ComboBox donde se cargarán los nombres.
+     * @throws Exception Si ocurre un error durante la carga.
+     */
     public void llenarComboBoxE(JComboBox jEquipo) throws Exception {
         rellenarEquipos();
         jEquipo.removeAllItems();
@@ -259,7 +297,7 @@ public class VistaController {
         jJornada.setSelectedIndex(0);
     }
 
-    public void procesarGanadoresSeleccionados(int indexJornadaSeleccionada) throws Exception {
+    public boolean procesarGanadoresSeleccionados(int indexJornadaSeleccionada) throws Exception {
         Jornada jornada = modeloController.jornadas.get(indexJornadaSeleccionada - 1);
         List<Enfrentamiento> enfrentamientos = jornada.getListaEnfrentamientos();
 
@@ -294,13 +332,13 @@ public class VistaController {
         }
 
         // Ahora enfren tiene id + equipoGanador
-        modeloController.asignarGanadoresEnfrentamientos(enfren);
+        return modeloController.asignarGanadoresEnfrentamientos(enfren);
     }
 
 
 
-    public void crearCuenta(String nickname, String nombre, String clave) throws Exception{
-        modeloController.crearCuenta(nickname, nombre, clave);
+    public boolean crearCuenta(String nickname, String nombre, String clave) throws Exception{
+        return modeloController.crearCuenta(nickname, nombre, clave);
     }
 
     public boolean comprobarNickname(String nickname) throws Exception {
@@ -312,8 +350,31 @@ public class VistaController {
         ventanaJugador.setVisible(true);
     }
 
-
     public String mostrarProcedimientoResultado() throws Exception {
         return modeloController.mostrarProcedimientoResultado();
+    }
+
+    public boolean hayJornadasAnterioresSinResultados(int idJornadaActual) throws Exception {
+        return modeloController.hayJornadasAnterioresSinResultados(idJornadaActual);
+    }
+
+    public void mostrarVentanaEquiposA(String uNombre, JFrame ventanaAdmin) {
+        ventanaEquiposA = new VentanaEquiposA(this, uNombre, ventanaAdmin);
+        ventanaEquiposA.setVisible(true);
+    }
+
+    public void mostrarventanaJugadoresA(String uNombre, JFrame ventanaAdmin) {
+        ventanaJugadorA = new VentanaJugadorA(this, uNombre, ventanaAdmin);
+        ventanaJugadorA.setVisible(true);
+    }
+    /**
+     * Muestra la ventana de resultados para un usuario.
+     *
+     * @param uNombre Nombre del usuario.
+     * @param ventanaAdmin Ventana desde donde se solicita.
+     */
+    public void mostrarVentanaResultadosA(String uNombre, JFrame ventanaAdmin) {
+        ventanaResultadosA = new VentanaResultadosA(this, uNombre, ventanaAdmin);
+        ventanaResultadosA.setVisible(true);
     }
 }

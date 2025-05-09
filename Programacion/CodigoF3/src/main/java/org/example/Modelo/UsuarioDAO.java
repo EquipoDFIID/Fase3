@@ -1,13 +1,8 @@
 package org.example.Modelo;
 
-
-import org.example.Modelo.BD;
-import org.example.Modelo.Usuario;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class UsuarioDAO {
     static Connection con = BD.getConnection();
@@ -19,7 +14,7 @@ public class UsuarioDAO {
      */
     public Usuario selectUsuarioNom(String nombreUsuario, String clave) throws Exception {
         Usuario u= null;
-        try {
+
             String sql = "SELECT * FROM USUARIOS WHERE LOWER(NOMBRE) = ? AND CLAVE=?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, nombreUsuario);
@@ -36,9 +31,7 @@ public class UsuarioDAO {
 
             }
 
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+
         return null;
     }
 
@@ -50,7 +43,7 @@ public class UsuarioDAO {
      */
     public Usuario selectUsuarioNick(String nickUsuario, String clave) throws Exception {
         Usuario u= null;
-        try {
+
             String sql = "SELECT * FROM USUARIOS WHERE lower(NICKNAME) = ? AND CLAVE=?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, nickUsuario);
@@ -67,9 +60,7 @@ public class UsuarioDAO {
 
             }
 
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+
         return null;
     }
 
@@ -78,24 +69,26 @@ public class UsuarioDAO {
      *
      * @param usuario Objeto `Usuario` que contiene los datos del usuario a crear.
      */
-    public void crearUsuario (Usuario usuario) throws Exception {
-        try {
-            String sql = "INSERT INTO USUARIOS (nickname, nombre, clave, tipo_usuario) VALUES(?, ?, ?, ?)";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, usuario.getNickname());
-            ps.setString(2, usuario.getNombre());
-            ps.setString(3, usuario.getClave());
-            ps.setString(4, usuario.getTipoUsuario());
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+    public boolean crearUsuario (Usuario usuario) throws Exception {
+        boolean creado = false;
+        String sql = "INSERT INTO USUARIOS (nickname, nombre, clave, tipo_usuario) VALUES(?, ?, ?, ?)";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, usuario.getNickname());
+        ps.setString(2, usuario.getNombre());
+        ps.setString(3, usuario.getClave());
+        ps.setString(4, usuario.getTipoUsuario());
+        int filas = ps.executeUpdate();
+        if (filas > 0) {
+            creado = true;
         }
+      return creado;
+
     }
 
     public boolean comprobarNickname(String nickname) throws Exception {
         boolean encontrado = false;
 
-        try {
+
             String sql = "SELECT * FROM USUARIOS WHERE LOWER(nickname) = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, nickname);
@@ -104,9 +97,7 @@ public class UsuarioDAO {
                 encontrado = true;
             }
 
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+
 
         return encontrado;
     }
