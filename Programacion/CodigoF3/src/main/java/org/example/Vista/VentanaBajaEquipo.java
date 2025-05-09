@@ -30,12 +30,10 @@ public class VentanaBajaEquipo extends JDialog {
             setSize(500, 580);
             setLocationRelativeTo(null);
             setResizable(false);
+            iconoVentana();
 
-            ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
-            setIconImage(icon.getImage());
-
-            vc.llenarComboBoxE(cNombre);
-            buttonOK.setEnabled(false); // Asegurarse de que esté desactivado inicialmente
+            inicializarCampos();
+            agregarListeners();
 
             buttonOK.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -49,7 +47,6 @@ public class VentanaBajaEquipo extends JDialog {
                 }
             });
 
-            // call onCancel() when cross is clicked
             setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
             addWindowListener(new WindowAdapter() {
                 public void windowClosing(WindowEvent e) {
@@ -57,47 +54,59 @@ public class VentanaBajaEquipo extends JDialog {
                 }
             });
 
-            // call onCancel() on ESCAPE
             contentPane.registerKeyboardAction(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     onCancel();
                 }
             }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-
-            cNombre.addItemListener(new ItemListener() {
-                @Override
-                public void itemStateChanged(ItemEvent e) {
-                    if (e.getStateChange() == ItemEvent.SELECTED) {
-                        String selectedItem = (String) cNombre.getSelectedItem();
-                        getRootPane().setDefaultButton(buttonOK); // Agregado
-                        buttonOK.setEnabled(selectedItem != null && !selectedItem.equals("Selecciona un equipo..."));
-                    }
-                }
-            });
-            bLogo.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dispose();
-                    vc.mostrarVentanaInicio();
-                }
-            });
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
+    public void iconoVentana(){
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        setIconImage(icon.getImage());
+    }
+
+    public void inicializarCampos() throws Exception {
+        vc.llenarComboBoxE(cNombre);
+        buttonOK.setEnabled(false);
+    }
+
+    public void agregarListeners() throws Exception {
+        cNombre.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    String selectedItem = (String) cNombre.getSelectedItem();
+                    getRootPane().setDefaultButton(buttonOK); // Agregado
+                    buttonOK.setEnabled(selectedItem != null && !selectedItem.equals("Selecciona un equipo..."));
+                }
+            }
+        });
+        bLogo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                vc.mostrarVentanaInicio();
+            }
+        });
+    }
+
     private void onOK() {
         try {
             vc.bajaEquipo(cNombre.getSelectedItem().toString());
-            ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
-            dispose(); //
+            JOptionPane.showMessageDialog(VentanaBajaEquipo.this, "Equipo eliminado correctamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            ventanaAdministrador.setVisible(true);
+            dispose();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void onCancel() {
-        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
-        dispose(); //
+        ventanaAdministrador.setVisible(true);
+        dispose();
     }
 }

@@ -38,14 +38,11 @@ public class VentanaAltaJugador extends JDialog {
             setSize(500, 580);
             setLocationRelativeTo(null);
             setResizable(false);
+            iconoVentana();
 
-            ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
-            setIconImage(icon.getImage());
-
-            vc.llenarComboBoxE(jEquipo);
             inicializarCampos();
+            agregarListeners();
 
-            // Acciones de botones
             buttonOK.addActionListener(e -> onOK());
             buttonCancel.addActionListener(e -> onCancel());
 
@@ -58,21 +55,18 @@ public class VentanaAltaJugador extends JDialog {
 
             contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
                     JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-
-            agregarListeners();
-            bLogo.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dispose();
-                    vc.mostrarVentanaInicio();
-                }
-            });
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private void inicializarCampos() {
+    public void iconoVentana(){
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        setIconImage(icon.getImage());
+    }
+
+    private void inicializarCampos() throws Exception {
+        vc.llenarComboBoxE(jEquipo);
         jApellido.setEnabled(false);
         jNacionalidad.setEnabled(false);
         jFecha.setEnabled(false);
@@ -272,6 +266,14 @@ public class VentanaAltaJugador extends JDialog {
                 jSueldo.setBorder(new LineBorder(Color.black, 1));
             }
         });
+
+        bLogo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                vc.mostrarVentanaInicio();
+            }
+        });
     }
 
     private boolean validarNombre() {
@@ -331,7 +333,8 @@ public class VentanaAltaJugador extends JDialog {
                     Double.parseDouble(jSueldo.getText()),
                     vc.buscarComboBoxE(jEquipo)
             );
-            ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+            JOptionPane.showMessageDialog(VentanaAltaJugador.this, "Jugador creado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            ventanaAdministrador.setVisible(true);
             dispose();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(VentanaAltaJugador.this, ex, "Error", JOptionPane.ERROR_MESSAGE);
@@ -339,7 +342,7 @@ public class VentanaAltaJugador extends JDialog {
     }
 
     private void onCancel() {
-        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+        ventanaAdministrador.setVisible(true);
         dispose();
     }
 }

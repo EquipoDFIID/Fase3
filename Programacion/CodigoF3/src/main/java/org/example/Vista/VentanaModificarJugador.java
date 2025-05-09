@@ -48,19 +48,10 @@ public class VentanaModificarJugador extends JDialog {
             setSize(500, 580);
             setLocationRelativeTo(null);
             setResizable(false);
+            iconoVentana();
 
-            ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
-            setIconImage(icon.getImage());
-
-            jNombre.setEnabled(false);
-            jApellido.setEnabled(false);
-            jNacionalidad.setEnabled(false);
-            jFecha.setEnabled(false);
-            jNickname.setEnabled(false);
-            jSueldo.setEnabled(false);
-            jEquipo.setEnabled(false);
-            vc.llenarComboBoxJ(cJugador);
-            vc.llenarComboBoxE(jEquipo);
+            inicializarCampos();
+            agregarListeners();
 
             buttonOK.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -74,7 +65,6 @@ public class VentanaModificarJugador extends JDialog {
                 }
             });
 
-            // call onCancel() when cross is clicked
             setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
             addWindowListener(new WindowAdapter() {
                 public void windowClosing(WindowEvent e) {
@@ -82,46 +72,53 @@ public class VentanaModificarJugador extends JDialog {
                 }
             });
 
-            // call onCancel() on ESCAPE
             contentPane.registerKeyboardAction(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     onCancel();
                 }
             }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-
-            cJugador.addItemListener(new ItemListener() {
-                @Override
-                public void itemStateChanged(ItemEvent e) {
-                    if (e.getStateChange() == ItemEvent.SELECTED) {
-                        String selectedItem = (String) cJugador.getSelectedItem();
-                        if (!selectedItem.equals("Selecciona un jugador...")) {
-                            jNombre.setEnabled(true);
-
-                        }
-                    }
-                    if (e.getStateChange() == ItemEvent.DESELECTED) {
-                        String selectedItem = (String) cJugador.getSelectedItem();
-                        if (selectedItem.equals("Selecciona un jugador...")) {
-                            jNombre.setEnabled(false);
-                        }
-                    }
-                }
-            });
-
-            agregarListeners();
-            bLogo.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dispose();
-                    vc.mostrarVentanaInicio();
-                }
-            });
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private void agregarListeners() {
+    public void iconoVentana(){
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        setIconImage(icon.getImage());
+    }
+
+    public void inicializarCampos() throws Exception {
+        jNombre.setEnabled(false);
+        jApellido.setEnabled(false);
+        jNacionalidad.setEnabled(false);
+        jFecha.setEnabled(false);
+        jNickname.setEnabled(false);
+        jSueldo.setEnabled(false);
+        jEquipo.setEnabled(false);
+        vc.llenarComboBoxJ(cJugador);
+        vc.llenarComboBoxE(jEquipo);
+    }
+
+    public void agregarListeners() {
+        cJugador.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    String selectedItem = (String) cJugador.getSelectedItem();
+                    if (!selectedItem.equals("Selecciona un jugador...")) {
+                        jNombre.setEnabled(true);
+
+                    }
+                }
+                if (e.getStateChange() == ItemEvent.DESELECTED) {
+                    String selectedItem = (String) cJugador.getSelectedItem();
+                    if (selectedItem.equals("Selecciona un jugador...")) {
+                        jNombre.setEnabled(false);
+                    }
+                }
+            }
+        });
+
         jNombre.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
                 if (validarNombre()) {
@@ -322,6 +319,14 @@ public class VentanaModificarJugador extends JDialog {
                 if ((opposite instanceof JRadioButton) || opposite == jNombre || opposite == jApellido || opposite == jNacionalidad || opposite == jFecha || opposite == jNickname || opposite == jSueldo|| opposite == cJugador) return;
             }
         });
+
+        bLogo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                vc.mostrarVentanaInicio();
+            }
+        });
     }
 
     private boolean validarNombre() {
@@ -372,7 +377,7 @@ public class VentanaModificarJugador extends JDialog {
                     ej = vc.buscarComboBoxE(jEquipo),
                     cJugador.getSelectedItem().toString()
             );
-            ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+            ventanaAdministrador.setVisible(true);
             dispose();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
@@ -380,7 +385,7 @@ public class VentanaModificarJugador extends JDialog {
     }
 
     private void onCancel() {
-        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+        ventanaAdministrador.setVisible(true);
         dispose(); //
     }
 
