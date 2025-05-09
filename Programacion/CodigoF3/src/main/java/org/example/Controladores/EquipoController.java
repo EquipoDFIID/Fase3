@@ -32,20 +32,20 @@ public class EquipoController {
     }
 
 
-    public void altaEquipo(String nombre, LocalDate fecha) throws Exception {
+    public boolean altaEquipo(String nombre, LocalDate fecha) throws Exception {
         Equipo e = new Equipo();
         e.setNombre(nombre);
         e.setFechaFund(fecha);
-        equipoDAO.altaEquipo(e);
+        return equipoDAO.altaEquipo(e);
     }
-    public void bajaEquipo() throws Exception {
-        equipoDAO.borrarEquipo(eb);
+    public boolean bajaEquipo() throws Exception {
+        return equipoDAO.borrarEquipo(eb);
     }
-    public void modificarEquipo(String nombre, LocalDate fecha) throws Exception {
+    public boolean modificarEquipo(String nombre, LocalDate fecha) throws Exception {
         Equipo equipo = new Equipo();
         equipo.setNombre(nombre);
         equipo.setFechaFund(fecha);
-        equipoDAO.modificarEquipo(equipo, eb);
+        return equipoDAO.modificarEquipo(equipo, eb);
     }
 
 

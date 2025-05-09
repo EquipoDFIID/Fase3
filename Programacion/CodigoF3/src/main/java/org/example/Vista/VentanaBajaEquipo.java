@@ -1,6 +1,7 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
+import org.example.Excepciones.DatoNoValido;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -35,30 +36,7 @@ public class VentanaBajaEquipo extends JDialog {
             inicializarCampos();
             agregarListeners();
 
-            buttonOK.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    onOK();
-                }
-            });
-
-            buttonCancel.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    onCancel();
-                }
-            });
-
             setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-            addWindowListener(new WindowAdapter() {
-                public void windowClosing(WindowEvent e) {
-                    onCancel();
-                }
-            });
-
-            contentPane.registerKeyboardAction(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    onCancel();
-                }
-            }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -92,16 +70,49 @@ public class VentanaBajaEquipo extends JDialog {
                 vc.mostrarVentanaInicio();
             }
         });
+
+        buttonOK.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onOK();
+            }
+        });
+
+        buttonCancel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onCancel();
+            }
+        });
+
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                onCancel();
+            }
+        });
+
+        contentPane.registerKeyboardAction(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onCancel();
+            }
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     private void onOK() {
         try {
-            vc.bajaEquipo(cNombre.getSelectedItem().toString());
-            JOptionPane.showMessageDialog(VentanaBajaEquipo.this, "Equipo eliminado correctamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            boolean eliminado;
+            eliminado = vc.bajaEquipo(cNombre.getSelectedItem().toString());
+
+            if (eliminado) {
+                JOptionPane.showMessageDialog(VentanaBajaEquipo.this, "Equipo eliminado exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                throw new DatoNoValido("Error al eliminar el Equipo");
+            }
+
             ventanaAdministrador.setVisible(true);
             dispose();
+        } catch (DatoNoValido error) {
+            JOptionPane.showMessageDialog(VentanaBajaEquipo.this, error.getMessage(), "Error de validación", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(VentanaBajaEquipo.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

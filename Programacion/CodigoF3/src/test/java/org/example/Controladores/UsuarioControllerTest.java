@@ -4,23 +4,32 @@ import org.example.Modelo.Usuario;
 import org.example.Modelo.UsuarioDAO;
 import org.junit.jupiter.api.*;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UsuarioControllerTest {
 
     private static UsuarioDAO usuarioDAO;
     private static UsuarioController usuarioController;
 
     @BeforeAll
-    static void setUp() {
+    static void setUp() throws SQLException {
+        limpiarUsuarioTest();
         usuarioDAO = new UsuarioDAO();
         usuarioController = new UsuarioController(usuarioDAO);
     }
 
+    private static void limpiarUsuarioTest() throws SQLException {
+        Connection con = org.example.Modelo.BD.getConnection();
+        Statement st = con.createStatement();
+        st.executeUpdate("DELETE FROM USUARIOS WHERE lower(NICKNAME)='tester'");
+        st.executeUpdate("DELETE FROM USUARIOS WHERE lower(NICKNAME)='usuarioInexistente123'");
+    }
+
     @Test
-    @Order(1)
     void testCrearCuenta() {
         usuarioController.crearCuenta("tester", "Test", "1234");
         Usuario usuario = usuarioDAO.selectUsuarioNick("tester", "1234");
@@ -30,30 +39,29 @@ class UsuarioControllerTest {
     }
 
     @Test
-    @Order(2)
     void testSelectUsuarioNick() {
+        usuarioController.crearCuenta("tester", "Test", "1234");
         Usuario usuario = usuarioController.selectUsuarioNick("tester", "1234");
+        assertNotNull(usuario);
+        assertEquals("Test", usuario.getNickname());
+    }
+
+   @Test
+    void testSelectUsuarioNom() {
+        usuarioController.crearCuenta("tester", "Test", "1234");
+        Usuario usuario = usuarioController.selectUsuarioNom("Test", "1234");
         assertNotNull(usuario);
         assertEquals("Test", usuario.getNombre());
     }
 
     @Test
-    @Order(3)
-    void testSelectUsuarioNom() { //Este tiene que dar error porque es otro nickname
-        Usuario usuario = usuarioController.selectUsuarioNom("Test", "1234");
-        assertNotNull(usuario);
-        assertEquals("tester2", usuario.getNickname());
-    }
-
-    @Test
-    @Order(4)
     void testComprobarNicknameTrue() {
+        usuarioController.crearCuenta("tester", "Test", "1234");
         assertTrue(usuarioController.comprobarNickname("tester"));
     }
 
     @Test
-    @Order(5)
     void testComprobarNicknameFalse() {
-        assertFalse(usuarioController.comprobarNickname("tester2"));
+        assertFalse(usuarioController.comprobarNickname("usuarioInexistente123"));
     }
 }

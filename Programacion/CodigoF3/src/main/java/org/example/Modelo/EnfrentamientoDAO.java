@@ -20,20 +20,21 @@ public class EnfrentamientoDAO {
             ps.setInt(3, enfrentamiento.getEquipoAtacante().getIdEquipo());
             ps.setInt(4, enfrentamiento.getEquipoDefensor().getIdEquipo());
             ps.setInt(5, enfrentamiento.getJornada().getIdJornada());
-
             ps.executeUpdate();
-
     }
 
-    public void asignarGanadorEnfrentamiento(Enfrentamiento enfrentamiento) throws Exception {
 
-            String sql = "UPDATE enfrentamientos SET equipo_ganador = ? WHERE id_enfrentamiento = ?";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, enfrentamiento.getEquipoGanador().getIdEquipo());
-            ps.setInt(2, enfrentamiento.getIdEnfrentamiento());
-
-            ps.executeUpdate();
-
+    public boolean asignarGanadorEnfrentamiento(Enfrentamiento enfrentamiento) throws Exception {
+        boolean insertados = false;
+        String sql = "UPDATE enfrentamientos SET equipo_ganador = ? WHERE id_enfrentamiento = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, enfrentamiento.getEquipoGanador().getIdEquipo());
+        ps.setInt(2, enfrentamiento.getIdEnfrentamiento());
+        int filas = ps.executeUpdate();
+        if (filas > 0) {
+            insertados = true;
+        }
+        return insertados;
     }
 
     public ArrayList<Enfrentamiento> selectEnfrentamientosJornada(int idJornada) throws Exception {
