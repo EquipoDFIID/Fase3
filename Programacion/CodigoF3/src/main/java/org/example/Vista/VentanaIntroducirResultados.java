@@ -1,6 +1,7 @@
 package org.example.Vista;
 
 import org.example.Controladores.VistaController;
+import org.example.Excepciones.DatoNoValido;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,63 +34,76 @@ public class VentanaIntroducirResultados extends JFrame {
             setSize(500, 580);
             setLocationRelativeTo(null);
             setResizable(false);
+            iconoVentana();
 
-            ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("icon.png")));
-            setIconImage(icon.getImage());
-
-            // Usa layout si y solo si NO usas el GUI Designer
-            panelEquipos.setLayout(new GridLayout(0, 2, 10, 5));
-
-            //vc.rellenarEquiposEnfrentamientos(panelEquipos, 0, bAceptar, this);
-            vc.llenarComboBoxJor(cJornada);
-            //Quiero que la jornada al seleccionarla haga una select y luego salgan los radioButtons de esa jornada
-
-            bAceptar.setEnabled(false);
-
-
-            cJornada.addItemListener(new ItemListener() {
-                @Override
-                public void itemStateChanged(ItemEvent e) {
-                    if (e.getStateChange() == ItemEvent.SELECTED) {
-                        vc.rellenarEquiposEnfrentamientos(panelEquipos, cJornada.getSelectedIndex(), bAceptar, VentanaIntroducirResultados.this);
-                        bAceptar.setEnabled(comprobarSelecciones());
-                        getRootPane().setDefaultButton(bAceptar); // Agregado
-                    }
-                }
-            });
-
-
-            bAceptar.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    try {
-                        vc.procesarGanadoresSeleccionados(cJornada.getSelectedIndex());
-                        JOptionPane.showMessageDialog(VentanaIntroducirResultados.this, "Resultados registrados correctamente.");
-                        ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
-                        dispose();
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            });
-
-            bSalir.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
-                    dispose(); //
-                }
-            });
-            bLogo.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dispose();
-                    vc.mostrarVentanaInicio();
-                }
-            });
+            inicializarCampos();
+            agregarListeners();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public void iconoVentana(){
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
+        setIconImage(icon.getImage());
+    }
+
+    public void inicializarCampos(){
+        panelEquipos.setLayout(new GridLayout(0, 2, 10, 5));
+        vc.llenarComboBoxJor(cJornada);
+        bAceptar.setEnabled(false);
+    }
+
+    public void agregarListeners(){
+        cJornada.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    vc.rellenarEquiposEnfrentamientos(panelEquipos, cJornada.getSelectedIndex(), bAceptar, VentanaIntroducirResultados.this);
+                    bAceptar.setEnabled(comprobarSelecciones());
+                    getRootPane().setDefaultButton(bAceptar); // Agregado
+                }
+            }
+        });
+
+
+        bAceptar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    boolean insertados;
+                    insertados = vc.procesarGanadoresSeleccionados(cJornada.getSelectedIndex());
+
+                    if (insertados) {
+                        JOptionPane.showMessageDialog(VentanaIntroducirResultados.this, "Resultados registrados correctamente.");
+                    } else {
+                        throw new DatoNoValido("Error al insertar los resultados");
+                    }
+
+                    ventanaAdministrador.setVisible(true);
+                    dispose();
+                } catch (DatoNoValido error) {
+                    JOptionPane.showMessageDialog(VentanaIntroducirResultados.this, error.getMessage(), "Error de validación", JOptionPane.ERROR_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(VentanaIntroducirResultados.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        bSalir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ventanaAdministrador.setVisible(true); // Vuelve a mostrar la ventana de administrador
+                dispose(); //
+            }
+        });
+        bLogo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                vc.mostrarVentanaInicio();
+            }
+        });
     }
 
     public boolean comprobarSelecciones(){

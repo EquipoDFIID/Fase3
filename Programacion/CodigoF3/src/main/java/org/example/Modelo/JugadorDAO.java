@@ -81,7 +81,9 @@ public class JugadorDAO {
      * Inserta un nuevo jugador en la base de datos.
      * @param jugador Objeto Jugador con los datos a insertar.
      */
-    public static void altaJugador(Jugador jugador) throws Exception {
+    public static boolean altaJugador(Jugador jugador) throws Exception {
+        boolean encontrado = false;
+
         try {
             String sql = "INSERT INTO jugadores (NOMBRE, APELLIDO, NACIONALIDAD, FECHA_NAC, NICKNAME, SUELDO, ID_EQUIPO) VALUES(?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
@@ -93,9 +95,11 @@ public class JugadorDAO {
             ps.setDouble(6, jugador.getSueldo());
             ps.setInt(7, jugador.getEquipo().getIdEquipo());
             ps.executeUpdate();
+            encontrado = true;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        return encontrado;
     }
 
 // =============================================
@@ -106,7 +110,9 @@ public class JugadorDAO {
      * @param jugador Objeto Jugador con los nuevos datos.
      * @param jugadorAnterior Objeto del jugador para identificar el registro a modificar.
      */
-    public static void modificarJugador(Jugador jugador, Jugador jugadorAnterior) throws Exception {
+    public static boolean modificarJugador(Jugador jugador, Jugador jugadorAnterior) throws Exception {
+        boolean modificado = false;
+
         try {
             String sql = "UPDATE JUGADORES SET NOMBRE = ?," +
                          "apellido = ?,nacionalidad = ?,fecha_nac = ?,nickname = ?,sueldo = ?," +
@@ -121,9 +127,12 @@ public class JugadorDAO {
             ps.setInt(7, jugador.getEquipo().getIdEquipo());
             ps.setString(8, jugadorAnterior.getNickname());
             ps.executeUpdate();
+            modificado = true;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+
+        return modificado;
     }
 
 // =============================================
@@ -134,15 +143,19 @@ public class JugadorDAO {
      * @param nombreJugador Nombre del jugador a eliminar.
      */
 
-    public static void borrarJugador(String nombreJugador) throws Exception {
+    public static boolean borrarJugador(String nombreJugador) throws Exception {
+        boolean eliminado = false;
+
         try {
             String sql = "DELETE FROM JUGADORES WHERE NICKNAME = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, nombreJugador);
             ps.executeUpdate();
+            eliminado = true;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        return eliminado;
     }
     public static String obtenerJugadoresPorEquipo(String nombreEquipo) throws Exception {
         StringBuilder tabla = new StringBuilder();

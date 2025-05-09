@@ -27,17 +27,20 @@ public class EnfrentamientoDAO {
         }
     }
 
-    public void asignarGanadorEnfrentamiento(Enfrentamiento enfrentamiento) throws Exception {
+    public boolean asignarGanadorEnfrentamiento(Enfrentamiento enfrentamiento) throws Exception {
+        boolean insertados = false;
+
         try {
             String sql = "UPDATE enfrentamientos SET equipo_ganador = ? WHERE id_enfrentamiento = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, enfrentamiento.getEquipoGanador().getIdEquipo());
             ps.setInt(2, enfrentamiento.getIdEnfrentamiento());
-
             ps.executeUpdate();
+            insertados = true;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        return insertados;
     }
 
     public ArrayList<Enfrentamiento> selectEnfrentamientosJornada(int idJornada) throws Exception {

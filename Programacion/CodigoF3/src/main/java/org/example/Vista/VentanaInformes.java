@@ -23,10 +23,17 @@ public class VentanaInformes extends JFrame {
         setSize(500, 580);
         setLocationRelativeTo(null);
         setResizable(false);
+        iconoVentana();
 
+        agregarListeners();
+    }
+
+    public void iconoVentana(){
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
         setIconImage(icon.getImage());
+    }
 
+    public void agregarListeners(){
         bSalir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
