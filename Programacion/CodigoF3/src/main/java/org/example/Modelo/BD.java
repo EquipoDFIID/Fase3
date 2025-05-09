@@ -20,11 +20,6 @@ public class BD{
 
         try {
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
-
-            if (conn != null) {
-                System.out.println("Conexión exitosa a Oracle!");
-            }
-
         } catch (SQLException e) {
             System.err.println("Error al conectar a la base de datos.");
         }

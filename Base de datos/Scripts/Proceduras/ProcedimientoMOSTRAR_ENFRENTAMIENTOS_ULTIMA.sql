@@ -3,6 +3,7 @@ create PROCEDURE mostrar_enfrentamientos_ultima (
     p_mensaje OUT VARCHAR2
 ) AS
     v_id_jornada JORNADAS.ID_JORNADA%TYPE;
+    v_fecha_jornada JORNADAS.FECHA%TYPE;
 BEGIN
     -- Buscar la última jornada con al menos un ganador confirmado
     SELECT MAX(E.ID_JORNADA)
@@ -15,7 +16,15 @@ BEGIN
         p_mensaje := 'No hay jornadas con enfrentamientos confirmados.';
         OPEN p_cursor FOR SELECT * FROM DUAL WHERE 1=0; -- cursor vacío
     ELSE
-        p_mensaje := 'Enfrentamientos de la última jornada con resultados confirmados:';
+        -- Obtener la fecha de la jornada
+        SELECT FECHA
+        INTO v_fecha_jornada
+        FROM JORNADAS
+        WHERE ID_JORNADA = v_id_jornada;
+
+        -- Crear el mensaje con ID y Fecha de jornada
+        p_mensaje := 'Enfrentamientos de la última jornada con resultados confirmados (ID: ' ||
+                     v_id_jornada || ', Fecha: ' || TO_CHAR(v_fecha_jornada, 'DD/MM/YYYY') || '):';
 
         OPEN p_cursor FOR
             SELECT
@@ -38,3 +47,4 @@ EXCEPTION
         OPEN p_cursor FOR SELECT * FROM DUAL WHERE 1=0;
 END;
 /
+

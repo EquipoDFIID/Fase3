@@ -26,7 +26,6 @@ public class UsuarioDAO {
                 u.setNombre(rs.getString("nombre"));
                 u.setClave(rs.getString("clave"));
                 u.setTipoUsuario(rs.getString("tipo_usuario"));
-                System.out.println(u.getNombre());
                 return u;
 
             }
@@ -55,9 +54,7 @@ public class UsuarioDAO {
                 u.setNombre(rs.getString("nombre"));
                 u.setClave(rs.getString("clave"));
                 u.setTipoUsuario(rs.getString("tipo_usuario"));
-                System.out.println(u.getNombre());
                 return u;
-
             }
 
 
