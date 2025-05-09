@@ -47,4 +47,23 @@ public class JornadaDAO {
 
         return j;
     }
+
+    public static boolean hayJornadasAnterioresSinResultados(int idJornadaActual) throws SQLException {
+        String sql = "SELECT j.ID_JORNADA " +
+                "FROM JORNADAS j " +
+                "JOIN ENFRENTAMIENTOS e ON j.ID_JORNADA = e.ID_JORNADA " +
+                "WHERE j.FECHA < (SELECT FECHA FROM JORNADAS WHERE ID_JORNADA = ?) " +
+                "AND e.EQUIPO_GANADOR IS NULL " +
+                "GROUP BY j.ID_JORNADA";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idJornadaActual);
+            ResultSet rs = ps.executeQuery();
+            return rs.next(); // Si devuelve algo, hay jornadas sin resultados
+        }
+    }
+
+
+
+
 }

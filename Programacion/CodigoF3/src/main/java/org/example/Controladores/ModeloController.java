@@ -224,4 +224,8 @@ public class ModeloController {
     public String mostrarProcedimientoResultado() throws Exception {
         return enfrentamientoController.mostrarProcedimientoResultado();
     }
+
+    public boolean hayJornadasAnterioresSinResultados(int idJornadaActual) throws Exception {
+        return jornadaController.hayJornadasAnterioresSinResultados(idJornadaActual);
+    }
 }

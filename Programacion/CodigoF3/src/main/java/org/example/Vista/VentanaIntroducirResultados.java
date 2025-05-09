@@ -51,15 +51,56 @@ public class VentanaIntroducirResultados extends JFrame {
                 @Override
                 public void itemStateChanged(ItemEvent e) {
                     if (e.getStateChange() == ItemEvent.SELECTED) {
-                        vc.rellenarEquiposEnfrentamientos(panelEquipos, cJornada.getSelectedIndex(), bAceptar, VentanaIntroducirResultados.this);
-                        bAceptar.setEnabled(comprobarSelecciones());
-                        getRootPane().setDefaultButton(bAceptar); // Agregado
+                        // Comprobamos que el índice seleccionado no sea 0 (el valor predeterminado)
+                        int selectedIndex = cJornada.getSelectedIndex();
+
+                        if (selectedIndex > 0) { // Solo procesamos si no es la opción predeterminada
+                            Object seleccionado = cJornada.getSelectedItem();
+
+                            if (seleccionado instanceof Integer) {
+                                int idJornada = (Integer) seleccionado;
+
+                                try {
+                                    // Comprobamos si hay jornadas anteriores sin resultados
+                                    if (vc.hayJornadasAnterioresSinResultados(idJornada)) {
+                                        JOptionPane.showMessageDialog(
+                                                VentanaIntroducirResultados.this,
+                                                "No puedes introducir resultados de esta jornada porque hay jornadas anteriores sin completar.",
+                                                "Jornadas pendientes",
+                                                JOptionPane.WARNING_MESSAGE
+                                        );
+                                        // Limpiar la vista si no es posible ingresar resultados
+                                        panelEquipos.removeAll();
+                                        panelEquipos.revalidate();
+                                        panelEquipos.repaint();
+                                        bAceptar.setEnabled(false);
+                                    } else {
+                                        // Si la jornada es válida, cargamos los enfrentamientos
+                                        vc.rellenarEquiposEnfrentamientos(panelEquipos, selectedIndex, bAceptar, VentanaIntroducirResultados.this);
+                                        bAceptar.setEnabled(comprobarSelecciones());
+                                        getRootPane().setDefaultButton(bAceptar);
+                                    }
+                                } catch (Exception ex) {
+                                    JOptionPane.showMessageDialog(VentanaIntroducirResultados.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                                }
+                            }
+                        } else {
+                            // Si seleccionan "Selecciona una jornada", deshabilitamos el botón y limpiamos los enfrentamientos
+                            panelEquipos.removeAll();
+                            panelEquipos.revalidate();
+                            panelEquipos.repaint();
+                            bAceptar.setEnabled(false);
+                        }
                     }
                 }
             });
 
 
-            bAceptar.addActionListener(new ActionListener() {
+
+
+
+
+           /* bAceptar.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
@@ -71,7 +112,37 @@ public class VentanaIntroducirResultados extends JFrame {
                         JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
+            });*/
+
+            bAceptar.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Object seleccionado = cJornada.getSelectedItem();
+                    if (!(seleccionado instanceof Integer)) {
+                        JOptionPane.showMessageDialog(
+                                VentanaIntroducirResultados.this,
+                                "Por favor, selecciona una jornada válida.",
+                                "Jornada inválida",
+                                JOptionPane.WARNING_MESSAGE
+                        );
+                    } else {
+                        int idJornada = (Integer) seleccionado;
+                        try {
+                            vc.procesarGanadoresSeleccionados(cJornada.getSelectedIndex());
+                            JOptionPane.showMessageDialog(
+                                    VentanaIntroducirResultados.this,
+                                    "Resultados registrados correctamente."
+                            );
+                            ventanaAdministrador.setVisible(true);
+                            dispose();
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                }
             });
+
+
 
             bSalir.addActionListener(new ActionListener() {
                 @Override
