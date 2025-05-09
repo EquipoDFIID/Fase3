@@ -1,9 +1,6 @@
 package org.example.Modelo;
 
-import org.example.Controladores.JornadaController;
-
 import java.sql.*;
-import java.util.ArrayList;
 
 public class JornadaDAO {
     static Connection con = BD.getConnection();

@@ -9,9 +9,6 @@ public class JugadorDAO {
     public JugadorDAO() {
     }
 
-// =============================================
-// == OPERACIONES DE CONSULTA (SELECT)
-// =============================================
     /**
      * Obtiene una lista de jugadores con su ID y nickname.
      * @return Lista de objetos Jugador con ID y nickname.
@@ -68,9 +65,6 @@ public class JugadorDAO {
         return j;
     }
 
-// =============================================
-// == OPERACIONES DE INSERCIÓN (INSERT)
-// =============================================
     /**
      * Inserta un nuevo jugador en la base de datos.
      * @param jugador Objeto Jugador con los datos a insertar.
@@ -93,9 +87,6 @@ public class JugadorDAO {
        return encontrado;
     }
 
-// =============================================
-// == OPERACIONES DE ACTUALIZACIÓN (UPDATE)
-// =============================================
     /**
      * Modifica los detalles de un jugador en la base de datos.
      * @param jugador Objeto Jugador con los nuevos datos.
@@ -123,9 +114,6 @@ public class JugadorDAO {
         return modificado;
     }
 
-// =============================================
-// == OPERACIONES DE ELIMINACIÓN (DELETE)
-// =============================================
     /**
      * Elimina un jugador de la base de datos por su nombre.
      * @param nombreJugador Nombre del jugador a eliminar.

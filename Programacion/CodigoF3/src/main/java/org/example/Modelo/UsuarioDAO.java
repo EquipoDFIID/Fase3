@@ -1,13 +1,8 @@
 package org.example.Modelo;
 
-
-import org.example.Modelo.BD;
-import org.example.Modelo.Usuario;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class UsuarioDAO {
     static Connection con = BD.getConnection();
