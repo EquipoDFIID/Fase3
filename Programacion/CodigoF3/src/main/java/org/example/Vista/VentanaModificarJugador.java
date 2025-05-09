@@ -17,7 +17,11 @@ import java.awt.event.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-
+/**
+ * Clase VentanaModificarJugador.
+ * Ventana de diálogo para modificar los datos de un jugador existente.
+ * Permite seleccionar un jugador desde un comboBox y editar sus datos.
+ */
 public class VentanaModificarJugador extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
@@ -86,7 +90,12 @@ public class VentanaModificarJugador extends JDialog {
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
         setIconImage(icon.getImage());
     }
-
+    /**
+     * Inicializa los campos de la ventana.
+     * Deshabilita los campos de texto y llena los ComboBox con los datos disponibles.
+     *
+     * @throws Exception Si ocurre un error al llenar los ComboBox.
+     */
     public void inicializarCampos() throws Exception {
         jNombre.setEnabled(false);
         jApellido.setEnabled(false);
@@ -99,6 +108,10 @@ public class VentanaModificarJugador extends JDialog {
         vc.llenarComboBoxE(jEquipo);
     }
 
+    /**
+     * Agrega los listeners a los componentes de la ventana.
+     * Maneja eventos como validación de campos y acciones de botones.
+     */
     public void agregarListeners() {
         cJugador.addItemListener(new ItemListener() {
             @Override

@@ -18,7 +18,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-
+/**
+ * Clase VentanaModificarEquipo.
+ * Representa una ventana de diálogo para modificar los datos de un equipo.
+ * Permite al usuario editar el nombre y la fecha de creación de un equipo seleccionado.
+ */
 public class VentanaModificarEquipo extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;

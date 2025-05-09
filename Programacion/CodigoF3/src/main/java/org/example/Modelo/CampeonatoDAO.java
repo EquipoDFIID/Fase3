@@ -37,4 +37,7 @@ public class CampeonatoDAO {
         ps.executeUpdate();
 
     }
+
+    public void insertarCompeticion(Campeonato expectedCampeonato) {
+    }
 }

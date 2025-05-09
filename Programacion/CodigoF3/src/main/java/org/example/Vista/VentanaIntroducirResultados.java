@@ -10,7 +10,10 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Objects;
-
+/**
+ * Clase VentanaIntroducirResultados.
+ * Representa una ventana gráfica que permite al usuario introducir los resultados de los enfrentamientos.
+ */
 public class VentanaIntroducirResultados extends JFrame {
     private JPanel panel1;
     private JButton bLogo;
@@ -23,7 +26,13 @@ public class VentanaIntroducirResultados extends JFrame {
     private String nombre;
     private JFrame ventanaAdministrador;
     private ArrayList<ButtonGroup> gruposEquipos = new ArrayList<>();
-
+    /**
+     * Constructor de la clase VentanaIntroducirResultados.
+     *
+     * @param vc Controlador de la vista que gestiona la lógica de la aplicación.
+     * @param aNombre Nombre del usuario actual.
+     * @param ventanaAdmin Ventana de administrador desde la que se accedió a esta ventana.
+     */
     public VentanaIntroducirResultados(VistaController vc, String aNombre, JFrame ventanaAdmin) {
         try {
             this.vc = vc;
@@ -91,7 +100,11 @@ public class VentanaIntroducirResultados extends JFrame {
             JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    /**
+     * Comprueba si todos los grupos de botones tienen una selección.
+     *
+     * @return true si todos los grupos tienen una selección, false en caso contrario.
+     */
     public boolean comprobarSelecciones(){
         ArrayList<ButtonGroup> gruposEquipos = vc.pasarGrupos();
 

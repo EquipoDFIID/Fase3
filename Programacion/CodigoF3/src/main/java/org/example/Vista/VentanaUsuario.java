@@ -12,7 +12,10 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
+/**
+ * Clase VentanaUsuario.
+ * Ventana principal del usuario que muestra las opciones disponibles para consultar información.
+ */
 public class VentanaUsuario extends JFrame {
     private JPanel panel1;
     private JButton bLogo;

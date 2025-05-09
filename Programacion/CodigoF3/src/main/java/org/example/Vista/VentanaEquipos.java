@@ -7,7 +7,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * Clase VentanaEquipos.
+ * Representa una ventana gráfica que muestra información sobre equipos y permite al usuario interactuar con el sistema.
+ */
 public class VentanaEquipos extends JFrame {
     private JButton bLogo;
     private JButton SALIRButton;
@@ -16,6 +19,13 @@ public class VentanaEquipos extends JFrame {
     private VistaController vc;
     private JFrame ventanaUser;
 
+    /**
+     * Constructor de la clase VentanaEquipos.
+     *
+     * @param vc Controlador de la vista que gestiona la lógica de la aplicación.
+     * @param nombre Nombre del usuario actual.
+     * @param ventanaUsuario Ventana de usuario desde la que se accedió a esta ventana.
+     */
     public VentanaEquipos(VistaController vc, String nombre, JFrame ventanaUsuario) {
         try {
             this.vc = vc;

@@ -10,6 +10,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Clase `VentanaAltaJugador` que representa una ventana de diálogo para registrar un nuevo jugador.
+ * Permite al usuario ingresar datos como nombre, apellido, nacionalidad, fecha de nacimiento, nickname, sueldo y equipo.
+ */
 public class VentanaAltaJugador extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
@@ -64,7 +68,11 @@ public class VentanaAltaJugador extends JDialog {
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
         setIconImage(icon.getImage());
     }
-
+    /**
+     * Inicializa los campos de la ventana y desactiva los que no deben estar habilitados inicialmente.
+     *
+     * @throws Exception Si ocurre un error al llenar el ComboBox.
+     */
     private void inicializarCampos() throws Exception {
         vc.llenarComboBoxE(jEquipo);
         jApellido.setEnabled(false);
