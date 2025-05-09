@@ -99,5 +99,3 @@ El sistema contempla dos tipos de usuarios:
       Acceso de solo lectura para consultar estadísticas y reportes.
       
 - Nickname: *Ibaicito* | Clave: *1111*
-
----
