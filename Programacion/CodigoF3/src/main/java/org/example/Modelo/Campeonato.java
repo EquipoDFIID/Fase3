@@ -50,4 +50,8 @@ public class Campeonato {
             throw new IllegalArgumentException("Estado inválido. Debe ser 'Inscripción', 'Curso' o 'Finalizado'.");
         }
     }
+
+    public int getId() {
+        return 0;
+    }
 }

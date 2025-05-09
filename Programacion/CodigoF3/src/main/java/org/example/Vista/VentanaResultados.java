@@ -6,7 +6,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * Clase VentanaResultados.
+ * Representa una ventana gráfica que muestra los resultados de un procedimiento
+ * y permite al usuario interactuar con el sistema.
+ */
 public class VentanaResultados extends JFrame {
     private JButton bLogo;
     private JButton SALIRButton;

@@ -10,6 +10,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+/**
+ * Clase VentanaJugadorA.
+ * Representa una ventana gráfica que permite al administrador consultar los jugadores
+ * de un equipo seleccionado y realizar acciones relacionadas.
+ */
+
 public class VentanaJugadorA extends JFrame {
     private JPanel pPrincipal;
     private JTextArea tJugadores;
@@ -48,7 +54,12 @@ public class VentanaJugadorA extends JFrame {
         vc.llenarComboBoxE(cEquipos);
         tJugadores.setFont(new Font("Monospaced", Font.PLAIN, 12));
     }
-
+    /**
+     * Agrega los listeners a los componentes de la ventana.
+     * Maneja eventos como la selección de un equipo y las acciones de los botones.
+     *
+     * @param ventanaUser Ventana de administrador desde la que se accedió a esta ventana.
+     */
     public void agregarListeners(JFrame ventanaUser){
         cEquipos.addItemListener(new ItemListener() {
             @Override

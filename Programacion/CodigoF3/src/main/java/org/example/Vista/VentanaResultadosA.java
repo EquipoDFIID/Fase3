@@ -7,6 +7,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
+/**
+ * Clase VentanaResultadosA.
+ * Representa una ventana gráfica que muestra los resultados de un procedimiento
+ * y permite al administrador interactuar con el sistema.
+ */
 public class VentanaResultadosA extends JFrame {
     private JButton bLogo;
     private JButton SALIRButton;
@@ -38,12 +44,22 @@ public class VentanaResultadosA extends JFrame {
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon.png"));
         setIconImage(icon.getImage());
     }
-
+    /**
+     * Inicializa los campos de la ventana.
+     * Muestra los resultados en el área de texto.
+     *
+     * @throws Exception Si ocurre un error al obtener los resultados.
+     */
     public void inicializarCampos() throws Exception{
         textArea1.setText(vc.mostrarProcedimientoResultado());
         textArea1.setFont(new Font("Monospaced", Font.PLAIN, 12));
     }
-
+    /**
+     * Agrega los listeners a los componentes de la ventana.
+     * Maneja eventos como salir de la ventana o volver a la ventana de inicio.
+     *
+     * @param nombre Nombre del administrador actual.
+     */
     public void agregarListeners(String nombre) {
         SALIRButton.addActionListener(new ActionListener() {
             @Override

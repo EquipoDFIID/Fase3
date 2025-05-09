@@ -163,7 +163,9 @@ public class VentanaAdministrador extends JFrame {
             }
         });
     }
-
+    /**
+     * Desactiva los botones relacionados con la gestión de jugadores y equipos.
+     */
     public void disableCrud(){
         bAltaJugador.setEnabled(false);
         bAltaEquipo.setEnabled(false);

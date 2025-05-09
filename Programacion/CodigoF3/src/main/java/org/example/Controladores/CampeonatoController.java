@@ -22,4 +22,6 @@ public class CampeonatoController {
         campeonatoDao.competicionUpdateInscripcion(inscripcion);
 
     }
+
+
 }

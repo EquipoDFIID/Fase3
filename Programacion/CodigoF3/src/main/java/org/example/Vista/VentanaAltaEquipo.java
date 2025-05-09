@@ -40,6 +40,7 @@ public class VentanaAltaEquipo extends JDialog {
         setResizable(false);
         iconoVentana();
 
+
         inicializarCampos();
         agregarListeners();
 

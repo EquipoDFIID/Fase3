@@ -17,6 +17,10 @@ public class EquipoController {
         this.equipoDAO = equipoDAO;
     }
 
+    public EquipoController() {
+
+    }
+
     public void buscarEquipo(String nombre) throws Exception {
         eb = equipoDAO.buscarEquipo(nombre);
     }

@@ -7,7 +7,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * Clase VentanaEquipos.
+ * Representa una ventana gráfica que permite al usuario consultar la información
+ * de los equipos disponibles en el sistema.
+ */
 public class VentanaEquipos extends JFrame {
     private JButton bLogo;
     private JButton SALIRButton;

@@ -5,7 +5,10 @@ import org.example.Controladores.VistaController;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * Clase VentanaInformes.
+ * Representa una ventana gráfica que muestra informes y permite al usuario interactuar con el sistema.
+ */
 public class VentanaInformes extends JFrame {
     private JButton bLogo;
     private JButton bSalir;
@@ -16,7 +19,13 @@ public class VentanaInformes extends JFrame {
     private VistaController vc;
     private String nombre;
     private JFrame ventanaAdministrador;
-
+    /**
+     * Constructor de la clase VentanaInformes.
+     *
+     * @param vc Controlador de la vista que gestiona la lógica de la aplicación.
+     * @param aNombre Nombre del usuario actual.
+     * @param ventanaAdmin Ventana de administrador desde la que se accedió a esta ventana.
+     */
     public VentanaInformes(VistaController vc, String aNombre, JFrame ventanaAdmin) {
         this.vc = vc;
         this.nombre = aNombre;

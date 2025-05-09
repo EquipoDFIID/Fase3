@@ -26,4 +26,5 @@ public class TestBD {
         Connection conn = BD.getConnection();
         assertNull(conn, "La conexión debería fallar y devolver null.");
     }
+
 }

@@ -10,6 +10,12 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
+/**
+ * Clase VentanaIntroducirResultados.
+ * Representa una ventana gráfica que permite al administrador introducir los resultados
+ * de una jornada seleccionada, validando las jornadas anteriores y los enfrentamientos.
+ */
+
 public class VentanaIntroducirResultados extends JFrame {
     private JPanel panel1;
     private JButton bLogo;
@@ -147,6 +153,11 @@ public class VentanaIntroducirResultados extends JFrame {
         });
     }
 
+    /**
+     * Comprueba si todos los enfrentamientos tienen un ganador seleccionado.
+     *
+     * @return true si todos los enfrentamientos tienen un ganador seleccionado, false en caso contrario.
+     */
     public boolean comprobarSelecciones() {
         ArrayList<ButtonGroup> gruposEquipos = vc.pasarGrupos();
 
