@@ -13,15 +13,15 @@
 
 <h1 id="estado">◾ Estado del Proyecto</h1>
 
-**En desarrollo 🔝**
-
-Se encuentra actualmente en fase activa de implementación y pruebas funcionales.
+**Finalizado ✅**
 
 ---
 
 <h1 id="descripcion">◾ Gestión de Competición CSGO</h1>
 
 Este proyecto corresponde a un programa orientado a la gestión de competiciones de *Counter-Strike: Global Offensive* (*CSGO*).
+
+<img src="readmeImg/Banner.jpg" alt="banner"/>
 
 Ofrece funcionalidades para administrar equipos, jugadores y partidos, así como registrar resultados y generar calendarios automáticos.
 
@@ -93,11 +93,11 @@ El sistema contempla dos tipos de usuarios:
   **Administrador**
       Acceso completo para gestionar entidades y resultados del torneo.
       
-  - Nombre: *Admin* |  Clave: *1111*
+  - Nombre: *Danel* |  Clave: *2424*
 
   **Usuario general**
       Acceso de solo lectura para consultar estadísticas y reportes.
       
-- Nickname: *Usuario* | Clave: *2222*
+- Nickname: *Ibaicito* | Clave: *1111*
 
 ---
