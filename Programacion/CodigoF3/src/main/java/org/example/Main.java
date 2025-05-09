@@ -2,9 +2,11 @@ package org.example;
 
 import org.example.Controladores.ModeloController;
 import org.example.Controladores.VistaController;
+import org.example.Modelo.EnfrentamientoDAO;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+
         ModeloController mc = new ModeloController();
         VistaController vc = new VistaController(mc);
         mc.competicionUpdateInscripcion("inscripcion");

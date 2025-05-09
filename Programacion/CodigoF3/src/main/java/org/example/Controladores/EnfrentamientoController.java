@@ -51,4 +51,8 @@ public class EnfrentamientoController {
     public ArrayList<Enfrentamiento> selectEnfrentamientosJornada(int idJornada) throws Exception {
         return dao.selectEnfrentamientosJornada(idJornada);
     }
+
+    public String mostrarProcedimientoResultado() throws Exception {
+        return dao.procedimientoEnfrentamientosUltimaJornada();
+    }
 }
