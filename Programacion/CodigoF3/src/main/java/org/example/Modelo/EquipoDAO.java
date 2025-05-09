@@ -137,7 +137,7 @@ public class EquipoDAO {
         ps.setDate(2, Date.valueOf(equipo.getFechaFund()));
         int filas = ps.executeUpdate();
         if (filas > 0) {
-            insertados = true;
+            insertado = true;
         }
         return insertado;
     }
@@ -151,9 +151,6 @@ public class EquipoDAO {
      * @param equipo Objeto Equipo con los nuevos datos.
      * @param equipoAnterior Objeto del equipo para identificar el registro a modificar.
      */
-
-    public static void modificarEquipo(Equipo equipo, Equipo equipoAnterior) throws Exception {
-
 
     public static boolean modificarEquipo(Equipo equipo, Equipo equipoAnterior) throws Exception {
         boolean modificado = false;

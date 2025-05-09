@@ -34,8 +34,6 @@ public class JugadorDAO {
                 j.setEquipo(EquipoDAO.buscarEquipo(rs.getString("ID_EQUIPO")));
                 jugadores.add(j);
             }
-
-
         return jugadores;
     }
 
@@ -79,22 +77,20 @@ public class JugadorDAO {
      */
     public static boolean altaJugador(Jugador jugador) throws Exception {
         boolean encontrado = false;
-
-            String sql = "INSERT INTO jugadores (NOMBRE, APELLIDO, NACIONALIDAD, FECHA_NAC, NICKNAME, SUELDO, ID_EQUIPO) VALUES(?,?,?,?,?,?,?)";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, jugador.getNombre());
-            ps.setString(2, jugador.getApellido());
-            ps.setString(3, jugador.getNacionalidad());
-            ps.setDate(4, Date.valueOf(jugador.getFechaNacimiento()));
-            ps.setString(5, jugador.getNickname());
-            ps.setDouble(6, jugador.getSueldo());
-            ps.setInt(7, jugador.getEquipo().getIdEquipo());
-            ps.executeUpdate();
-            int filas = ps.executeUpdate();
-            if (filas > 0) {
-                encontrado = true;
-            }
-           return encontrado;
+        String sql = "INSERT INTO jugadores (NOMBRE, APELLIDO, NACIONALIDAD, FECHA_NAC, NICKNAME, SUELDO, ID_EQUIPO) VALUES(?,?,?,?,?,?,?)";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, jugador.getNombre());
+        ps.setString(2, jugador.getApellido());
+        ps.setString(3, jugador.getNacionalidad());
+        ps.setDate(4, Date.valueOf(jugador.getFechaNacimiento()));
+        ps.setString(5, jugador.getNickname());
+        ps.setDouble(6, jugador.getSueldo());
+        ps.setInt(7, jugador.getEquipo().getIdEquipo());
+        int filas = ps.executeUpdate();
+        if (filas > 0) {
+            encontrado = true;
+        }
+       return encontrado;
     }
 
 // =============================================
@@ -107,6 +103,7 @@ public class JugadorDAO {
      */
     public static boolean modificarJugador(Jugador jugador, Jugador jugadorAnterior) throws Exception {
         boolean modificado = false;
+
         String sql = "UPDATE JUGADORES SET NOMBRE = ?," +
                      "apellido = ?,nacionalidad = ?,fecha_nac = ?,nickname = ?,sueldo = ?," +
                      "id_equipo = ? WHERE NICKNAME = ?";
@@ -119,7 +116,6 @@ public class JugadorDAO {
         ps.setDouble(6, jugador.getSueldo());
         ps.setInt(7, jugador.getEquipo().getIdEquipo());
         ps.setString(8, jugadorAnterior.getNickname());
-        ps.executeUpdate();
         int filas = ps.executeUpdate();
         if (filas > 0) {
             modificado = true;
@@ -138,14 +134,13 @@ public class JugadorDAO {
 
     public static boolean borrarJugador(String nombreJugador) throws Exception {
         boolean eliminado = false;
-            String sql = "DELETE FROM JUGADORES WHERE NICKNAME = ?";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, nombreJugador);
-            ps.executeUpdate();
-            int filas = ps.executeUpdate();
-            if (filas > 0) {
-                eliminado = true;
-            }
+        String sql = "DELETE FROM JUGADORES WHERE NICKNAME = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, nombreJugador);
+        int filas = ps.executeUpdate();
+        if (filas > 0) {
+            eliminado = true;
+        }
         return eliminado;
     }
     public static String obtenerJugadoresPorEquipo(String nombreEquipo) throws Exception {
@@ -178,12 +173,8 @@ public class JugadorDAO {
             }
 
             if (cstmt != null) {
-
-                    cstmt.close();
-
-
-        }
-
+                cstmt.close();
+            }
         return tabla.toString();
     }
 
