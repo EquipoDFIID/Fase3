@@ -61,6 +61,23 @@ public class JornadaDAO {
     }
 
 
+    public void resetDatos() throws Exception {
+        String[] sqls = {
+                "TRUNCATE TABLE ENFRENTAMIENTOS",
+                "TRUNCATE TABLE JORNADAS",
+                "ALTER TABLE ENFRENTAMIENTOS MODIFY ID_ENFRENTAMIENTO GENERATED ALWAYS AS IDENTITY (START WITH 1)",
+                "ALTER TABLE JORNADAS MODIFY ID_JORNADA GENERATED ALWAYS AS IDENTITY (START WITH 1)"
+        };
 
+        try {
+            for (String sql : sqls) {
+                try (PreparedStatement ps = con.prepareStatement(sql)) {
+                    ps.executeUpdate();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
